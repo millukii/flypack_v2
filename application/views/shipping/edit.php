@@ -29,7 +29,7 @@
                     			  					<label for="shipping-type" class="col-sm-2 control-label">Tipo</label>
                     			  					<div class="col-sm-10">
                     			  						<input type="text" class="form-control" name="input-shipping-type" id="input-shipping-type"
-                                        value="<?php if(!empty($shipping[0]['quadmins_code'])) echo $shipping[0]['quadmins_code'];?>"
+                                        value="<?php if(!empty($shipping[0]['shipping_type'])) echo $shipping[0]['shipping_type'];?>"
                                         >
                     			  					</div>
                     			  				</div>
@@ -38,7 +38,7 @@
                     			  					<label for="address" class="col-sm-2 control-label">Dirección</label>
                     			  					<div class="col-sm-10">
                     			  						<input type="text" class="form-control" name="input-address" id="input-address"
-                                        value="<?php if(!empty($shipping[0]['quadmins_code'])) echo $shipping[0]['quadmins_code'];?>"
+                                        value="<?php if(!empty($shipping[0]['address'])) echo $shipping[0]['address'];?>"
                                         >
                     			  					</div>
                     			  				</div>
@@ -46,15 +46,15 @@
                     			  					<label for="sender" class="col-sm-2 control-label">Emisor</label>
                     			  					<div class="col-sm-10">
                     			  						<input type="text" class="form-control" name="input-sender" id="input-sender"
-                                        value="<?php if(!empty($shipping[0]['quadmins_code'])) echo $shipping[0]['quadmins_code'];?>"
+                                        value="<?php if(!empty($shipping[0]['sender'])) echo $shipping[0]['sender'];?>"
                                         >
                     			  					</div>
                                       </div>
                     			  				<div class="form-group">
                     			  					<label for="receiver-name" class="col-sm-2 control-label">Receptor</label>
                     			  					<div class="col-sm-10">
-                    			  						<input type="number" class="form-control" name="input-receiver-name" id="input-receiver-name"
-                                        value="<?php if(!empty($shipping[0]['quadmins_code'])) echo $shipping[0]['quadmins_code'];?>"
+                    			  						<input type="text" class="form-control" name="input-receiver-name" id="input-receiver-name"
+                                        value="<?php if(!empty($shipping[0]['receiver_name'])) echo $shipping[0]['receiver_name'];?>"
                                         >
                     			  					</div>
                     			  				</div>
@@ -62,8 +62,8 @@
                     			  				<div class="form-group">
                     			  					<label for="receiver_phone" class="col-sm-2 control-label">Teléfono</label>
                     			  					<div class="col-sm-5">
-                    			  						<input type="number" class="form-control" name="input-receiver-phone" id="input-receiver-phone"
-                                        value="<?php if(!empty($shipping[0]['quadmins_code'])) echo $shipping[0]['quadmins_code'];?>"
+                    			  						<input type="text" class="form-control" name="input-receiver-phone" id="input-receiver-phone"
+                                        value="<?php if(!empty($shipping[0]['receiver_phone'])) echo $shipping[0]['receiver_phone'];?>"
                                         >
                     			  					</div>
                     			  				</div>
@@ -72,7 +72,7 @@
                     			  					<label for="receiver-mail" class="col-sm-2 control-label">E-mail</label>
                     			  					<div class="col-sm-5">
                     			  						<input type="email" class="form-control" name="input-receiver-mail" id="input-receiver-mail"
-                                        value="<?php if(!empty($shipping[0]['quadmins_code'])) echo $shipping[0]['quadmins_code'];?>"
+                                        value="<?php if(!empty($shipping[0]['receiver_mail'])) echo $shipping[0]['receiver_mail'];?>"
                                         >
                     			  					</div>
                     			  				</div>
@@ -80,7 +80,7 @@
                     			  					<label for="observation" class="col-sm-2 control-label">Observacion</label>
                     			  					<div class="col-sm-5">
                     			  						<input type="test" class="form-control" name="input-observation" id="input-observation"
-                                        value="<?php if(!empty($shipping[0]['quadmins_code'])) echo $shipping[0]['quadmins_code'];?>"
+                                        value="<?php if(!empty($shipping[0]['observation'])) echo $shipping[0]['observation'];?>"
                                         >
                     			  					</div>
                     			  				</div>
@@ -98,9 +98,9 @@
                     			  				</div>
                     
                     			  				<div class="form-group">
-                    			  					<label for="people" class="col-sm-2 control-label">Estado</label>
+                    			  					<label for="shipping" class="col-sm-2 control-label">Estado</label>
                     			  					<div class="col-sm-5">
-                    			  						<select name="select-people_states" id="select-people_states" class="form-control" required>
+                    			  						<select name="select-shipping-states" id="select-shipping-states" class="form-control" required>
                     			  							<option value="">Seleccione una opción</option>
                     			  							<?php foreach ($shipping_states as $key) { ?>
                     			  								<option value="<?php echo $key->id; ?>"><?php echo $key->state; ?></option>
@@ -134,10 +134,10 @@
 	{
 
 
-		$('#select-shipping_states').val('<?php if(!empty($shipping[0]['shipping_states_id'])) echo $shipping[0]['shipping_states_id'];?>');
+		$('#select-shipping-states').val('<?php if(!empty($shipping[0]['shipping_states_id'])) echo $shipping[0]['shipping_states_id'];?>');
 
     
-		$('#select-companies').val('<?php if(!empty($shipping[0]['company'])) echo $shipping[0]['company'];?>');
+		$('#select-companies').val('<?php if(!empty($shipping[0]['companies_id'])) echo $shipping[0]['companies_id'];?>');
 
 		$("#form-shipping").submit(function(event) {
 			event.preventDefault();
