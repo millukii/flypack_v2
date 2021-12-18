@@ -67,12 +67,12 @@ class CShipping extends CI_Controller {
 		$id = trim($this->input->get('id', TRUE));
 
 		$shipping = $this->modelo->getShipping_($id);
-		$profiles = $this->modelo->getAllProfiles();
+		$companies = $this->modelo->getAllcompanies();
 		$shipping_states = $this->modelo->getAllShipping_States();
 
 		$data = array(
 			'shipping' => $shipping,
-			'profiles' => $profiles,
+			'companies' => $companies,
 			'shipping_states' => $shipping_states,
 		);
 

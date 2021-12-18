@@ -5,84 +5,118 @@
 				<div class="box box-success">
 					<div class="box-header ui-sortable-handle">
 					    <i class="fa fa-users"></i>
-						<h3 class="box-title">Editar Persona # <?php if(!empty($people[0]['id'])) echo $people[0]['id'];?></h3>
+						<h3 class="box-title">Editar Orden de Transporte # <?php if(!empty($shipping[0]['id'])) echo $shipping[0]['id'];?></h3>
 				  	</div>
+                    				  	<form class="form-horizontal" id="form-shipping">
+                    			  			<div class="box-body">
+                    			  				<div class="form-group">
+                    			  					<label for="order_nro" class="col-sm-2 control-label">Numero de Orden</label>
+                    			  					<div class="col-sm-3">
 
-				  	<form class="form-horizontal" id="form-people">
-			  			<div class="box-body">
-			  				<div class="form-group">
-			  					<label for="rut" class="col-sm-2 control-label">Rut</label>
-			  					<div class="col-sm-3">
-			  					    <!--
-			  						<input type="text" class="form-control" name="input-rut" id="input-rut" oninput="checkRut(this)" placeholder="12345678-9" maxlength="10" value="<?php //if(!empty($people[0]['rut'])) echo $people[0]['rut'];?>-<?php //echo $people[0]['dv']; ?>" required>
-			  						-->
-			  						<input type="text" class="form-control" name="input-rut" id="input-rut" maxlength="10" value="<?php if(!empty($people[0]['rut'])) echo $people[0]['rut'];?>" disabled required>
-			  					</div>
-			  				</div>
-			  				<div class="form-group">
-			  					<label for="name" class="col-sm-2 control-label">Nombres</label>
-			  					<div class="col-sm-10">
-			  						<input type="text" class="form-control" name="input-name" id="input-name" value="<?php if(!empty($people[0]['name'])) echo $people[0]['name'];?>">
-			  					</div>
-			  				</div>
+                    			  						<input type="text" class="form-control" name="input-order_nro" id="input-order_nro"  maxlength="10" value="<?php if(!empty($shipping[0]['order_nro'])) echo $shipping[0]['order_nro'];?>"   disabled required>
+                    			  					</div>
+                    			  				</div>
+                    			  				<div class="form-group">
+                    			  					<label for="quadmins-code" class="col-sm-2 control-label">Codigo Quadmin</label>
+                    			  					<div class="col-sm-10">
+                    			  						<input type="text" class="form-control" name="input-quadmins-code" id="input-quadmins-code"
+                                        value="<?php if(!empty($shipping[0]['quadmins_code'])) echo $shipping[0]['quadmins_code'];?>" 
+                                        >
+                    			  					</div>
+                    			  				</div>
+                    
+                    			  				<div class="form-group">
+                    			  					<label for="shipping-type" class="col-sm-2 control-label">Tipo</label>
+                    			  					<div class="col-sm-10">
+                    			  						<input type="text" class="form-control" name="input-shipping-type" id="input-shipping-type"
+                                        value="<?php if(!empty($shipping[0]['quadmins_code'])) echo $shipping[0]['quadmins_code'];?>"
+                                        >
+                    			  					</div>
+                    			  				</div>
+                    
+                    			  				<div class="form-group">
+                    			  					<label for="address" class="col-sm-2 control-label">Dirección</label>
+                    			  					<div class="col-sm-10">
+                    			  						<input type="text" class="form-control" name="input-address" id="input-address"
+                                        value="<?php if(!empty($shipping[0]['quadmins_code'])) echo $shipping[0]['quadmins_code'];?>"
+                                        >
+                    			  					</div>
+                    			  				</div>
+                                     <div class="form-group">
+                    			  					<label for="sender" class="col-sm-2 control-label">Emisor</label>
+                    			  					<div class="col-sm-10">
+                    			  						<input type="text" class="form-control" name="input-sender" id="input-sender"
+                                        value="<?php if(!empty($shipping[0]['quadmins_code'])) echo $shipping[0]['quadmins_code'];?>"
+                                        >
+                    			  					</div>
+                                      </div>
+                    			  				<div class="form-group">
+                    			  					<label for="receiver-name" class="col-sm-2 control-label">Receptor</label>
+                    			  					<div class="col-sm-10">
+                    			  						<input type="number" class="form-control" name="input-receiver-name" id="input-receiver-name"
+                                        value="<?php if(!empty($shipping[0]['quadmins_code'])) echo $shipping[0]['quadmins_code'];?>"
+                                        >
+                    			  					</div>
+                    			  				</div>
 
-			  				<div class="form-group">
-			  					<label for="last_name" class="col-sm-2 control-label">Apellidos</label>
-			  					<div class="col-sm-10">
-			  						<input type="text" class="form-control" name="input-lastname" id="input-lastname" value="<?php if(!empty($people[0]['lastname'])) echo $people[0]['lastname'];?>">
-			  					</div>
-			  				</div>
+                    			  				<div class="form-group">
+                    			  					<label for="receiver_phone" class="col-sm-2 control-label">Teléfono</label>
+                    			  					<div class="col-sm-5">
+                    			  						<input type="number" class="form-control" name="input-receiver-phone" id="input-receiver-phone"
+                                        value="<?php if(!empty($shipping[0]['quadmins_code'])) echo $shipping[0]['quadmins_code'];?>"
+                                        >
+                    			  					</div>
+                    			  				</div>
+                    
+                    			  				<div class="form-group">
+                    			  					<label for="receiver-mail" class="col-sm-2 control-label">E-mail</label>
+                    			  					<div class="col-sm-5">
+                    			  						<input type="email" class="form-control" name="input-receiver-mail" id="input-receiver-mail"
+                                        value="<?php if(!empty($shipping[0]['quadmins_code'])) echo $shipping[0]['quadmins_code'];?>"
+                                        >
+                    			  					</div>
+                    			  				</div>
+                                     <div class="form-group">
+                    			  					<label for="observation" class="col-sm-2 control-label">Observacion</label>
+                    			  					<div class="col-sm-5">
+                    			  						<input type="test" class="form-control" name="input-observation" id="input-observation"
+                                        value="<?php if(!empty($shipping[0]['quadmins_code'])) echo $shipping[0]['quadmins_code'];?>"
+                                        >
+                    			  					</div>
+                    			  				</div>
 
-			  				<div class="form-group">
-			  					<label for="address" class="col-sm-2 control-label">Dirección</label>
-			  					<div class="col-sm-10">
-			  						<input type="text" class="form-control" name="input-address" id="input-address" value="<?php if(!empty($people[0]['address'])) echo $people[0]['address'];?>">
-			  					</div>
-			  				</div>
-
-			  				<div class="form-group">
-			  					<label for="phone" class="col-sm-2 control-label">Teléfono</label>
-			  					<div class="col-sm-5">
-			  						<input type="number" class="form-control" name="input-phone" id="input-phone" value="<?php if(!empty($people[0]['phone'])) echo $people[0]['phone'];?>">
-			  					</div>
-			  				</div>
-
-			  				<div class="form-group">
-			  					<label for="email" class="col-sm-2 control-label">E-mail</label>
-			  					<div class="col-sm-5">
-			  						<input type="email" class="form-control" name="input-email" id="input-email" value="<?php if(!empty($people[0]['email'])) echo $people[0]['email'];?>">
-			  					</div>
-			  				</div>
-
-			  				<div class="form-group">
-			  					<label for="companies" class="col-sm-2 control-label">Perfil</label>
-			  					<div class="col-sm-5">
-			  						<select name="select-profiles" id="select-profiles" class="form-control" required>
-			  							<option value="">Seleccione una opción</option>
-			  							<?php foreach ($profiles as $key) { ?>
-			  								<option value="<?php echo $key->id; ?>"><?php echo $key->profile; ?></option>
-			  							<?php } ?>
-			  						</select>
-			  					</div>
-			  				</div>
-
-			  				<div class="form-group">
-			  					<label for="people" class="col-sm-2 control-label">Estado</label>
-			  					<div class="col-sm-5">
-			  						<select name="select-people_states" id="select-people_states" class="form-control" required>
-			  							<option value="">Seleccione una opción</option>
-			  							<?php foreach ($people_states as $key) { ?>
-			  								<option value="<?php echo $key->id; ?>"><?php echo $key->state; ?></option>
-			  							<?php } ?>
-			  						</select>
-			  					</div>
-			  				</div>
-			  				
-			  			</div>
-			  			<div class="box-footer">
-			  				<button type="submit" class="btn btn-primary pull-right">Guardar</button>
-			  			</div>
-			  		</form>
+                    			  				<div class="form-group">
+                    			  					<label for="companies" class="col-sm-2 control-label">Empresa</label>
+                    			  					<div class="col-sm-5">
+                    			  						<select name="select-companies" id="select-companies" class="form-control" required>
+                    			  							<option value="">Seleccione una opción</option>
+                    			  							<?php foreach ($companies as $key) { ?>
+                    			  								<option value="<?php echo $key->id; ?>"><?php echo $key->razon; ?></option>
+                    			  							<?php } ?>
+                    			  						</select>
+                    			  					</div>
+                    			  				</div>
+                    
+                    			  				<div class="form-group">
+                    			  					<label for="people" class="col-sm-2 control-label">Estado</label>
+                    			  					<div class="col-sm-5">
+                    			  						<select name="select-people_states" id="select-people_states" class="form-control" required>
+                    			  							<option value="">Seleccione una opción</option>
+                    			  							<?php foreach ($shipping_states as $key) { ?>
+                    			  								<option value="<?php echo $key->id; ?>"><?php echo $key->state; ?></option>
+                    			  							<?php } ?>
+                    			  						</select>
+                    			  					</div>
+                    			  				</div>
+                    			  				
+                    			  			</div>
+                    			  			<div class="box-footer">
+                                      <a href="<?php echo site_url(); ?>/CShipping/index" class="btn btn-primary pull-right" role="button">
+                                      <i class='fa fa-undo'></i> Volver
+                                    </a>
+                    			  				<button type="submit" class="btn btn-primary pull-right">Guardar</button>
+                    			  			</div>
+                    			  		</form>
 				</div>
 			</div>
 		</div>
@@ -96,77 +130,16 @@
 	var cuerpo;
 	var dv;
 
-	function checkRut(rut) {
-	    // Despejar Puntos
-	    var valor = rut.value.replace('.','');
-	    // Despejar Guión
-	    valor = valor.replace('-','');
-	    
-	    // Aislar Cuerpo y Dígito Verificador
-	    cuerpo = valor.slice(0,-1);
-	    dv = valor.slice(-1).toUpperCase();
-	    
-	    // Formatear RUN
-	    rut.value = cuerpo + '-'+ dv
-	    
-	    // Si no cumple con el mínimo ej. (n.nnn.nnn)
-	    if(cuerpo.length < 7) { rut.setCustomValidity("RUT Incompleto"); return false;}
-	    
-	    // Calcular Dígito Verificador
-	    suma = 0;
-	    multiplo = 2;
-	    
-	    // Para cada dígito del Cuerpo
-	    for(i=1;i<=cuerpo.length;i++) {
-	    
-	        // Obtener su Producto con el Múltiplo Correspondiente
-	        index = multiplo * valor.charAt(cuerpo.length - i);
-	        
-	        // Sumar al Contador General
-	        suma = suma + index;
-	        
-	        // Consolidar Múltiplo dentro del rango [2,7]
-	        if(multiplo < 7) { multiplo = multiplo + 1; } else { multiplo = 2; }
-	  
-	    }
-	    
-	    // Calcular Dígito Verificador en base al Módulo 11
-	    dvEsperado = 11 - (suma % 11);
-	    
-	    // Casos Especiales (0 y K)
-	    dv = (dv == 'K')?10:dv;
-	    dv = (dv == 0)?11:dv;
-	    
-	    // Validar que el Cuerpo coincide con su Dígito Verificador
-	    if(dvEsperado != dv) 
-	    { 
-	    	rut.setCustomValidity("RUT Inválido"); 
-	    	return false; 
-	    }
-	    else
-	    {
-	    	//pequeña validacion
-	    	if(dv == 11)
-	    		dv = 0;
-
-	    	if(dv == 10)
-	    		dv = 'K';
-	    }
-	    
-	    // Si todo sale bien, eliminar errores (decretar que es válido)
-	    rut.setCustomValidity('');
-	}
-	
-
 	$(document).ready(function()
 	{
 
-		$('#select-profiles').val('<?php if(!empty($people[0]['profiles_id'])) echo $people[0]['profiles_id'];?>');
-		$('#select-people_states').val('<?php if(!empty($people[0]['people_states_id'])) echo $people[0]['people_states_id'];?>');
 
-		$('#select-contractor').val('<?php if(!empty($people[0]['contractor'])) echo $people[0]['contractor'];?>');
+		$('#select-shipping_states').val('<?php if(!empty($shipping[0]['shipping_states_id'])) echo $shipping[0]['shipping_states_id'];?>');
 
-		$("#form-people").submit(function(event) {
+    
+		$('#select-companies').val('<?php if(!empty($shipping[0]['company'])) echo $shipping[0]['company'];?>');
+
+		$("#form-shipping").submit(function(event) {
 			event.preventDefault();
             
 			//checkRut(document.getElementById('input-rut'));
@@ -175,27 +148,28 @@
 	        dv = cuerpo;
 
 			$.post(
-				site_url + "/CPeople/editPeople",{
-          order_nro: $("#input-quadmins-code").val(),
+				site_url + "/CShipping/editShipping",{
+          order_nro: $("#input-order-nro").val(),
           quadmins_code: $("#input-quadmins-code").val(),
-          total_amount: $("#input-quadmins-code").val(),
-          address: $("#input-quadmins-code").val(),
-          delivery_name: $("#input-quadmins-code").val(),
-          shipping_date: $("#input-quadmins-code").val(),
-          companies_id: $("#input-quadmins-code").val(),
-          shipping_states_id: $("#input-quadmins-code").val(),
-          sender: $("#input-quadmins-code").val(),
-          address: $("#input-quadmins-code").val(),
-          receiver_name: $("#input-quadmins-code").val(),
-          receiver_phone: $("#input-quadmins-code").val(),
-          receiver_mail: $("#input-quadmins-code").val(),
-          observation: $("#input-quadmins-code").val(),
-          label: $("#input-quadmins-code").val(),
+          total_amount: $("#input-total-amount").val(),
+          address: $("#input-address").val(),
+          delivery_name: $("#input-delivery-name").val(),
+          shipping_date: $("#input-shipping-date").val(),
+          shipping_type: $("#input-shipping-type").val(),
+          companies_id: $("#input-company").val(),
+          shipping_states_id: $("#input-shipping-state").val(),
+          sender: $("#input-sender").val(),
+          address: $("#input-address").val(),
+          receiver_name: $("#input-receiver-name").val(),
+          receiver_phone: $("#input-receiver-phone").val(),
+          receiver_mail: $("#input-receiver-mail").val(),
+          observation: $("#input-observation").val(),
+          label: $("#input-label").val(),
 				},
 				function(data)
 				{
 					if (data == 1)
-						window.location.replace(site_url+"/CPeople/index");
+						window.location.replace(site_url+"/CShipping/index");
 					else
 						alert("Rut existente.")
 				}
@@ -205,8 +179,8 @@
 		$('#li-configuration').addClass('menu-open');
       	$('#ul-configuration').css('display', 'block');
 
-      	$('#li-people').addClass('menu-open');
-      	$('#ul-people').css('display', 'block');
+      	$('#li-shipping').addClass('menu-open');
+      	$('#ul-shipping').css('display', 'block');
 	});
 
 </script>

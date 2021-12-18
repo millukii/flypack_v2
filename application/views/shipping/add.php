@@ -55,7 +55,7 @@
                     			  					<div class="col-sm-10">
                     			  						<input type="text" class="form-control" name="input-sender" id="input-sender">
                     			  					</div>
-
+                                      </div>
                                      <div class="form-group">
                     			  					<label for="receiver-name" class="col-sm-2 control-label">Receptor</label>
                     			  					<div class="col-sm-10">

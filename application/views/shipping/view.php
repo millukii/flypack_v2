@@ -5,7 +5,7 @@
 				<div class="box box-success">
 					<div class="box-header ui-sortable-handle">
 					    <i class="fa fa-users"></i>
-						<h3 class="box-title">Persona</h3>
+						<h3 class="box-title">Orden de Transporte</h3>
 				  	</div>
 
 				  	<div class="box-body">
@@ -14,54 +14,61 @@
 		  		    		    <tbody>
 		  		    		    	<tr>
 		  		    		    		<th>Id</th>
-		  			    				<td><?php if(!empty($people[0]['id'])) echo $people[0]['id'];?></td>
+		  			    				<td><?php if(!empty($shipping[0]['id'])) echo $shipping[0]['id'];?></td>
 		  		    		    	</tr>
 		  		    		    	<tr>
-		  		    		    		<th>Rut</th>
-		  			    				<td><?php if(!empty($people[0]['rut'])) echo $people[0]['rut'];?>-<?php if(!empty($people[0]['dv'])) echo $people[0]['dv'];?></td>
+		  		    		    		<th>Orden</th>
+		  			    				<td><?php if(!empty($shipping[0]['order_nro'])) echo $shipping[0]['order_nro'];?></td>
 		  		    		    	</tr>
 		  		    		    	<tr>
-		  		    	    			<th>Nombres</th>
-		  		    	    			<td><?php if(!empty($people[0]['name'])) echo $people[0]['name'];?></td>
+		  		    	    			<th>Quadmin</th>
+		  		    	    			<td><?php if(!empty($shipping[0]['quadmins_code'])) echo $shipping[0]['quadmins_code'];?></td>
 		  		    	    		</tr>
 		  		    	    		<tr>
-		  		    	    			<th>Apellidos</th>
-		  		    	    			<td><?php if(!empty($people[0]['lastname'])) echo $people[0]['lastname'];?></td>
+		  		    	    			<th>Tipo de Envio</th>
+		  		    	    			<td><?php if(!empty($shipping[0]['shipping_type'])) echo $shipping[0]['shipping_type'];?></td>
 		  		    	    		</tr>
 		  		    	    		<tr>
+                          <th>Total</th>
+                              <td><?php if(!empty($shipping[0]['total_amount'])) echo $shipping[0]['total_amount'];?></td>
+                          </tr>
+                          <tr>
+                          <th>Repartidor</th>
+                              <td><?php if(!empty($shipping[0]['delivery_name'])) echo $shipping[0]['delivery_name'];?></td>
+                          </tr>
 		  		    	    			<th>Dirección</th>
-		  		    	    			<td><?php if(!empty($people[0]['address'])) echo $people[0]['address'];?></td>
+		  		    	    			<td><?php if(!empty($shipping[0]['address'])) echo $shipping[0]['address'];?></td>
 		  		    	    		</tr>
 		  		    	    		<tr>
 		  		    	    			<th>Teléfono</th>
-		  		    	    			<td><?php if(!empty($people[0]['phone'])) echo $people[0]['phone'];?></td>
+		  		    	    			<td><?php if(!empty($shipping[0]['receiver_phone'])) echo $shipping[0]['receiver_phone'];?></td>
 		  		    	    		</tr>
 		  		    	    		<tr>
 		  		    	    			<th>Email</th>
-		  		    	    			<td><?php if(!empty($people[0]['email'])) echo $people[0]['email'];?></td>
+		  		    	    			<td><?php if(!empty($shipping[0]['receiver_mail'])) echo $shipping[0]['receiver_mail'];?></td>
 		  		    	    		</tr>
 		  		    	    		<tr>
-		  		    	    			<th>Perfil</th>
-		  		    	    			<td><?php if(!empty($people[0]['profile'])) echo $people[0]['profile'];?></td>
+		  		    	    			<th>Fecha Envio</th>
+		  		    	    			<td><?php if(!empty($shipping[0]['shipping_date'])) echo $shipping[0]['shipping_date'];?></td>
 		  		    	    		</tr>
 		  		    	    		<tr>
 		  		    	    			<th>Estado</th>
-		  		    	    			<td><?php if(!empty($people[0]['state'])) echo $people[0]['state'];?></td>
+		  		    	    			<td><?php if(!empty($shipping[0]['state'])) echo $shipping[0]['state'];?></td>
 		  		    	    		</tr>
 		  		    		    	<tr>
 		  		    	    			<th>Creado</th>
-		  		    	    			<td><?php if(!empty($people[0]['created'])) echo $people[0]['created'];?></td>
+		  		    	    			<td><?php if(!empty($shipping[0]['created'])) echo $shipping[0]['created'];?></td>
 		  		    	    		</tr>
 		  		    	    		<tr>
 		  		    	    			<th>Modificado</th>
-		  		    	    			<td><?php if(!empty($people[0]['modified'])) echo $people[0]['modified'];?></td>
+		  		    	    			<td><?php if(!empty($shipping[0]['modified'])) echo $shipping[0]['modified'];?></td>
 		  		    	    		</tr>
 		  		    		    </tbody>
 		  			    	</table>
 			  			</section>
 				  	</div>
 				  	<div class="box-footer">
-				  		<a href="<?php echo site_url(); ?>/CPeople/index" class="btn btn-primary pull-right" role="button">
+				  		<a href="<?php echo site_url(); ?>/CShipping/index" class="btn btn-primary pull-right" role="button">
 	                    <i class='fa fa-undo'></i> Volver
 	                </a>
 				  	</div>
@@ -79,8 +86,8 @@
       	$('#li-configuration').addClass('menu-open');
       	$('#ul-configuration').css('display', 'block');
 
-      	$('#li-people').addClass('menu-open');
-      	$('#ul-people').css('display', 'block');
+      	$('#li-shipping').addClass('menu-open');
+      	$('#ul-shipping').css('display', 'block');
     });
   
 </script>

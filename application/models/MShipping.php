@@ -30,6 +30,7 @@ class MShipping extends CI_Model {
 		$this->db->select(
       'shipping.id as id, 
       shipping.order_nro as order_nro, 
+      shipping.delivery_name as delivery_name, 
       shipping.quadmins_code as quadmins_code, 
       shipping.shipping_type as shipping_type, 
       shipping.total_amount as total_amount, 
@@ -40,7 +41,9 @@ class MShipping extends CI_Model {
       shipping.shipping_states_id as shipping_states_id, companies.razon as company, 
       shipping_states.state as state,  
       DATE_FORMAT(shipping.created, "%d-%m-%Y %H:%i:%s") as created, 
-      DATE_FORMAT(shipping.modified, "%d-%m-%Y %H:%i:%s") as modified');
+      DATE_FORMAT(shipping.modified, "%d-%m-%Y %H:%i:%s") as modified,
+      DATE_FORMAT(shipping.shipping_date, "%d-%m-%Y %H:%i:%s") as shipping_date
+      ');
 
 		$this->db->join('shipping_states','shipping_states.id = shipping.shipping_states_id');
 		$this->db->join('companies','companies.id = shipping.companies_id');
@@ -75,7 +78,7 @@ class MShipping extends CI_Model {
 		$this->db->join('shipping_states','shipping_states.id = shipping.shipping_states_id');
 		$this->db->join('companies','companies.id = shipping.companies_id');
 
-    $this->db->where('shipping_states.id <> ', 2);
+    $this->db->where('state <> ', "ELIMINADO");
 
 		switch ($by)
 		{
