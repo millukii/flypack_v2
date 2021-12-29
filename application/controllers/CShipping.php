@@ -32,7 +32,7 @@ class CShipping extends CI_Controller {
             "data"            => $result['data']
             );
 
-        echo json_encode($json_data);
+     echo json_encode($json_data);
 	}
 
 	public function add()
@@ -97,6 +97,7 @@ class CShipping extends CI_Controller {
 
 	public function addShipping()
 	{
+    $id 				= 	trim($this->input->post('id', TRUE));
 		$order_nro 				= 	trim($this->input->post('order_nro', TRUE));
 		$quadmins_code 				= 	trim($this->input->post('quadmins_code', TRUE));
 		$total_amount 				= 	trim($this->input->post('total_amount', TRUE));

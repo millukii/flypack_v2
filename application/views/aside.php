@@ -69,8 +69,9 @@ if(!empty($this->session->userdata('options')))
                     </a>
                     <ul class="treeview-menu" id="ul-ot">
                         <li><a href="<?php echo site_url() ?>/CShipping/index"><i class="fa fa-circle-o"></i>OT</a></li>
-                        
+                        <li><a href="<?php echo site_url() ?>/CLabels/index"><i class="fa fa-circle-o"></i>Etiquetas</a></li>
                     </ul>
+                    <li><a href="<?php echo site_url() ?>/CShipping/index"><i class="fa fa-circle-o"></i>Mis Envios</a></li>
                   </li>
                 </ul>
             </li>

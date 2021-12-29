@@ -23,11 +23,19 @@
                     				  	</div>
                     				  	<form class="form-horizontal" id="form-shipping">
                     			  			<div class="box-body">
+
+                                  
+                                  <div class="form-group">
+                    			  					<label for="id" class="col-sm-2 control-label">Id</label>
+                    			  					<div class="col-sm-3">
+                    			  						<input type="text" class="form-control" name="input-id" id="input-id"  maxlength="10" value="<?php if(!empty($new_id)) echo $new_id;?>"  disabled required>
+                    			  					</div>
+                    			  				</div>
+
                     			  				<div class="form-group">
                     			  					<label for="order_nro" class="col-sm-2 control-label">Numero de Orden</label>
                     			  					<div class="col-sm-3">
-
-                    			  						<input type="text" class="form-control" name="input-order_nro" id="input-order_nro"  maxlength="10" value="<?php if(!empty($new_id)) echo $new_id;?>"  disabled required>
+                    			  						<input type="text" class="form-control" name="input-order-nro" id="input-order-nro"  maxlength="10"  required>
                     			  					</div>
                     			  				</div>
                     			  				<div class="form-group">
@@ -66,7 +74,7 @@
                     			  				<div class="form-group">
                     			  					<label for="receiver_phone" class="col-sm-2 control-label">Teléfono</label>
                     			  					<div class="col-sm-5">
-                    			  						<input type="number" class="form-control" name="input-receiver-phone" id="input-receiver-phone">
+                    			  						<input type="text" class="form-control" name="input-receiver-phone" id="input-receiver-phone">
                     			  					</div>
                     			  				</div>
                     
@@ -149,6 +157,7 @@
 	    
 			$.post(
 				site_url + "/CShipping/addShipping",{
+          id: $("#input-id").val(),
           order_nro: $("#input-order-nro").val(),
           quadmins_code: $("#input-quadmins-code").val(),
           total_amount: $("#input-total-amount").val(),
