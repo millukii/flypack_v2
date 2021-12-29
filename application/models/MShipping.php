@@ -71,6 +71,8 @@ class MShipping extends CI_Model {
       shipping.shipping_date as shipping_date, 
       shipping_states.state as state, 
       shipping.sender as sender, 
+      shipping_states.state as state, 
+      shipping.shipping_states_id as shipping_states_id,
       shipping.receiver_name as receiver_name, 
       shipping.observation as observation, 
       shipping.label as label, 
@@ -82,7 +84,7 @@ class MShipping extends CI_Model {
 		$this->db->join('shipping_states','shipping_states.id = shipping.shipping_states_id');
 		$this->db->join('companies','companies.id = shipping.companies_id');
 
-    $this->db->where('state <> ', "ELIMINADO");
+    //$this->db->where('shipping_states.id != ',2);
 
 		switch ($by)
 		{
