@@ -21,7 +21,7 @@ if(!empty($this->session->userdata('options')))
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu" data-widget="tree">
 
-    <li class="treeview" id="li-configuration">
+            <li class="treeview" id="li-configuration">
               <a href="#">
                 <i class="fa fa-cog"></i> <span>Configuración</span>
                 <span class="pull-right-container">
@@ -30,7 +30,17 @@ if(!empty($this->session->userdata('options')))
               </a>
               <ul class="treeview-menu" id="ul-configuration">
 
-                  
+                  <li class="treeview" id="li-companies">
+                    <a href="#">
+                      <i class="fa fa-circle-o"></i> <span>Empresas</span>
+                      <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                      </span>
+                    </a>
+                    <ul class="treeview-menu" id="ul-companies">
+                        <li><a href="<?php echo site_url() ?>/CCompanies/index"><i class="fa fa-circle-o"></i>Empresas</a></li>
+                    </ul>
+                  </li>
 
                   <li class="treeview" id="li-people">
                     <a href="#">
@@ -56,26 +66,37 @@ if(!empty($this->session->userdata('options')))
                     <ul class="treeview-menu" id="ul-users">
                         <li><a href="<?php echo site_url() ?>/CRoles/index"><i class="fa fa-circle-o"></i>Roles</a></li>
                         <li><a href="<?php echo site_url() ?>/CUsers/index"><i class="fa fa-circle-o"></i>Usuarios</a></li>
-                        
                     </ul>
                   </li>
 
-                  <li class="treeview" id="li-ot">
-                    <a href="#">
-                      <i class="fa fa-circle-o"></i> <span>Ordenes de Transporte</span>
-                      <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                      </span>
-                    </a>
-                    <ul class="treeview-menu" id="ul-ot">
-                        <li><a href="<?php echo site_url() ?>/CShipping/index"><i class="fa fa-circle-o"></i>OT</a></li>
-                        <li><a href="<?php echo site_url() ?>/CLabels/index"><i class="fa fa-circle-o"></i>Etiquetas</a></li>
-                    </ul>
-                    <li><a href="<?php echo site_url() ?>/CShipping/index"><i class="fa fa-circle-o"></i>Mis Envios</a></li>
-                  </li>
                 </ul>
             </li>
            
+            <li  id="li-ot">
+              <a href="<?php echo site_url() ?>/CShipping/index">
+                <i class="fa fa-circle-o"></i> <span>Ordenes de Transporte</span>
+                
+              </a>
+            </li>
+
+            <li  id="li-prices">
+              <a href="<?php echo site_url() ?>/CPrices/index">
+                <i class="fa fa-circle-o"></i> <span>Precios</span>
+                
+              </a>
+            </li>
+
+            <li  id="li-labels">
+              <a href="<?php echo site_url() ?>/CShipping/getLabels">
+                <i class="fa fa-circle-o"></i> <span>Etiquetas</span>
+              </a>
+            </li>
+
+            <li  id="li-my_shippings">
+              <a href="<?php echo site_url() ?>/CShipping/getMyShippings">
+                <i class="fa fa-circle-o"></i> <span>Mis Envíos</span>
+              </a>
+            </li>
     </ul>
   </section>
   <!-- /.sidebar -->
