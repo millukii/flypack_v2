@@ -17,8 +17,8 @@
                 <i class="fa fa-file-text fa-5x" aria-hidden="true"></i>
               
               <div class="card-block">
-                <h4 class="card-title">Informes</h4>
-                <a href="<?php echo site_url() ?>/CProduction/report" style="background-color: #3c8dbc;" class="btn"><font color="white">Acceder</font></a>
+                <h4 class="card-title">Ordenes Transporte (OT)</h4>
+                <a href="<?php echo site_url() ?>/CShipping/index" style="background-color: #3c8dbc;" class="btn"><font color="white">Acceder</font></a>
               <br><br>
               </div>
               </center>
@@ -36,8 +36,8 @@
                     <i class="fa fa-hand-stop-o fa-5x" aria-hidden="true"></i>
                   
                   <div class="card-block">
-                    <h4 class="card-title">Iniciar Control</h4>
-                    <a href="<?php echo site_url() ?>/CControl/index" style="background-color: #3c8dbc;" class="btn"><font color="white">Acceder</font></a>
+                    <h4 class="card-title">Nueva OT</h4>
+                    <a href="<?php echo site_url() ?>/CShipping/add" style="background-color: #3c8dbc;" class="btn"><font color="white">Acceder</font></a>
                   <br><br>
                   </div>
                   </center>
@@ -70,11 +70,11 @@
                 <center>
                 <div class="card" style="width: 20rem;">
                   <center>
-                    <i class="fa fa-database fa-5x" aria-hidden="true"></i>
+                    <i class="fa fa-users fa-5x" aria-hidden="true"></i>
                   
                   <div class="card-block">
-                    <h4 class="card-title">Producción</h4>
-                    <a href="<?php echo site_url() ?>/CProduction/index" style="background-color: #3c8dbc;" class="btn"><font color="white">Acceder</font></a>
+                    <h4 class="card-title">Usuarios</h4>
+                    <a href="<?php echo site_url() ?>/CUsers/index" style="background-color: #3c8dbc;" class="btn"><font color="white">Acceder</font></a>
                   <br><br>
                   </div>
                   </center>
@@ -87,8 +87,6 @@
 
     </div>
 
-    <h3> <i class="fa fa-cogs" aria-hidden="true"></i> Utilidades</h3>
-
     <div class="row">
 
       <div class="col-md-3">
@@ -99,8 +97,8 @@
                 <i class="fa fa-list fa-5x" aria-hidden="true"></i>
               
               <div class="card-block">
-                <h4 class="card-title">Cargas Masivas</h4>
-                <a href="<?php echo site_url() ?>/CMasive/index" style="background-color: #3c8dbc;" class="btn"><font color="white">Acceder</font></a>
+                <h4 class="card-title">Exportar / Importar</h4>
+                <a href="<?php echo site_url() ?>/CUtilities/index" style="background-color: #3c8dbc;" class="btn"><font color="white">Acceder</font></a>
               <br><br>
               </div>
               </center>
@@ -118,8 +116,8 @@
                 <i class="fa fa-barcode fa-5x" aria-hidden="true"></i>
               
               <div class="card-block">
-                <h4 class="card-title">Generar Código Barras</h4>
-                <a href="<?php echo site_url() ?>/CBarCode/index" style="background-color: #3c8dbc;" class="btn"><font color="white">Acceder</font></a>
+                <h4 class="card-title">Generar Etiquetas</h4>
+                <a href="<?php echo site_url() ?>/CShipping/addLabel" style="background-color: #3c8dbc;" class="btn"><font color="white">Acceder</font></a>
               <br><br>
               </div>
               </center>
@@ -133,11 +131,11 @@
                 <center>
                 <div class="card" style="width: 20rem;">
                   <center>
-                    <i class="fa fa-users fa-5x" aria-hidden="true"></i>
+                  <i class="fa fa-list fa-5x" aria-hidden="true"></i>
                   
                   <div class="card-block">
-                    <h4 class="card-title">Sesiones</h4>
-                    <a href="<?php echo site_url() ?>/CSession/index" style="background-color: #3c8dbc;" class="btn"><font color="white">Acceder</font></a>
+                    <h4 class="card-title">Estados OT QuadMinds</h4>
+                    <a href="<?php echo site_url() ?>/CQuadmins/states" style="background-color: #3c8dbc;" class="btn"><font color="white">Acceder</font></a>
                   <br><br>
                   </div>
                   </center>
@@ -147,21 +145,23 @@
         </div>
       
         <div class="col-md-3">
-        <div class="white-box">
-            <center>
-            <div class="card" style="width: 20rem;">
+          <!--
+          <div class="white-box">
               <center>
-                <i class="fa fa-history fa-5x" aria-hidden="true"></i>
-              
-              <div class="card-block">
-                <h4 class="card-title">Logs</h4>
-                <a href="<?php echo site_url() ?>/CLogs/index" style="background-color: #3c8dbc;" class="btn"><font color="white">Acceder</font></a>
-              <br><br>
+              <div class="card" style="width: 20rem;">
+                <center>
+                  <i class="fa fa-history fa-5x" aria-hidden="true"></i>
+                
+                <div class="card-block">
+                  <h4 class="card-title">Logs</h4>
+                  <a href="<?php //echo site_url() ?>/CLogs/index" style="background-color: #3c8dbc;" class="btn"><font color="white">Acceder</font></a>
+                <br><br>
+                </div>
+                </center>
               </div>
-              </center>
-            </div>
-          </center>
-        </div>
+            </center>
+          </div>
+          -->
       </div>
       
     </div>

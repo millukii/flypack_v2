@@ -8,7 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>SANTA PAULA SPH</title>
+  <title>Flypack</title>
   <!-- <link href="<?php //echo base_url();?>assets/img/logo_bordachar.png" type="image/x-icon" rel="icon"/>
   -->
   <!-- <link href="<?php //echo base_url();?>assets/img/logo_bordachar.png" type="image/x-icon" rel="shortcut icon"/>
@@ -70,9 +70,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Logo -->
     <a href="<?php echo base_url();?>" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><i class="fa fa-tachometer"></i>  <b>SPH</b></span>
+      <span class="logo-mini"><i class="fa fa-tachometer"></i>  <b>Flypack</b></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><i class="fa fa-tachometer"></i> <b>SPH</b></span>
+      <span class="logo-lg"><i class="fa fa-tachometer"></i> <b>Flypack</b></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -105,7 +105,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       $name .= $this->session->userdata('lastname');
                     }
 
-                    echo 'Bienvenido'.$name;
+                    echo 'Bienvenido '.$name;
                   ?>
               </span>
             </a>

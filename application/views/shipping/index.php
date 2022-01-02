@@ -197,11 +197,12 @@
            ],
         });
 
-      $('#li-configuration').addClass('menu-open');
+      /*$('#li-configuration').addClass('menu-open');
       $('#ul-configuration').css('display', 'block');
 
       $('#li-shipping').addClass('menu-open');
       $('#ul-shipping').css('display', 'block');
+      */
     });
 
     function deleteShipping(id)
