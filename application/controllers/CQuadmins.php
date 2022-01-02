@@ -15,7 +15,7 @@ class CQuadmins extends CI_Controller {
 		$this->load->view('quadmins/index');
 	}
 
-    public function states()
+  public function states()
 	{
         $this->load->library('guzzle');
         # guzzle client define

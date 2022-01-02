@@ -26,12 +26,13 @@
                     			  				<div class="form-group">
                     			  					<label for="rut" class="col-sm-2 control-label">Rut</label>
                     			  					<div class="col-sm-3">
-                    			  					    <!--
+                    			  					    
                     			  						<input type="text" class="form-control" name="input-rut" id="input-rut" oninput="checkRut(this)" placeholder="12345678-9" maxlength="10" required>
-                    			  						-->
-                    			  						
-                    			  						<input type="text" class="form-control" name="input-rut" id="input-rut"  maxlength="10" value="<?php if(!empty($new_id)) echo $new_id;?>"  disabled required>
-                    			  					</div>
+                    			  				
+                    			  						<!--
+                    			  						<input type="text" class="form-control" name="input-rut" id="input-rut"  maxlength="10" value="<?php //if(!empty($new_id)) echo $new_id;?>"  disabled required>
+														-->
+													</div>
                     			  				</div>
                     			  				<div class="form-group">
                     			  					<label for="name" class="col-sm-2 control-label">Nombres</label>
