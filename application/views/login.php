@@ -17,7 +17,7 @@
         left: 0;
         background-size: cover;
         background-position: 50% 50%;
-        background-image: url('<?php //echo base_url().'/assets/img/background_final.jpg'?>');
+        background-image: url('<?php echo base_url().'/assets/img/background_final.jpg'?>');
         background-repeat:repeat;
       }
       .form-signin input[type="text"] {
@@ -130,7 +130,7 @@
                 <div class="row">
                   <div class="col-md-12 sidebar text-center">
                     <aside id="text-12" class="widget widget_text">     
-                      <div class="textwidget"><p><b>Copyright &copy; <?php echo date('Y');?> <a href="#">FLYPACK BPLAYER.CL</a>.</strong> Todos los derechos reservados.</b></p>
+                      <div class="textwidget"><p><b>Copyright &copy; <?php echo date('Y');?> <a href="#">FLYPACK </a>.</strong> Todos los derechos reservados.</b></p>
                       </div>
                     </aside>              
                   </div>

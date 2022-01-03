@@ -14,3 +14,9 @@
 9. Etiquetas(quadmins) (Mati)
 10. Reporte Ordenes de transporte (Mati)
 11. Accesos directos (Mel)
+
+## Vistas
+
+- Cliente:  OT(solo de la empresa que inicia sesion), Precios, Etiquetas
+- Repartidor:  OT(solo del repartidor que inicia sesion )
+- Administrador: Todo

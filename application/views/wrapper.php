@@ -3,12 +3,12 @@
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
-    <h1>
-    </h1>
+
 
     <h3> <i class="fa fa-share" aria-hidden="true"></i> Accesos directos</h3>
     <div class="row">
-    
+      
+    <?php if ($this->session->userdata("rol_id") == 1 ||  $this->session->userdata("rol_id") == 2){     ?>
       <div class="col-md-3">
         <div class="white-box">
             <center>
@@ -45,7 +45,9 @@
               </center>
             </div>
         </div>
-    
+      <?php  }    ?>
+
+      <?php if ($this->session->userdata("rol_id") == 1){     ?>
         <div class="col-md-3">
             <div class="white-box">
                 <center>
@@ -106,8 +108,9 @@
           </center>
         </div>
       </div>
-    
+    <?php  }    ?>
 
+    <?php if ($this->session->userdata("rol_id") == 1 ||  $this->session->userdata("rol_id") == 2){     ?>
       <div class="col-md-3">
         <div class="white-box">
             <center>
@@ -143,27 +146,10 @@
               </center>
             </div>
         </div>
-      
-        <div class="col-md-3">
-          <!--
-          <div class="white-box">
-              <center>
-              <div class="card" style="width: 20rem;">
-                <center>
-                  <i class="fa fa-history fa-5x" aria-hidden="true"></i>
-                
-                <div class="card-block">
-                  <h4 class="card-title">Logs</h4>
-                  <a href="<?php //echo site_url() ?>/CLogs/index" style="background-color: #3c8dbc;" class="btn"><font color="white">Acceder</font></a>
-                <br><br>
-                </div>
-                </center>
-              </div>
-            </center>
-          </div>
-          -->
-      </div>
-      
+      <?php  }    ?>
+    <?php if ($this->session->userdata("rol_id") == 3){     ?>
+        En construccion
+    <?php  }    ?>
     </div>
 
   </section>
