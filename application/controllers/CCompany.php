@@ -12,7 +12,7 @@ class CCompany extends CI_Controller {
 	{
 		$this->load->view('header');
 		$this->load->view('aside');
-		$this->load->view('companiesr  /index');
+		$this->load->view('companies/index');
 	}
 
 	//Datatable
@@ -37,8 +37,8 @@ class CCompany extends CI_Controller {
 
 	public function add()
 	{
-		$profiles = $this->modelo->getAllProfiles();
-		$company_states = $this->modelo->getAllCompany_States();
+		$people = $this->modelo->getAllPeople();
+
 		
 		$this->db->select('id');
         $this->db->from('companies');
@@ -52,8 +52,7 @@ class CCompany extends CI_Controller {
             $res = 1;
     
 		$data = array(
-			'profiles' => $profiles,
-			'company_states' => $company_states,
+			'people' => $people,
 			'new_id' => $res,
 		);
 
@@ -99,42 +98,39 @@ class CCompany extends CI_Controller {
 	{
 		$rut 				= 	trim($this->input->post('rut', TRUE));
 		$dv 				= 	trim($this->input->post('dv', TRUE));
-		$name 				= 	trim($this->input->post('name', TRUE));
-		$lastname 			= 	trim($this->input->post('lastname', TRUE));
+		$razon 				= 	trim($this->input->post('razon', TRUE));
+		$fantasy 			= 	trim($this->input->post('fantasy', TRUE));
 		$address 			= 	trim($this->input->post('address', TRUE));
-		$phone 				= 	trim($this->input->post('phone', TRUE));
-		$email 				= 	trim($this->input->post('email', TRUE));
-		$profiles_id 		= 	trim($this->input->post('profile_id', TRUE));
+		$city 				= 	trim($this->input->post('city', TRUE));
+		$commune 				= 	trim($this->input->post('commune', TRUE));
+		$people_id 		= 	trim($this->input->post('people_id', TRUE));
 		$company_states_id	=	trim($this->input->post('company_states_id', TRUE));
 		
-		if(empty($name))
-			$name = 'N/A';
+		if(empty($razon))
+			$razon = 'N/A';
 		
-		if(empty($lastname))
-			$lastname = 'N/A';
+		if(empty($fantasy))
+			$fantasy = 'N/A';
 		
 		if(empty($address))
 			$address = 'N/A';
 
-		if(empty($phone))
-			$phone = '000000000';
+		if(empty($city))
+			$city = 'N/A';
 
-		if(empty($email))
-			$email = 'sin_email@gmail.com';
+		if(empty($commune))
+			$commune = 'N/A';
 		
-		$date_time = date('Y-m-d H:i:s');
 
 		$data = array(
 			'rut' 				=> $rut,
 			'dv' 				=> $dv,
-			'name' 				=> $name,
-			'lastname' 			=> $lastname,
+			'razon' 				=> $razon,
+			'fantasy' 			=> $fantasy,
 			'address' 			=> $address,
-			'email' 			=> $email,
-			'phone' 			=> $phone,
-			'profile_id'		=> $profiles_id,
-			'company_states_id'	=> $company_states_id,
-			'created'			=> $date_time
+			'city' 			=> $city,
+			'commune' 			=> $commune,
+			'people_id'		=> $people_id
 		);
 
 		if($this->modelo->addCompany($data))
@@ -148,12 +144,12 @@ class CCompany extends CI_Controller {
 		$id 				= 	trim($this->input->post('id', TRUE));
 		$rut 				= 	trim($this->input->post('rut', TRUE));
 		$dv 				= 	trim($this->input->post('dv', TRUE));
-		$name 				= 	trim($this->input->post('name', TRUE));
-		$lastname 			= 	trim($this->input->post('lastname', TRUE));
+		$razon 				= 	trim($this->input->post('razon', TRUE));
+		$fantasy 			= 	trim($this->input->post('fantasy', TRUE));
 		$address 			= 	trim($this->input->post('address', TRUE));
-		$email 				= 	trim($this->input->post('email', TRUE));
-		$phone 				= 	trim($this->input->post('phone', TRUE));
-		$profiles_id 		= 	trim($this->input->post('profile_id', TRUE));
+		$city 				= 	trim($this->input->post('city', TRUE));
+		$commune 				= 	trim($this->input->post('commune', TRUE));
+		$people_id 		= 	trim($this->input->post('people_id', TRUE));
 		$company_states_id	=	trim($this->input->post('company_states_id', TRUE));
 		
 		if(empty($name))
@@ -174,13 +170,12 @@ class CCompany extends CI_Controller {
 		$data = array(
 			'rut' 				=> $rut,
 			'dv' 				=> $dv,
-			'name' 				=> $name,
-			'lastname' 			=> $lastname,
+			'razon' 				=> $razon,
+			'fantasy' 			=> $fantasy,
 			'address' 			=> $address,
-			'email' 			=> $email,
-			'phone' 			=> $phone,
-			'profile_id'		=> $profiles_id,
-			'company_states_id'	=> $company_states_id
+			'city' 			=> $city,
+			'commune' 			=> $commune,
+			'people_id'		=> $people_id,
 		);
 
 		if($this->modelo->editCompany($data, $id))

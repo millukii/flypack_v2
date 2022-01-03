@@ -22,10 +22,12 @@
                         <tr>
                           <th>ID</th>
                           <th>Rut</th>
-                          <th>Nombres</th>
-                          <th>Apellidos</th>
-                          <th>Teléfono</th>
-                          <th>Perfil</th>
+                          <th>Razon</th>
+                          <th>Nombre de Fantasia</th>
+                          <th>Direccion</th>
+                          <th>Ciudad</th>
+                          <th>Comuna</th>
+                          <th>Representante Legal</th>
                           <th>Estado</th>
                           <th>Acción</th>
                         </tr>
@@ -67,10 +69,14 @@
           "columns": [
             { "data": "ID"},
             { "data": "Rut" },
-            { "data": "Nombre" },
-            { "data": "Apellidos" },
-            { "data": "Teléfono" },
-            { "data": "Perfil" },
+            { "data": "Digito Verificador" },
+            { "data": "Razon" },
+            { "data": "Nombre de Fantasia" },
+            { "data": "Direccion" },
+            { "data": "Ciudad" },
+            { "data": "Comuna" },
+            { "data": "Ciudad" },
+            { "data": "Representante Legal" },
             { "data": "Estado" },
             { "data": "Acción" }
           ],
@@ -94,35 +100,42 @@
               "targets": [2],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.name
+                return row.razon
               }
             },
             {
               "targets": [3],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.lastname
+                return row.fantasy
               }
             },
             {
               "targets": [4],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.phone
+                return row.address
               }
             },
             {
               "targets": [5],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.profile
+                return row.city
               }
             },
             {
               "targets": [6],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.state
+                return row.commune
+              }
+            },
+            {
+              "targets": [6],
+              "orderable": true,
+              "render": function(data, type, row) {
+                return row.people_id
               }
             },
             {

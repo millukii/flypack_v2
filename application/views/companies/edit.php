@@ -20,16 +20,16 @@
 			  					</div>
 			  				</div>
 			  				<div class="form-group">
-			  					<label for="name" class="col-sm-2 control-label">Nombres</label>
+			  					<label for="razon" class="col-sm-2 control-label">Razon Social</label>
 			  					<div class="col-sm-10">
-			  						<input type="text" class="form-control" name="input-name" id="input-name" value="<?php if(!empty($company[0]['name'])) echo $company[0]['name'];?>">
+			  						<input type="text" class="form-control" name="input-razon" id="input-razon" value="<?php if(!empty($company[0]['razon'])) echo $company[0]['razon'];?>">
 			  					</div>
 			  				</div>
 
 			  				<div class="form-group">
-			  					<label for="last_name" class="col-sm-2 control-label">Apellidos</label>
+			  					<label for="fantasy" class="col-sm-2 control-label">Nombre de Fantasia</label>
 			  					<div class="col-sm-10">
-			  						<input type="text" class="form-control" name="input-lastname" id="input-lastname" value="<?php if(!empty($company[0]['lastname'])) echo $company[0]['lastname'];?>">
+			  						<input type="text" class="form-control" name="input-fantasy" id="input-fantasy" value="<?php if(!empty($company[0]['fantasy'])) echo $company[0]['fantasy'];?>">
 			  					</div>
 			  				</div>
 
@@ -41,38 +41,26 @@
 			  				</div>
 
 			  				<div class="form-group">
-			  					<label for="phone" class="col-sm-2 control-label">Teléfono</label>
+			  					<label for="city" class="col-sm-2 control-label">Ciudad</label>
 			  					<div class="col-sm-5">
-			  						<input type="number" class="form-control" name="input-phone" id="input-phone" value="<?php if(!empty($company[0]['phone'])) echo $company[0]['phone'];?>">
+			  						<input type="text" class="form-control" name="input-city" id="input-city" value="<?php if(!empty($company[0]['city'])) echo $company[0]['city'];?>">
 			  					</div>
 			  				</div>
 
 			  				<div class="form-group">
-			  					<label for="email" class="col-sm-2 control-label">E-mail</label>
+			  					<label for="commune" class="col-sm-2 control-label">Comuna</label>
 			  					<div class="col-sm-5">
-			  						<input type="email" class="form-control" name="input-email" id="input-email" value="<?php if(!empty($company[0]['email'])) echo $company[0]['email'];?>">
+			  						<input type="text" class="form-control" name="input-commune" id="input-commune" value="<?php if(!empty($company[0]['commune'])) echo $company[0]['commune'];?>">
 			  					</div>
 			  				</div>
 
 			  				<div class="form-group">
-			  					<label for="companies" class="col-sm-2 control-label">Perfil</label>
+			  					<label for="companies" class="col-sm-2 control-label">Representante Legal</label>
 			  					<div class="col-sm-5">
-			  						<select name="select-profiles" id="select-profiles" class="form-control" required>
+			  						<select name="select-people" id="select-people" class="form-control" required>
 			  							<option value="">Seleccione una opción</option>
-			  							<?php foreach ($profiles as $key) { ?>
-			  								<option value="<?php echo $key->id; ?>"><?php echo $key->profile; ?></option>
-			  							<?php } ?>
-			  						</select>
-			  					</div>
-			  				</div>
-
-			  				<div class="form-group">
-			  					<label for="company" class="col-sm-2 control-label">Estado</label>
-			  					<div class="col-sm-5">
-			  						<select name="select-company_states" id="select-company_states" class="form-control" required>
-			  							<option value="">Seleccione una opción</option>
-			  							<?php foreach ($company_states as $key) { ?>
-			  								<option value="<?php echo $key->id; ?>"><?php echo $key->state; ?></option>
+			  							<?php foreach ($people as $key) { ?>
+			  								<option value="<?php echo $key->id; ?>"><?php echo $key->name; echo $key->rut;?></option>
 			  							<?php } ?>
 			  						</select>
 			  					</div>
@@ -179,14 +167,12 @@
 					id    				: 	'<?php if(!empty($company[0]['id'])) echo $company[0]['id'];?>',
 					rut 				: 	cuerpo,
 					dv 					: 	dv,
-					name 				: 	$("#input-name").val(),
-					lastname 			: 	$("#input-lastname").val(),
+					razon 				: 	$("#input-razon").val(),
+					fantasy 			: 	$("#input-fantasy").val(),
 					address 			: 	$("#input-address").val(),
-					email 				: 	$("#input-email").val(),
-					phone 				: 	$("#input-phone").val(),
-					profiles_id 		: 	$("#select-profiles").val(),
-					company_states_id	:   $('#select-company_states').val(),
-					contractor			: 	$("#select-contractor").val()
+					city 				: 	$("#input-city").val(),
+					commune 				: 	$("#input-commune").val(),
+					people_id 		: 	$("#select-people").val(),
 				},
 				function(data)
 				{

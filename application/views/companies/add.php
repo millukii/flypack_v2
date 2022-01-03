@@ -35,16 +35,16 @@
 													</div>
                     			  				</div>
                     			  				<div class="form-group">
-                    			  					<label for="name" class="col-sm-2 control-label">Nombres</label>
+                    			  					<label for="razon" class="col-sm-2 control-label">Razon Social</label>
                     			  					<div class="col-sm-10">
-                    			  						<input type="text" class="form-control" name="input-name" id="input-name">
+                    			  						<input type="text" class="form-control" name="input-razon" id="input-razon">
                     			  					</div>
                     			  				</div>
                     
                     			  				<div class="form-group">
-                    			  					<label for="last_name" class="col-sm-2 control-label">Apellidos</label>
+                    			  					<label for="fantasy" class="col-sm-2 control-label">Nombre de Fantasia</label>
                     			  					<div class="col-sm-10">
-                    			  						<input type="text" class="form-control" name="input-lastname" id="input-lastname">
+                    			  						<input type="text" class="form-control" name="input-fantasy" id="input-fantasy">
                     			  					</div>
                     			  				</div>
                     
@@ -56,43 +56,31 @@
                     			  				</div>
                     
                     			  				<div class="form-group">
-                    			  					<label for="phone" class="col-sm-2 control-label">Teléfono</label>
+                    			  					<label for="city" class="col-sm-2 control-label">Ciudad</label>
                     			  					<div class="col-sm-5">
-                    			  						<input type="number" class="form-control" name="input-phone" id="input-phone">
+                    			  						<input type="text" class="form-control" name="input-city" id="input-city">
                     			  					</div>
                     			  				</div>
                     
                     			  				<div class="form-group">
-                    			  					<label for="email" class="col-sm-2 control-label">E-mail</label>
+                    			  					<label for="commune" class="col-sm-2 control-label">Comuna</label>
                     			  					<div class="col-sm-5">
-                    			  						<input type="email" class="form-control" name="input-email" id="input-email">
+                    			  						<input type="commune" class="form-control" name="input-commune" id="input-commune">
                     			  					</div>
                     			  				</div>
                     
                     			  				<div class="form-group">
-                    			  					<label for="companies" class="col-sm-2 control-label">Perfil</label>
+                    			  					<label for="companies" class="col-sm-2 control-label">Representante Legal</label>
                     			  					<div class="col-sm-5">
-                    			  						<select name="select-profiles" id="select-profiles" class="form-control" required>
+                    			  						<select name="select-people" id="select-people" class="form-control" required>
                     			  							<option value="">Seleccione una opción</option>
-                    			  							<?php foreach ($profiles as $key) { ?>
-                    			  								<option value="<?php echo $key->id; ?>"><?php echo $key->profile; ?></option>
+                    			  							<?php foreach ($people as $key) { ?>
+                    			  								<option value="<?php echo $key->id; ?>"><?php echo $key->rut; echo $key->name;?></option>
                     			  							<?php } ?>
                     			  						</select>
                     			  					</div>
                     			  				</div>
-                    
-                    			  				<div class="form-group">
-                    			  					<label for="company" class="col-sm-2 control-label">Estado</label>
-                    			  					<div class="col-sm-5">
-                    			  						<select name="select-company_states" id="select-company_states" class="form-control" required>
-                    			  							<option value="">Seleccione una opción</option>
-                    			  							<?php foreach ($company_states as $key) { ?>
-                    			  								<option value="<?php echo $key->id; ?>"><?php echo $key->state; ?></option>
-                    			  							<?php } ?>
-                    			  						</select>
-                    			  					</div>
-                    			  				</div>
-                    			  				
+
                     			  			</div>
                     			  			<div class="box-footer">
                     			  				<button type="submit" class="btn btn-primary pull-right">Guardar</button>
@@ -197,22 +185,21 @@
 	        dv = cuerpo;
 	    
 			$.post(
-				site_url + "/CPeople/addPeople",{
+				site_url + "/CCompany/addCompany",{
 					rut 				: 	cuerpo,
 					dv 					: 	dv,
-					name 				: 	$("#input-name").val(),
-					lastname 			: 	$("#input-lastname").val(),
+					razon 				: 	$("#input-razon").val(),
+					fantasy 			: 	$("#input-fantasy").val(),
 					address 			: 	$("#input-address").val(),
-					email 				: 	$("#input-email").val(),
-					phone 				: 	$("#input-phone").val(),
-					profiles_id 		: 	$("#select-profiles").val(),
-					company_states_id	:   $('#select-company_states').val(),
-					contractor			:	$("#select-contractor").val()
+					city 				: 	$("#input-city").val(),
+					commune 				: 	$("#input-commune").val(),
+					people_id 		: 	$("#select-people").val(),
+
 				},
 				function(data)
 				{
 					if (data == 1)
-						window.location.replace(site_url+"/CPeople/index");
+						window.location.replace(site_url+"/CCompany/index");
 					else
 						alert("Rut existente.")
 					
@@ -227,32 +214,6 @@
       	$('#ul-company').css('display', 'block');
 	});
 
-    function generateMasive()
-    {
-        var quantity_workers = parseInt($('#input-quantity_workers').val().trim());
-        var contractor = $('#select-contractor_masive').val();
-        var c = confirm('Confirme la generación de '+quantity_workers+' registros de cosecheros adicionales.');
-        if(c)
-        {
-            $.ajax({
-                url: site_url+'/CPeople/generateMasive',
-                type: 'post',
-                dataType: 'text',
-                data: {quantity_workers: quantity_workers, contractor: contractor},
-                success: function(data)
-                {
-                    if(data == 1)
-                    {
-                        alert('Generados correctamente.');
-                        window.location.replace(site_url+"/CPeople/index");
-                    }
-                    else
-                        alert('No se han podido generar los registros de cosecheros adicionales.');
-                }
-            });
-        }
-        
-    }
     
 </script>
 </body>

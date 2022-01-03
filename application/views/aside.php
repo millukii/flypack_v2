@@ -38,7 +38,7 @@ if(!empty($this->session->userdata('options')))
                       </span>
                     </a>
                     <ul class="treeview-menu" id="ul-companies">
-                        <li><a href="<?php echo site_url() ?>/CCompanies/index"><i class="fa fa-circle-o"></i>Empresas</a></li>
+                        <li><a href="<?php echo site_url() ?>/CCompany/index"><i class="fa fa-circle-o"></i>Empresas</a></li>
                     </ul>
                   </li>
 
