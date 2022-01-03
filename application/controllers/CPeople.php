@@ -104,7 +104,9 @@ class CPeople extends CI_Controller {
 		$address 			= 	trim($this->input->post('address', TRUE));
 		$phone 				= 	trim($this->input->post('phone', TRUE));
 		$email 				= 	trim($this->input->post('email', TRUE));
-		$profiles_id 		= 	trim($this->input->post('profile_id', TRUE));
+    $city 				= 	trim($this->input->post('city', TRUE));
+    $commune 				= 	trim($this->input->post('commune', TRUE));
+		$profiles_id 		= 	trim($this->input->post('profiles_id', TRUE));
 		$people_states_id	=	trim($this->input->post('people_states_id', TRUE));
 		
 		if(empty($name))
@@ -133,6 +135,8 @@ class CPeople extends CI_Controller {
 			'email' 			=> $email,
 			'phone' 			=> $phone,
 			'profile_id'		=> $profiles_id,
+      'city'		=> $city,
+      'commune'		=> $commune,
 			'people_states_id'	=> $people_states_id,
 			'created'			=> $date_time
 		);
@@ -152,8 +156,10 @@ class CPeople extends CI_Controller {
 		$lastname 			= 	trim($this->input->post('lastname', TRUE));
 		$address 			= 	trim($this->input->post('address', TRUE));
 		$email 				= 	trim($this->input->post('email', TRUE));
+    $city 				= 	trim($this->input->post('city', TRUE));
+    $commune 				= 	trim($this->input->post('commune', TRUE));
 		$phone 				= 	trim($this->input->post('phone', TRUE));
-		$profiles_id 		= 	trim($this->input->post('profile_id', TRUE));
+		$profiles_id 		= 	trim($this->input->post('profiles_id', TRUE));
 		$people_states_id	=	trim($this->input->post('people_states_id', TRUE));
 		
 		if(empty($name))
@@ -179,10 +185,12 @@ class CPeople extends CI_Controller {
 			'address' 			=> $address,
 			'email' 			=> $email,
 			'phone' 			=> $phone,
+    	'city' 			=> $city,
+    	'commune' 			=> $commune,
 			'profile_id'		=> $profiles_id,
 			'people_states_id'	=> $people_states_id
 		);
-
+  
 		if($this->modelo->editPeople($data, $id))
 			echo '1';
 		else

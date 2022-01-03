@@ -28,7 +28,6 @@
                           <th>Ciudad</th>
                           <th>Comuna</th>
                           <th>Representante Legal</th>
-                          <th>Estado</th>
                           <th>Acción</th>
                         </tr>
                       </thead>
@@ -69,15 +68,12 @@
           "columns": [
             { "data": "ID"},
             { "data": "Rut" },
-            { "data": "Digito Verificador" },
             { "data": "Razon" },
             { "data": "Nombre de Fantasia" },
             { "data": "Direccion" },
             { "data": "Ciudad" },
             { "data": "Comuna" },
-            { "data": "Ciudad" },
             { "data": "Representante Legal" },
-            { "data": "Estado" },
             { "data": "Acción" }
           ],
           "columnDefs": [
@@ -92,8 +88,7 @@
               "targets": [1],
               "orderable": true,
               "render": function(data, type, row) {
-                //return row.rut + '-' + row.dv
-                return row.rut
+                return row.rut + '-' + row.dv
               }
             },
             {
@@ -132,14 +127,14 @@
               }
             },
             {
-              "targets": [6],
+              "targets": [7],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.people_id
+                return row.name+ ' ' + row.lastname
               }
             },
             {
-              "targets": [7],
+              "targets": [8],
               "orderable": false,
               "render": function(data, type, row) {
                 return `

@@ -58,7 +58,7 @@
                     			  				<div class="form-group">
                     			  					<label for="phone" class="col-sm-2 control-label">Teléfono</label>
                     			  					<div class="col-sm-5">
-                    			  						<input type="number" class="form-control" name="input-phone" id="input-phone">
+                    			  						<input type="text" class="form-control" name="input-phone" id="input-phone">
                     			  					</div>
                     			  				</div>
                     
@@ -68,7 +68,19 @@
                     			  						<input type="email" class="form-control" name="input-email" id="input-email">
                     			  					</div>
                     			  				</div>
-                    
+                                    <div class="form-group">
+                    			  					<label for="commune" class="col-sm-2 control-label">Comuna</label>
+                    			  					<div class="col-sm-5">
+                    			  						<input type="text" class="form-control" name="input-commune" id="input-commune">
+                    			  					</div>
+                    			  				</div>
+
+                                    <div class="form-group">
+                    			  					<label for="city" class="col-sm-2 control-label">Ciudad</label>
+                    			  					<div class="col-sm-5">
+                    			  						<input type="text" class="form-control" name="input-city" id="input-city">
+                    			  					</div>
+                    			  				</div>
                     			  				<div class="form-group">
                     			  					<label for="companies" class="col-sm-2 control-label">Perfil</label>
                     			  					<div class="col-sm-5">
@@ -205,6 +217,8 @@
 					address 			: 	$("#input-address").val(),
 					email 				: 	$("#input-email").val(),
 					phone 				: 	$("#input-phone").val(),
+          city 				: 	$("#input-city").val(),
+          commune 				: 	$("#input-commune").val(),
 					profiles_id 		: 	$("#select-profiles").val(),
 					people_states_id	:   $('#select-people_states').val(),
 					contractor			:	$("#select-contractor").val()

@@ -39,11 +39,24 @@
 			  						<input type="text" class="form-control" name="input-address" id="input-address" value="<?php if(!empty($people[0]['address'])) echo $people[0]['address'];?>">
 			  					</div>
 			  				</div>
+			  				<div class="form-group">
+			  					<label for="city" class="col-sm-2 control-label">Ciudad</label>
+			  					<div class="col-sm-10">
+			  						<input type="text" class="form-control" name="input-city" id="input-city" value="<?php if(!empty($people[0]['city'])) echo $people[0]['city'];?>">
+			  					</div>
+			  				</div>
+
+			  				<div class="form-group">
+			  					<label for="commune" class="col-sm-2 control-label">Comuna</label>
+			  					<div class="col-sm-10">
+			  						<input type="text" class="form-control" name="input-commune" id="input-commune" value="<?php if(!empty($people[0]['commune'])) echo $people[0]['commune'];?>">
+			  					</div>
+			  				</div>
 
 			  				<div class="form-group">
 			  					<label for="phone" class="col-sm-2 control-label">Teléfono</label>
 			  					<div class="col-sm-5">
-			  						<input type="number" class="form-control" name="input-phone" id="input-phone" value="<?php if(!empty($people[0]['phone'])) echo $people[0]['phone'];?>">
+			  						<input type="text" class="form-control" name="input-phone" id="input-phone" value="<?php if(!empty($people[0]['phone'])) echo $people[0]['phone'];?>">
 			  					</div>
 			  				</div>
 
@@ -55,7 +68,7 @@
 			  				</div>
 
 			  				<div class="form-group">
-			  					<label for="companies" class="col-sm-2 control-label">Perfil</label>
+			  					<label for="profiles" class="col-sm-2 control-label">Perfil</label>
 			  					<div class="col-sm-5">
 			  						<select name="select-profiles" id="select-profiles" class="form-control" required>
 			  							<option value="">Seleccione una opción</option>
@@ -164,8 +177,6 @@
 		$('#select-profiles').val('<?php if(!empty($people[0]['profiles_id'])) echo $people[0]['profiles_id'];?>');
 		$('#select-people_states').val('<?php if(!empty($people[0]['people_states_id'])) echo $people[0]['people_states_id'];?>');
 
-		$('#select-contractor').val('<?php if(!empty($people[0]['contractor'])) echo $people[0]['contractor'];?>');
-
 		$("#form-people").submit(function(event) {
 			event.preventDefault();
             
@@ -184,16 +195,17 @@
 					address 			: 	$("#input-address").val(),
 					email 				: 	$("#input-email").val(),
 					phone 				: 	$("#input-phone").val(),
+          commune 				: 	$("#input-commune").val(),
+          city 				: 	$("#input-city").val(),
 					profiles_id 		: 	$("#select-profiles").val(),
 					people_states_id	:   $('#select-people_states').val(),
-					contractor			: 	$("#select-contractor").val()
 				},
 				function(data)
 				{
 					if (data == 1)
 						window.location.replace(site_url+"/CPeople/index");
 					else
-						alert("Rut existente.")
+						alert("Error actualizando.")
 				}
 			);
 		});

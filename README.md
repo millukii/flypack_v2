@@ -3,10 +3,10 @@
 
 ## TODO
 
-1. Compañias crud Bloqueo
+1. Compañias crud Done
 2. Revisar error rut Personas, Empresas (Mati)
-3. Crear personas, empresas y usuarios por cada rol (Mel)
-4. Login (Mel)  Bloqueo
+3. Crear personas, empresas y usuarios por cada rol Done
+4. Login (Mel)  Done
 5. Configurar que ve cada tipo de usuarios (Mel)
 6. Cliente: ordenes de transporte, precios y etiquetas
 7. Repartidor: Mis envios Filtro de fechas listado (Mel)

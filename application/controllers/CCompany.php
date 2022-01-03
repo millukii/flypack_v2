@@ -66,13 +66,11 @@ class CCompany extends CI_Controller {
 		$id = trim($this->input->get('id', TRUE));
 
 		$company = $this->modelo->getCompany_($id);
-		$profiles = $this->modelo->getAllProfiles();
-		$company_states = $this->modelo->getAllCompany_States();
+		$people = $this->modelo->getAllPeople();
 
 		$data = array(
 			'company' => $company,
-			'profiles' => $profiles,
-			'company_states' => $company_states,
+			'people' => $people
 		);
 
 		$this->load->view('header');
@@ -104,7 +102,6 @@ class CCompany extends CI_Controller {
 		$city 				= 	trim($this->input->post('city', TRUE));
 		$commune 				= 	trim($this->input->post('commune', TRUE));
 		$people_id 		= 	trim($this->input->post('people_id', TRUE));
-		$company_states_id	=	trim($this->input->post('company_states_id', TRUE));
 		
 		if(empty($razon))
 			$razon = 'N/A';

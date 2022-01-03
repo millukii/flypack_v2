@@ -97,23 +97,15 @@ class CUsers extends CI_Controller
 		$password 		= 	trim($this->input->post('password', TRUE));
 		$roles_id 		= 	trim($this->input->post('roles_id', TRUE));
 		$people_id 		= 	trim($this->input->post('people_id', TRUE));
-		$user_states_id	= 	trim($this->input->post('user_states_id', TRUE));
-		$users_save		= 	trim($this->input->post('users_save', TRUE));
-		$users_edit		= 	trim($this->input->post('users_edit', TRUE));
-		$users_delete	= 	trim($this->input->post('users_delete', TRUE));
-
+		$user_state_id	= 	trim($this->input->post('user_states_id', TRUE));
 		$date_time = date('Y-m-d H:i:s');
 
 		$data = array(
 			'user' 				=> $user,
 			'password' 			=> md5($password),
-			'roles_id' 			=> $roles_id,
+			'rol_id' 			=> $roles_id,
 			'people_id' 		=> $people_id,
-			'user_states_id' 	=> $user_states_id,
-			'save' 				=> $users_save,
-			'edit' 				=> $users_edit,
-			'delete' 			=> $users_delete,
-			'created'			=> $date_time
+			'user_state_id' 	=> $user_state_id,
 		);
 
 		if($this->modelo->addUser($data))
@@ -129,10 +121,7 @@ class CUsers extends CI_Controller
 		$password 		= 	trim($this->input->post('password', TRUE));
 		$roles_id 		= 	trim($this->input->post('roles_id', TRUE));
 		$people_id 		= 	trim($this->input->post('people_id', TRUE));
-		$user_states_id	= 	trim($this->input->post('user_states_id', TRUE));
-		$users_save		= 	trim($this->input->post('users_save', TRUE));
-		$users_edit		= 	trim($this->input->post('users_edit', TRUE));
-		$users_delete	= 	trim($this->input->post('users_delete', TRUE));
+		$user_state_id	= 	trim($this->input->post('user_states_id', TRUE));
 
 		//validar recifrado password
 		$this->db->select('password');
@@ -153,12 +142,9 @@ class CUsers extends CI_Controller
 		{
 			$data = array(
 				'user' 				=> $user,
-				'roles_id' 			=> $roles_id,
+				'rol_id' 			=> $roles_id,
 				'people_id' 		=> $people_id,
-				'user_states_id' 	=> $user_states_id,
-				'save' 				=> $users_save,
-				'edit' 				=> $users_edit,
-				'delete' 			=> $users_delete
+				'user_state_id' 	=> $user_state_id
 			);
 		}
 		else
@@ -166,12 +152,9 @@ class CUsers extends CI_Controller
 			$data = array(
 				'user' 				=> $user,
 				'password' 			=> md5($password),
-				'roles_id' 			=> $roles_id,
+				'rol_id' 			=> $roles_id,
 				'people_id' 		=> $people_id,
-				'user_states_id' 	=> $user_states_id,
-				'save' 				=> $users_save,
-				'edit' 				=> $users_edit,
-				'delete' 			=> $users_delete
+				'user_state_id' 	=> $user_state_id
 			);
 		}
 
@@ -186,7 +169,7 @@ class CUsers extends CI_Controller
 		$id 			= 	trim($this->input->post('id', TRUE));
 
 		$data = array(
-			'user_states_id'	=>	'2'
+			'user_state_id'	=>	'2'
 		);
 
 		if($this->modelo->editUser($data, $id))

@@ -27,12 +27,12 @@ class MCompany extends CI_Model {
 
 	public function getCompany_($id)
 	{
-		$this->db->select('companies.id as id, companies.rut as rut, companies.dv as dv, companies.razon as razon, companies.fantasy as fantasy, companies.address as address, people.id as people_id, companies.city as city, companies.commune as commune');
+		$this->db->select('companies.id as id, companies.rut as rut, companies.dv as dv, companies.razon as razon, companies.fantasy as fantasy, companies.address as address, people.id as people_id, people.name as name, people.rut as rut, people.lastname as lastname, companies.city as city, companies.commune as commune');
 
-		$this->db->join('people','people.id = people.id');
+		$this->db->join('people','people.id = companies.people_id');
 
-		$this->db->from('people');
-		$this->db->where('people.id', $id);
+		$this->db->from('companies');
+		$this->db->where('companies.id', $id);
 		$this->db->limit(1);
 
 		return $this->db->get()->result_array();
@@ -41,9 +41,9 @@ class MCompany extends CI_Model {
 	// Funciones auxiliares datatable
 	public function getAllCompanies($start, $length, $order, $by)
 	{
-		$this->db->select('companies.id as id, companies.rut as rut, companies.dv as dv, companies.razon as razon, companies.fantasy as fantasy, companies.address as address, people.id as people_id, companies.city as city, companies.commune as commune');
+		$this->db->select('companies.id as id, companies.rut as rut, companies.dv as dv, companies.razon as razon, companies.fantasy as fantasy, companies.address as address, people.id as people_id, , people.name as name,people.lastname as lastname, companies.city as city, companies.commune as commune');
 
-		$this->db->join('people','people.id = people.id');
+		$this->db->join('people','people.id = companies.people_id');
 
 		switch ($by)
 		{
@@ -77,7 +77,7 @@ class MCompany extends CI_Model {
 	{
 		$this->db->select('companies.id as id, companies.rut as rut, companies.dv as dv, companies.razon as razon, companies.fantasy as fantasy, companies.address as address, people.id as people_id, companies.city as city, companies.commune as commune');
 
-		$this->db->join('people','people.id = people.id');
+		$this->db->join('people','people.id = companies.people_id');
 
 		$this->db->like('companies.id', $search);
 		$this->db->or_like('companies.rut', $search);
@@ -118,7 +118,7 @@ class MCompany extends CI_Model {
 	{
 		$this->db->select('companies.id');
 
-		$this->db->join('people','people.id = people.id');
+		$this->db->join('people','people.id = companies.people_id');
 
 		$this->db->like('companies.id', $search);
 		$this->db->or_like('companies.rut', $search);
@@ -150,7 +150,7 @@ class MCompany extends CI_Model {
 
 	public function getAllPeople()
 	{
-		$this->db->select('id, rut, name');
+		$this->db->select('id, rut, name, lastname');
 		$this->db->from('people');
 		$this->db->order_by('rut');
 
