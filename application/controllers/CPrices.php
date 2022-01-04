@@ -85,10 +85,10 @@ class CPrices extends CI_Controller {
 	public function editPrice()
 	{
 		$id = trim($this->input->post('id', TRUE));
-		$price 	= trim($this->input->post('price', TRUE));
+		$value 	= trim($this->input->post('value', TRUE));
 		
 		$data = array(
-			'price' 	=> $price
+			'value' 	=> $value
 		);
 
 		if($this->modelo->editPrice($data, $id))
