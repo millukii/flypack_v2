@@ -21,7 +21,7 @@
 15. Select reprentante legal agregar digito verificador Done
 16. Agregar monto en orden de transporte Done
 17. Agregar select origen y destino orden de transporte Done (caja de texto)
-18. ShippingType de orden de transporte convertirlo en select X, L, M
+18. ShippingType de orden de transporte convertirlo en select X, L, M Done
 19. Aplicar precio sugerido que se encuentre en la tabla rates
 20. Dejar edit ot igual al add pero con edicion del estado
 

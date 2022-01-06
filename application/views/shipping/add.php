@@ -45,10 +45,15 @@
                     			  					</div>
                     			  				</div> -->
                     
-                    			  				<div class="form-group">
+                                    <div class="form-group">
                     			  					<label for="shipping-type" class="col-sm-2 control-label">Tipo</label>
-                    			  					<div class="col-sm-10">
-                    			  						<input type="text" class="form-control" name="input-shipping-type" id="input-shipping-type">
+                    			  					<div class="col-sm-5">
+                    			  						<select name="select-shipping-type" id="select-shipping-type" class="form-control" required>
+                    			  							<option value="">Seleccione una opción</option>
+                    			  								<option value=X>X</option>
+                                            <option value=L>L</option>
+                                            <option value=M>M</option>
+                    			  						</select>
                     			  					</div>
                     			  				</div>
 
@@ -188,7 +193,7 @@
           origin: $("#input-origin").val(),
           destiny: $("#input-destiny").val(),
           shipping_date: $("#input-shipping-date").val(),
-          shipping_type: $("#input-shipping-type").val(),
+          shipping_type: $("#select-shipping-type").val(),
           companies_id: $("#input-company").val(),
           shipping_states_id: $("#input-shipping-state").val(),
           sender: $("#input-sender").val(),

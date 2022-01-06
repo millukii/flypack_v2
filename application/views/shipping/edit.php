@@ -13,18 +13,18 @@
                     			  					<label for="order_nro" class="col-sm-2 control-label">Numero de Orden</label>
                     			  					<div class="col-sm-3">
 
-                    			  						<input type="text" class="form-control" name="input-order_nro" id="input-order_nro"  maxlength="10" value="<?php if(!empty($shipping[0]['order_nro'])) echo $shipping[0]['order_nro'];?>"   disabled required>
-                    			  					</div>
-                    			  				</div>
-                    			  				<div class="form-group">
+                                    <div class="form-group">
                     			  					<label for="shipping-type" class="col-sm-2 control-label">Tipo</label>
-                    			  					<div class="col-sm-10">
-                    			  						<input type="text" class="form-control" name="input-shipping-type" id="input-shipping-type"
-                                        value="<?php if(!empty($shipping[0]['shipping_type'])) echo $shipping[0]['shipping_type'];?>"
-                                        >
+                    			  					<div class="col-sm-5">
+                    			  						<select name="select-shipping-type" id="select-shipping-type" class="form-control" required>
+                    			  							<option value="<?php if(!empty($shipping[0]['shipping_type'])) echo $shipping[0]['shipping_type'];?>"></option>
+                    			  								<option value=X>X</option>
+                                            <option value=L>L</option>
+                                            <option value=M>M</option>
+                    			  						</select>
                     			  					</div>
                     			  				</div>
-                    
+
                                      <div class="form-group">
                     			  					<label for="total-amount" class="col-sm-2 control-label">Total</label>
                     			  					<div class="col-sm-10">
