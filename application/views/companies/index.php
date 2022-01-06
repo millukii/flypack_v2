@@ -27,7 +27,7 @@
                           <th>Direccion</th>
                           <th>Ciudad</th>
                           <th>Comuna</th>
-                          <th>Representante Legal</th>
+                          <th>Contacto</th>
                           <th>Acción</th>
                         </tr>
                       </thead>
@@ -73,7 +73,7 @@
             { "data": "Direccion" },
             { "data": "Ciudad" },
             { "data": "Comuna" },
-            { "data": "Representante Legal" },
+            { "data": "Contacto" },
             { "data": "Acción" }
           ],
           "columnDefs": [

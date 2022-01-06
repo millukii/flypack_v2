@@ -110,6 +110,8 @@ class CShipping extends CI_Controller {
 		$shipping_states_id	=	trim($this->input->post('shipping_states_id', TRUE));
 		$sender	=	trim($this->input->post('sender', TRUE));
     $address	=	trim($this->input->post('address', TRUE));
+    $origin	=	trim($this->input->post('origin', TRUE));
+    $destiny	=	trim($this->input->post('destiny', TRUE));
     $receiver_name	=	trim($this->input->post('receiver_name', TRUE));
     $receiver_phone	=	trim($this->input->post('receiver_phone', TRUE));
     $receiver_mail	=	trim($this->input->post('receiver_mail', TRUE));

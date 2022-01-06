@@ -41,7 +41,7 @@
 		  		    	    			<td><?php if(!empty($company[0]['commune'])) echo $company[0]['commune'];?></td>
 		  		    	    		</tr>
 		  		    	    		<tr>
-		  		    	    			<th>Representante Legal</th>
+		  		    	    			<th>Contacto</th>
 		  		    	    			<td><?php if(!empty($company[0]['people_id'])) echo $company[0]['people_id'];?></td>
 		  		    	    		</tr>
 		  		    		    </tbody>

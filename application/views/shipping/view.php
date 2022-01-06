@@ -20,10 +20,6 @@
 		  		    		    		<th>Orden</th>
 		  			    				<td><?php if(!empty($shipping[0]['order_nro'])) echo $shipping[0]['order_nro'];?></td>
 		  		    		    	</tr>
-		  		    		    	<tr>
-		  		    	    			<th>Quadmin</th>
-		  		    	    			<td><?php if(!empty($shipping[0]['quadmins_code'])) echo $shipping[0]['quadmins_code'];?></td>
-		  		    	    		</tr>
 		  		    	    		<tr>
 		  		    	    			<th>Tipo de Envio</th>
 		  		    	    			<td><?php if(!empty($shipping[0]['shipping_type'])) echo $shipping[0]['shipping_type'];?></td>

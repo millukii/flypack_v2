@@ -150,7 +150,7 @@ class MCompany extends CI_Model {
 
 	public function getAllPeople()
 	{
-		$this->db->select('id, rut, name, lastname');
+		$this->db->select('id, rut, dv, name, lastname');
 		$this->db->from('people');
 		$this->db->order_by('rut');
 

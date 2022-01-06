@@ -38,12 +38,12 @@
                     			  						<input type="text" class="form-control" name="input-order-nro" id="input-order-nro"  maxlength="10"  required>
                     			  					</div>
                     			  				</div>
-                    			  				<div class="form-group">
+<!--                     			  				<div class="form-group">
                     			  					<label for="quadmins-code" class="col-sm-2 control-label">Codigo Quadmin</label>
                     			  					<div class="col-sm-10">
                     			  						<input type="text" class="form-control" name="input-quadmins-code" id="input-quadmins-code">
                     			  					</div>
-                    			  				</div>
+                    			  				</div> -->
                     
                     			  				<div class="form-group">
                     			  					<label for="shipping-type" class="col-sm-2 control-label">Tipo</label>
@@ -51,13 +51,35 @@
                     			  						<input type="text" class="form-control" name="input-shipping-type" id="input-shipping-type">
                     			  					</div>
                     			  				</div>
-                    
+
+                                     <div class="form-group">
+                    			  					<label for="total-amount" class="col-sm-2 control-label">Total</label>
+                    			  					<div class="col-sm-10">
+                    			  						<input type="text" class="form-control" name="input-total-amount" id="input-total-amount">
+                    			  					</div>
+                    			  				</div>
+
                     			  				<div class="form-group">
                     			  					<label for="address" class="col-sm-2 control-label">Dirección</label>
                     			  					<div class="col-sm-10">
                     			  						<input type="text" class="form-control" name="input-address" id="input-address">
                     			  					</div>
                     			  				</div>
+
+                    			  				<div class="form-group">
+                    			  					<label for="origin" class="col-sm-2 control-label">Origin</label>
+                    			  					<div class="col-sm-10">
+                    			  						<input type="text" class="form-control" name="input-origin" id="input-origin">
+                    			  					</div>
+                    			  				</div>
+
+                                    <div class="form-group">
+                    			  					<label for="destiny" class="col-sm-2 control-label">Destino</label>
+                    			  					<div class="col-sm-10">
+                    			  						<input type="text" class="form-control" name="input-destiny" id="input-destiny">
+                    			  					</div>
+                    			  				</div>
+
                                      <div class="form-group">
                     			  					<label for="sender" class="col-sm-2 control-label">Emisor</label>
                     			  					<div class="col-sm-10">
@@ -87,7 +109,7 @@
                                      <div class="form-group">
                     			  					<label for="observation" class="col-sm-2 control-label">Observacion</label>
                     			  					<div class="col-sm-5">
-                    			  						<input type="test" class="form-control" name="input-observation" id="input-observation">
+                    			  						<input type="text" class="form-control" name="input-observation" id="input-observation">
                     			  					</div>
                     			  				</div>
 
@@ -159,10 +181,12 @@
 				site_url + "/CShipping/addShipping",{
           id: $("#input-id").val(),
           order_nro: $("#input-order-nro").val(),
-          quadmins_code: $("#input-quadmins-code").val(),
+          quadmins_code: null, // $("#input-quadmins-code").val(),
           total_amount: $("#input-total-amount").val(),
           address: $("#input-address").val(),
           delivery_name: $("#input-delivery-name").val(),
+          origin: $("#input-origin").val(),
+          destiny: $("#input-destiny").val(),
           shipping_date: $("#input-shipping-date").val(),
           shipping_type: $("#input-shipping-type").val(),
           companies_id: $("#input-company").val(),

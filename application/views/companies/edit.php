@@ -55,14 +55,14 @@
 			  				</div>
 
 			  				<div class="form-group">
-			  					<label for="companies" class="col-sm-2 control-label">Representante Legal</label>
+			  					<label for="companies" class="col-sm-2 control-label">Contacto</label>
 			  					<div class="col-sm-5">
-			  						<select name="select-people" id="select-people" class="form-control" required>
-			  							<option value="">Seleccione una opción</option>
-			  							<?php foreach ($people as $key) { ?>
-			  								<option value="<?php echo $key->id; ?>"><?php echo $key->name; echo $key->rut;?></option>
-			  							<?php } ?>
-			  						</select>
+                    	<select name="select-people" id="select-people" class="form-control" required>
+                    		<option value="">Seleccione una opción</option>
+                    			<?php foreach ($people as $key) { ?>
+                    		<option value="<?php echo $key->id; ?>"><?php echo $key->rut; echo '-'.$key->dv; echo $key->name;?></option>
+                    		  <?php } ?>
+                    	</select>
 			  					</div>
 			  				</div>
 			  				

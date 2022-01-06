@@ -17,15 +17,6 @@
                     			  					</div>
                     			  				</div>
                     			  				<div class="form-group">
-                    			  					<label for="quadmins-code" class="col-sm-2 control-label">Codigo Quadmin</label>
-                    			  					<div class="col-sm-10">
-                    			  						<input type="text" class="form-control" name="input-quadmins-code" id="input-quadmins-code"
-                                        value="<?php if(!empty($shipping[0]['quadmins_code'])) echo $shipping[0]['quadmins_code'];?>" 
-                                        >
-                    			  					</div>
-                    			  				</div>
-                    
-                    			  				<div class="form-group">
                     			  					<label for="shipping-type" class="col-sm-2 control-label">Tipo</label>
                     			  					<div class="col-sm-10">
                     			  						<input type="text" class="form-control" name="input-shipping-type" id="input-shipping-type"
@@ -34,6 +25,16 @@
                     			  					</div>
                     			  				</div>
                     
+                                     <div class="form-group">
+                    			  					<label for="total-amount" class="col-sm-2 control-label">Total</label>
+                    			  					<div class="col-sm-10">
+                    			  						<input type="text" class="form-control" name="input-total-amount" id="input-total-amount"
+                                         value="<?php if(!empty($shipping[0]['total_amount'])) echo $shipping[0]['total_amount'];?>"
+                                        >
+                    			  					</div>
+                    			  				</div>
+
+
                     			  				<div class="form-group">
                     			  					<label for="address" class="col-sm-2 control-label">Dirección</label>
                     			  					<div class="col-sm-10">
@@ -42,6 +43,25 @@
                                         >
                     			  					</div>
                     			  				</div>
+
+                                    <div class="form-group">
+                    			  					<label for="origin" class="col-sm-2 control-label">Origin</label>
+                    			  					<div class="col-sm-10">
+                    			  						<input type="text" class="form-control" name="input-origin" id="input-origin"
+                                        value="<?php if(!empty($shipping[0]['origin'])) echo $shipping[0]['origin'];?>"
+                                        >
+                    			  					</div>
+                    			  				</div>
+
+                                    <div class="form-group">
+                    			  					<label for="destiny" class="col-sm-2 control-label">Destino</label>
+                    			  					<div class="col-sm-10">
+                    			  						<input type="text" class="form-control" name="input-destiny" id="input-destiny"
+                                        value="<?php if(!empty($shipping[0]['destiny'])) echo $shipping[0]['destiny'];?>"
+                                        >
+                    			  					</div>
+                    			  				</div>
+
                                      <div class="form-group">
                     			  					<label for="sender" class="col-sm-2 control-label">Emisor</label>
                     			  					<div class="col-sm-10">
@@ -150,12 +170,14 @@
 			$.post(
 				site_url + "/CShipping/editShipping",{
           order_nro: $("#input-order-nro").val(),
-          quadmins_code: $("#input-quadmins-code").val(),
+          quadmins_code: null,//$("#input-quadmins-code").val(),
           total_amount: $("#input-total-amount").val(),
           address: $("#input-address").val(),
           delivery_name: $("#input-delivery-name").val(),
           shipping_date: $("#input-shipping-date").val(),
           shipping_type: $("#input-shipping-type").val(),
+          origin: $("#input-origin").val(),
+          destiny: $("#input-destiny").val(),
           companies_id: $("#input-company").val(),
           shipping_states_id: $("#input-shipping-state").val(),
           sender: $("#input-sender").val(),

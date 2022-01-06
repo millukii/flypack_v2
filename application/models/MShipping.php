@@ -35,6 +35,8 @@ class MShipping extends CI_Model {
       shipping.shipping_type as shipping_type, 
       shipping.total_amount as total_amount, 
       shipping.address as address, 
+      shipping.origin as origin,
+      shipping.destiny as destiny,
       shipping.sender as sender, 
       shipping.delivery_name as delivery_name, 
       shipping.observation as observation, 
@@ -77,6 +79,8 @@ class MShipping extends CI_Model {
       shipping.observation as observation, 
       shipping.label as label, 
       shipping.address as address, 
+      shipping.origin as origin,
+      shipping.destiny as destiny,
       shipping.receiver_phone as receiver_phone, 
       shipping.receiver_mail as receiver_mail, 
       companies.razon as company');
@@ -132,7 +136,9 @@ class MShipping extends CI_Model {
       shipping.receiver_name as receiver_name, 
       shipping.observation as observation, 
       shipping.label as label, 
-      shipping.address as address, 
+      shipping.address as address,
+      shipping.origin as origin,
+      shipping.destiny as destiny,
       shipping.receiver_phone as receiver_phone, 
       shipping.receiver_mail as receiver_mail, 
       companies.razon as company');

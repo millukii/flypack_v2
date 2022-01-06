@@ -21,7 +21,6 @@
                       <thead>
                         <tr>
                           <th>Orden</th>
-                          <th>Quadmin</th>
                           <th>Tipo</th>
                           <th>Total</th>
                           <th>Delivery</th>
@@ -30,6 +29,8 @@
                           <th>Empresa</th>
                           <th>Emisor</th>
                           <th>Direccion</th>
+                          <th>Origen</th>
+                          <th>Destino</th>
                           <th>Receptor</th>
                           <th>Telefono</th>
                           <th>Etiqueta</th>
@@ -72,7 +73,6 @@
           },
           "columns": [
             { "data": "Orden"},
-            { "data": "Quadmin" },
             { "data": "Tipo" },
             { "data": "Total" },
             { "data": "Delivery" },
@@ -81,6 +81,8 @@
             { "data": "Empresa" },
             { "data": "Emisor" },
             { "data": "Direccion" },
+            { "data": "Origen" },
+            { "data": "Destino" },
             { "data": "Receptor" },
             { "data": "Telefono" },
             { "data": "Etiqueta" },
@@ -93,93 +95,107 @@
               "render": function(data, type, row) {
                 return row.order_nro
               }
-            },
+            },/* 
             {
               "targets": [1],
               "orderable": true,
               "render": function(data, type, row) {
                 return row.quadmins_code
               }
-            },
+            }, */
             {
-              "targets": [2],
+              "targets": [1],
               "orderable": true,
               "render": function(data, type, row) {
                 return row.shipping_type
               }
             },
             {
-              "targets": [3],
+              "targets": [2],
               "orderable": true,
               "render": function(data, type, row) {
                 return row.total_amount
               }
             },
             {
-              "targets": [4],
+              "targets": [3],
               "orderable": true,
               "render": function(data, type, row) {
                 return row.delivery_name
               }
             },
             {
-              "targets": [5],
+              "targets": [4],
               "orderable": true,
               "render": function(data, type, row) {
                 return row.shipping_date
               }
             },
             {
-              "targets": [6],
+              "targets": [5],
               "orderable": true,
               "render": function(data, type, row) {
                 return row.state
               }
             },
             {
-              "targets": [7],
+              "targets": [6],
               "orderable": true,
               "render": function(data, type, row) {
                 return row.company
               }
             },
             {
-              "targets": [8],
+              "targets": [7],
               "orderable": true,
               "render": function(data, type, row) {
                 return row.sender
               }
             },
             {
-              "targets": [9],
+              "targets": [8],
               "orderable": true,
               "render": function(data, type, row) {
                 return row.address
+              }
+            },
+           {
+              "targets": [9],
+              "orderable": true,
+              "render": function(data, type, row) {
+                return row.origin
               }
             },
             {
               "targets": [10],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.receiver_name
+                return row.destiny
               }
             },
             {
               "targets": [11],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.receiver_phone
+                return row.receiver_name
               }
             },
             {
               "targets": [12],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.label
+                return row.receiver_phone
               }
             },
             {
               "targets": [13],
+              "orderable": true,
+              "render": function(data, type, row) {
+                return row.label
+              }
+            },
+            {
+              "targets": [14],
               "orderable": false,
               "render": function(data, type, row) {
                 return `
