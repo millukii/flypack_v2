@@ -4,7 +4,7 @@
       <div class="col-sm-12">
         <div class="box box-success">
           <div class="box-header ui-sortable-handle">
-              <i class="fa fa-users"></i>
+              <i class="fa fa-university"></i>
             <h3 class="box-title">Empresas</h3>
             </div>
 
@@ -27,7 +27,6 @@
                           <th>Direccion</th>
                           <th>Ciudad</th>
                           <th>Comuna</th>
-                          <th>Contacto</th>
                           <th>Acción</th>
                         </tr>
                       </thead>
@@ -73,7 +72,6 @@
             { "data": "Direccion" },
             { "data": "Ciudad" },
             { "data": "Comuna" },
-            { "data": "Contacto" },
             { "data": "Acción" }
           ],
           "columnDefs": [
@@ -128,13 +126,6 @@
             },
             {
               "targets": [7],
-              "orderable": true,
-              "render": function(data, type, row) {
-                return row.name+ ' ' + row.lastname
-              }
-            },
-            {
-              "targets": [8],
               "orderable": false,
               "render": function(data, type, row) {
                 return `
@@ -143,9 +134,6 @@
                   </a>
                   <a href="<?php echo site_url(); ?>/CCompany/edit?id=`+row.id+`" class="btn btn-warning btn-xs" role="button">
                       <i class='fa fa-pencil-square-o'></i> Editar
-                  </a>
-                  <a href="#" class="btn btn-danger btn-xs" role="button" onclick="deleteCompany(`+row.id+`);">
-                      <i class='fa fa-trash-o'></i> Eliminar
                   </a>`;
               }
             }

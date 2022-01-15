@@ -4,7 +4,7 @@
 			<div class="col-sm-12">
 				<div class="box box-success">
 					<div class="box-header ui-sortable-handle">
-					    <i class="fa fa-users"></i>
+					<i class="fa fa-university"></i>
 						<h3 class="box-title">Editar Empresa # <?php if(!empty($company[0]['id'])) echo $company[0]['id'];?></h3>
 				  	</div>
 
@@ -54,17 +54,6 @@
 			  					</div>
 			  				</div>
 
-			  				<div class="form-group">
-			  					<label for="companies" class="col-sm-2 control-label">Contacto</label>
-			  					<div class="col-sm-5">
-                    	<select name="select-people" id="select-people" class="form-control" required>
-                    		<option value="">Seleccione una opción</option>
-                    			<?php foreach ($people as $key) { ?>
-                    		<option value="<?php echo $key->id; ?>"><?php echo $key->rut; echo '-'.$key->dv; echo $key->name;?></option>
-                    		  <?php } ?>
-                    	</select>
-			  					</div>
-			  				</div>
 			  				
 			  			</div>
 			  			<div class="box-footer">
@@ -163,7 +152,7 @@
 	        dv = cuerpo;
 
 			$.post(
-				site_url + "/CPeople/editPeople",{
+				site_url + "/CCompany/editCompany",{
 					id    				: 	'<?php if(!empty($company[0]['id'])) echo $company[0]['id'];?>',
 					rut 				: 	cuerpo,
 					dv 					: 	dv,
@@ -171,13 +160,12 @@
 					fantasy 			: 	$("#input-fantasy").val(),
 					address 			: 	$("#input-address").val(),
 					city 				: 	$("#input-city").val(),
-					commune 				: 	$("#input-commune").val(),
-					people_id 		: 	$("#select-people").val(),
+					commune 				: 	$("#input-commune").val()
 				},
 				function(data)
 				{
 					if (data == 1)
-						window.location.replace(site_url+"/CPeople/index");
+						window.location.replace(site_url+"/CCompany/index");
 					else
 						alert("Rut existente.")
 				}

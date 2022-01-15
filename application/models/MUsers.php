@@ -30,10 +30,10 @@ class MUsers extends CI_Model
 
 	public function getAllUsers($start, $length, $order, $by) 
 	{
-		$this->db->select('users.id as id, users.user as user, people.rut as rut, people.dv as dv, people.name as name, people.lastname as lastname, roles.rol as rol, user_state.state');
-		$this->db->join('people', 'people.id = users.people_id');
+		$this->db->select('users.id as id, users.user as user, CONCAT(users.name, " " ,users.lastname ) as name, users.email as email, users.phone as phone, roles.rol as rol, user_state.state, companies.razon as razon');
 		$this->db->join('roles', 'roles.id = users.rol_id');
 		$this->db->join('user_state', 'user_state.id = users.user_state_id');
+		$this->db->join('companies', 'companies.id = users.companies_id');
 
 		if ($by == 0) 
 		{
@@ -49,7 +49,7 @@ class MUsers extends CI_Model
 		}
 		else
 		{
-			$this->db->order_by('people.rut', $order);
+			$this->db->order_by('name', $order);
 		}
 
 		$this->db->limit($length, $start);
@@ -63,15 +63,15 @@ class MUsers extends CI_Model
 
 	public function getSearchUsers($search, $start, $length, $order, $by) 
 	{
-		$this->db->select('users.id as id, users.user as user, people.rut as rut, people.dv as dv, people.name as name, people.lastname as lastname, roles.rol as rol, user_state.state');
-		$this->db->join('people', 'people.id = users.people_id');
+		$this->db->select('users.id as id, users.user as user, CONCAT(users.name, " " ,users.lastname ) as name, users.email as email, users.phone as phone, roles.rol as rol, user_state.state, companies.razon as razon');
 		$this->db->join('roles', 'roles.id = users.rol_id');
 		$this->db->join('user_state', 'user_state.id = users.user_state_id');
+		$this->db->join('companies', 'companies.id = users.companies_id');
 
 		$this->db->like('users.id', $search);
 		$this->db->or_like('users.user', $search);
 		$this->db->or_like('roles.rol', $search);
-		$this->db->or_like('people.rut', $search);
+		$this->db->or_like('name', $search);
 
 		if ($by == 0) 
 		{
@@ -87,7 +87,7 @@ class MUsers extends CI_Model
 		}
 		else
 		{
-			$this->db->order_by('people.rut', $order);
+			$this->db->order_by('name', $order);
 		}
 
 		$this->db->limit($length, $start);
@@ -107,15 +107,15 @@ class MUsers extends CI_Model
 
 	public function getCountSearch($search, $start, $length, $order, $by) 
 	{
-		$this->db->select('users.id as id, users.user as user, people.rut as rut, people.dv as dv, people.name as name, people.lastname as lastname, roles.rol as rol, user_state.state');
-		$this->db->join('people', 'people.id = users.people_id');
+		$this->db->select('users.id as id, users.user as user, CONCAT(users.name, " " ,users.lastname ) as name, users.email as email, users.phone as phone, roles.rol as rol, user_state.state, companies.razon as razon');
 		$this->db->join('roles', 'roles.id = users.rol_id');
 		$this->db->join('user_state', 'user_state.id = users.user_state_id');
+		$this->db->join('companies', 'companies.id = users.companies_id');
 
 		$this->db->like('users.id', $search);
 		$this->db->or_like('users.user', $search);
 		$this->db->or_like('roles.rol', $search);
-		$this->db->or_like('people.rut', $search);
+		$this->db->or_like('name', $search);
 
 		$query = $this->db->get('users')->num_rows();
 		return $query;
@@ -168,15 +168,24 @@ class MUsers extends CI_Model
 
 	public function getUser($id)
 	{
-		$this->db->select('users.id as id, users.user as user, people.rut as rut, people.dv as dv, people.name as name, people.lastname as lastname, roles.rol as rol, user_state.state');
-		$this->db->join('people', 'people.id = users.people_id');
+		$this->db->select('*, users.id as id');
 		$this->db->join('roles', 'roles.id = users.rol_id');
 		$this->db->join('user_state', 'user_state.id = users.user_state_id');
+		$this->db->join('companies', 'companies.id = users.companies_id');
 		$this->db->from('users');
 		$this->db->where('users.id', $id);
 		$this->db->limit(1);
 
 		return $this->db->get()->result_array();
+	}
+
+	public function getAllCompanies()
+	{
+		$this->db->select('id, rut, dv, razon');
+		$this->db->from('companies');
+		$this->db->order_by('rut', 'asc');
+
+		return $this->db->get()->result();
 	}
 	//END CRUD
 }

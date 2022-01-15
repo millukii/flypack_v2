@@ -4,7 +4,7 @@
 			<div class="col-sm-12">
 				<div class="box box-success">
 					<div class="box-header ui-sortable-handle">
-					    <i class="fa fa-users"></i>
+					<i class="fa fa-university"></i>
 						<h3 class="box-title">Company</h3>
 				  	</div>
 
@@ -40,14 +40,40 @@
 		  		    	    			<th>Comuna</th>
 		  		    	    			<td><?php if(!empty($company[0]['commune'])) echo $company[0]['commune'];?></td>
 		  		    	    		</tr>
-		  		    	    		<tr>
-		  		    	    			<th>Contacto</th>
-		  		    	    			<td><?php if(!empty($company[0]['people_id'])) echo $company[0]['people_id'];?></td>
-		  		    	    		</tr>
+		  		    	    		
 		  		    		    </tbody>
 		  			    	</table>
 			  			</section>
 				  	</div>
+
+
+					  <div class="box-body">
+					  <h4>Usuarios:</h4>
+			  			<section class="content">
+
+			  			    <table class="table">
+								<thead>
+									<tr>
+										<th>Usuario</th>
+										<th>Nombre</th>
+									</tr>
+								</thead>
+		  		    		    <tbody>
+								  	<?php
+									  if(!empty($users))
+									  {
+									  	foreach ($users as $key) { ?>
+										<tr>
+											<?php echo '<td>'.$key->user.'</td>';echo '<td>'.$key->name.'</td>'; ?>
+									  	</tr>
+									<?php }} ?>
+		  		    		    </tbody>
+		  			    	</table>
+
+			  			</section>
+
+				  	</div>
+
 				  	<div class="box-footer">
 				  		<a href="<?php echo site_url(); ?>/CCompany/index" class="btn btn-primary pull-right" role="button">
 	                    <i class='fa fa-undo'></i> Volver

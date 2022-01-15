@@ -54,12 +54,14 @@ class CWelcome extends CI_Controller {
 						'lastname' => $data[0]['lastname'],
 						'state' => $data[0]['state'],
 						'ip' => $ip,
-						'people_id' => $data[0]['people_id'],
 						'rut' => $data[0]['rut'], 
 						'dv' => $data[0]['dv'], 
-						'address' => $data[0]['address'], 
 						'email' => $data[0]['email'], 
-						'phone' => $data[0]['phone']
+						'phone' => $data[0]['phone'],
+						'companies_id' => $data[0]['companies_id'],
+						'rut' => $data[0]['rut'],
+						'dv' => $data[0]['dv'],
+						'razon' => $data[0]['razon']
 					);
 					
 					//SESSION START

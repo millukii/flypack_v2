@@ -25,14 +25,29 @@
                           				<td><?php if(!empty($user[0]['rol'])) echo $user[0]['rol'];?></td>
                           			</tr>
                           			<tr>
-                          				<th>Persona</th>
-                          				<td><?php if(!empty($user[0]['name'])) echo $user[0]['name'];?></td>
+                          				<th>Nombre</th>
+                          				<td><?php if(!empty($user[0]['name'])) echo $user[0]['name'];if(!empty($user[0]['lastname'])) echo $user[0]['lastname'];?></td>
+                          			</tr>
+									<tr>
+                          				<th>Email</th>
+                          				<td><?php if(!empty($user[0]['email'])) echo $user[0]['email'];?></td>
+                          			</tr>
+									<tr>
+                          				<th>Empresa</th>
+                          				<td><?php if(!empty($user[0]['rut'])) echo $user[0]['rut'].'-'.$user[0]['dv'].' '.$user[0]['razon'];?></td>
                           			</tr>
                           			<tr>
                           				<th>Estado</th>
                           				<td><?php if(!empty($user[0]['state'])) echo $user[0]['state'];?></td>
                           			</tr>
-
+									<tr>
+                          				<th>Creado</th>
+                          				<td><?php if(!empty($user[0]['created'])) echo $user[0]['created'];?></td>
+                          			</tr>
+									  <tr>
+                          				<th>Modificado</th>
+                          				<td><?php if(!empty($user[0]['modified'])) echo $user[0]['modified'];?></td>
+                          			</tr>
                           			
 		  		    		    </tbody>
 		  			    	</table>

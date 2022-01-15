@@ -17,11 +17,12 @@
                     			<div class="col-sm-12">
                     				<div class="box box-success">
                     					<div class="box-header ui-sortable-handle">
-                    					    <i class="fa fa-users"></i>
+										<i class="fa fa-university"></i>
                     						<h3 class="box-title">Agregar Empresa</h3>
                     						<hr>
                     				  	</div>
                     				  	<form class="form-horizontal" id="form-company">
+										  <h4>Datos Empresa:</h4>
                     			  			<div class="box-body">
                     			  				<div class="form-group">
                     			  					<label for="rut" class="col-sm-2 control-label">Rut</label>
@@ -57,31 +58,67 @@
                     
                     			  				<div class="form-group">
                     			  					<label for="city" class="col-sm-2 control-label">Ciudad</label>
-                    			  					<div class="col-sm-5">
+                    			  					<div class="col-sm-10">
                     			  						<input type="text" class="form-control" name="input-city" id="input-city">
                     			  					</div>
                     			  				</div>
                     
                     			  				<div class="form-group">
                     			  					<label for="commune" class="col-sm-2 control-label">Comuna</label>
-                    			  					<div class="col-sm-5">
-                    			  						<input type="commune" class="form-control" name="input-commune" id="input-commune">
-                    			  					</div>
-                    			  				</div>
-                    
-                    			  				<div class="form-group">
-                    			  					<label for="companies" class="col-sm-2 control-label">Contacto</label>
-                    			  					<div class="col-sm-5">
-                    			  						<select name="select-people" id="select-people" class="form-control" required>
-                    			  							<option value="">Seleccione una opción</option>
-                    			  							<?php foreach ($people as $key) { ?>
-                    			  								<option value="<?php echo $key->id; ?>"><?php echo $key->rut; echo '-'.$key->dv; echo $key->name;?></option>
-                    			  							<?php } ?>
-                    			  						</select>
+                    			  					<div class="col-sm-10">
+                    			  						<input type="text" class="form-control" name="input-commune" id="input-commune">
                     			  					</div>
                     			  				</div>
 
                     			  			</div>
+											<hr>
+
+											<div class="box-body">
+											<h4>Datos Usuario:</h4>
+												<div class="form-group">
+													<label for="user" class="col-sm-2 control-label">Usuario</label>
+													<div class="col-sm-10">
+														<input type="text" class="form-control" name="input-user" id="input-user" required>
+													</div>
+												</div>
+
+												<div class="form-group">
+													<label for="password" class="col-sm-2 control-label">Contraseña</label>
+													<div class="col-sm-10">
+														<input type="password" class="form-control" name="input-password" id="input-password" required>
+													</div>
+												</div>
+
+												<div class="form-group">
+                    			  					<label for="companies" class="col-sm-2 control-label">Nombre</label>
+                    			  					<div class="col-sm-10">
+													  <input type="text" class="form-control" name="input-name" id="input-name">
+                    			  					</div>
+                    			  				</div>
+
+												<div class="form-group">
+                    			  					<label for="companies" class="col-sm-2 control-label">Apellido</label>
+                    			  					<div class="col-sm-10">
+													  <input type="text" class="form-control" name="input-lastname" id="input-lastname">
+                    			  					</div>
+                    			  				</div>
+
+												<div class="form-group">
+                    			  					<label for="companies" class="col-sm-2 control-label">Email</label>
+                    			  					<div class="col-sm-10">
+													  <input type="email" class="form-control" name="input-email" id="input-email">
+                    			  					</div>
+                    			  				</div>
+
+												<div class="form-group">
+                    			  					<label for="companies" class="col-sm-2 control-label">Teléfono</label>
+                    			  					<div class="col-sm-10">
+													  <input type="text" class="form-control" name="input-phone" id="input-phone">
+                    			  					</div>
+                    			  				</div>
+
+											</div>
+
                     			  			<div class="box-footer">
                     			  				<button type="submit" class="btn btn-primary pull-right">Guardar</button>
                     			  			</div>
@@ -192,8 +229,13 @@
 					fantasy 			: 	$("#input-fantasy").val(),
 					address 			: 	$("#input-address").val(),
 					city 				: 	$("#input-city").val(),
-					commune 				: 	$("#input-commune").val(),
-					people_id 		: 	$("#select-people").val(),
+					commune 			: 	$("#input-commune").val(),
+					name				:	$('#input-name').val(),
+					lastname			:	$('#input-lastname').val(),
+					email				:	$('#input-email').val(),
+					phone				:	$('#input-phone').val(),
+					user				:	$('#input-user').val(),
+					password			:	$('#input-password').val()
 
 				},
 				function(data)

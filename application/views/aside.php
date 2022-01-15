@@ -50,7 +50,7 @@ if(!empty($this->session->userdata('options')))
                         <li><a href="<?php echo site_url() ?>/CCompany/index"><i class="fa fa-circle-o"></i>Empresas</a></li>
                     </ul>
                   </li>
-
+                  <!--
                   <li class="treeview" id="li-people">
                     <a href="#">
                       <i class="fa fa-circle-o"></i> <span>Personas</span>
@@ -59,12 +59,12 @@ if(!empty($this->session->userdata('options')))
                       </span>
                     </a>
                     <ul class="treeview-menu" id="ul-people">
-                        <li><a href="<?php echo site_url() ?>/CProfiles/index"><i class="fa fa-circle-o"></i>Perfiles</a></li>
+                        <li><a href="<?php //echo site_url() ?>/CProfiles/index"><i class="fa fa-circle-o"></i>Perfiles</a></li>
 
-                        <li><a href="<?php echo site_url() ?>/CPeople/index"><i class="fa fa-circle-o"></i>Personas</a></li>
+                        <li><a href="<?php //echo site_url() ?>/CPeople/index"><i class="fa fa-circle-o"></i>Personas</a></li>
                     </ul>
                   </li>
-                  
+                  -->                  
                   <li class="treeview" id="li-users">
                     <a href="#">
                       <i class="fa fa-circle-o"></i> <span>Usuarios</span>

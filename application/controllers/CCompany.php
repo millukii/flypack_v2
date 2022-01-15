@@ -66,11 +66,9 @@ class CCompany extends CI_Controller {
 		$id = trim($this->input->get('id', TRUE));
 
 		$company = $this->modelo->getCompany_($id);
-		$people = $this->modelo->getAllPeople();
 
 		$data = array(
-			'company' => $company,
-			'people' => $people
+			'company' => $company
 		);
 
 		$this->load->view('header');
@@ -83,8 +81,11 @@ class CCompany extends CI_Controller {
 		$id = trim($this->input->get('id', TRUE));
 
 		$company = $this->modelo->getCompany_($id);
+		$users = $this->modelo->getUsersByCompany($id);
+
 		$data = array(
-			'company' => $company
+			'company' => $company,
+			'users' => $users
 		);
 
 		$this->load->view('header');
@@ -100,9 +101,8 @@ class CCompany extends CI_Controller {
 		$fantasy 			= 	trim($this->input->post('fantasy', TRUE));
 		$address 			= 	trim($this->input->post('address', TRUE));
 		$city 				= 	trim($this->input->post('city', TRUE));
-		$commune 				= 	trim($this->input->post('commune', TRUE));
-		$people_id 		= 	trim($this->input->post('people_id', TRUE));
-		
+		$commune 			= 	trim($this->input->post('commune', TRUE));
+
 		if(empty($razon))
 			$razon = 'N/A';
 		
@@ -117,23 +117,53 @@ class CCompany extends CI_Controller {
 
 		if(empty($commune))
 			$commune = 'N/A';
-		
 
 		$data = array(
 			'rut' 				=> $rut,
 			'dv' 				=> $dv,
-			'razon' 				=> $razon,
+			'razon' 			=> $razon,
 			'fantasy' 			=> $fantasy,
 			'address' 			=> $address,
-			'city' 			=> $city,
-			'commune' 			=> $commune,
-			'people_id'		=> $people_id
+			'city' 				=> $city,
+			'commune' 			=> $commune
 		);
 
-		if($this->modelo->addCompany($data))
-			echo '1';
+		$companies_id = $this->modelo->addCompany($data);
+		if($companies_id != false)
+		{
+			$user 			= 	trim($this->input->post('user', TRUE));
+			$password 		= 	trim($this->input->post('password', TRUE));
+			$roles_id 		= 	2;
+			$name 			= 	trim($this->input->post('name', TRUE));
+			$lastname 		= 	trim($this->input->post('lastname', TRUE));
+			$email 			= 	trim($this->input->post('email', TRUE));
+			$phone 			= 	trim($this->input->post('phone', TRUE));
+			$companies_id 	= 	$companies_id;
+			$user_state_id	= 	1;
+			$date_time 		= 	date('Y-m-d H:i:s');
+			
+			$data = array(
+				'user' 				=> 	$user,
+				'password' 			=> 	md5($password),
+				'rol_id' 			=> 	$roles_id,
+				'name'				=>	$name,
+				'lastname'			=>	$lastname,
+				'email'				=>	$email,
+				'phone'				=>	$phone,
+				'companies_id' 		=> 	$companies_id,
+				'user_state_id' 	=> 	$user_state_id,
+				'created'			=> 	$date_time,
+				'modified'			=> 	$date_time
+			);
+
+			if($this->modelo->addUser($data))
+				echo '1';
+			else
+				echo '0';
+		}
 		else
 			echo '0';
+		
 	}
 
 	public function editCompany()
@@ -146,7 +176,6 @@ class CCompany extends CI_Controller {
 		$address 			= 	trim($this->input->post('address', TRUE));
 		$city 				= 	trim($this->input->post('city', TRUE));
 		$commune 				= 	trim($this->input->post('commune', TRUE));
-		$people_id 		= 	trim($this->input->post('people_id', TRUE));
 		$company_states_id	=	trim($this->input->post('company_states_id', TRUE));
 		
 		if(empty($name))
@@ -171,8 +200,7 @@ class CCompany extends CI_Controller {
 			'fantasy' 			=> $fantasy,
 			'address' 			=> $address,
 			'city' 			=> $city,
-			'commune' 			=> $commune,
-			'people_id'		=> $people_id,
+			'commune' 			=> $commune
 		);
 
 		if($this->modelo->editCompany($data, $id))

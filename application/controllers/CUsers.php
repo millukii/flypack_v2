@@ -40,12 +40,12 @@ class CUsers extends CI_Controller
 	{
 		
 		$roles = $this->modelo->getAllRoles();
-		$people = $this->modelo->getAllPeople();
+		$companies = $this->modelo->getAllCompanies();
 		$users_state = $this->modelo->getAllUser_States();
 
 		$data = array(
 			'roles' => $roles,
-			'people' => $people,
+			'companies' => $companies,
 			'user_states' => $users_state
 		);
 
@@ -60,13 +60,13 @@ class CUsers extends CI_Controller
 
 		$user = $this->modelo->getUser($id);
 		$roles = $this->modelo->getAllRoles();
-		$people = $this->modelo->getAllPeople();
+		$companies = $this->modelo->getAllCompanies();
 		$user_states = $this->modelo->getAllUser_States();
 
 		$data = array(
 			'user' => $user,
 			'roles' => $roles,
-			'people' => $people,
+			'companies' => $companies,
 			'user_states' => $user_states
 		);
 
@@ -96,16 +96,26 @@ class CUsers extends CI_Controller
 		$user 			= 	trim($this->input->post('user', TRUE));
 		$password 		= 	trim($this->input->post('password', TRUE));
 		$roles_id 		= 	trim($this->input->post('roles_id', TRUE));
-		$people_id 		= 	trim($this->input->post('people_id', TRUE));
+		$name 			= 	trim($this->input->post('name', TRUE));
+		$lastname 		= 	trim($this->input->post('lastname', TRUE));
+		$email 			= 	trim($this->input->post('email', TRUE));
+		$phone 			= 	trim($this->input->post('phone', TRUE));
+		$companies_id 	= 	trim($this->input->post('companies_id', TRUE));
 		$user_state_id	= 	trim($this->input->post('user_states_id', TRUE));
-		$date_time = date('Y-m-d H:i:s');
+		$date_time 		= 	date('Y-m-d H:i:s');
 
 		$data = array(
-			'user' 				=> $user,
-			'password' 			=> md5($password),
-			'rol_id' 			=> $roles_id,
-			'people_id' 		=> $people_id,
-			'user_state_id' 	=> $user_state_id,
+			'user' 				=> 	$user,
+			'password' 			=> 	md5($password),
+			'rol_id' 			=> 	$roles_id,
+			'name'				=>	$name,
+			'lastname'			=>	$lastname,
+			'email'				=>	$email,
+			'phone'				=>	$phone,
+			'companies_id' 		=> 	$companies_id,
+			'user_state_id' 	=> 	$user_state_id,
+			'created'			=> 	$date_time,
+			'modified'			=> 	$date_time
 		);
 
 		if($this->modelo->addUser($data))
@@ -120,8 +130,13 @@ class CUsers extends CI_Controller
 		$user 			= 	trim($this->input->post('user', TRUE));
 		$password 		= 	trim($this->input->post('password', TRUE));
 		$roles_id 		= 	trim($this->input->post('roles_id', TRUE));
-		$people_id 		= 	trim($this->input->post('people_id', TRUE));
+		$name 			= 	trim($this->input->post('name', TRUE));
+		$lastname 		= 	trim($this->input->post('lastname', TRUE));
+		$email 			= 	trim($this->input->post('email', TRUE));
+		$phone 			= 	trim($this->input->post('phone', TRUE));
+		$companies_id 	= 	trim($this->input->post('companies_id', TRUE));
 		$user_state_id	= 	trim($this->input->post('user_states_id', TRUE));
+		$date_time 		= 	date('Y-m-d H:i:s');
 
 		//validar recifrado password
 		$this->db->select('password');
@@ -141,20 +156,30 @@ class CUsers extends CI_Controller
 		if($password == $res)
 		{
 			$data = array(
-				'user' 				=> $user,
-				'rol_id' 			=> $roles_id,
-				'people_id' 		=> $people_id,
-				'user_state_id' 	=> $user_state_id
+				'user' 				=> 	$user,
+				'rol_id' 			=> 	$roles_id,
+				'name'				=>	$name,
+				'lastname'			=>	$lastname,
+				'email'				=>	$email,
+				'phone'				=>	$phone,
+				'companies_id' 		=> 	$companies_id,
+				'user_state_id' 	=> 	$user_state_id,
+				'modified'			=> 	$date_time
 			);
 		}
 		else
 		{
 			$data = array(
-				'user' 				=> $user,
-				'password' 			=> md5($password),
-				'rol_id' 			=> $roles_id,
-				'people_id' 		=> $people_id,
-				'user_state_id' 	=> $user_state_id
+				'user' 				=> 	$user,
+				'password' 			=> 	md5($password),
+				'rol_id' 			=> 	$roles_id,
+				'name'				=>	$name,
+				'lastname'			=>	$lastname,
+				'email'				=>	$email,
+				'phone'				=>	$phone,
+				'companies_id' 		=> 	$companies_id,
+				'user_state_id' 	=> 	$user_state_id,
+				'modified'			=> 	$date_time
 			);
 		}
 
@@ -169,7 +194,7 @@ class CUsers extends CI_Controller
 		$id 			= 	trim($this->input->post('id', TRUE));
 
 		$data = array(
-			'user_state_id'	=>	'2'
+			'user_state_id'	=>	4
 		);
 
 		if($this->modelo->editUser($data, $id))

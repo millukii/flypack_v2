@@ -38,7 +38,7 @@ class CQuadmins extends CI_Controller {
         $data_ot =  $response->getBody();
 
         $data = array(
-            'ot' => $data_ot
+            'ordenes_transporte' => $data_ot
         );
 
 		$this->load->view('header');

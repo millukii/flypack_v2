@@ -17,7 +17,9 @@
                           <th>ID</th>
                           <th>Usuario</th>
                           <th>Rol</th>
-                          <th>Persona</th>
+                          <th>Nombre</th>
+                          <th>Email</th>
+                          <th>Empresa</th>
                           <th>Estado</th>
                           <th>Acción</th>
                         </tr>
@@ -59,9 +61,11 @@
           },
           "columns": [
             { "data": "ID"},
-            { "data": "Nombre" },
+            { "data": "Usuario" },
             { "data": "Rol" },
-            { "data": "Persona" },
+            { "data": "Nombre" },
+            { "data": "Email" },
+            { "data": "Empresa" },
             { "data": "Estado" },
             { "data": "Acción" }
           ],
@@ -91,18 +95,32 @@
               "targets": [3],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.rut+'-'+row.dv+' | '+row.name+' '+row.lastname
+                return row.name
               }
             },
             {
               "targets": [4],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.state
+                return row.email
               }
             },
             {
               "targets": [5],
+              "orderable": true,
+              "render": function(data, type, row) {
+                return row.razon
+              }
+            },
+            {
+              "targets": [6],
+              "orderable": true,
+              "render": function(data, type, row) {
+                return row.state
+              }
+            },
+            {
+              "targets": [7],
               "orderable": false,
               "render": function(data, type, row) {
                 return  `
@@ -132,17 +150,16 @@
     {
       if (confirm('¡Seguro de eliminar!'))
       {
-        $.post(
-          site_url + "/CUsers/deleteUser",{
-          id  :   id
-        },
-        function(data)
-        {
-          if (data == 1)
+        $.ajax({
+          url: site_url + '/CUsers/deleteUser',
+          data: {id: id},
+          type: 'post',
+          dataType: 'text',
+          success: function(data)
+          {
             window.location.reload();
-         
-        }
-        );
+          }
+        });
       }
     }
     

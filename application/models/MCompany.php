@@ -27,10 +27,7 @@ class MCompany extends CI_Model {
 
 	public function getCompany_($id)
 	{
-		$this->db->select('companies.id as id, companies.rut as rut, companies.dv as dv, companies.razon as razon, companies.fantasy as fantasy, companies.address as address, people.id as people_id, people.name as name, people.rut as rut, people.lastname as lastname, companies.city as city, companies.commune as commune');
-
-		$this->db->join('people','people.id = companies.people_id');
-
+		$this->db->select('*');
 		$this->db->from('companies');
 		$this->db->where('companies.id', $id);
 		$this->db->limit(1);
@@ -41,9 +38,7 @@ class MCompany extends CI_Model {
 	// Funciones auxiliares datatable
 	public function getAllCompanies($start, $length, $order, $by)
 	{
-		$this->db->select('companies.id as id, companies.rut as rut, companies.dv as dv, companies.razon as razon, companies.fantasy as fantasy, companies.address as address, people.id as people_id, , people.name as name,people.lastname as lastname, companies.city as city, companies.commune as commune');
-
-		$this->db->join('people','people.id = companies.people_id');
+		$this->db->select('companies.id as id, companies.rut as rut, companies.dv as dv, companies.razon as razon, companies.fantasy as fantasy, companies.address as address, companies.city as city, companies.commune as commune');
 
 		switch ($by)
 		{
@@ -75,9 +70,7 @@ class MCompany extends CI_Model {
 
 	public function getSearchCompany($search, $start, $length, $order, $by)
 	{
-		$this->db->select('companies.id as id, companies.rut as rut, companies.dv as dv, companies.razon as razon, companies.fantasy as fantasy, companies.address as address, people.id as people_id, companies.city as city, companies.commune as commune');
-
-		$this->db->join('people','people.id = companies.people_id');
+		$this->db->select('companies.id as id, companies.rut as rut, companies.dv as dv, companies.razon as razon, companies.fantasy as fantasy, companies.address as address, companies.contact_name as name, companies.city as city, companies.commune as commune');
 
 		$this->db->like('companies.id', $search);
 		$this->db->or_like('companies.rut', $search);
@@ -133,7 +126,7 @@ class MCompany extends CI_Model {
 	public function addCompany($data)
 	{
 		if($this->db->insert('companies', $data))
-			return true;
+			return $this->db->insert_id();
 		else
 			return false;
 	}
@@ -153,6 +146,25 @@ class MCompany extends CI_Model {
 		$this->db->select('id, rut, dv, name, lastname');
 		$this->db->from('people');
 		$this->db->order_by('rut');
+
+		return $this->db->get()->result();
+	}
+
+	public function addUser($data) 
+	{
+		if($this->db->insert('users', $data))
+			return true;
+		else
+			return false;
+	}
+
+	public function getUsersByCompany($id)
+	{
+		$this->db->select('*');
+		$this->db->from('users');
+		$this->db->join('companies','companies.id = users.companies_id');
+		$this->db->where('companies.id', $id);
+		$this->db->order_by('users.user', 'asc');
 
 		return $this->db->get()->result();
 	}

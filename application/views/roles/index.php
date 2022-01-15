@@ -10,13 +10,11 @@
 
           <div class="box-body">
             <section class="content">
-                <a href="<?php echo site_url() ?>/CRoles/add" class="btn btn-primary">Agregar</a><br><hr>
                 <table id="table-roles" class="table table-striped table-bordered table-condensed" style="width:100%;">
                     <thead>
                       <tr>
                         <th width="10%">ID</th>
                         <th>Rol</th>
-                        <th>Acción</th>
                       </tr>
                     </thead>
                     <tbody></tbody>
@@ -56,8 +54,7 @@
           },
           "columns": [
             { "data": "ID"},
-            { "data": "Rol" },
-            { "data": "Acción" }
+            { "data": "Rol" }
           ],
           "columnDefs": [
             {
@@ -72,22 +69,6 @@
               "orderable": true,
               "render": function(data, type, row) {
                 return row.rol
-              }
-            },
-            {
-              "targets": [2],
-              "orderable": false,
-              "render": function(data, type, row) {
-                return `
-                  <a href="<?php echo site_url(); ?>/CRoles/view?id=`+row.id+`" class="btn btn-primary btn-xs" role="button">
-                    <i class='fa fa-search'></i> Ver
-                  </a>
-                  <a href="<?php echo site_url(); ?>/CRoles/edit?id=`+row.id+`" class="btn btn-warning btn-xs" role="button">
-                      <i class='fa fa-pencil-square-o'></i> Editar
-                  </a>
-                  <a href="#" class="btn btn-danger btn-xs" role="button" onclick="deleteRol(`+row.id+`);">
-                      <i class='fa fa-trash-o'></i> Eliminar
-                  </a>`;
               }
             }
            ],

@@ -16,8 +16,25 @@
                     <span>&nbsp;&nbsp;</span>
                   </div>
                   <br>
+                  <?php 
+                    $ordenes_transporte = json_decode($ordenes_transporte, true); 
+
+                    foreach($ordenes_transporte['data'] as $ot)
+                    {
+
+                      echo '<div class="col-md-3 col-lg-3 col-sm-3">
+                              <div class="card" style="width: 18rem;">
+                                <div class="card-body">
+                                  <h5 class="card-title">OT '.$ot['code'].' '.$ot['date'].'</h5>
+                                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the cards content.</p>
+                                  <a href="#" class="btn btn-primary">'.$ot['operation'].'</a>
+                                </div>
+                              </div>
+                            </div>';
+                      
+                    }
                   
-                  <?php echo $ot; ?>
+                  ?>
               </section>
             </div>
             <div class="box-footer"></div>
