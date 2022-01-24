@@ -193,6 +193,20 @@
 			);
 		});
 
+		$('#select-city').change(function(){
+			
+			$.ajax({
+				url: site_url + '/CCompany/getCommunesByCity',
+				type: 'post',
+				data: {city_id: $('#select-city').val()},
+				dataType: 'text',
+				success: function(data)
+				{
+					$('#select-communes').html('<option value="">Seleccione una opción</option>'+data);
+				}
+			});
+		});
+
 		$('#li-configuration').addClass('menu-open');
       	$('#ul-configuration').css('display', 'block');
 
