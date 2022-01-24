@@ -16,7 +16,7 @@
 			  					    <!--
 			  						<input type="text" class="form-control" name="input-rut" id="input-rut" oninput="checkRut(this)" placeholder="12345678-9" maxlength="10" value="<?php //if(!empty($company[0]['rut'])) echo $company[0]['rut'];?>-<?php //echo $company[0]['dv']; ?>" required>
 			  						-->
-			  						<input type="text" class="form-control" name="input-rut" id="input-rut" maxlength="10" value="<?php if(!empty($company[0]['rut'])) echo $company[0]['rut'];?>" disabled required>
+			  						<input type="text" class="form-control" name="input-rut" id="input-rut"oninput="checkRut(this)" placeholder="12345678-9" maxlength="10" value="<?php if(!empty($company[0]['rut'])) echo $company[0]['rut'].'-'.$company[0]['dv'];?>"  required>
 			  					</div>
 			  				</div>
 			  				<div class="form-group">
@@ -41,19 +41,40 @@
 			  				</div>
 
 			  				<div class="form-group">
-			  					<label for="city" class="col-sm-2 control-label">Ciudad</label>
+								<label for="users_state_id" class="col-sm-2 control-label">Ciudad</label>
+								<div class="col-sm-5">
+									<select name="select-city" id="select-city" class="form-control" required>
+										<option value="">Seleccione una opción</option>
+										<?php foreach ($city as $key) { ?>
+											<option value="<?php echo $key->id; ?>"><?php echo $key->city; ?></option>
+										<?php } ?>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="users_state_id" class="col-sm-2 control-label">Comuna</label>
+								<div class="col-sm-5">
+									<select name="select-communes" id="select-communes" class="form-control" required>
+										<option value="">Seleccione una opción</option>
+										<?php foreach ($communes as $key) { ?>
+											<option value="<?php echo $key->id; ?>"><?php echo $key->commune; ?></option>
+										<?php } ?>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group">
+			  					<label for="users_state_id" class="col-sm-2 control-label">Estado Empresa</label>
 			  					<div class="col-sm-5">
-			  						<input type="text" class="form-control" name="input-city" id="input-city" value="<?php if(!empty($company[0]['city'])) echo $company[0]['city'];?>">
+			  						<select name="select-companies_states_id" id="select-companies_states_id" class="form-control" required>
+			  							<option value="">Seleccione una opción</option>
+			  							<?php foreach ($companies_states as $key) { ?>
+			  								<option value="<?php echo $key->id; ?>"><?php echo $key->state; ?></option>
+			  							<?php } ?>
+			  						</select>
 			  					</div>
 			  				</div>
-
-			  				<div class="form-group">
-			  					<label for="commune" class="col-sm-2 control-label">Comuna</label>
-			  					<div class="col-sm-5">
-			  						<input type="text" class="form-control" name="input-commune" id="input-commune" value="<?php if(!empty($company[0]['commune'])) echo $company[0]['commune'];?>">
-			  					</div>
-			  				</div>
-
 			  				
 			  			</div>
 			  			<div class="box-footer">
@@ -137,11 +158,10 @@
 
 	$(document).ready(function()
 	{
+		$('#select-companies_states_id').val('<?php if(!empty($company[0]['companies_state_id'])) echo $company[0]['companies_state_id'];?>');
 
-		$('#select-profiles').val('<?php if(!empty($company[0]['profiles_id'])) echo $company[0]['profiles_id'];?>');
-		$('#select-company_states').val('<?php if(!empty($company[0]['company_states_id'])) echo $company[0]['company_states_id'];?>');
-
-		$('#select-contractor').val('<?php if(!empty($company[0]['contractor'])) echo $company[0]['contractor'];?>');
+		$('#select-city').val('<?php if(!empty($company[0]['city_id'])) echo $company[0]['city_id'];?>');
+		$('#select-communes').val('<?php if(!empty($company[0]['communes_id'])) echo $company[0]['communes_id'];?>');
 
 		$("#form-company").submit(function(event) {
 			event.preventDefault();
@@ -159,8 +179,9 @@
 					razon 				: 	$("#input-razon").val(),
 					fantasy 			: 	$("#input-fantasy").val(),
 					address 			: 	$("#input-address").val(),
-					city 				: 	$("#input-city").val(),
-					commune 				: 	$("#input-commune").val()
+					city_id 				: 	$("#select-city").val(),
+					communes_id			: 	$("#select-communes").val(),
+					companies_states_id	:	$('#select-companies_states_id').val()
 				},
 				function(data)
 				{

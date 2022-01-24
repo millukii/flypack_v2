@@ -27,6 +27,7 @@
                           <th>Direccion</th>
                           <th>Ciudad</th>
                           <th>Comuna</th>
+                          <th>Estado</th>
                           <th>Acción</th>
                         </tr>
                       </thead>
@@ -72,6 +73,7 @@
             { "data": "Direccion" },
             { "data": "Ciudad" },
             { "data": "Comuna" },
+            { "data": "Estado" },
             { "data": "Acción" }
           ],
           "columnDefs": [
@@ -126,6 +128,13 @@
             },
             {
               "targets": [7],
+              "orderable": true,
+              "render": function(data, type, row) {
+                return row.state
+              }
+            },
+            {
+              "targets": [8],
               "orderable": false,
               "render": function(data, type, row) {
                 return `
@@ -134,7 +143,10 @@
                   </a>
                   <a href="<?php echo site_url(); ?>/CCompany/edit?id=`+row.id+`" class="btn btn-warning btn-xs" role="button">
                       <i class='fa fa-pencil-square-o'></i> Editar
-                  </a>`;
+                  </a>
+                  <a class="btn btn-danger btn-xs" role="button" style="cursor: pointer;" onclick="deleteCompany(`+row.id+`);">
+                      <i class='fa fa-trash-o'></i> Eliminar
+                  </a>` ;
               }
             }
            ],

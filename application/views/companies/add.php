@@ -57,18 +57,25 @@
                     			  				</div>
                     
                     			  				<div class="form-group">
-                    			  					<label for="city" class="col-sm-2 control-label">Ciudad</label>
-                    			  					<div class="col-sm-10">
-                    			  						<input type="text" class="form-control" name="input-city" id="input-city">
-                    			  					</div>
-                    			  				</div>
-                    
-                    			  				<div class="form-group">
-                    			  					<label for="commune" class="col-sm-2 control-label">Comuna</label>
-                    			  					<div class="col-sm-10">
-                    			  						<input type="text" class="form-control" name="input-commune" id="input-commune">
-                    			  					</div>
-                    			  				</div>
+													<label for="users_state_id" class="col-sm-2 control-label">Ciudad</label>
+													<div class="col-sm-5">
+														<select name="select-city" id="select-city" class="form-control" required>
+															<option value="">Seleccione una opción</option>
+															<?php foreach ($city as $key) { ?>
+																<option value="<?php echo $key->id; ?>"><?php echo $key->city; ?></option>
+															<?php } ?>
+														</select>
+													</div>
+												</div>
+
+												<div class="form-group">
+													<label for="users_state_id" class="col-sm-2 control-label">Comuna</label>
+													<div class="col-sm-5">
+														<select name="select-communes" id="select-communes" class="form-control" required>
+															<option value="">Seleccione una opción</option>
+														</select>
+													</div>
+												</div>
 
                     			  			</div>
 											<hr>
@@ -228,8 +235,8 @@
 					razon 				: 	$("#input-razon").val(),
 					fantasy 			: 	$("#input-fantasy").val(),
 					address 			: 	$("#input-address").val(),
-					city 				: 	$("#input-city").val(),
-					commune 			: 	$("#input-commune").val(),
+					city_id 			: 	$("#select-city").val(),
+					communes_id 		: 	$("#select-communes").val(),
 					name				:	$('#input-name').val(),
 					lastname			:	$('#input-lastname').val(),
 					email				:	$('#input-email').val(),
@@ -248,6 +255,21 @@
 				}
 			);
 		});
+
+		$('#select-city').change(function(){
+			
+			$.ajax({
+				url: site_url + '/CCompany/getCommunesByCity',
+				type: 'post',
+				data: {city_id: $('#select-city').val()},
+				dataType: 'text',
+				success: function(data)
+				{
+					$('#select-communes').html('<option value="">Seleccione una opción</option>'+data);
+				}
+			});
+		});
+		
 
 		$('#li-configuration').addClass('menu-open');
       	$('#ul-configuration').css('display', 'block');

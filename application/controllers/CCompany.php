@@ -37,23 +37,9 @@ class CCompany extends CI_Controller {
 
 	public function add()
 	{
-		$people = $this->modelo->getAllPeople();
-
-		
-		$this->db->select('id');
-        $this->db->from('companies');
-        $this->db->order_by('id', 'desc');
-        $this->db->limit(1);
-        $res = $this->db->get()->result_array();
-        $res;
-        if(!empty($res[0]['id']))
-            $res = intval($res[0]['id']) + 1;
-        else
-            $res = 1;
-    
+		$city = $this->modelo->getCity();
 		$data = array(
-			'people' => $people,
-			'new_id' => $res,
+			'city' => $city
 		);
 
 		$this->load->view('header');
@@ -66,9 +52,15 @@ class CCompany extends CI_Controller {
 		$id = trim($this->input->get('id', TRUE));
 
 		$company = $this->modelo->getCompany_($id);
+		$companies_states = $this->modelo->getAllCompanies_States();
+		$city = $this->modelo->getCity();
+		$communes = $this->modelo->getCommunes();
 
 		$data = array(
-			'company' => $company
+			'company' => $company,
+			'companies_states' => $companies_states,
+			'city' => $city,
+			'communes' => $communes
 		);
 
 		$this->load->view('header');
@@ -100,8 +92,8 @@ class CCompany extends CI_Controller {
 		$razon 				= 	trim($this->input->post('razon', TRUE));
 		$fantasy 			= 	trim($this->input->post('fantasy', TRUE));
 		$address 			= 	trim($this->input->post('address', TRUE));
-		$city 				= 	trim($this->input->post('city', TRUE));
-		$commune 			= 	trim($this->input->post('commune', TRUE));
+		$city_id 			= 	trim($this->input->post('city_id', TRUE));
+		$communes_id 		= 	trim($this->input->post('communes_id', TRUE));
 
 		if(empty($razon))
 			$razon = 'N/A';
@@ -124,8 +116,8 @@ class CCompany extends CI_Controller {
 			'razon' 			=> $razon,
 			'fantasy' 			=> $fantasy,
 			'address' 			=> $address,
-			'city' 				=> $city,
-			'commune' 			=> $commune
+			'city_id' 			=> $city_id,
+			'communes_id' 		=> $communes_id
 		);
 
 		$companies_id = $this->modelo->addCompany($data);
@@ -174,9 +166,9 @@ class CCompany extends CI_Controller {
 		$razon 				= 	trim($this->input->post('razon', TRUE));
 		$fantasy 			= 	trim($this->input->post('fantasy', TRUE));
 		$address 			= 	trim($this->input->post('address', TRUE));
-		$city 				= 	trim($this->input->post('city', TRUE));
-		$commune 				= 	trim($this->input->post('commune', TRUE));
-		$company_states_id	=	trim($this->input->post('company_states_id', TRUE));
+		$city_id 				= 	trim($this->input->post('city_id', TRUE));
+		$communes_id 				= 	trim($this->input->post('communes_id', TRUE));
+		$companies_states_id	=	trim($this->input->post('companies_states_id', TRUE));
 		
 		if(empty($name))
 			$name = 'N/A';
@@ -199,8 +191,9 @@ class CCompany extends CI_Controller {
 			'razon' 				=> $razon,
 			'fantasy' 			=> $fantasy,
 			'address' 			=> $address,
-			'city' 			=> $city,
-			'commune' 			=> $commune
+			'city_id' 			=> $city_id,
+			'communes_id' 			=> $communes_id,
+			'companies_state_id' => $companies_states_id
 		);
 
 		if($this->modelo->editCompany($data, $id))
@@ -214,11 +207,18 @@ class CCompany extends CI_Controller {
 		$id 	= 	trim($this->input->post('id', TRUE));
 
 		$data = array(
-			'company_states_id'	=>	'2'
+			'companies_state_id'	=>	'3'
 		);
 
 		if($this->modelo->editCompany($data, $id))
-			echo '1';
+		{
+			$data = array(
+				'user_state_id'	=>	'3'
+			);
+
+			if($this->modelo->editUsers($data, $id))
+				echo '1';
+		}
 		else
 			echo '0';
 	}
@@ -259,6 +259,19 @@ class CCompany extends CI_Controller {
 		}
 
         echo '1';		
+	}
+
+	public function getCommunesByCity()
+	{
+		$city_id = trim($this->input->post('city_id', TRUE));
+		$communes =  $this->modelo->getCommunes($city_id);
+		$salida = '';
+		foreach($communes as $c)
+		{
+			$salida .= '<option value="'.$c->id.'">'.$c->commune.'</option>';
+		}
+
+		echo $salida;
 	}
 }
 

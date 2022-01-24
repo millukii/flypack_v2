@@ -40,6 +40,10 @@
 		  		    	    			<th>Comuna</th>
 		  		    	    			<td><?php if(!empty($company[0]['commune'])) echo $company[0]['commune'];?></td>
 		  		    	    		</tr>
+									<tr>
+		  		    	    			<th>Estado</th>
+		  		    	    			<td><?php if(!empty($company[0]['state'])) echo $company[0]['state'];?></td>
+		  		    	    		</tr>
 		  		    	    		
 		  		    		    </tbody>
 		  			    	</table>
