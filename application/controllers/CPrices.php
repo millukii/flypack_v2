@@ -2,17 +2,26 @@
 
 class CPrices extends CI_Controller {
 
+	private $letters;
+
 	function __construct()
 	{
 		parent::__construct();
 		$this->load->model('MPrices', 'modelo');
+		$this->letters = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 	}
 
 	public function index()
 	{
+		$companies = $this->modelo->getAllCompanies();
+
+		$data = array(
+			'companies' => $companies
+		);
+
 		$this->load->view('header');
 		$this->load->view('aside');
-		$this->load->view('prices/index');
+		$this->load->view('prices/index', $data);
 	}
 
 	public function datatable()
@@ -23,7 +32,9 @@ class CPrices extends CI_Controller {
 		$by = $this->input->post('order')['0']['column'];
 		$order = $this->input->post('order')['0']['dir'];
 
-		$result = $this->modelo->getPrices($start, $length, $search, $order, $by);
+		$company = trim($this->input->post('company', TRUE));
+
+		$result = $this->modelo->getPrices($start, $length, $search, $order, $by, $company);
 
 		$json_data = array(
 			"draw"            => intval($this->input->post('draw')),
@@ -104,6 +115,68 @@ class CPrices extends CI_Controller {
 			echo '1';
 		else
 			echo '0';
+	}
+
+	public function export_excelfile()
+	{
+		$company 			= trim($this->input->get('company',TRUE));
+		
+		/*
+		$this->db->select('*');
+		$this->db->from('rates');
+		$this->db->where('companies_id', $company);
+		$this->db->order_by('from');
+
+		$rates = $this->db->get()->result_array();
+		*/
+		$this->db->where('companies_id', $company);
+		$this->db->delete('rates');
+
+		$this->load->library('excel');
+
+		$ruta = './assets/excel/';
+        if (!file_exists($ruta)) {
+            mkdir($ruta, 0777, true);
+        }
+
+        $mensaje = '';
+
+        foreach($_FILES as $key) {
+	        if($key['error'] == UPLOAD_ERR_OK) {
+	            $nombreArchivo = $key['name'];
+	            $temporal = $key['tmp_name'];
+	            $destino = $ruta.$nombreArchivo;
+
+	            move_uploaded_file($temporal, $destino);
+	            
+	            $objReader = PHPExcel_IOFactory::createReader('Excel2007');
+	            $objReader->setReadDataOnly(true);
+
+	            $objPHPExcel = $objReader->load($destino);
+	            //$objWhorksheet = $objPHPExcel->getActiveSheet();
+
+	            $filas = $objPHPExcel->getActiveSheet()->getHighestRow();
+
+	            for ($i=2; $i <= $filas ; $i++)
+	            { 
+					/*
+	            	$data = array(
+						'rut' 				=> ($objPHPExcel->getActiveSheet()->getCell($this->letters[0].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($this->letters[0].$i)->getValue() : ''),
+						'dv' 			=> ($objPHPExcel->getActiveSheet()->getCell($this->letters[1].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($this->letters[1].$i)->getValue() : ''),
+						'name' 				=> ($objPHPExcel->getActiveSheet()->getCell($this->letters[2].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($this->letters[2].$i)->getValue() : ''),
+						'lastname' 		=> ($objPHPExcel->getActiveSheet()->getCell($this->letters[3].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($this->letters[3].$i)->getValue() : ''),
+						'address' 			=> ($objPHPExcel->getActiveSheet()->getCell($this->letters[4].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($this->letters[4].$i)->getValue() : 'sin dirección.'),
+						'phone' 			=> ($objPHPExcel->getActiveSheet()->getCell($this->letters[5].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($this->letters[5].$i)->getValue() : '000000000'),
+						'email' 			=> ($objPHPExcel->getActiveSheet()->getCell($this->letters[6].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($this->letters[6].$i)->getValue() : 'sin_email@gmail.com')
+					);
+					*/
+
+	            }
+				unlink($destino);
+    		}
+	    }
+	    
+	    echo $mensaje;
 	}
 }
 

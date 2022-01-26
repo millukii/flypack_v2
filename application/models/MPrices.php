@@ -8,21 +8,21 @@ class MPrices extends CI_Model
 		parent::__construct();
 	}
 
-	public function getPrices($start, $length, $search, $order, $by)
+	public function getPrices($start, $length, $search, $order, $by, $company)
 	{
 		$retornar = array();
 		if ($search) {
-			$busca = $this->getSearchPrices($search, $start, $length, $order, $by);
-			$retornar['numDataFilter'] = $this->getCountSearch($search, $start, $length, $order, $by);
+			$busca = $this->getSearchPrices($search, $start, $length, $order, $by, $company);
+			$retornar['numDataFilter'] = $this->getCountSearch($search, $start, $length, $order, $by, $company);
 			$retornar['data'] = $busca['datos'];
 		}
 		else {
-			$todo = $this->getAllPrices($start, $length, $order, $by);
-			$retornar['numDataFilter'] = $this->getCount();
+			$todo = $this->getAllPrices($start, $length, $order, $by, $company);
+			$retornar['numDataFilter'] = $this->getCount($company);
 			$retornar['data'] = $todo['datos'];
 		}
 
-		$retornar['numDataTotal'] = $this->getCount();
+		$retornar['numDataTotal'] = $this->getCount($company);
 
 		return $retornar;
 	}
@@ -38,9 +38,10 @@ class MPrices extends CI_Model
 	}
 
 	// Funciones auxiliares datatable
-	public function getAllPrices($start, $length, $order, $by)
+	public function getAllPrices($start, $length, $order, $by, $company)
 	{
 		$this->db->select('id, value, from, to');
+		$this->db->where('companies_id', $company);
 		if ($by == 0) {
 			$this->db->order_by('id', $order);
 		}
@@ -55,9 +56,10 @@ class MPrices extends CI_Model
 		return $retornar;
 	}
 
-	public function getSearchPrices($search, $start, $length, $order, $by)
+	public function getSearchPrices($search, $start, $length, $order, $by, $company)
 	{
 		$this->db->select('id, value, from, to');
+		$this->db->where('companies_id', $company);
 		$this->db->like('id', $search);
 		$this->db->or_like('value', $search);
 		if ($by == 0) {
@@ -74,14 +76,16 @@ class MPrices extends CI_Model
 		return $retornar;
 	}
 
-	public function getCount()
+	public function getCount($company)
 	{
+		$this->db->where('companies_id', $company);
 		return $this->db->count_all('rates');
 	}
 
-	public function getCountSearch($search, $start, $length, $order, $by)
+	public function getCountSearch($search, $start, $length, $order, $by, $company)
 	{
 		$this->db->select('id');
+		$this->db->where('companies_id', $company);
 		$this->db->or_like('value', $search);
 		$quer = $this->db->get('rates')->num_rows();
 		return $quer;
@@ -113,6 +117,16 @@ class MPrices extends CI_Model
 			return true;
 		else
 			return false;
+	}
+
+	public function getAllCompanies()
+	{
+		$this->db->select('id, rut, dv, razon');
+		$this->db->from('companies');
+		$this->db->where('id <> 1');
+		$this->db->order_by('rut', 'asc');
+
+		return $this->db->get()->result();
 	}
 }
 

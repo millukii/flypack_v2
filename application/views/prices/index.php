@@ -13,18 +13,27 @@
                 <section class="content">
                 <a href="#" class="btn btn-primary">Importar</a>&nbsp;&nbsp;<a href="#" class="btn btn-primary">Exportar</a
                 <br><hr>
-                  <table id="table-prices" class="table table-striped table-bordered table-condensed" style="width:100%;">
-                      <thead>
-                      <tr>
-                        <th width="10%">ID</th>
-                        <th>Origen</th>
-                        <th>Destino</th>
-                        <th>Precio</th>
-                        <th>Acción</th>
-                      </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+                <select class="form-control" id="select-companies" name="select-companies">
+                  <option value="">Seleccione una Empresa</option>
+                  <?php foreach ($companies as $key) { ?>
+                      <option value="<?php echo $key->id; ?>"><?php echo $key->rut.'-'.$key->dv.' '.$key->razon; ?></option>
+                    <?php } ?>
+                </select>
+                <hr>
+                    <div id="div-table">
+                      <table id="table-prices" class="table table-striped table-bordered table-condensed" style="width:100%;">
+                          <thead>
+                          <tr>
+                            <th width="10%">ID</th>
+                            <th>Origen</th>
+                            <th>Destino</th>
+                            <th>Precio</th>
+                            <th>Acción</th>
+                          </tr>
+                        </thead>
+                        <tbody></tbody>
+                      </table>
+                    </div>
             </section>
           </div>
           <div class="box-footer"></div>
@@ -40,6 +49,16 @@
 <script>
 
     $(document).ready(function() {
+      loadDataTable();
+
+      $('#select-companies').change(function(){
+        loadDataTable();
+      });
+    });
+
+    function loadDataTable()
+    {
+      $('#div-table').html('<table id="table-prices" class="table table-striped table-bordered table-condensed" style="width:100%;"><thead><tr><th width="10%">ID</th><th>Origen</th><th>Destino</th><th>Precio</th><th>Acción</th></tr></thead><tbody></tbody></table>');
       $('#table-prices').DataTable({
           "lengthMenu": [[2000, 2500, 5000, -1], [2000, 2500, 5000, "All"]],
           'responsive': true,
@@ -57,6 +76,7 @@
           'ajax': {
             "url": site_url + "/CPrices/datatable",
             "type":"POST",
+            "data":{company: $('#select-companies').val()},
           },
           "columns": [
             { "data": "ID"},
@@ -106,9 +126,7 @@
             }
            ],
         });
-
-    
-    });
+    }
 
 
 </script>

@@ -44,7 +44,7 @@
 				function(data)
 				{
 					if (data == 1)
-						window.location.replace(site_url+"/CPrice/index");
+						window.location.replace(site_url+"/CPrices/index");
 					else 
 						alert("Precio existente.");
 				}
