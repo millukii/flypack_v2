@@ -25,6 +25,9 @@
 19. Aplicar precio sugerido que se encuentre en la tabla rates
 20. Dejar edit ot igual al add pero con edicion del estado
 
+21. Agregar boton para editar de usuarios que inicia sesión, todos menos el campo "user". (mel)
+22. Al momento de que se cree un usuario, generar una constraseña aleatoria y mande un correo al usuario con sus datos para iniciar sesion. (mel)
+
 ## Vistas
 
 - Cliente:  OT(solo de la empresa que inicia sesion), Precios, Etiquetas
