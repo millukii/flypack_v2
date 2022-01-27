@@ -11,7 +11,7 @@
           
           <div class="box-body">
                 <section class="content">
-                <a href="#" class="btn btn-primary">Importar</a>&nbsp;&nbsp;<a href="#" class="btn btn-primary">Exportar</a
+                <a href="#" class="btn btn-primary">Importar</a>&nbsp;&nbsp;<a href="<?php echo base_url();?>index.php/CPrices/export_excelfile" class="btn btn-primary">Exportar</a
                 <br><hr>
                 <select class="form-control" id="select-companies" name="select-companies">
                   <option value="">Seleccione una Empresa</option>
