@@ -199,6 +199,15 @@ class CPrices extends CI_Controller {
 
 		$objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);
 		$objWriter->save($ruta.'precios_'.date('Ymd').'.xlsx');
+
+		// We'll be outputting an excel file
+		header('Content-type: application/vnd.ms-excel');
+
+		// It will be called file.xls
+		header('Content-Disposition: attachment; filename="file.xls"');
+
+		// Write file to the browser
+		$objWriter->save('php://output');
 	}
 }
 
