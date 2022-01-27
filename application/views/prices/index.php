@@ -13,8 +13,8 @@
                 <section class="content">
 
                   <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
-                    <form method="post" enctype="multipart/form-data" action="<?php echo base_url();?>index.php/CPrices/import_excelfile">
-                      <input type="file" name="spreadsheet" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
+                    <form id="form-upload_file" method="post" enctype="multipart/form-data" action="<?php echo base_url();?>index.php/CPrices/import_excelfile">
+                      <input id="input-upload_file" type="file" name="spreadsheet" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
                     </form>
                   
                   </div>
@@ -66,7 +66,7 @@
       });
 
       $('#input-upload_file').change(function(){
-        
+        $('#form-upload_file').trigger('submit');
       });
     });
 
