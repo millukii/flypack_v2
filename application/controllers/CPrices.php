@@ -204,7 +204,7 @@ class CPrices extends CI_Controller {
 		header('Content-type: application/vnd.ms-excel');
 
 		// It will be called file.xls
-		header('Content-Disposition: attachment; filename="'.$ruta.'precios_'.date('Ymd').'.xlsx"');
+		header('Content-Disposition: attachment; filename="precios_'.date('Ymd').'.xlsx"');
 
 		// Write file to the browser
 		$objWriter->save('php://output');
