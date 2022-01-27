@@ -117,7 +117,7 @@ class CPrices extends CI_Controller {
 			echo '0';
 	}
 
-	public function export_excelfile1()
+	public function import_excelfile()
 	{
 		$company 			= trim($this->input->get('company',TRUE));
 		
@@ -160,6 +160,7 @@ class CPrices extends CI_Controller {
 
 	            for ($i=2; $i <= $filas ; $i++)
 	            { 
+					echo $objPHPExcel->getActiveSheet()->getCell($this->letters[0].$i)->getValue().'<br>';
 					/*
 	            	$data = array(
 						'rut' 				=> ($objPHPExcel->getActiveSheet()->getCell($this->letters[0].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($this->letters[0].$i)->getValue() : ''),

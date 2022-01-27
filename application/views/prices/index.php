@@ -11,8 +11,18 @@
           
           <div class="box-body">
                 <section class="content">
-                <a href="#" class="btn btn-primary">Importar</a>&nbsp;&nbsp;<a href="<?php echo base_url();?>index.php/CPrices/export_excelfile" class="btn btn-primary">Exportar</a
-                <br><hr>
+
+                  <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
+                    <form method="post" enctype="multipart/form-data" action="<?php echo base_url();?>index.php/CPrices/import_excelfile">
+                      <input type="file" name="spreadsheet" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
+                    </form>
+                  
+                  </div>
+
+                  <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
+                  <a href="<?php echo base_url();?>index.php/CPrices/export_excelfile" class="btn btn-primary">Exportar</a
+                <br>
+                  </div><hr>
                 <select class="form-control" id="select-companies" name="select-companies">
                   <option value="">Seleccione una Empresa</option>
                   <?php foreach ($companies as $key) { ?>
@@ -53,6 +63,10 @@
 
       $('#select-companies').change(function(){
         loadDataTable();
+      });
+
+      $('#input-upload_file').change(function(){
+        
       });
     });
 
