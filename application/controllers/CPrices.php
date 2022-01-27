@@ -184,15 +184,21 @@ class CPrices extends CI_Controller {
 	{
 		$this->load->library('Excel');
 
+		$ruta = './assets/excel/';
+        if (!file_exists($ruta)) {
+            mkdir($ruta, 0777, true);
+        }
+
+		$company = trim($this->input->get('company',TRUE));
+
 		$objPHPExcel = new PHPExcel();
 		$objPHPExcel->setActiveSheetIndex(0);
-		$rowCount = 1;
 
 		$objPHPExcel->getActiveSheet()->SetCellValue('A1', "hola");
 		$objPHPExcel->getActiveSheet()->SetCellValue('B1',"chao");
 
 		$objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);
-		$objWriter->save('some_excel_file.xlsx');
+		$objWriter->save($ruta.'precios_'.date('Ymd').'.xlsx');
 	}
 }
 
