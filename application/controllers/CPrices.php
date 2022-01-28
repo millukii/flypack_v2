@@ -200,8 +200,6 @@ class CPrices extends CI_Controller {
 		$this->db->order_by('id', 'asc');
 		$prices = $this->db->get()->result_array();
 
-		print_r($prices);
-
 		$from = array();
 
 		$objPHPExcel = new PHPExcel();
