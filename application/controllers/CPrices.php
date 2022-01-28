@@ -172,8 +172,8 @@ class CPrices extends CI_Controller {
 						$value = str_replace(',','',$value);
 
 						$data = array(
-							'from' => $from,
-							'to' => $to,
+							'from' => strtoupper($from),
+							'to' => strtoupper($to),
 							'value' => $value,
 							'companies_id' => $company
 						);
