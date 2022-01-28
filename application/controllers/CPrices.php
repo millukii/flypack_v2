@@ -207,25 +207,16 @@ class CPrices extends CI_Controller {
 
 		$objPHPExcel->getActiveSheet()->SetCellValue('A1', "");
 		$indice = 0;
-		$indice2 = 0;
 		for($i=0; $i < count($prices); $i++)
 		{
+			//crear filas y columnas
 			if(!in_array($prices[$i]['from'], $from))
 			{
-				//$indice2 = 0;
 				array_push($from, $prices[$i]['from']);
 				$objPHPExcel->getActiveSheet()->SetCellValue('A'.($indice+2),$prices[$i]['from']);
 				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice+1)].'1',$prices[$i]['from']);
 
-				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice+1)].($indice+2),$prices[$i]['value']);
-
 				$indice++;
-				//$indice2++;
-			}
-			else
-			{
-				//$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice2+1)].($indice+1),$prices[$i]['value']);
-				//$indice2++;
 			}
 		}
 
