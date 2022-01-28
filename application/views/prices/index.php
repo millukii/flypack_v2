@@ -68,10 +68,13 @@
       });
 
       $('#input-upload_file').change(function(){
-        if(('#select-companies').val() != '' && ('#select-companies').val() != '0')
+        if($('#select-companies').val() != '' && $('#select-companies').val() != '0')
           $('#form-upload_file').trigger('submit');
-        else
+        else{
+          $('#input-upload_file').val('');
           alert('Debe seleccionar una Empresa');
+        }
+          
       });
     });
 
@@ -82,8 +85,8 @@
           "lengthMenu": [[2000, 2500, 5000, -1], [2000, 2500, 5000, "All"]],
           'responsive': true,
           'paging': true,
-          'info': true,
-          'filter': true,
+          'info': false,
+          'filter': false,
           'ordering': true,
           // 'stateSave': true,
           'processing':true,
