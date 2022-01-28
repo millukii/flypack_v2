@@ -222,8 +222,7 @@ class CPrices extends CI_Controller {
 			}
 			else
 			{
-				//$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice2+1)].'1',$prices[$i]['from']);
-				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice2+1)].($indice2+2),$prices[$i]['value']);
+				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice2)].($indice),$prices[$i]['value']);
 				$indice2++;
 			}
 		}
