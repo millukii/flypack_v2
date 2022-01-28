@@ -186,7 +186,7 @@ class CPrices extends CI_Controller {
     		}
 	    }
 	    
-	    $this->index();
+	    header("Location: ".base_url()."index.php/CPrices/index");
 	}
 
 	public function export_excelfile()
