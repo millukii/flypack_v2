@@ -222,14 +222,14 @@ class CPrices extends CI_Controller {
 				array_push($from, $prices[$i]['from']);
 				$objPHPExcel->getActiveSheet()->SetCellValue('A'.($indice+2),$prices[$i]['from']);
 				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice+2)].'1',$prices[$i]['from']);
-				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice2+2)].($indice2+2),$prices[$i]['value']);
+				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice2+2)].($indice2+2),$this->getValue($prices[$i]['from'], $prices[$i]['to'], $company));
 				$indice++;
 				$indice2++;
 			}
 			else
 			{
 				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice+2)].'1',$prices[$i]['from']);
-				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice2+2)].($indice2+2),$prices[$i]['value']);
+				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice2+2)].($indice2+2),$$this->getValue($prices[$i]['from'], $prices[$i]['to'], $company));
 				$indice2++;
 			}
 		}
@@ -245,6 +245,23 @@ class CPrices extends CI_Controller {
 
 		// Write file to the browser
 		$objWriter->save('php://output');
+	}
+
+	private function getValue($from, $to, $company)
+	{
+		$this->db->select('value');
+		$this->db->from('rates');
+		$this->db->where('from', $from);
+		$this->db->where('to', $to);
+		$this->db->where('companies_id', $company);
+		$this->db->limit(1);
+
+		$res = $this->db->get()->result_array();
+		if(!empty($res[0]['value']))
+			return $res[0]['value'];
+		else
+			return 0;
+
 	}
 }
 
