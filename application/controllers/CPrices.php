@@ -201,12 +201,15 @@ class CPrices extends CI_Controller {
 		$prices = $this->db->get()->result_array();
 
 		$from = array();
+		$from_to = array();
 
 		$objPHPExcel = new PHPExcel();
 		$objPHPExcel->setActiveSheetIndex(0);
 
 		$objPHPExcel->getActiveSheet()->SetCellValue('A1', "");
 		$indice = 0;
+		$indice2 = 0;
+		$indice3 = 0;
 		for($i=0; $i < count($prices); $i++)
 		{
 			//crear filas y columnas
@@ -218,6 +221,24 @@ class CPrices extends CI_Controller {
 
 				$indice++;
 			}
+			
+			//llenar valores
+			
+			if(!in_array($prices[$i]['from'].$prices[$i]['to'], $from_to) && !in_array($prices[$i]['to'].$prices[$i]['from'], $from_to))
+			{
+				array_push($from_to, $prices[$i]['from'].$prices[$i]['to']);
+				
+				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice2+2)].($indice3+2),$prices[$i]['value']);
+				$indice2++;
+			}
+			else
+			{
+				$indice2 = 0;
+				$indice3++;
+				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice2+2)].($indice3+2),$prices[$i]['value']);
+				$indice2++;
+			}
+			
 		}
 
 		$objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);
