@@ -224,20 +224,19 @@ class CPrices extends CI_Controller {
 			
 			//llenar valores
 			
-			if(!in_array($prices[$i]['from'].$prices[$i]['to'], $from_to) && !in_array($prices[$i]['to'].$prices[$i]['from'], $from_to))
+			if(!in_array($prices[$i]['from'], $from_to))
 			{
-				array_push($from_to, $prices[$i]['from'].$prices[$i]['to']);
+				array_push($from_to, $prices[$i]['from']);
 				
-				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice2+2)].($indice3+2),$prices[$i]['value']);
+				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice2+1)].($indice3+2),$prices[$i]['value']);
 				$indice2++;
 			}
 			else
 			{
-				$indice2 = 0;
 				$indice3++;
-				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice2+2)].($indice3+2),$prices[$i]['value']);
-				$indice2++;
+				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice2+1)].($indice3+2),$prices[$i]['value']);
 			}
+			
 		}
 
 		$objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);
