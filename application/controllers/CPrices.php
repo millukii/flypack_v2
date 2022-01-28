@@ -220,10 +220,13 @@ class CPrices extends CI_Controller {
 				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice+1)].'1',$prices[$i]['from']);
 
 				$indice++;
+				$indice2 = 0;
 			}
 			
 			//llenar valores
-			
+			$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice2+2)].($indice+1),$prices[$i]['value']);
+			$indice2++;
+			/*
 			if(!in_array($prices[$i]['from'], $from_to))
 			{
 				array_push($from_to, $prices[$i]['from']);
@@ -236,7 +239,7 @@ class CPrices extends CI_Controller {
 				$indice3++;
 				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice2+1)].($indice3+2),$prices[$i]['value']);
 			}
-			
+			*/
 		}
 
 		$objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);
