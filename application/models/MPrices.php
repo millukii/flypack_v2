@@ -42,6 +42,7 @@ class MPrices extends CI_Model
 	{
 		$this->db->select('id, value, from, to');
 		$this->db->where('companies_id', $company);
+		$this->db->where('value > 0');
 		if ($by == 0) {
 			$this->db->order_by('id', $order);
 		}
@@ -60,6 +61,7 @@ class MPrices extends CI_Model
 	{
 		$this->db->select('id, value, from, to');
 		$this->db->where('companies_id', $company);
+		$this->db->where('value > 0');
 		$this->db->like('id', $search);
 		$this->db->or_like('value', $search);
 		if ($by == 0) {
@@ -79,6 +81,7 @@ class MPrices extends CI_Model
 	public function getCount($company)
 	{
 		$this->db->where('companies_id', $company);
+		$this->db->where('value > 0');
 		return $this->db->count_all('rates');
 	}
 
@@ -86,6 +89,7 @@ class MPrices extends CI_Model
 	{
 		$this->db->select('id');
 		$this->db->where('companies_id', $company);
+		$this->db->where('value > 0');
 		$this->db->or_like('value', $search);
 		$quer = $this->db->get('rates')->num_rows();
 		return $quer;
