@@ -15,6 +15,7 @@
                   <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
                     <form id="form-upload_file" method="post" enctype="multipart/form-data" action="<?php echo base_url();?>index.php/CPrices/import_excelfile">
                       <input id="input-upload_file" type="file" name="spreadsheet" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
+                      <input name="input-company" id="input-company" type="hidden" value="0">
                     </form>
                   
                   </div>
@@ -62,11 +63,15 @@
       loadDataTable();
 
       $('#select-companies').change(function(){
+        $('#input-company').val($('#select-companies').val());
         loadDataTable();
       });
 
       $('#input-upload_file').change(function(){
-        $('#form-upload_file').trigger('submit');
+        if(('#select-companies').val() != '' && ('#select-companies').val() != '0')
+          $('#form-upload_file').trigger('submit');
+        else
+          alert('Debe seleccionar una Empresa');
       });
     });
 
