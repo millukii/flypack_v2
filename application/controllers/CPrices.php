@@ -156,7 +156,7 @@ class CPrices extends CI_Controller {
 					for($j=2; $j <= $filas; $j++)
 					{
 						$to = $objPHPExcel->getActiveSheet()->getCell($this->letters[0].$j)->getValue();
-						$value = $objPHPExcel->getActiveSheet()->getCell($this->letters[$j].$i)->getValue();
+						$value = $objPHPExcel->getActiveSheet()->getCell($this->letters[$j].$j)->getValue();
 						
 						if(empty($from))
 							$fom = 'N/A';
@@ -200,11 +200,34 @@ class CPrices extends CI_Controller {
 
 		$company = trim($this->input->get('company',TRUE));
 
+		$this->db->select('*');
+		$this->db->from('rates');
+		$this->db->where('companies_id', $company);
+		$this->db->order_by('id', 'asc');
+		$prices = $this->db->get()->result_array();
+
+		$from = array();
+
 		$objPHPExcel = new PHPExcel();
 		$objPHPExcel->setActiveSheetIndex(0);
 
-		$objPHPExcel->getActiveSheet()->SetCellValue('A1', "hola");
-		$objPHPExcel->getActiveSheet()->SetCellValue('B1',"chao");
+		$objPHPExcel->getActiveSheet()->SetCellValue('A1', "");
+
+		for($i=0; $i < count($prices); $i++)
+		{
+			if(!in_array($prices[$i]['from'], $from))
+			{
+				array_push($from, $prices[$i]['from']);
+				$objPHPExcel->getActiveSheet()->SetCellValue('A'.($i+1),$prices[$i]['from']);
+				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($i+1)].'1',$prices[$i]['from']);
+				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($i+1)].($i+1),$prices[$i]['value']);
+			}
+			else
+			{
+				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($i+1)].'1',$prices[$i]['from']);
+				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($i+1)].($i+1),$prices[$i]['value']);
+			}
+		}
 
 		$objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);
 		//$objWriter->save($ruta.'precios_'.date('Ymd').'.xlsx');
