@@ -156,29 +156,23 @@ class CPrices extends CI_Controller {
 					for($j=2; $j <= $filas; $j++)
 					{
 						$to = $objPHPExcel->getActiveSheet()->getCell($this->letters[0].$j)->getValue();
-						$value = $objPHPExcel->getActiveSheet()->getCell($this->letters[$j].$j)->getValue();
-						
-						if(empty($from))
-							$fom = 'N/A';
-
-						if(empty($to))
-							$to = 'N/A';
-
-						if(empty($value))
-							$value = 0;
+						$value = $objPHPExcel->getActiveSheet()->getCell($this->letters[$j].($j-1))->getValue();
 						
 						$value = str_replace('$','',$value);
 						$value = str_replace('.','',$value);
 						$value = str_replace(',','',$value);
 
-						$data = array(
-							'from' => strtoupper($from),
-							'to' => strtoupper($to),
-							'value' => $value,
-							'companies_id' => $company
-						);
+						if(!empty($from))
+						{
+							$data = array(
+								'from' => strtoupper($from),
+								'to' => strtoupper($to),
+								'value' => $value,
+								'companies_id' => $company
+							);
 
-						$this->db->insert('rates', $data);
+							$this->db->insert('rates', $data);
+						}
 					}
 
 	            }
