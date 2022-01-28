@@ -156,7 +156,7 @@ class CPrices extends CI_Controller {
 					for($j=2; $j <= $filas; $j++)
 					{
 						$to = $objPHPExcel->getActiveSheet()->getCell($this->letters[0].$j)->getValue();
-						$value = $objPHPExcel->getActiveSheet()->getCell($this->letters[$j].$i)->getValue();
+						$value = $objPHPExcel->getActiveSheet()->getCell($this->letters[($j-1)].$i)->getValue();
 						
 						$value = str_replace('$','',$value);
 						$value = str_replace('.','',$value);
