@@ -215,15 +215,15 @@ class CPrices extends CI_Controller {
 				$indice2 = 0;
 				array_push($from, $prices[$i]['from']);
 				$objPHPExcel->getActiveSheet()->SetCellValue('A'.($indice+2),$prices[$i]['from']);
-				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice+2)].'1',$prices[$i]['from']);
-				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice+2)].($indice+2),$prices[$i]['value']);
+				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice+1)].'1',$prices[$i]['from']);
+				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice+1)].($indice+2),$prices[$i]['value']);
 				$indice++;
 				$indice2++;
 			}
 			else
 			{
-				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice2+2)].'1',$prices[$i]['from']);
-				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice2+2)].($indice2+2),$prices[$i]['value']);
+				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice2+1)].'1',$prices[$i]['from']);
+				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice2+1)].($indice2+2),$prices[$i]['value']);
 				$indice2++;
 			}
 		}
