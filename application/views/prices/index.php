@@ -20,9 +20,8 @@
                   
                   </div>
 
-                  <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
-                  <a href="<?php echo base_url();?>index.php/CPrices/export_excelfile" class="btn btn-primary">Exportar</a
-                <br>
+                  <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6" >
+                    <a style="cursor: pointer;" class="btn btn-primary" onclick="exportar();">Exportar</a>
                   </div><hr>
                 <select class="form-control" id="select-companies" name="select-companies">
                   <option value="">Seleccione una Empresa</option>
@@ -77,6 +76,12 @@
           
       });
     });
+
+    function exportar()
+    {
+      let url = "<?php echo base_url();?>index.php/CPrices/export_excelfile?company="+$('#select-companies').val();
+      window.location.href = url;
+    }
 
     function loadDataTable()
     {
