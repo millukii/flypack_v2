@@ -153,10 +153,10 @@ class CCompany extends CI_Controller {
 
 			if($this->modelo->addUser($data))
 			{
-				$message = '<hr>Bienvenido '.$name.':';
-				$message .= '<br>Se ha creado una cuenta para que puedas acceder al portal de Flypack, tus credenciales son:';
-				$message .= '<br>Usuario: '.$user;
-				$message .= '<br>Password: '.$password_;
+				$message = 'Bienvenido '.$name.'. ';
+				$message .= 'Se ha creado una cuenta para que puedas acceder al portal de Flypack, tus credenciales son: ';
+				$message .= '- Usuario: '.$user;
+				$message .= '- Password: '.$password_;
 				$this->sendEmail('no-reply@flypack.cl', $email, 'Credenciales de acceso', $message);
 				echo '1';
 			}
