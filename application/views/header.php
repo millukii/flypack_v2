@@ -141,9 +141,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
               <li class="user-footer">
                 <div class="pull-left">
-                  <!--
-                  <a href="<?php //echo site_url('CWelcome/Profile') ?>" class="btn btn-default btn-flat">Configuración</a>
-                  -->
+                  
+                  <a href="<?php echo site_url('CWelcome/Profile') ?>" class="btn btn-default btn-flat">Configuración</a>
+                  
                 </div>
                 <div class="pull-right">
                   <a href="<?php echo site_url("CWelcome/Logout");?>" class="btn btn-default btn-flat">Salir</a>

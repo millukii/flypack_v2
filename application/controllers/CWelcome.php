@@ -32,6 +32,7 @@ class CWelcome extends CI_Controller {
 		$time_now = $dt->format('H:i:s');
 
 		$user = trim($this->input->post('user', TRUE));
+		$password_ = trim($this->input->post('password', TRUE));
 		$password = md5(trim($this->input->post('password', TRUE)));
 		$ip = trim($this->input->post('ip', TRUE));
 
@@ -47,6 +48,7 @@ class CWelcome extends CI_Controller {
 					$session_array = array(
 						'user' => $user,
 						'password' => $password,
+						'password_' => $password_,
 						'rol' => $data[0]['rol'],
 						'rol_id' => $data[0]['rol_id'],
 						'users_id' => $data[0]['id'],
@@ -100,6 +102,50 @@ class CWelcome extends CI_Controller {
 		$this->session->userdata = array();
 		$this->session->sess_destroy();
 		header('Location: '.site_url("CWelcome"));
+	}
+
+	public function Profile()
+	{
+		$this->load->view('header');
+		$this->load->view('aside');
+		$this->load->view('users/profile');
+	}
+
+	public function updateData()
+	{
+		$password = trim($this->input->post('password', TRUE));
+		$name = trim($this->input->post('name', TRUE));
+		$lastname = trim($this->input->post('lastname', TRUE));
+		$email = trim($this->input->post('email', TRUE));
+		$phone = trim($this->input->post('phone', TRUE));
+
+		if(!empty($password))
+		{
+			$password = md5($password);
+
+			$data = array(
+				'password' => $password,
+				'name' => $name,
+				'lastname' => $lastname,
+				'email' => $email,
+				'phone' => $phone
+			);
+		}
+		else
+		{
+			$data = array(
+				'name' => $name,
+				'lastname' => $lastname,
+				'email' => $email,
+				'phone' => $phone
+			);
+		}
+			
+		$this->db->where('id', $this->session->userdata('users_id'));
+		$this->db->update('users',$data);
+
+		$this->Logout();
+		
 	}
 		
 }

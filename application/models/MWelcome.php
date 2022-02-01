@@ -9,7 +9,7 @@ class MWelcome extends CI_Model
 
 	public function getUserSession($user, $password)
 	{
-		$this->db->select('users.id as id, users.rol_id, roles.rol, users.name as name, users.lastname as lastname, users.user_state_id, user_state.state,  
+		$this->db->select('users.id as id, users.email as email, users.rol_id, roles.rol, users.name as name, users.lastname as lastname, users.user_state_id, user_state.state,  
 		users.phone, companies.rut, companies.dv, companies.razon, companies.id as companies_id');
 		$this->db->from('users');
 		$this->db->join('roles', 'roles.id = users.rol_id');

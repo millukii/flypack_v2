@@ -125,6 +125,9 @@ class CCompany extends CI_Controller {
 		{
 			$user 			= 	trim($this->input->post('user', TRUE));
 			$password 		= 	trim($this->input->post('password', TRUE));
+			if(empty($password))
+				$password = $this->generatePassword();
+			$password_ = $password;
 			$roles_id 		= 	2;
 			$name 			= 	trim($this->input->post('name', TRUE));
 			$lastname 		= 	trim($this->input->post('lastname', TRUE));
@@ -149,7 +152,14 @@ class CCompany extends CI_Controller {
 			);
 
 			if($this->modelo->addUser($data))
+			{
+				$message = '<hr>Bienvenido '.$name.':';
+				$message .= '<br>Se ha creado una cuenta para que puedas acceder al portal de Flypack, tus credenciales son:';
+				$message .= '<br>Usuario: '.$user;
+				$message .= '<br>Password: '.$password_;
+				$this->sendEmail('no-reply@flypack.cl', $email, 'Credenciales de acceso', $message);
 				echo '1';
+			}
 			else
 				echo '0';
 		}
@@ -272,6 +282,27 @@ class CCompany extends CI_Controller {
 		}
 
 		echo $salida;
+	}
+
+	private function generatePassword()
+	{
+		$comb = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+		$pass = array(); 
+		$combLen = strlen($comb) - 1; 
+		for ($i = 0; $i < 8; $i++) {
+			$n = rand(0, $combLen);
+			$pass[] = $comb[$n];
+		}
+		return implode($pass); 
+	}
+
+	private function sendEmail($from, $to, $subject, $message)
+	{
+		$to_ = $to;
+		$to = $from.', '.$to;
+		$headers = "From: ".$from . "\r\n" . "CC: ".$to_;
+		
+		mail($to, $subject, $message, $headers);
 	}
 }
 
