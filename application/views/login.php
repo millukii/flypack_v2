@@ -17,7 +17,7 @@
         left: 0;
         background-size: cover;
         background-position: 50% 50%;
-        background-image: url('<?php echo base_url().'/assets/img/background_final.jpg'?>');
+        background-image: url('<?php echo base_url().'/assets/img/back_delivery.png'?>');
         background-repeat:repeat;
       }
       .form-signin input[type="text"] {
@@ -65,9 +65,10 @@
         color: #fff;
       }
       .input-group-addon {
-    color: #fff;
-    background: #3276B1;
-}
+        color: #fff;
+        background: #3276B1;
+      }
+
   </style>
 </head>
 <body>
@@ -121,7 +122,7 @@
 
         </div>
     </div>
-    <br><br><br><br><br>
+    <br>
     <footer style="color: white;" class="main-footer-wrapper dark-black">
       <div id="wrapper-footer">
         <div class="bottom-bar-wrapper">
@@ -130,7 +131,10 @@
                 <div class="row">
                   <div class="col-md-12 sidebar text-center">
                     <aside id="text-12" class="widget widget_text">     
-                      <div class="textwidget"><p><b>Copyright &copy; <?php echo date('Y');?> <a href="#">FLYPACK </a>.</strong> Todos los derechos reservados.</b></p>
+                      <div class="textwidget">
+                        <img src="<?php echo base_url()?>/assets/img/logo.png">
+                        <h4>Copyright &copy; <?php echo date('Y');?> 
+                        </strong> Todos los derechos reservados.<b></h4>
                       </div>
                     </aside>              
                   </div>
