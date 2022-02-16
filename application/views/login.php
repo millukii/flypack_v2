@@ -76,7 +76,7 @@
         <div class="row vertical-offset-100">
             <div class="col-md-6 col-md-offset-3">
                 <div class="panel panel-default">
-                    <div style="background-color: #0e7d99;" class="panel-heading">                                
+                    <div style="background-color: #337ab7; color: white;" class="panel-heading">                                
                         <div class="row-fluid user-row">
 
                             <center>
