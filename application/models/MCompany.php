@@ -217,6 +217,25 @@ class MCompany extends CI_Model {
 		return $this->db->get()->result();
 	}
 
+	public function add_company_address($data)
+	{
+		if($this->db->insert('company_address', $data))
+			return true;
+		else
+			return false;
+	}
+
+	public function getSucursales($companies_id)
+	{
+		$this->db->select('city.city, communes.commune, company_address.address');
+		$this->db->from('company_address');
+		$this->db->join('city','city.id = company_address.city_id');
+		$this->db->join('communes','communes.id = company_address.communes_id');
+		$this->db->where('company_address.companies_id', $companies_id);
+
+		return $this->db->get()->result();
+	}
+
 }
 
 ?>

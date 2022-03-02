@@ -50,8 +50,35 @@
 			  			</section>
 				  	</div>
 
+					<div class="box-body">
+					  <h4>Sucursales:</h4>
+			  			<section class="content">
 
-					  <div class="box-body">
+			  			    <table class="table">
+								<thead>
+									<tr>
+										<th>Ciudad</th>
+										<th>Comuna</th>
+										<th>Dirección</th>
+									</tr>
+								</thead>
+		  		    		    <tbody>
+								  	<?php
+									  if(!empty($sucursales))
+									  {
+									  	foreach ($sucursales as $key) { ?>
+										<tr>
+											<?php echo '<td>'.$key->city.'</td>';echo '<td>'.$key->commune.'</td>';echo '<td>'.$key->address.'</td>'; ?>
+									  	</tr>
+									<?php }} ?>
+		  		    		    </tbody>
+		  			    	</table>
+
+			  			</section>
+
+				  	</div>
+
+					<div class="box-body">
 					  <h4>Usuarios:</h4>
 			  			<section class="content">
 
