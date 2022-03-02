@@ -107,13 +107,12 @@
                           <input type="hidden" name="ip" id="ip" value="">
                           <input class="btn btn-lg btn-primary btn-block" type="submit" id="login" value="Iniciar">
                                 <br>
-                          <!-- 
-                          <div class="checkbox">
+                    
+                          <div  class="form-group">
                             <label>
-                              <input type="checkbox"> Remember me
+                              <a href="<?php echo base_url()?>">Haz olvidado tu contraseña? Recupera tu cuenta</a>
                             </label>
                           </div>
-                          --> <!-- /.checkbox -->
                         </form>
 
                     </div>

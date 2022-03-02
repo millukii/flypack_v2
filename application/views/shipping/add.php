@@ -131,9 +131,9 @@
                     			  				</div>
                     
                     			  				<div class="form-group">
-                    			  					<label for="people" class="col-sm-2 control-label">Estado</label>
+                    			  					<label for="select-shipping_states" class="col-sm-2 control-label">Estado</label>
                     			  					<div class="col-sm-5">
-                    			  						<select name="select-people_states" id="select-people_states" class="form-control" required>
+                    			  						<select name="select-shipping_states" id="select-shipping_states" class="form-control" required>
                     			  							<option value="">Seleccione una opción</option>
                     			  							<?php foreach ($shipping_states as $key) { ?>
                     			  								<option value="<?php echo $key->id; ?>"><?php echo $key->state; ?></option>
@@ -194,8 +194,8 @@
           destiny: $("#input-destiny").val(),
           shipping_date: $("#input-shipping-date").val(),
           shipping_type: $("#select-shipping-type").val(),
-          companies_id: $("#input-company").val(),
-          shipping_states_id: $("#input-shipping-state").val(),
+          companies_id: $("#select-company").val(),
+          shipping_states_id: $("#select-shipping_states").val(),
           sender: $("#input-sender").val(),
           address: $("#input-address").val(),
           receiver_name: $("#input-receiver-name").val(),
