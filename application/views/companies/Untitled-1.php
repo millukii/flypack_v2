@@ -48,16 +48,6 @@
                     			  						<input type="text" class="form-control" name="input-fantasy" id="input-fantasy">
                     			  					</div>
                     			  				</div>
-
-												<div class="form-group">
-                    			  					<label for="fantasy" class="col-sm-2 control-label">Tipo de Precios</label>
-                    			  					<div class="col-sm-10">
-														<select name="select-rate_type" id="select-rate_type" class="form-control" required>
-															<option value="1">Estandar (Origen a Destino)</option>
-															<option value="2">Tamaño Paquete</option>
-														</select>
-                    			  					</div>
-                    			  				</div>
                     
                     			  				<div class="form-group">
                     			  					<label for="address" class="col-sm-2 control-label">Dirección Mat.</label>
@@ -112,7 +102,7 @@
 												<div class="form-group">
 													<label for="password" class="col-sm-2 control-label">Contraseña</label>
 													<div class="col-sm-10">
-														<input type="password" class="form-control" name="input-password" id="input-password" required>
+														<input type="password" class="form-control" name="input-password" id="input-password">
 													</div>
 												</div>
 
@@ -248,22 +238,20 @@
             
             cuerpo = $('#input-rut').val();
 	        //dv = cuerpo;
-			
 			var data_suc = [];
-			var sucursales_address = document.getElementsByName('input-suc-address');
-			var sucursales_city = document.getElementsByName('select-suc-city');
-			var sucursales_commune = document.getElementsByName('select-suc-communes');
+			var sucursales_address = document.getElementsByClassName('input-suc-address');
+			var sucursales_city = document.getElementsByClassName('select-suc-city');
+			var sucursales_commune = document.getElementsByClassName('select-suc-communes');
 
 			for(let i=0; i< sucursales_address.length; i++)
 			{
 				let suc_address = $(sucursales_address[i]).val();
 				let suc_city = $(sucursales_city[i]).val();
 				let suc_commune = $(sucursales_commune[i]).val();
-				let arr_temp = {'suc_address': suc_address, 'suc_city': suc_city, 'suc_commune': suc_commune};
-				data_suc.push(arr_temp);
+				data_suc.push({'address':suc_address, 'city':suc_city, 'commune':suc_commune});
 			}
-
-			
+			console.log(data_suc, sucursales_address.length);
+			/*
 			$.post(
 				site_url + "/CCompany/addCompany",{
 					rut 				: 	cuerpo,
@@ -278,8 +266,7 @@
 					email				:	$('#input-email').val(),
 					phone				:	$('#input-phone').val(),
 					user				:	$('#input-user').val(),
-					password			:	$('#input-password').val(),
-					sucursales			:	data_suc
+					password			:	$('#input-password').val()
 
 				},
 				function(data)
@@ -291,7 +278,7 @@
 					
 				}
 			);
-			
+			*/
 		});
 
 		$('#select-city').change(function(){

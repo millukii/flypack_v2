@@ -169,7 +169,7 @@
 			//checkRut(document.getElementById('input-rut'));
 
             cuerpo = $('#input-rut').val();
-	        dv = cuerpo;
+	        //dv = cuerpo;
 
 			$.post(
 				site_url + "/CCompany/editCompany",{

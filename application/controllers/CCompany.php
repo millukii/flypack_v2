@@ -74,10 +74,12 @@ class CCompany extends CI_Controller {
 
 		$company = $this->modelo->getCompany_($id);
 		$users = $this->modelo->getUsersByCompany($id);
+		$sucursales = $this->modelo->getSucursales($id);
 
 		$data = array(
 			'company' => $company,
-			'users' => $users
+			'users' => $users,
+			'sucursales' => $sucursales
 		);
 
 		$this->load->view('header');
@@ -94,6 +96,8 @@ class CCompany extends CI_Controller {
 		$address 			= 	trim($this->input->post('address', TRUE));
 		$city_id 			= 	trim($this->input->post('city_id', TRUE));
 		$communes_id 		= 	trim($this->input->post('communes_id', TRUE));
+
+		$sucursales		= 	$this->input->post('sucursales', TRUE);
 
 		if(empty($razon))
 			$razon = 'N/A';
@@ -123,6 +127,13 @@ class CCompany extends CI_Controller {
 		$companies_id = $this->modelo->addCompany($data);
 		if($companies_id != false)
 		{
+
+			foreach($sucursales as $suc)
+			{
+				$data = ['companies_id' => $companies_id, 'city_id' => $suc['suc_city'] ,'communes_id' => $suc['suc_commune'], 'address' => $suc['suc_address']]; 
+				$this->modelo->add_company_address($data);
+			}
+
 			$user 			= 	trim($this->input->post('user', TRUE));
 			$password 		= 	trim($this->input->post('password', TRUE));
 			if(empty($password))
@@ -137,31 +148,37 @@ class CCompany extends CI_Controller {
 			$user_state_id	= 	1;
 			$date_time 		= 	date('Y-m-d H:i:s');
 			
-			$data = array(
-				'user' 				=> 	$user,
-				'password' 			=> 	md5($password),
-				'rol_id' 			=> 	$roles_id,
-				'name'				=>	$name,
-				'lastname'			=>	$lastname,
-				'email'				=>	$email,
-				'phone'				=>	$phone,
-				'companies_id' 		=> 	$companies_id,
-				'user_state_id' 	=> 	$user_state_id,
-				'created'			=> 	$date_time,
-				'modified'			=> 	$date_time
-			);
-
-			if($this->modelo->addUser($data))
+			if(!empty($user) && !empty($password) && !empty($name) && !empty($lastname))
 			{
-				$message = 'Bienvenido '.$name.'. ';
-				$message .= 'Se ha creado una cuenta para que puedas acceder al portal de Flypack, tus credenciales son: ';
-				$message .= '- Usuario: '.$user;
-				$message .= '- Password: '.$password_;
-				$this->sendEmail('no-reply@flypack.cl', $email, 'Credenciales de acceso', $message);
-				echo '1';
+				$data = array(
+					'user' 				=> 	$user,
+					'password' 			=> 	md5($password),
+					'rol_id' 			=> 	$roles_id,
+					'name'				=>	$name,
+					'lastname'			=>	$lastname,
+					'email'				=>	$email,
+					'phone'				=>	$phone,
+					'companies_id' 		=> 	$companies_id,
+					'user_state_id' 	=> 	$user_state_id,
+					'created'			=> 	$date_time,
+					'modified'			=> 	$date_time
+				);
+	
+				if($this->modelo->addUser($data))
+				{
+					$message = 'Bienvenido '.$name.'. ';
+					$message .= 'Se ha creado una cuenta para que puedas acceder al portal de Flypack, tus credenciales son: ';
+					$message .= '- Usuario: '.$user;
+					$message .= '- Password: '.$password_;
+					//$this->sendEmail('no-reply@flypack.cl', $email, 'Credenciales de acceso', $message);
+					echo '1';
+				}
+				else
+					echo '0';
 			}
-			else
-				echo '0';
+
+			echo '1';
+			
 		}
 		else
 			echo '0';
@@ -274,7 +291,9 @@ class CCompany extends CI_Controller {
 	public function getCommunesByCity()
 	{
 		$city_id = trim($this->input->post('city_id', TRUE));
-		$communes =  $this->modelo->getCommunes($city_id);
+		if(!empty($city_id))
+			$communes =  $this->modelo->getCommunes($city_id);
+		
 		$salida = '';
 		foreach($communes as $c)
 		{
