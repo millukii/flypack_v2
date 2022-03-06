@@ -50,8 +50,28 @@ class CShipping extends CI_Controller {
             $res = intval($res[0]['id']) + 1;
         else
             $res = 1;
-    
+    // agregar get a points de quadmins
+    $curl = curl_init('https://flash-api.quadminds.com/api/v2/pois/search?limit=100&offset=0');
+
+    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
+
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+    'Content-Type: application/json',
+    'x-saas-apikey:  SzaORv8XtExcO1zVX3jcWGsOvyGwsl3y46sOLnmn')
+    );
+
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);  // Make it so the data coming back is put into a string
+
+    // Send the request
+    $result = curl_exec($curl);
+
+    // Free up the resources $curl is using
+    curl_close($curl);
+
+    $points = json_decode($result, true);
+
 		$data = array(
+      'points' => $points['data'],
 			'companies' => $companies,
 			'shipping_states' => $shipping_states,
 			'new_id' => $res,
@@ -117,6 +137,10 @@ class CShipping extends CI_Controller {
     $receiver_mail	=	trim($this->input->post('receiver_mail', TRUE));
     $observation	=	trim($this->input->post('observation', TRUE));
     $label	=	trim($this->input->post('label', TRUE));
+    $poiId	=	trim($this->input->post('poiId', TRUE));
+    $priority	=	trim($this->input->post('priority', TRUE));
+    $label	=	trim($this->input->post('label', TRUE));
+    $operation_type	=	trim($this->input->post('operation_type', TRUE));
 
 		if(empty($total_amount))
 			$total_amount = 'N/A';
@@ -126,6 +150,9 @@ class CShipping extends CI_Controller {
 		
 		if(empty($address))
 			$address = 'N/A';
+
+    if(empty($label))
+			$label = 'N/A';
 
 		if(empty($delivery_name))
 			$delivery_name = '000000000';
@@ -142,6 +169,7 @@ class CShipping extends CI_Controller {
 			'quadmins_code' 			=> $quadmins_code,
 			'address' 			=> $address,
       'sender' 			=> $sender,
+      'label' 			=> $label,
       'shipping_type' 			=> $shipping_type,
       'receiver_name' 			=> $receiver_name,
       'receiver_phone' 			=> $receiver_phone,
@@ -155,10 +183,43 @@ class CShipping extends CI_Controller {
 			'created'			=> $date_time
 		);
 
+
 		if($this->modelo->addShipping($data))
 			echo '1';
 		else
 			echo '0';
+        //agregar llamado a la api de quadmin con los datos necesarios para crear una orden
+
+      $quadminOrder = array(
+			'code' 				=> $quadmins_code,
+      'poiId' 				=> $poiId,
+			'quadmins_code' 				=> $quadmins_code,
+      'operation' 				=> $operation_type,
+      'label' 				=> $label,
+      'priority' 				=> $priority,
+      'totalAmount' 				=> $total_amount,
+      'totalWithoutTaxes' 				=> $total_amount
+		);
+    $data_string = json_encode($data);
+
+
+    $curl = curl_init('https://flash-api.quadminds.com/api/v2/orders');
+
+    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+    'Content-Type: application/json',
+    'Content-Length: ' . strlen($data_string),
+     'x-saas-apikey: ' . 'SzaORv8XtExcO1zVX3jcWGsOvyGwsl3y46sOLnmn'));
+
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);  // Make it so the data coming back is put into a string
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);  // Insert the data
+
+    // Send the request
+    $result = curl_exec($curl);
+
+    // Free up the resources $curl is using
+    curl_close($curl);
 	}
 
 	public function editShipping()

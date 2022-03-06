@@ -23,8 +23,6 @@
                     				  	</div>
                     				  	<form class="form-horizontal" id="form-shipping">
                     			  			<div class="box-body">
-
-                                  
                                   <div class="form-group">
                     			  					<label for="id" class="col-sm-2 control-label">Id</label>
                     			  					<div class="col-sm-3">
@@ -38,12 +36,12 @@
                     			  						<input type="text" class="form-control" name="input-order-nro" id="input-order-nro"  maxlength="10"  required>
                     			  					</div>
                     			  				</div>
-<!--                     			  				<div class="form-group">
+                    			  				<div class="form-group">
                     			  					<label for="quadmins-code" class="col-sm-2 control-label">Codigo Quadmin</label>
                     			  					<div class="col-sm-10">
                     			  						<input type="text" class="form-control" name="input-quadmins-code" id="input-quadmins-code">
                     			  					</div>
-                    			  				</div> -->
+                    			  				</div> 
                     
                                     <div class="form-group">
                     			  					<label for="shipping-type" class="col-sm-2 control-label">Tipo</label>
@@ -56,7 +54,34 @@
                     			  						</select>
                     			  					</div>
                     			  				</div>
-
+                                      <div class="form-group">
+                    			  					<label for="operation-type" class="col-sm-2 control-label">Operación</label>
+                    			  					<div class="col-sm-5">
+                    			  						<select name="select-operation-type" id="select-operation-type" class="form-control" required>
+                    			  							<option value="">Seleccione una opción</option>
+                    			  								<option value=Pedido>Pedido</option>
+                                            <option value=Retiro>Retiro</option>
+                    			  						</select>
+                    			  					</div>
+                    			  				</div>
+                                    <div class="form-group">
+                    			  					<label for="shipping-type" class="col-sm-2 control-label">Prioridad</label>
+                    			  					<div class="col-sm-5">
+                    			  						<select name="select-shipping-type" id="select-shipping-type" class="form-control" required>
+                    			  							<option value="">Seleccione una opción</option>
+                    			  								<option value=0>0</option>
+                                            <option value=1>1</option>
+                                            <option value=2>2</option>
+                                            <option value=3>3</option>
+                                            <option value=4>4</option>
+                                            <option value=5>5</option>
+                                            <option value=6>6</option>
+                                            <option value=7>7</option>
+                                            <option value=8>8</option>
+                                            <option value=9>9</option>
+                    			  						</select>
+                    			  					</div>
+                    			  				</div>
                                      <div class="form-group">
                     			  					<label for="total-amount" class="col-sm-2 control-label">Total</label>
                     			  					<div class="col-sm-10">
@@ -109,6 +134,17 @@
                     			  					<label for="receiver-mail" class="col-sm-2 control-label">E-mail</label>
                     			  					<div class="col-sm-5">
                     			  						<input type="email" class="form-control" name="input-receiver-mail" id="input-receiver-mail">
+                    			  					</div>
+                    			  				</div>
+                    			  				<div class="form-group">
+                    			  					<label for="points" class="col-sm-2 control-label">Punto de Interés</label>
+                    			  					<div class="col-sm-5">
+                    			  						<select name="select-points" id="select-points" class="form-control" required>
+                    			  							<option value="">Seleccione una opción</option>
+                    			  							<?php foreach ($points as $key) { ?>
+                    			  								<option value="<?php echo $key['code']; ?>"><?php echo $key['address']; ?></option>
+                    			  							<?php } ?>
+                    			  						</select>
                     			  					</div>
                     			  				</div>
                                      <div class="form-group">
@@ -179,8 +215,8 @@
 		$("#form-shipping").submit(function(event) {
 			event.preventDefault();
             
-            cuerpo = $('#input-order_nro').val();
-	        dv = cuerpo;
+        cuerpo = $('#input-order_nro').val();
+	      dv = cuerpo;
 	    
 			$.post(
 				site_url + "/CShipping/addShipping",{
@@ -194,6 +230,7 @@
           destiny: $("#input-destiny").val(),
           shipping_date: $("#input-shipping-date").val(),
           shipping_type: $("#select-shipping-type").val(),
+          operation_type: $("#select-operation-type").val(),
           companies_id: $("#select-company").val(),
           shipping_states_id: $("#select-shipping_states").val(),
           sender: $("#input-sender").val(),
@@ -203,51 +240,30 @@
           receiver_mail: $("#input-receiver-mail").val(),
           observation: $("#input-observation").val(),
           label: $("#input-label").val(),
+          poiId: $("#input-poild").val(),
+          code: $("#input-quadmins-code").val() ,
+          date: $("#input-shipping-date").val(),
+          priority: $("#input-priority").val(),
+          
 				},
 				function(data)
 				{
 					if (data == 1)
 						window.location.replace(site_url+"/CShipping/index");
 					else
-						alert("Rut existente.")
+						alert("Orden existente.")
 					
 				}
 			);
 		});
 
 		$('#li-configuration').addClass('menu-open');
-      	$('#ul-configuration').css('display', 'block');
-
-      	$('#li-people').addClass('menu-open');
-      	$('#ul-people').css('display', 'block');
+    $('#ul-configuration').css('display', 'block');
+  	$('#li-people').addClass('menu-open');
+    $('#ul-people').css('display', 'block');
 	});
 
-    function generateMasive()
-    {
-        var quantity_workers = parseInt($('#input-quantity_workers').val().trim());
-        var contractor = $('#select-contractor_masive').val();
-        var c = confirm('Confirme la generación de '+quantity_workers+' registros de cosecheros adicionales.');
-        if(c)
-        {
-            $.ajax({
-                url: site_url+'/CShipping/generateMasive',
-                type: 'post',
-                dataType: 'text',
-                data: {quantity_workers: quantity_workers, contractor: contractor},
-                success: function(data)
-                {
-                    if(data == 1)
-                    {
-                        alert('Generados correctamente.');
-                        window.location.replace(site_url+"/CShipping/index");
-                    }
-                    else
-                        alert('No se han podido generar los registros de ordenes de transporte adicionales.');
-                }
-            });
-        }
-        
-    }
+
     
 </script>
 </body>
