@@ -5,7 +5,11 @@
 				<div class="box box-success">
 					<div class="box-header ui-sortable-handle">
 					    <i class="fa fa-users"></i>
+<<<<<<< HEAD
 						<h3 class="box-title">Orden de Transporte</h3>
+=======
+						<h3 class="box-title">Persona</h3>
+>>>>>>> 1faacbce48356d48f2d7ccb7721675adf46d5269
 				  	</div>
 
 				  	<div class="box-body">
@@ -64,7 +68,11 @@
 			  			</section>
 				  	</div>
 				  	<div class="box-footer">
+<<<<<<< HEAD
 				  		<a href="<?php echo site_url(); ?>/CShipping/index" class="btn btn-primary pull-right" role="button">
+=======
+				  		<a href="<?php echo site_url(); ?>/CPeople/index" class="btn btn-primary pull-right" role="button">
+>>>>>>> 1faacbce48356d48f2d7ccb7721675adf46d5269
 	                    <i class='fa fa-undo'></i> Volver
 	                </a>
 				  	</div>
@@ -82,8 +90,13 @@
       	$('#li-configuration').addClass('menu-open');
       	$('#ul-configuration').css('display', 'block');
 
+<<<<<<< HEAD
       	$('#li-shipping').addClass('menu-open');
       	$('#ul-shipping').css('display', 'block');
+=======
+      	$('#li-people').addClass('menu-open');
+      	$('#ul-people').css('display', 'block');
+>>>>>>> 1faacbce48356d48f2d7ccb7721675adf46d5269
     });
   
 </script>

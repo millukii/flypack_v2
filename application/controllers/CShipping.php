@@ -183,7 +183,6 @@ class CShipping extends CI_Controller {
 			'created'			=> $date_time
 		);
 
-
 		if($this->modelo->addShipping($data))
 			echo '1';
 		else

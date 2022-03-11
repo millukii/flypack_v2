@@ -10,21 +10,30 @@
 
 				  	<form class="form-horizontal" id="form-users">
 			  			<div class="box-body">
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1faacbce48356d48f2d7ccb7721675adf46d5269
 			  				<div class="form-group">
 			  					<label for="user" class="col-sm-2 control-label">Usuario</label>
 			  					<div class="col-sm-10">
 			  						<input type="text" class="form-control" name="input-user" id="input-user" required>
 			  					</div>
 			  				</div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1faacbce48356d48f2d7ccb7721675adf46d5269
 			  				<div class="form-group">
 			  					<label for="password" class="col-sm-2 control-label">Contraseña</label>
 			  					<div class="col-sm-10">
 			  						<input type="password" class="form-control" name="input-password" id="input-password" required>
 			  					</div>
 			  				</div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1faacbce48356d48f2d7ccb7721675adf46d5269
 			  				<div class="form-group">
 			  					<label for="roles_id" class="col-sm-2 control-label">Rol</label>
 			  					<div class="col-sm-5">
@@ -76,7 +85,6 @@
 			  						</select>
 			  					</div>
 			  				</div>
-
 			  				<div class="form-group">
 			  					<label for="users_state_id" class="col-sm-2 control-label">Estado usuario</label>
 			  					<div class="col-sm-5">

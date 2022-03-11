@@ -17,7 +17,6 @@
 			  						<input type="text" class="form-control" name="user" id="user" value="<?php echo $this->session->userdata('user');?>" readonly>
 			  					</div>
 			  				</div>
-
 			  				<div class="form-group">
 			  					<label for="password" class="col-sm-2 control-label">Contraseña Actual</label>
 			  					<div class="col-sm-10">

@@ -61,11 +61,17 @@
           },
           "columns": [
             { "data": "ID"},
+<<<<<<< HEAD
             { "data": "Usuario" },
             { "data": "Rol" },
             { "data": "Nombre" },
             { "data": "Email" },
             { "data": "Empresa" },
+=======
+            { "data": "Nombre" },
+            { "data": "Rol" },
+            { "data": "Persona" },
+>>>>>>> 1faacbce48356d48f2d7ccb7721675adf46d5269
             { "data": "Estado" },
             { "data": "Acción" }
           ],
@@ -95,13 +101,18 @@
               "targets": [3],
               "orderable": true,
               "render": function(data, type, row) {
+<<<<<<< HEAD
                 return row.name
+=======
+                return row.rut+'-'+row.dv+' | '+row.name+' '+row.lastname
+>>>>>>> 1faacbce48356d48f2d7ccb7721675adf46d5269
               }
             },
             {
               "targets": [4],
               "orderable": true,
               "render": function(data, type, row) {
+<<<<<<< HEAD
                 return row.email
               }
             },
@@ -116,11 +127,17 @@
               "targets": [6],
               "orderable": true,
               "render": function(data, type, row) {
+=======
+>>>>>>> 1faacbce48356d48f2d7ccb7721675adf46d5269
                 return row.state
               }
             },
             {
+<<<<<<< HEAD
               "targets": [7],
+=======
+              "targets": [5],
+>>>>>>> 1faacbce48356d48f2d7ccb7721675adf46d5269
               "orderable": false,
               "render": function(data, type, row) {
                 return  `
@@ -150,6 +167,7 @@
     {
       if (confirm('¡Seguro de eliminar!'))
       {
+<<<<<<< HEAD
         $.ajax({
           url: site_url + '/CUsers/deleteUser',
           data: {id: id},
@@ -160,6 +178,19 @@
             window.location.reload();
           }
         });
+=======
+        $.post(
+          site_url + "/CUsers/deleteUser",{
+          id  :   id
+        },
+        function(data)
+        {
+          if (data == 1)
+            window.location.reload();
+         
+        }
+        );
+>>>>>>> 1faacbce48356d48f2d7ccb7721675adf46d5269
       }
     }
     

@@ -40,12 +40,20 @@ class CUsers extends CI_Controller
 	{
 		
 		$roles = $this->modelo->getAllRoles();
+<<<<<<< HEAD
 		$companies = $this->modelo->getAllCompanies();
+=======
+		$people = $this->modelo->getAllPeople();
+>>>>>>> 1faacbce48356d48f2d7ccb7721675adf46d5269
 		$users_state = $this->modelo->getAllUser_States();
 
 		$data = array(
 			'roles' => $roles,
+<<<<<<< HEAD
 			'companies' => $companies,
+=======
+			'people' => $people,
+>>>>>>> 1faacbce48356d48f2d7ccb7721675adf46d5269
 			'user_states' => $users_state
 		);
 
@@ -60,13 +68,21 @@ class CUsers extends CI_Controller
 
 		$user = $this->modelo->getUser($id);
 		$roles = $this->modelo->getAllRoles();
+<<<<<<< HEAD
 		$companies = $this->modelo->getAllCompanies();
+=======
+		$people = $this->modelo->getAllPeople();
+>>>>>>> 1faacbce48356d48f2d7ccb7721675adf46d5269
 		$user_states = $this->modelo->getAllUser_States();
 
 		$data = array(
 			'user' => $user,
 			'roles' => $roles,
+<<<<<<< HEAD
 			'companies' => $companies,
+=======
+			'people' => $people,
+>>>>>>> 1faacbce48356d48f2d7ccb7721675adf46d5269
 			'user_states' => $user_states
 		);
 

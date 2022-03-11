@@ -73,7 +73,10 @@
 			  						</select>
 			  					</div>
 			  				</div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1faacbce48356d48f2d7ccb7721675adf46d5269
 			  				<div class="form-group">
 			  					<label for="users_state_id" class="col-sm-2 control-label">Estado usuario</label>
 			  					<div class="col-sm-5">
