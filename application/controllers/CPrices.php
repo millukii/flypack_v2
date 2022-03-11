@@ -29,22 +29,45 @@ class CPrices extends CI_Controller {
 
 	public function datatable()
 	{
-		$start = $this->input->post('start');
-		$length = $this->input->post('length');
-		$search = $this->input->post('search')['value'];
-		$by = $this->input->post('order')['0']['column'];
-		$order = $this->input->post('order')['0']['dir'];
+		if($this->getType_Rate_() == '1')
+		{
+			$start = $this->input->post('start');
+			$length = $this->input->post('length');
+			$search = $this->input->post('search')['value'];
+			$by = $this->input->post('order')['0']['column'];
+			$order = $this->input->post('order')['0']['dir'];
 
-		$company = trim($this->input->post('company', TRUE));
+			$company = trim($this->input->post('company', TRUE));
 
-		$result = $this->modelo->getPrices($start, $length, $search, $order, $by, $company);
+			$result = $this->modelo->getPrices($start, $length, $search, $order, $by, $company);
 
-		$json_data = array(
-			"draw"            => intval($this->input->post('draw')),
-            "recordsTotal"    => intval($result['numDataTotal']),
-            "recordsFiltered" => intval($result['numDataFilter']),
-            "data"            => $result['data']
-            );
+			$json_data = array(
+				"draw"            => intval($this->input->post('draw')),
+				"recordsTotal"    => intval($result['numDataTotal']),
+				"recordsFiltered" => intval($result['numDataFilter']),
+				"data"            => $result['data']
+				);
+		}
+		else
+		{
+			$start = $this->input->post('start');
+			$length = $this->input->post('length');
+			$search = $this->input->post('search')['value'];
+			$by = $this->input->post('order')['0']['column'];
+			$order = $this->input->post('order')['0']['dir'];
+
+			$company = trim($this->input->post('company', TRUE));
+
+			$result = $this->modelo->getPrices_($start, $length, $search, $order, $by, $company);
+
+			$json_data = array(
+				"draw"            => intval($this->input->post('draw')),
+				"recordsTotal"    => intval($result['numDataTotal']),
+				"recordsFiltered" => intval($result['numDataFilter']),
+				"data"            => $result['data']
+				);
+		}
+		
 
         echo json_encode($json_data);
 	}
@@ -123,7 +146,7 @@ class CPrices extends CI_Controller {
 	public function import_excelfile()
 	{
 		$company 			= trim($this->input->post('input-company',TRUE));
-		
+		//TODO: condicionar type_rate
 		$this->db->where('companies_id', $company);
 		$this->db->delete('rates');
 
@@ -193,7 +216,7 @@ class CPrices extends CI_Controller {
         }
 
 		$company = trim($this->input->get('company',TRUE));
-
+		//TODO: condicionar type_rate
 		$this->db->select('*');
 		$this->db->from('rates');
 		$this->db->where('companies_id', $company);
@@ -270,6 +293,36 @@ class CPrices extends CI_Controller {
 		else
 			return 0;
 
+	}
+
+	public function getType_Rate()
+	{
+		$company = trim($this->input->post('company', TRUE));
+		$type_rate = 1;
+
+		$this->db->select('type_rate');
+		$this->db->from('companies');
+		$this->db->where('companies.id', $company);
+		$this->db->limit(1);
+		$res = $this->db->get()->result_array();
+		if(!empty($res[0]['type_rate']))
+			$type_rate = $res[0]['type_rate'];
+		echo $type_rate;
+	}
+
+	public function getType_Rate_()
+	{
+		$company = trim($this->input->post('company', TRUE));
+		$type_rate = 1;
+
+		$this->db->select('type_rate');
+		$this->db->from('companies');
+		$this->db->where('companies.id', $company);
+		$this->db->limit(1);
+		$res = $this->db->get()->result_array();
+		if(!empty($res[0]['type_rate']))
+			$type_rate = $res[0]['type_rate'];
+		return $type_rate;
 	}
 }
 

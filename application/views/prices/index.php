@@ -85,74 +85,152 @@
 
     function loadDataTable()
     {
-      $('#div-table').html('<table id="table-prices" class="table table-striped table-bordered table-condensed" style="width:100%;"><thead><tr><th width="10%">ID</th><th>Origen</th><th>Destino</th><th>Precio</th><th>Acción</th></tr></thead><tbody></tbody></table>');
-      $('#table-prices').DataTable({
-          "lengthMenu": [[2000, 2500, 5000, -1], [2000, 2500, 5000, "All"]],
-          'responsive': true,
-          'paging': true,
-          'info': false,
-          'filter': false,
-          'ordering': true,
-          // 'stateSave': true,
-          'processing':true,
-          'serverSide':true,
-          'language': {
-            "url": base_url + "assets/Spanish.json"
-          },
-          "order": [[0, "asc"]],
-          'ajax': {
-            "url": site_url + "/CPrices/datatable",
-            "type":"POST",
-            "data":{company: $('#select-companies').val()},
-          },
-          "columns": [
-            { "data": "ID"},
-            { "data": "Origen" },
-            { "data": "Destino" },
-            { "data": "Precio" },
-            { "data": "Acción" }
-          ],
-          "columnDefs": [
-            {
-              "targets": [0],
-              "orderable": true,
-              "render": function(data, type, row) {
-                return row.id
-              }
-            },
-            {
-              "targets": [1],
-              "orderable": true,
-              "render": function(data, type, row) {
-                return row.from
-              }
-            },
-            {
-              "targets": [2],
-              "orderable": true,
-              "render": function(data, type, row) {
-                return row.to
-              }
-            },
-           {
-              "targets": [3],
-              "orderable": true,
-              "render": function(data, type, row) {
-                return row.value
-              }
-            },
-            {
-              "targets": [4],
-              "orderable": false,
-              "render": function(data, type, row) {
-                return `
-                  <a href="<?php echo site_url(); ?>/CPrices/edit?id=`+row.id+`" class="btn btn-warning btn-xs" role="button">
-                      <i class='fa fa-pencil-square-o'></i> Editar
-                  </a>`;
-              }
-            }
-           ],
-        });
+      $.ajax({
+        url: site_url + '/CPrices/getType_Rate',
+        type: 'post',
+        data: {company: $('#select-companies').val()},
+        success: function(data)
+        {
+          if(data == '1')
+          {
+            $('#div-table').html('<table id="table-prices" class="table table-striped table-bordered table-condensed" style="width:100%;"><thead><tr><th width="10%">ID</th><th>Origen</th><th>Destino</th><th>Precio</th><th>Acción</th></tr></thead><tbody></tbody></table>');
+            $('#table-prices').DataTable({
+                "lengthMenu": [[2000, 2500, 5000, -1], [2000, 2500, 5000, "All"]],
+                'responsive': true,
+                'paging': true,
+                'info': false,
+                'filter': false,
+                'ordering': true,
+                // 'stateSave': true,
+                'processing':true,
+                'serverSide':true,
+                'language': {
+                  "url": base_url + "assets/Spanish.json"
+                },
+                "order": [[0, "asc"]],
+                'ajax': {
+                  "url": site_url + "/CPrices/datatable",
+                  "type":"POST",
+                  "data":{company: $('#select-companies').val()},
+                },
+                "columns": [
+                  { "data": "ID"},
+                  { "data": "Origen" },
+                  { "data": "Destino" },
+                  { "data": "Precio" },
+                  { "data": "Acción" }
+                ],
+                "columnDefs": [
+                  {
+                    "targets": [0],
+                    "orderable": true,
+                    "render": function(data, type, row) {
+                      return row.id
+                    }
+                  },
+                  {
+                    "targets": [1],
+                    "orderable": true,
+                    "render": function(data, type, row) {
+                      return row.from
+                    }
+                  },
+                  {
+                    "targets": [2],
+                    "orderable": true,
+                    "render": function(data, type, row) {
+                      return row.to
+                    }
+                  },
+                {
+                    "targets": [3],
+                    "orderable": true,
+                    "render": function(data, type, row) {
+                      return row.value
+                    }
+                  },
+                  {
+                    "targets": [4],
+                    "orderable": false,
+                    "render": function(data, type, row) {
+                      return `
+                        <a href="<?php echo site_url(); ?>/CPrices/edit?id=`+row.id+`" class="btn btn-warning btn-xs" role="button">
+                            <i class='fa fa-pencil-square-o'></i> Editar
+                        </a>`;
+                    }
+                  }
+                ],
+              });
+          }
+          else
+          {
+            $('#div-table').html('<table id="table-prices" class="table table-striped table-bordered table-condensed" style="width:100%;"><thead><tr><th width="10%">ID</th><th>Tamaño</th><th>Precio</th><th>Acción</th></tr></thead><tbody></tbody></table>');
+            $('#table-prices').DataTable({
+                "lengthMenu": [[2000, 2500, 5000, -1], [2000, 2500, 5000, "All"]],
+                'responsive': true,
+                'paging': true,
+                'info': false,
+                'filter': false,
+                'ordering': true,
+                // 'stateSave': true,
+                'processing':true,
+                'serverSide':true,
+                'language': {
+                  "url": base_url + "assets/Spanish.json"
+                },
+                "order": [[0, "asc"]],
+                'ajax': {
+                  "url": site_url + "/CPrices/datatable",
+                  "type":"POST",
+                  "data":{company: $('#select-companies').val()},
+                },
+                "columns": [
+                  { "data": "ID"},
+                  { "data": "Tamaño" },
+                  { "data": "Precio" },
+                  { "data": "Acción" }
+                ],
+                "columnDefs": [
+                  {
+                    "targets": [0],
+                    "orderable": true,
+                    "render": function(data, type, row) {
+                      return row.id
+                    }
+                  },
+                  {
+                    "targets": [1],
+                    "orderable": true,
+                    "render": function(data, type, row) {
+                      return row.size
+                    }
+                  },
+                  {
+                    "targets": [2],
+                    "orderable": true,
+                    "render": function(data, type, row) {
+                      return row.value
+                    }
+                  },
+                  {
+                    "targets": [3],
+                    "orderable": false,
+                    "render": function(data, type, row) {
+                      return `
+                        <a href="<?php echo site_url(); ?>/CPrices/edit?id=`+row.id+`" class="btn btn-warning btn-xs" role="button">
+                            <i class='fa fa-pencil-square-o'></i> Editar
+                        </a>`;
+                    }
+                  }
+                ],
+              });
+          }
+        }
+      });
+
+
+
+      
     }
 
 

@@ -40,6 +40,10 @@
 		  		    	    			<th>Comuna</th>
 		  		    	    			<td><?php if(!empty($company[0]['commune'])) echo $company[0]['commune'];?></td>
 		  		    	    		</tr>
+									  <tr>
+		  		    	    			<th>Tipo Tarifa Precios</th>
+		  		    	    			<td><?php if($company[0]['type_rate'] == 1) echo 'Estandar (Origen a Destino)';else{echo 'Tamaño Paquete';}?></td>
+		  		    	    		</tr>
 									<tr>
 		  		    	    			<th>Estado</th>
 		  		    	    			<td><?php if(!empty($company[0]['state'])) echo $company[0]['state'];?></td>
