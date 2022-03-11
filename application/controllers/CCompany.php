@@ -55,12 +55,14 @@ class CCompany extends CI_Controller {
 		$companies_states = $this->modelo->getAllCompanies_States();
 		$city = $this->modelo->getCity();
 		$communes = $this->modelo->getCommunes();
+		$sucursales = $this->modelo->getSucursales($id);
 
 		$data = array(
 			'company' => $company,
 			'companies_states' => $companies_states,
 			'city' => $city,
-			'communes' => $communes
+			'communes' => $communes,
+			'sucursales' => $sucursales
 		);
 
 		$this->load->view('header');
@@ -96,6 +98,7 @@ class CCompany extends CI_Controller {
 		$address 			= 	trim($this->input->post('address', TRUE));
 		$city_id 			= 	trim($this->input->post('city_id', TRUE));
 		$communes_id 		= 	trim($this->input->post('communes_id', TRUE));
+		$type_rate			= 	trim($this->input->post('type_rate', TRUE));
 
 		$sucursales		= 	$this->input->post('sucursales', TRUE);
 
@@ -121,18 +124,22 @@ class CCompany extends CI_Controller {
 			'fantasy' 			=> $fantasy,
 			'address' 			=> $address,
 			'city_id' 			=> $city_id,
-			'communes_id' 		=> $communes_id
+			'communes_id' 		=> $communes_id,
+			'type_rate'			=> $type_rate
 		);
 
 		$companies_id = $this->modelo->addCompany($data);
 		if($companies_id != false)
 		{
-
-			foreach($sucursales as $suc)
+			if(!empty($sucursales))
 			{
-				$data = ['companies_id' => $companies_id, 'city_id' => $suc['suc_city'] ,'communes_id' => $suc['suc_commune'], 'address' => $suc['suc_address']]; 
-				$this->modelo->add_company_address($data);
+				foreach($sucursales as $suc)
+				{
+					$data = ['companies_id' => $companies_id, 'city_id' => $suc['suc_city'] ,'communes_id' => $suc['suc_commune'], 'address' => $suc['suc_address']]; 
+					$this->modelo->add_company_address($data);
+				}
 			}
+			
 
 			$user 			= 	trim($this->input->post('user', TRUE));
 			$password 		= 	trim($this->input->post('password', TRUE));
@@ -176,8 +183,8 @@ class CCompany extends CI_Controller {
 				else
 					echo '0';
 			}
-
-			echo '1';
+			else
+				echo '0';
 			
 		}
 		else

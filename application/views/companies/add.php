@@ -52,7 +52,7 @@
 												<div class="form-group">
                     			  					<label for="fantasy" class="col-sm-2 control-label">Tipo de Precios</label>
                     			  					<div class="col-sm-10">
-														<select name="select-rate_type" id="select-rate_type" class="form-control" required>
+														<select name="select-type_rate" id="select-type_rate" class="form-control" required>
 															<option value="1">Estandar (Origen a Destino)</option>
 															<option value="2">Tamaño Paquete</option>
 														</select>
@@ -279,6 +279,7 @@
 					phone				:	$('#input-phone').val(),
 					user				:	$('#input-user').val(),
 					password			:	$('#input-password').val(),
+					type_rate			:	$('#select-type_rate').val(),
 					sucursales			:	data_suc
 
 				},

@@ -33,6 +33,16 @@
 			  					</div>
 			  				</div>
 
+							<div class="form-group">
+								<label for="fantasy" class="col-sm-2 control-label">Tipo de Precios</label>
+								<div class="col-sm-10">
+									<select name="select-type_rate" id="select-type_rate" class="form-control" required>
+										<option value="1">Estandar (Origen a Destino)</option>
+										<option value="2">Tamaño Paquete</option>
+									</select>
+								</div>
+							</div>
+
 			  				<div class="form-group">
 			  					<label for="address" class="col-sm-2 control-label">Dirección</label>
 			  					<div class="col-sm-10">
@@ -75,6 +85,33 @@
 			  						</select>
 			  					</div>
 			  				</div>
+
+							  	<div class="box-body">
+								<h4>Sucursales:</h4>
+									<section class="content">
+
+										<table class="table">
+											<thead>
+												<tr>
+													<th>Ciudad</th>
+													<th>Comuna</th>
+													<th>Dirección</th>
+												</tr>
+											</thead>
+											<tbody>
+												<?php
+												if(!empty($sucursales))
+												{
+													foreach ($sucursales as $key) { ?>
+													<tr>
+														<?php echo '<td>'.$key->city.'</td>';echo '<td>'.$key->commune.'</td>';echo '<td>'.$key->address.'</td>'; ?>
+													</tr>
+												<?php }} ?>
+											</tbody>
+										</table>
+
+									</section>
+								</div>
 			  				
 			  			</div>
 			  			<div class="box-footer">
@@ -159,6 +196,7 @@
 	$(document).ready(function()
 	{
 		$('#select-companies_states_id').val('<?php if(!empty($company[0]['companies_state_id'])) echo $company[0]['companies_state_id'];?>');
+		$('#select-type_rate').val('<?php if(!empty($company[0]['type_rate'])) echo $company[0]['type_rate'];?>');
 
 		$('#select-city').val('<?php if(!empty($company[0]['city_id'])) echo $company[0]['city_id'];?>');
 		$('#select-communes').val('<?php if(!empty($company[0]['communes_id'])) echo $company[0]['communes_id'];?>');
