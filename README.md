@@ -117,4 +117,13 @@
     }
   ]
 }
-    ´´´´
+
+## TODO
+28. OTs en el listado remover atributos (mel)
+29. OTs atributo tipo = tamaño (mel)
+30. OTs atributo delivery = repartidor, corresponde nombre completo del repartidor (sale de usuarios con rol repartidor) (mel)
+31. OTs al agregar, considerar campos que se esten pre cargados:
+  - origen = es un selector con la comuna de origen de la empresa. (mel)
+  - para origen considerar empresas que puedan tener sucursales, a lo cual habría que listar dichas comunas de sucursales. (mel)
+32. El total se calcula dependiendo si la empresa posee tarifa por (origen  a destino) o (tamaño), para eso existe un campo en la bd que se llama type_rate [1 = origen a destino, 2 = tamaño]. Por ende el precio no es ingresado a mano, si no que se calcula en base a la matriz de precios ya sea de origen destino o por tamaño. (mel)
+
