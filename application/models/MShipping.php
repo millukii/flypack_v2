@@ -35,8 +35,7 @@ class MShipping extends CI_Model {
       shipping.shipping_type as shipping_type, 
       shipping.total_amount as total_amount, 
       shipping.address as address, 
-      shipping.origin as origin,
-      shipping.destiny as destiny,
+      shipping.branch_office as branch_office,
       shipping.sender as sender, 
       shipping.delivery_name as delivery_name, 
       shipping.observation as observation, 
@@ -79,8 +78,7 @@ class MShipping extends CI_Model {
       shipping.observation as observation, 
       shipping.label as label, 
       shipping.address as address, 
-      shipping.origin as origin,
-      shipping.destiny as destiny,
+      shipping.branch_office as branch_office,
       shipping.receiver_phone as receiver_phone, 
       shipping.receiver_mail as receiver_mail, 
       companies.razon as company');
@@ -137,8 +135,7 @@ class MShipping extends CI_Model {
       shipping.observation as observation, 
       shipping.label as label, 
       shipping.address as address,
-      shipping.origin as origin,
-      shipping.destiny as destiny,
+      shipping.branch_office as branch_office,
       shipping.receiver_phone as receiver_phone, 
       shipping.receiver_mail as receiver_mail, 
       companies.razon as company');
@@ -250,6 +247,31 @@ class MShipping extends CI_Model {
 		$this->db->order_by('state');
 		return $this->db->get()->result();
 	}
+	public function getCompanyOfUser($id)
+	{
+		$this->db->select('companies.id, companies.razon, companies.city_id, city.city, companies.communes_id,communes.commune, companies.address');
+		$this->db->from('companies');
+    $this->db->join('city','city.id  = companies.city_id');
+    $this->db->join('communes','communes.id  = companies.communes_id');
+		$this->db->join('users','users.companies_id  = companies.id');
+		$this->db->where('users.id', $id);
+		$this->db->order_by('companies.razon', 'asc');
+
+		return $this->db->get()->result();
+	}
+
+public function getBranchOfficesOfCompany($id)
+	{
+		$this->db->select('company_address.id, company_address.city_id, city.city, company_address.communes_id,communes.commune, company_address.address');
+		$this->db->from('company_address');
+    $this->db->join('communes','communes.id  = company_address.communes_id');
+    $this->db->join('city','city.id  = company_address.city_id');
+		$this->db->where('company_address.companies_id', $id);
+		$this->db->order_by('company_address.address', 'asc');
+
+		return $this->db->get()->result();
+	}
+
 
 }
 

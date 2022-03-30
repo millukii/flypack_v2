@@ -179,6 +179,7 @@ class MCompany extends CI_Model {
 		return $this->db->get()->result();
 	}
 
+
 	public function editUsers($data, $id)
 	{
 		$this->db->where('companies_id', $id);

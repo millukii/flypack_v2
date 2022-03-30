@@ -29,8 +29,7 @@
                           <th>Empresa</th>
                           <th>Emisor</th>
                           <th>Direccion</th>
-                          <th>Origen</th>
-                          <th>Destino</th>
+                          <th>Sucursal</th>
                           <th>Receptor</th>
                           <th>Telefono</th>
                           <th>Etiqueta</th>
@@ -81,8 +80,7 @@
             { "data": "Empresa" },
             { "data": "Emisor" },
             { "data": "Direccion" },
-            { "data": "Origen" },
-            { "data": "Destino" },
+            { "data": "Sucursal" },
             { "data": "Receptor" },
             { "data": "Telefono" },
             { "data": "Etiqueta" },
@@ -163,39 +161,32 @@
               "targets": [9],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.origin
+                return row.branch_office
               }
             },
             {
               "targets": [10],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.destiny
+                return row.receiver_name
               }
             },
             {
               "targets": [11],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.receiver_name
+                return row.receiver_phone
               }
             },
             {
               "targets": [12],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.receiver_phone
-              }
-            },
-            {
-              "targets": [13],
-              "orderable": true,
-              "render": function(data, type, row) {
                 return row.label
               }
             },
             {
-              "targets": [14],
+              "targets": [13],
               "orderable": false,
               "render": function(data, type, row) {
                 return `

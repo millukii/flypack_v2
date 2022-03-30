@@ -95,21 +95,6 @@
                     			  						<input type="text" class="form-control" name="input-address" id="input-address">
                     			  					</div>
                     			  				</div>
-
-                    			  				<div class="form-group">
-                    			  					<label for="origin" class="col-sm-2 control-label">Origin</label>
-                    			  					<div class="col-sm-10">
-                    			  						<input type="text" class="form-control" name="input-origin" id="input-origin">
-                    			  					</div>
-                    			  				</div>
-
-                                    <div class="form-group">
-                    			  					<label for="destiny" class="col-sm-2 control-label">Destino</label>
-                    			  					<div class="col-sm-10">
-                    			  						<input type="text" class="form-control" name="input-destiny" id="input-destiny">
-                    			  					</div>
-                    			  				</div>
-
                                      <div class="form-group">
                     			  					<label for="sender" class="col-sm-2 control-label">Emisor</label>
                     			  					<div class="col-sm-10">
@@ -155,12 +140,13 @@
                     			  				</div>
 
                     			  				<div class="form-group">
-                    			  					<label for="companies" class="col-sm-2 control-label">Empresa</label>
+                    			  					<label for="select-branch-offices" class="col-sm-2 control-label">Sucursal</label>
                     			  					<div class="col-sm-5">
-                    			  						<select name="select-companies" id="select-companies" class="form-control" required>
+                    			  						<select name="select-branch-offices" id="select-branch-offices" class="form-control" required>
                     			  							<option value="">Seleccione una opción</option>
-                    			  							<?php foreach ($companies as $key) { ?>
-                    			  								<option value="<?php echo $key->id; ?>"><?php echo $key->razon; ?></option>
+                                          <option value="<?php echo $user_company[0]->id; ?>"><?php echo $user_company[0]->address; ?></option>
+                    			  							<?php foreach ($branch_offices as $key) { ?>
+                    			  								<option value="<?php echo $key->id; ?>"><?php echo $key->address; ?></option>
                     			  							<?php } ?>
                     			  						</select>
                     			  					</div>
@@ -226,12 +212,11 @@
           total_amount: $("#input-total-amount").val(),
           address: $("#input-address").val(),
           delivery_name: $("#input-delivery-name").val(),
-          origin: $("#input-origin").val(),
+          origin: $("#select-branch-offices").val(),
           destiny: $("#input-destiny").val(),
           shipping_date: $("#input-shipping-date").val(),
           shipping_type: $("#select-shipping-type").val(),
           operation_type: $("#select-operation-type").val(),
-          companies_id: $("#select-company").val(),
           shipping_states_id: $("#select-shipping_states").val(),
           sender: $("#input-sender").val(),
           address: $("#input-address").val(),

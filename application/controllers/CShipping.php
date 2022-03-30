@@ -6,6 +6,7 @@ class CShipping extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('MShipping', 'modelo');
+    $this->load->model('MSession', 'modelo_session');
 	}
 
 	public function index()
@@ -37,9 +38,11 @@ class CShipping extends CI_Controller {
 
 	public function add()
 	{
-		$companies = $this->modelo->getAllCompanies();
 		$shipping_states = $this->modelo->getAllShipping_States();
-		
+    $user = $this->session->userdata('users_id');
+		$userCompany = $this->modelo->getCompanyOfUser($user);
+    $branchOffices = $this->modelo->getBranchOfficesOfCompany($userCompany[0]->id);
+
 		$this->db->select('id');
         $this->db->from('shipping');
         $this->db->order_by('id', 'desc');
@@ -72,7 +75,8 @@ class CShipping extends CI_Controller {
 
 		$data = array(
       'points' => $points['data'],
-			'companies' => $companies,
+      'user_company'=>$userCompany,
+			'branch_offices' => $branchOffices,
 			'shipping_states' => $shipping_states,
 			'new_id' => $res,
 		);
@@ -130,8 +134,7 @@ class CShipping extends CI_Controller {
 		$shipping_states_id	=	trim($this->input->post('shipping_states_id', TRUE));
 		$sender	=	trim($this->input->post('sender', TRUE));
     $address	=	trim($this->input->post('address', TRUE));
-    $origin	=	trim($this->input->post('origin', TRUE));
-    $destiny	=	trim($this->input->post('destiny', TRUE));
+    $branch_office	=	trim($this->input->post('branch_office', TRUE));
     $receiver_name	=	trim($this->input->post('receiver_name', TRUE));
     $receiver_phone	=	trim($this->input->post('receiver_phone', TRUE));
     $receiver_mail	=	trim($this->input->post('receiver_mail', TRUE));
@@ -171,6 +174,7 @@ class CShipping extends CI_Controller {
       'sender' 			=> $sender,
       'label' 			=> $label,
       'shipping_type' 			=> $shipping_type,
+      'branch_office' 			=> $branch_office,
       'receiver_name' 			=> $receiver_name,
       'receiver_phone' 			=> $receiver_phone,
       'receiver_mail' 			=> $receiver_mail,
@@ -188,7 +192,7 @@ class CShipping extends CI_Controller {
 		else
 			echo '0';
         //agregar llamado a la api de quadmin con los datos necesarios para crear una orden
-
+/* 
       $quadminOrder = array(
 			'code' 				=> $quadmins_code,
       'poiId' 				=> $poiId,
@@ -218,7 +222,7 @@ class CShipping extends CI_Controller {
     $result = curl_exec($curl);
 
     // Free up the resources $curl is using
-    curl_close($curl);
+    curl_close($curl); */
 	}
 
 	public function editShipping()
