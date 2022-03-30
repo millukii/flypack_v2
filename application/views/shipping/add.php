@@ -44,7 +44,7 @@
                     			  				</div> 
                     
                                     <div class="form-group">
-                    			  					<label for="shipping-type" class="col-sm-2 control-label">Tipo</label>
+                    			  					<label for="shipping-type" class="col-sm-2 control-label">Tamaño</label>
                     			  					<div class="col-sm-5">
                     			  						<select name="select-shipping-type" id="select-shipping-type" class="form-control" required>
                     			  							<option value="">Seleccione una opción</option>
@@ -79,6 +79,17 @@
                                             <option value=7>7</option>
                                             <option value=8>8</option>
                                             <option value=9>9</option>
+                    			  						</select>
+                    			  					</div>
+                    			  				</div>
+                                    <div class="form-group">
+                    			  					<label for="delivery-options" class="col-sm-2 control-label">Repartidor</label>
+                    			  					<div class="col-sm-5">
+                    			  						<select name="delivery-options" id="delivery-options" class="form-control" required>
+                    			  							<option value="">Seleccione una opción</option>
+                    			  							<?php foreach ($delivery_options as $key) { ?>
+                    			  								<option value="<?php echo $key->id; ?>"><?php echo $key->name; ?></option>
+                    			  							<?php } ?>
                     			  						</select>
                     			  					</div>
                     			  				</div>
@@ -212,8 +223,8 @@
           total_amount: $("#input-total-amount").val(),
           address: $("#input-address").val(),
           delivery_name: $("#input-delivery-name").val(),
-          origin: $("#select-branch-offices").val(),
-          destiny: $("#input-destiny").val(),
+          branch_office: $("#select-branch-offices").val(),
+          delivery_name: $("#delivery-options").val(),
           shipping_date: $("#input-shipping-date").val(),
           shipping_type: $("#select-shipping-type").val(),
           operation_type: $("#select-operation-type").val(),

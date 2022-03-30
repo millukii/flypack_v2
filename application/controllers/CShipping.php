@@ -42,6 +42,7 @@ class CShipping extends CI_Controller {
     $user = $this->session->userdata('users_id');
 		$userCompany = $this->modelo->getCompanyOfUser($user);
     $branchOffices = $this->modelo->getBranchOfficesOfCompany($userCompany[0]->id);
+    $deliveryOptions = $this->modelo->getAllDeliveryOptions();
 
 		$this->db->select('id');
         $this->db->from('shipping');
@@ -75,6 +76,7 @@ class CShipping extends CI_Controller {
 
 		$data = array(
       'points' => $points['data'],
+      'delivery_options' =>  $deliveryOptions, true,
       'user_company'=>$userCompany,
 			'branch_offices' => $branchOffices,
 			'shipping_states' => $shipping_states,

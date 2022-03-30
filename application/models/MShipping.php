@@ -247,6 +247,15 @@ class MShipping extends CI_Model {
 		$this->db->order_by('state');
 		return $this->db->get()->result();
 	}
+  public function getAllDeliveryOptions()
+	{
+		$this->db->select('id, name, rol_id');
+		$this->db->from('users');
+    $this->db->where('users.rol_id', "3");
+		$this->db->order_by('name');
+		return $this->db->get()->result();
+	}
+
 	public function getCompanyOfUser($id)
 	{
 		$this->db->select('companies.id, companies.razon, companies.city_id, city.city, companies.communes_id,communes.commune, companies.address');

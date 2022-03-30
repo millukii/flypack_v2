@@ -27,12 +27,10 @@
                           <th>Fecha de Envio</th>
                           <th>Estado</th>
                           <th>Empresa</th>
-                          <th>Emisor</th>
                           <th>Direccion</th>
                           <th>Sucursal</th>
                           <th>Receptor</th>
                           <th>Telefono</th>
-                          <th>Etiqueta</th>
                           <th>Acción</th>
                         </tr>
                       </thead>
@@ -78,12 +76,10 @@
             { "data": "Fecha de Envio" },
             { "data": "Estado" },
             { "data": "Empresa" },
-            { "data": "Emisor" },
             { "data": "Direccion" },
             { "data": "Sucursal" },
             { "data": "Receptor" },
             { "data": "Telefono" },
-            { "data": "Etiqueta" },
             { "data": "Acción" }
           ],
           "columnDefs": [
@@ -147,46 +143,32 @@
               "targets": [7],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.sender
-              }
-            },
-            {
-              "targets": [8],
-              "orderable": true,
-              "render": function(data, type, row) {
                 return row.address
               }
             },
            {
-              "targets": [9],
+              "targets": [8],
               "orderable": true,
               "render": function(data, type, row) {
                 return row.branch_office
               }
             },
             {
-              "targets": [10],
+              "targets": [9],
               "orderable": true,
               "render": function(data, type, row) {
                 return row.receiver_name
               }
             },
             {
-              "targets": [11],
+              "targets": [10],
               "orderable": true,
               "render": function(data, type, row) {
                 return row.receiver_phone
               }
             },
             {
-              "targets": [12],
-              "orderable": true,
-              "render": function(data, type, row) {
-                return row.label
-              }
-            },
-            {
-              "targets": [13],
+              "targets": [11],
               "orderable": false,
               "render": function(data, type, row) {
                 return `
