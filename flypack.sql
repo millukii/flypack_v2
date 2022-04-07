@@ -65,7 +65,7 @@ CREATE TABLE `companies` (
 
 /*Data for the table `companies` */
 
-insert  into `companies`(`id`,`rut`,`dv`,`razon`,`fantasy`,`address`,`city_id`,`communes_id`,`companies_state_id`,`type_rate`) values (1,11111111,'1','RAZON SOCIAL 1','NOMBRE FANTASIA 1','DIRECCION 1',1,1,1,1),(2,76993984,'9','Anza SpA','BPLAYER','Av. Providencia 1208 Of 1603',1,9,1,1),(3,22222222,'2','Prueba','Prueba fan','dir mat',1,23,1,1);
+insert  into `companies`(`id`,`rut`,`dv`,`razon`,`fantasy`,`address`,`city_id`,`communes_id`,`companies_state_id`,`type_rate`) values (1,11111111,'1','RAZON SOCIAL 1','NOMBRE FANTASIA 1','DIRECCION 1',1,1,1,1),(2,76993984,'9','Anza SpA','BPLAYER','Av. Providencia 1208 Of 1603',1,9,1,1),(3,22222222,'2','Prueba','Prueba fan','dir mat',1,23,1,2);
 
 /*Table structure for table `companies_state` */
 
@@ -186,7 +186,7 @@ CREATE TABLE `rates_size` (
 
 /*Data for the table `rates_size` */
 
-insert  into `rates_size`(`id`,`size`,`value`,`companies_id`) values (1,'XL',4000,2),(2,'L',3000,2),(3,'M',2500,2);
+insert  into `rates_size`(`id`,`size`,`value`,`companies_id`) values (1,'XL',4000,3),(2,'L',3000,3),(3,'M',2500,3);
 
 /*Table structure for table `roles` */
 
