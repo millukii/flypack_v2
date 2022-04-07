@@ -224,8 +224,8 @@ CREATE TABLE `shipping` (
   `users_id` int(11) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
-  `origin` int(11) DEFAULT NULL COMMENT 'commune_id de la empres que emite la OT',
-  `destination` int(11) DEFAULT NULL COMMENT 'commune_id del cliente que recibe el paquete',
+  `origin` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'comuna de la empres que emite la OT',
+  `destination` varchar(155) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT 'comuna del cliente que recibe el paquete',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
