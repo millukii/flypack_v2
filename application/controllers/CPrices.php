@@ -220,12 +220,9 @@ class CPrices extends CI_Controller {
 		$company = trim($this->input->get('company',TRUE));
 		//TODO: condicionar type_rate
     
-    $this->db->select('type_rate');
-		$this->db->from('companies');
-		$this->db->where('id', $company);
-    $res = $this->db->get()->result_array();
+		$type_rate = $this->modelo->getType_Rate($company);
 
-    if ($res[0]["type_rate"] ==1 ){
+    if ($type_rate ==1 ){
 
 		$this->db->select('*');
 		$this->db->from('rates');
@@ -289,7 +286,8 @@ class CPrices extends CI_Controller {
 
 		// Write file to the browser
 		$objWriter->save('php://output');
-    }else {
+    }else 
+	{
       //exportar segun tipo de cobro por tallas
 
       
@@ -311,37 +309,14 @@ class CPrices extends CI_Controller {
 		$objPHPExcel->getActiveSheet()->SetCellValue('A1', "");
 		$indice = 0;
 		$indice2 = 0;
-		$indice3 = 0;
+
+		$objPHPExcel->getActiveSheet()->SetCellValue('A1','Tamaño');
+		$objPHPExcel->getActiveSheet()->SetCellValue('B1','Valor');
+
 		for($i=0; $i < count($prices); $i++)
 		{
-			//crear filas y columnas
-			if(!in_array($prices[$i]['from'], $from))
-			{
-				array_push($from, $prices[$i]['from']);
-				$objPHPExcel->getActiveSheet()->SetCellValue('A'.($indice+2),$prices[$i]['from']);
-				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice+1)].'1',$prices[$i]['from']);
-
-				$indice++;
-				$indice2 = 0;
-			}
-			
-			//llenar valores
-			$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice2+1)].($indice+1),$prices[$i]['value']);
-			$indice2++;
-			/*
-			if(!in_array($prices[$i]['from'], $from_to))
-			{
-				array_push($from_to, $prices[$i]['from']);
-				
-				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice2+1)].($indice3+2),$prices[$i]['value']);
-				$indice2++;
-			}
-			else
-			{
-				$indice3++;
-				$objPHPExcel->getActiveSheet()->SetCellValue($this->letters[($indice2+1)].($indice3+2),$prices[$i]['value']);
-			}
-			*/
+			$objPHPExcel->getActiveSheet()->SetCellValue('A'.($i+2),$prices[$i]['size']);
+			$objPHPExcel->getActiveSheet()->SetCellValue('B'.($i+2),$prices[$i]['value']);
 		}
 
 		$objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);

@@ -66,7 +66,7 @@ class MPrices extends CI_Model
 		return $this->db->get()->result_array();
 	}
 
-	private function getType_Rate($companies_id)
+	public function getType_Rate($companies_id)
 	{
 		$this->db->select('type_rate');
 		$this->db->from('companies');
