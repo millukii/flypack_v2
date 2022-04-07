@@ -315,8 +315,8 @@ class CPrices extends CI_Controller {
 
 		for($i=0; $i < count($prices); $i++)
 		{
-			$objPHPExcel->getActiveSheet()->SetCellValue('A'.($indice+2),$prices[$i]['size']);
-			$objPHPExcel->getActiveSheet()->SetCellValue('B'.($indice+2),$prices[$i]['value']);
+			$objPHPExcel->getActiveSheet()->SetCellValue('A'.($i+2),$prices[$i]['size']);
+			$objPHPExcel->getActiveSheet()->SetCellValue('B'.($i+2),$prices[$i]['value']);
 		}
 
 		$objWriter = new PHPExcel_Writer_Excel2007($objPHPExcel);
