@@ -63,7 +63,8 @@ class CWelcome extends CI_Controller {
 						'companies_id' => $data[0]['companies_id'],
 						'rut' => $data[0]['rut'],
 						'dv' => $data[0]['dv'],
-						'razon' => $data[0]['razon']
+						'razon' => $data[0]['razon'],
+						'type_rate' => $data[0]['type_rate']
 					);
 					
 					//SESSION START

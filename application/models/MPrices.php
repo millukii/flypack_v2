@@ -46,14 +46,38 @@ class MPrices extends CI_Model
 		return $retornar;
 	}
 
-	public function getPrice($id)
+	public function getPrice($companies_id, $id)
 	{
-		$this->db->select('id, value, from, to');
-		$this->db->from('rates');
-		$this->db->where('id', $id);
-		$this->db->limit(1);
+		if($this->getType_Rate($companies_id) == 1)
+		{
+			$this->db->select('id, value, from, to');
+			$this->db->from('rates');
+			$this->db->where('id', $id);
+			$this->db->limit(1);
+		}
+		else
+		{
+			$this->db->select('id, size, value');
+			$this->db->from('rates_size');
+			$this->db->where('id', $id);
+			$this->db->limit(1);
+		}
 
 		return $this->db->get()->result_array();
+	}
+
+	private function getType_Rate($companies_id)
+	{
+		$this->db->select('type_rate');
+		$this->db->from('companies');
+		$this->db->where('id', $companies_id);
+		$this->db->limit(1);
+
+		$response =  $this->db->get()->result_array();
+		if(!empty($response[0]['type_rate']))
+			return $response[0]['type_rate'];
+		else
+			return 1;
 	}
 
 	// Funciones auxiliares datatable
@@ -180,13 +204,24 @@ class MPrices extends CI_Model
 			return false;
 	}
 
-	public function editPrice($data, $id)
+	public function editPrice($companies_id, $data, $id)
 	{
-		$this->db->where('id', $id);
-		if($this->db->update('rates', $data))
-			return true;
+		if($this->getType_Rate($companies_id) == 1)
+		{
+			$this->db->where('id', $id);
+			if($this->db->update('rates', $data))
+				return true;
+			else
+				return false;
+		}
 		else
-			return false;
+		{
+			$this->db->where('id', $id);
+			if($this->db->update('rates_size', $data))
+				return true;
+			else
+				return false;
+		}
 	}
 
 	public function deletePrice($id)

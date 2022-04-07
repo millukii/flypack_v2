@@ -39,6 +39,7 @@
 			$.post(
 				site_url + "/CPrices/editPrice",{
 					id 		: 	<?php echo $prices[0]['id']; ?>,
+					companies_id: <?php echo $_GET['companies_id']; ?>,
 					value : 	$("#input-value").val()
 				},
 				function(data)

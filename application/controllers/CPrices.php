@@ -82,8 +82,9 @@ class CPrices extends CI_Controller {
 	public function edit()
 	{
 		$id = trim($this->input->get('id', TRUE));
+		$companies_id = trim($this->input->get('companies_id', TRUE));
 
-		$prices = $this->modelo->getPrice($id);
+		$prices = $this->modelo->getPrice($companies_id, $id);
 
 		$data = array('prices' => $prices);
 
@@ -122,13 +123,14 @@ class CPrices extends CI_Controller {
 	public function editPrice()
 	{
 		$id = trim($this->input->post('id', TRUE));
+		$companies_id = trim($this->input->post('companies_id', TRUE));
 		$value 	= trim($this->input->post('value', TRUE));
 		
 		$data = array(
 			'value' 	=> $value
 		);
 
-		if($this->modelo->editPrice($data, $id))
+		if($this->modelo->editPrice($companies_id, $data, $id))
 			echo '1';
 		else
 			echo '0';
