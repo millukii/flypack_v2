@@ -28,7 +28,8 @@
                           <th>Estado</th>
                           <th>Empresa</th>
                           <th>Direccion</th>
-                          <th>Sucursal</th>
+                          <th>Origen</th>
+                          <th>Destino</th>
                           <th>Receptor</th>
                           <th>Telefono</th>
                           <th>Acción</th>
@@ -77,7 +78,8 @@
             { "data": "Estado" },
             { "data": "Empresa" },
             { "data": "Direccion" },
-            { "data": "Sucursal" },
+            { "data": "Origen" },
+            { "data": "Destino" },
             { "data": "Receptor" },
             { "data": "Telefono" },
             { "data": "Acción" }
@@ -150,25 +152,32 @@
               "targets": [8],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.branch_office
+                return row.origin
               }
             },
-            {
+           {
               "targets": [9],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.receiver_name
+                return row.destination
               }
             },
             {
               "targets": [10],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.receiver_phone
+                return row.receiver_name
               }
             },
             {
               "targets": [11],
+              "orderable": true,
+              "render": function(data, type, row) {
+                return row.receiver_phone
+              }
+            },
+            {
+              "targets": [12],
               "orderable": false,
               "render": function(data, type, row) {
                 return `

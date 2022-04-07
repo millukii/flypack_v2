@@ -32,6 +32,7 @@
 25. Agregar Consumo de endpoint POST para que al crear una orden se cree su homologo en quadmin.
 26. Las ordenes en quadmin se crean por separado en su cuerpo genérico y su detalle. El detalle se compone de ítems.
 27. Revisar en agregar orden que la compañia y el estado no se estan enviando a la bd
+28. Editar Envio (campos editables,todos excepto company y user)
 ## Vistas
 
 - Cliente:  OT(solo de la empresa que inicia sesion), Precios, Etiquetas

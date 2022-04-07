@@ -32,8 +32,23 @@
                           <th>Repartidor</th>
                               <td><?php if(!empty($shipping[0]['delivery_name'])) echo $shipping[0]['delivery_name'];?></td>
                           </tr>
-		  		    	    			<th>Dirección</th>
-		  		    	    			<td><?php if(!empty($shipping[0]['address'])) echo $shipping[0]['address'];?></td>
+                          <tr>
+                            <th>Dirección</th>
+                            <td>
+                                <?php if(!empty($shipping[0]['address'])) echo $shipping[0]['address'];?>
+                              </td>
+		  		    	    		</tr>
+                        <tr>
+                            <th>Origen</th>
+                            <td>
+                                <?php if(!empty($shipping[0]['origin'])) echo $shipping[0]['origin'];?>
+                              </td>
+		  		    	    		</tr>
+                        <tr>
+                            <th>Destino</th>
+                            <td>
+                                <?php if(!empty($shipping[0]['destination'])) echo $shipping[0]['destination'];?>
+                              </td>
 		  		    	    		</tr>
 		  		    	    		<tr>
 		  		    	    			<th>Teléfono</th>

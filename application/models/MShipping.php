@@ -35,8 +35,8 @@ class MShipping extends CI_Model {
       shipping.shipping_type as shipping_type, 
       shipping.total_amount as total_amount, 
       shipping.address as address, 
-      shipping.branch_office as branch_office,
-      shipping.sender as sender, 
+      shipping.origin as origin, 
+      shipping.destination as destination, 
       shipping.delivery_name as delivery_name, 
       shipping.observation as observation, 
       shipping.receiver_name as receiver_name, 
@@ -71,21 +71,18 @@ class MShipping extends CI_Model {
       shipping.delivery_name as delivery_name, 
       shipping.shipping_date as shipping_date, 
       shipping_states.state as state, 
-      shipping.sender as sender, 
-      shipping_states.state as state, 
+      shipping.origin as origin, 
+      shipping.destination as destination,
       shipping.shipping_states_id as shipping_states_id,
       shipping.receiver_name as receiver_name, 
       shipping.observation as observation, 
-      shipping.label as label, 
       shipping.address as address, 
-      shipping.branch_office as branch_office,
       shipping.receiver_phone as receiver_phone, 
       shipping.receiver_mail as receiver_mail, 
       companies.razon as company');
 
 		$this->db->join('shipping_states','shipping_states.id = shipping.shipping_states_id');
 		$this->db->join('companies','companies.id = shipping.companies_id');
-
     //$this->db->where('shipping_states.id != ',2);
 
 		switch ($by)
@@ -130,12 +127,11 @@ class MShipping extends CI_Model {
       shipping.delivery_name as delivery_name, 
       shipping.shipping_date as shipping_date, 
       shipping_states.state as state, 
-      shipping.sender as sender, 
       shipping.receiver_name as receiver_name, 
+      shipping.origin as origin, 
+      shipping.destination as destination,
       shipping.observation as observation, 
-      shipping.label as label, 
       shipping.address as address,
-      shipping.branch_office as branch_office,
       shipping.receiver_phone as receiver_phone, 
       shipping.receiver_mail as receiver_mail, 
       companies.razon as company');
@@ -240,6 +236,14 @@ class MShipping extends CI_Model {
 		$this->db->order_by('razon');
 		return $this->db->get()->result();
 	}
+
+  	public function getAllCommunes()
+	{
+		$this->db->select('id, commune');
+		$this->db->from('communes');
+		$this->db->order_by('commune');
+		return $this->db->get()->result();
+	}
 	public function getAllShipping_States()
 	{
 		$this->db->select('id, state');
@@ -247,9 +251,11 @@ class MShipping extends CI_Model {
 		$this->db->order_by('state');
 		return $this->db->get()->result();
 	}
+
+
   public function getAllDeliveryOptions()
 	{
-		$this->db->select('id, name, rol_id');
+		$this->db->select('id, name, lastname, rol_id');
 		$this->db->from('users');
     $this->db->where('users.rol_id', "3");
 		$this->db->order_by('name');
@@ -258,7 +264,7 @@ class MShipping extends CI_Model {
 
 	public function getCompanyOfUser($id)
 	{
-		$this->db->select('companies.id, companies.razon, companies.city_id, city.city, companies.communes_id,communes.commune, companies.address');
+		$this->db->select('companies.id,companies.type_rate, companies.razon, companies.city_id, city.city, companies.communes_id,communes.commune, companies.address');
 		$this->db->from('companies');
     $this->db->join('city','city.id  = companies.city_id');
     $this->db->join('communes','communes.id  = companies.communes_id');

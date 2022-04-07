@@ -93,12 +93,14 @@ class CShipping extends CI_Controller {
 		$id = trim($this->input->get('id', TRUE));
 
 		$shipping = $this->modelo->getShipping_($id);
-		$companies = $this->modelo->getAllcompanies();
+		$communes = $this->modelo->getAllCommunes();
 		$shipping_states = $this->modelo->getAllShipping_States();
+    $delivery = $this->modelo->getAllDeliveryOptions();
 
 		$data = array(
 			'shipping' => $shipping,
-			'companies' => $companies,
+			'communes' => $communes,
+      'delivery' => $delivery,
 			'shipping_states' => $shipping_states,
 		);
 
@@ -134,16 +136,12 @@ class CShipping extends CI_Controller {
     $shipping_type 				= 	trim($this->input->post('shipping_type', TRUE));
 		$companies_id 		= 	trim($this->input->post('companies_id', TRUE));
 		$shipping_states_id	=	trim($this->input->post('shipping_states_id', TRUE));
-		$sender	=	trim($this->input->post('sender', TRUE));
     $address	=	trim($this->input->post('address', TRUE));
-    $branch_office	=	trim($this->input->post('branch_office', TRUE));
     $receiver_name	=	trim($this->input->post('receiver_name', TRUE));
     $receiver_phone	=	trim($this->input->post('receiver_phone', TRUE));
     $receiver_mail	=	trim($this->input->post('receiver_mail', TRUE));
     $observation	=	trim($this->input->post('observation', TRUE));
-    $label	=	trim($this->input->post('label', TRUE));
     $poiId	=	trim($this->input->post('poiId', TRUE));
-    $priority	=	trim($this->input->post('priority', TRUE));
     $label	=	trim($this->input->post('label', TRUE));
     $operation_type	=	trim($this->input->post('operation_type', TRUE));
 
@@ -173,10 +171,7 @@ class CShipping extends CI_Controller {
 			'total_amount' 				=> $total_amount,
 			'quadmins_code' 			=> $quadmins_code,
 			'address' 			=> $address,
-      'sender' 			=> $sender,
-      'label' 			=> $label,
       'shipping_type' 			=> $shipping_type,
-      'branch_office' 			=> $branch_office,
       'receiver_name' 			=> $receiver_name,
       'receiver_phone' 			=> $receiver_phone,
       'receiver_mail' 			=> $receiver_mail,
@@ -240,7 +235,6 @@ class CShipping extends CI_Controller {
     $shipping_type 				= 	trim($this->input->post('shipping_type', TRUE));
 		$companies_id 		= 	trim($this->input->post('companies_id', TRUE));
 		$shipping_states_id	=	trim($this->input->post('shipping_states_id', TRUE));
-		$sender	=	trim($this->input->post('sender', TRUE));
     $address	=	trim($this->input->post('address', TRUE));
     $receiver_name	=	trim($this->input->post('receiver_name', TRUE));
     $receiver_phone	=	trim($this->input->post('receiver_phone', TRUE));
@@ -269,7 +263,6 @@ class CShipping extends CI_Controller {
 			'total_amount' 				=> $total_amount,
 			'quadmins_code' 			=> $quadmins_code,
 			'address' 			=> $address,
-      'sender' 			=> $sender,
       'shipping_type' 			=> $shipping_type,
       'receiver_name' 			=> $receiver_name,
       'receiver_phone' 			=> $receiver_phone,

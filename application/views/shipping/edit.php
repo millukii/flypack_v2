@@ -9,15 +9,20 @@
 				  	</div>
                     				  	<form class="form-horizontal" id="form-shipping">
                     			  			<div class="box-body">
-                    			  				<div class="form-group">
-                    			  					<label for="order_nro" class="col-sm-2 control-label">Numero de Orden</label>
-                    			  					<div class="col-sm-3">
 
+                                     <div class="form-group">
+                    			  					<label for="total-amount" class="col-sm-2 control-label">Numero de Ordem</label>
+                    			  					<div class="col-sm-5">
+                    			  						<input type="text" class="form-control" name="input-order-nro" id="input-order-nro"
+                                         value="<?php if(!empty($shipping[0]['order_nro'])) echo $shipping[0]['order_nro'];?>"
+                                        >
+                    			  					</div>
+                    			  				</div>
                                     <div class="form-group">
-                    			  					<label for="shipping-type" class="col-sm-2 control-label">Tipo</label>
+                    			  					<label for="shipping-type" class="col-sm-2 control-label">Tamaño</label>
                     			  					<div class="col-sm-5">
                     			  						<select name="select-shipping-type" id="select-shipping-type" class="form-control" required>
-                    			  							<option value="<?php if(!empty($shipping[0]['shipping_type'])) echo $shipping[0]['shipping_type'];?>"></option>
+                    			  							<option value="<?php if(!empty($shipping[0]['shipping_type'])) echo $shipping[0]['shipping_type'];?>"><?php if(!empty($shipping[0]['shipping_type'])) echo $shipping[0]['shipping_type'];?></option>
                     			  								<option value=X>X</option>
                                             <option value=L>L</option>
                                             <option value=M>M</option>
@@ -27,7 +32,7 @@
 
                                      <div class="form-group">
                     			  					<label for="total-amount" class="col-sm-2 control-label">Total</label>
-                    			  					<div class="col-sm-10">
+                    			  					<div class="col-sm-5">
                     			  						<input type="text" class="form-control" name="input-total-amount" id="input-total-amount"
                                          value="<?php if(!empty($shipping[0]['total_amount'])) echo $shipping[0]['total_amount'];?>"
                                         >
@@ -37,42 +42,16 @@
 
                     			  				<div class="form-group">
                     			  					<label for="address" class="col-sm-2 control-label">Dirección</label>
-                    			  					<div class="col-sm-10">
+                    			  					<div class="col-sm-5">
                     			  						<input type="text" class="form-control" name="input-address" id="input-address"
                                         value="<?php if(!empty($shipping[0]['address'])) echo $shipping[0]['address'];?>"
                                         >
                     			  					</div>
                     			  				</div>
 
-                                    <div class="form-group">
-                    			  					<label for="origin" class="col-sm-2 control-label">Origin</label>
-                    			  					<div class="col-sm-10">
-                    			  						<input type="text" class="form-control" name="input-origin" id="input-origin"
-                                        value="<?php if(!empty($shipping[0]['origin'])) echo $shipping[0]['origin'];?>"
-                                        >
-                    			  					</div>
-                    			  				</div>
-
-                                    <div class="form-group">
-                    			  					<label for="destiny" class="col-sm-2 control-label">Destino</label>
-                    			  					<div class="col-sm-10">
-                    			  						<input type="text" class="form-control" name="input-destiny" id="input-destiny"
-                                        value="<?php if(!empty($shipping[0]['destiny'])) echo $shipping[0]['destiny'];?>"
-                                        >
-                    			  					</div>
-                    			  				</div>
-
-                                     <div class="form-group">
-                    			  					<label for="sender" class="col-sm-2 control-label">Emisor</label>
-                    			  					<div class="col-sm-10">
-                    			  						<input type="text" class="form-control" name="input-sender" id="input-sender"
-                                        value="<?php if(!empty($shipping[0]['sender'])) echo $shipping[0]['sender'];?>"
-                                        >
-                    			  					</div>
-                                      </div>
                     			  				<div class="form-group">
                     			  					<label for="receiver-name" class="col-sm-2 control-label">Receptor</label>
-                    			  					<div class="col-sm-10">
+                    			  					<div class="col-sm-5">
                     			  						<input type="text" class="form-control" name="input-receiver-name" id="input-receiver-name"
                                         value="<?php if(!empty($shipping[0]['receiver_name'])) echo $shipping[0]['receiver_name'];?>"
                                         >
@@ -106,17 +85,41 @@
                     			  				</div>
 
                     			  				<div class="form-group">
-                    			  					<label for="companies" class="col-sm-2 control-label">Empresa</label>
+                    			  					<label for="origin" class="col-sm-2 control-label">Origen</label>
                     			  					<div class="col-sm-5">
-                    			  						<select name="select-companies" id="select-companies" class="form-control" required>
-                    			  							<option value="">Seleccione una opción</option>
-                    			  							<?php foreach ($companies as $key) { ?>
-                    			  								<option value="<?php echo $key->id; ?>"><?php echo $key->razon; ?></option>
+                    			  						<select name="select-origin" id="select-origin" class="form-control" required>
+                    			  							<option value="<?php if(!empty($shipping[0]['origin'])) echo $shipping[0]['origin'];?>"><?php if(!empty($shipping[0]['origin'])) echo $shipping[0]['origin'];?></option>
+                    			  							<?php foreach ($communes as $key) { ?>
+                    			  								<option value="<?php echo $key->id; ?>"><?php echo $key->commune; ?></option>
+                    			  							<?php } ?>
+                    			  						</select>
+                    			  					</div>
+                    			  				</div>
+
+                    			  				<div class="form-group">
+                    			  					<label for="destination" class="col-sm-2 control-label">Destino</label>
+                    			  					<div class="col-sm-5">
+                    			  						<select name="select-destination" id="select-destination" class="form-control" required>
+                    			  							<option value="<?php if(!empty($shipping[0]['destination'])) echo $shipping[0]['destination'];?>"><?php if(!empty($shipping[0]['destination'])) echo $shipping[0]['destination'];?></option>
+                    			  							<?php foreach ($communes as $key) { ?>
+                    			  								<option value="<?php echo $key->id; ?>"><?php echo $key->commune; ?></option>
                     			  							<?php } ?>
                     			  						</select>
                     			  					</div>
                     			  				</div>
                     
+                                    <div class="form-group">
+                    			  					<label for="delivery" class="col-sm-2 control-label">Repartidor</label>
+                    			  					<div class="col-sm-5">
+                    			  						<select name="select-delivery" id="select-delivery" class="form-control" required>
+                    			  							<option value="<?php if(!empty($shipping[0]['delivery_name'])) echo $shipping[0]['delivery_name'];?>"><?php if(!empty($shipping[0]['delivery_name'])) echo $shipping[0]['delivery_name'];?></option>
+                    			  							<?php foreach ($delivery as $key) { ?>
+                    			  								<option value="<?php echo $key->name. " " . $key->lastname; ?>"><?php echo $key->name. " " . $key->lastname; ?></option>
+                    			  							<?php } ?>
+                    			  						</select>
+                    			  					</div>
+                    			  				</div>
+
                     			  				<div class="form-group">
                     			  					<label for="shipping" class="col-sm-2 control-label">Estado</label>
                     			  					<div class="col-sm-5">
