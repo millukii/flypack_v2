@@ -233,7 +233,7 @@
 					if (data == 1)
 						window.location.replace(site_url+"/CShipping/index");
 					else
-						alert("Rut existente.")
+						alert("Error.")
 				}
 			);
 		});

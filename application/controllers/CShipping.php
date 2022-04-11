@@ -312,7 +312,7 @@ class CShipping extends CI_Controller {
       'observation' 			=> $observation,
 			'companies_id'		=> $companies_id,
 			'shipping_states_id'	=> $shipping_states_id,
-			'updated'			=> $date_time
+			'modified'			=> $date_time
 		);
 
 		if($this->modelo->editShipping($data, $id))
