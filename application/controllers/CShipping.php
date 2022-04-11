@@ -43,6 +43,22 @@ class CShipping extends CI_Controller {
 		$userCompany = $this->modelo->getCompanyOfUser($user);
     $branchOffices = $this->modelo->getBranchOfficesOfCompany($userCompany[0]->id);
     $deliveryOptions = $this->modelo->getAllDeliveryOptions();
+		$communes = $this->modelo->getAllCommunes();
+    $rates = null;
+    $rates_sizes = null;
+    $type_rate = $userCompany[0]->type_rate;
+
+    if ($type_rate === "1"){
+      //por lista de precio (rates) origen destino
+      $rates = $this->modelo->getAllRatesByCompany($userCompany[0]->id);
+    }
+
+    if ($type_rate === "2"){
+      //por tamaño x m s (rates_sizes)
+        $rates_sizes = $this->modelo->getAllRatesSizesByCompany($userCompany[0]->id);
+
+    }
+
 
 		$this->db->select('id');
         $this->db->from('shipping');
@@ -76,8 +92,12 @@ class CShipping extends CI_Controller {
 
 		$data = array(
       'points' => $points['data'],
-      'delivery_options' =>  $deliveryOptions, true,
+      'delivery_options' =>  $deliveryOptions, 
       'user_company'=>$userCompany,
+      'communes' => $communes,
+      'type_rate' => $type_rate,
+      'rates' => $rates,
+      'rates_sizes' => $rates_sizes,
 			'branch_offices' => $branchOffices,
 			'shipping_states' => $shipping_states,
 			'new_id' => $res,
@@ -91,15 +111,33 @@ class CShipping extends CI_Controller {
 	public function edit()
 	{
 		$id = trim($this->input->get('id', TRUE));
-
+    $user = $this->session->userdata('users_id');
+		$userCompany = $this->modelo->getCompanyOfUser($user);
 		$shipping = $this->modelo->getShipping_($id);
 		$communes = $this->modelo->getAllCommunes();
 		$shipping_states = $this->modelo->getAllShipping_States();
     $delivery = $this->modelo->getAllDeliveryOptions();
+    $rates = null;
+    $rates_sizes = null;
+    $type_rate = $userCompany[0]->type_rate;
+
+    if ($type_rate === "1"){
+      //por lista de precio (rates) origen destino
+      $rates = $this->modelo->getAllRatesByCompany($userCompany[0]->id);
+    }
+
+    if ($type_rate === "2"){
+      //por tamaño x m s (rates_sizes)
+        $rates_sizes = $this->modelo->getAllRatesSizesByCompany($userCompany[0]->id);
+
+    }
 
 		$data = array(
 			'shipping' => $shipping,
 			'communes' => $communes,
+      'type_rate' => $type_rate,
+      'rates' => $rates,
+      'rates_sizes' => $rates_sizes,
       'delivery' => $delivery,
 			'shipping_states' => $shipping_states,
 		);
@@ -256,7 +294,8 @@ class CShipping extends CI_Controller {
 
 		if(empty($shipping_date))
 			$shipping_date = 'sin_shipping_date@gmail.com';
-		
+
+		$date_time = date('Y-m-d H:i:s');
 		$data = array(
 			'order_nro' 				=> $order_nro,
 			'quadmins_code' 				=> $quadmins_code,

@@ -229,6 +229,24 @@ class MShipping extends CI_Model {
 
 		return $this->db->get()->result();
 	}
+  public function getAllRatesByCompany($id)
+	{
+		$this->db->select('id, from, to, value, companies_id');
+		$this->db->from('rates');
+    $this->db->where('companies_id', $id);
+		$this->db->order_by('companies_id');
+
+		return $this->db->get()->result();
+	}
+  public function getAllRatesSizesByCompany($id)
+	{
+		$this->db->select('id, size, value');
+		$this->db->from('rates_size');
+    $this->db->where('companies_id', $id);
+		$this->db->order_by('size');
+
+		return $this->db->get()->result();
+	}
 	public function getAllCompanies()
 	{
 		$this->db->select('id, razon');

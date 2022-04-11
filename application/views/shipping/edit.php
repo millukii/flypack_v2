@@ -11,7 +11,7 @@
                     			  			<div class="box-body">
 
                                      <div class="form-group">
-                    			  					<label for="total-amount" class="col-sm-2 control-label">Numero de Ordem</label>
+                    			  					<label for="total-amount" class="col-sm-2 control-label">Numero de OrdeN</label>
                     			  					<div class="col-sm-5">
                     			  						<input type="text" class="form-control" name="input-order-nro" id="input-order-nro"
                                          value="<?php if(!empty($shipping[0]['order_nro'])) echo $shipping[0]['order_nro'];?>"
@@ -21,11 +21,11 @@
                                     <div class="form-group">
                     			  					<label for="shipping-type" class="col-sm-2 control-label">Tamaño</label>
                     			  					<div class="col-sm-5">
-                    			  						<select name="select-shipping-type" id="select-shipping-type" class="form-control" required>
+                    			  						<select name="select-shipping-type" id="select-shipping-type" class="form-control totalAmount" required>
                     			  							<option value="<?php if(!empty($shipping[0]['shipping_type'])) echo $shipping[0]['shipping_type'];?>"><?php if(!empty($shipping[0]['shipping_type'])) echo $shipping[0]['shipping_type'];?></option>
-                    			  								<option value=X>X</option>
+                    			  								<option value=M>M</option>
                                             <option value=L>L</option>
-                                            <option value=M>M</option>
+                                            <option value=XL>XL</option>
                     			  						</select>
                     			  					</div>
                     			  				</div>
@@ -87,7 +87,7 @@
                     			  				<div class="form-group">
                     			  					<label for="origin" class="col-sm-2 control-label">Origen</label>
                     			  					<div class="col-sm-5">
-                    			  						<select name="select-origin" id="select-origin" class="form-control" required>
+                    			  						<select name="select-origin" id="select-origin" class="form-control totalAmount" required >
                     			  							<option value="<?php if(!empty($shipping[0]['origin'])) echo $shipping[0]['origin'];?>"><?php if(!empty($shipping[0]['origin'])) echo $shipping[0]['origin'];?></option>
                     			  							<?php foreach ($communes as $key) { ?>
                     			  								<option value="<?php echo $key->id; ?>"><?php echo $key->commune; ?></option>
@@ -99,7 +99,7 @@
                     			  				<div class="form-group">
                     			  					<label for="destination" class="col-sm-2 control-label">Destino</label>
                     			  					<div class="col-sm-5">
-                    			  						<select name="select-destination" id="select-destination" class="form-control" required>
+                    			  						<select name="select-destination" id="select-destination" class="form-control totalAmount" required>
                     			  							<option value="<?php if(!empty($shipping[0]['destination'])) echo $shipping[0]['destination'];?>"><?php if(!empty($shipping[0]['destination'])) echo $shipping[0]['destination'];?></option>
                     			  							<?php foreach ($communes as $key) { ?>
                     			  								<option value="<?php echo $key->id; ?>"><?php echo $key->commune; ?></option>
@@ -156,6 +156,43 @@
 	$(document).ready(function()
 	{
 
+     totalAmount();
+    function totalAmount(){
+        let typeRate = "<?php print($type_rate); ?>"
+      let rates = null;
+      let ratesSizes = null;
+
+      let shippingType  = document.getElementById('select-shipping-type').value;
+      if (typeRate ==="1"){
+        var js_data = '<?php echo json_encode($rates); ?>';
+        var js_obj_data = JSON.parse(js_data);
+       let origin = document.getElementById('select-origin');
+       let originSelectedText = origin.options[origin.selectedIndex].text;
+       let destination = document.getElementById('select-destination');
+       let destinationSelectedText = destination.options[destination.selectedIndex].text;
+
+          js_obj_data.forEach(price => {
+            if (price.from===originSelectedText &&
+                price.to===destinationSelectedText
+            ){
+              console.log( price );
+               document.getElementById('input-total-amount').value = price.value;
+            }
+          });
+      }else if(typeRate ==="2"){
+        var js_data = '<?php echo json_encode($rates_sizes); ?>';
+        var js_obj_data = JSON.parse(js_data);
+
+          js_obj_data.forEach(price => {
+            if (price.size===shippingType){
+               document.getElementById('input-total-amount').value = price.value;
+            }
+          });
+      }
+    }
+    $('select.totalAmount').on('change', function() {
+      totalAmount();
+    });
 
 		$('#select-shipping-states').val('<?php if(!empty($shipping[0]['shipping_states_id'])) echo $shipping[0]['shipping_states_id'];?>');
 

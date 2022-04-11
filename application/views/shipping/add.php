@@ -12,7 +12,7 @@
                 <div class="panel-body">
                     <div class="tab-content">
                         <div class="tab-pane fade in active" id="tab1default">
-                            
+
                             <div class="row">
                     			<div class="col-sm-12">
                     				<div class="box box-success">
@@ -21,6 +21,7 @@
                     						<h3 class="box-title">Agregar Orden de Transporte</h3>
                     						<hr>
                     				  	</div>
+
                     				  	<form class="form-horizontal" id="form-shipping">
                     			  			<div class="box-body">
                                   <div class="form-group">
@@ -29,7 +30,6 @@
                     			  						<input type="text" class="form-control" name="input-id" id="input-id"  maxlength="10" value="<?php if(!empty($new_id)) echo $new_id;?>"  disabled required>
                     			  					</div>
                     			  				</div>
-
                     			  				<div class="form-group">
                     			  					<label for="order_nro" class="col-sm-2 control-label">Numero de Orden</label>
                     			  					<div class="col-sm-3">
@@ -38,7 +38,7 @@
                     			  				</div>
                     			  				<div class="form-group">
                     			  					<label for="quadmins-code" class="col-sm-2 control-label">Codigo Quadmin</label>
-                    			  					<div class="col-sm-10">
+                    			  					<div class="col-sm-5">
                     			  						<input type="text" class="form-control" name="input-quadmins-code" id="input-quadmins-code">
                     			  					</div>
                     			  				</div> 
@@ -46,15 +46,15 @@
                                     <div class="form-group">
                     			  					<label for="shipping-type" class="col-sm-2 control-label">Tamaño</label>
                     			  					<div class="col-sm-5">
-                    			  						<select name="select-shipping-type" id="select-shipping-type" class="form-control" required>
-                    			  							<option value="">Seleccione una opción</option>
-                    			  								<option value=X>X</option>
+                    			  						<select name="select-shipping-type" id="select-shipping-type" class="form-control totalAmount" required>
+                    			  							<option default value="L">L</option>
+                    			  								<option value=M>M</option>
                                             <option value=L>L</option>
-                                            <option value=M>M</option>
+                                            <option value=XL>XL</option>
                     			  						</select>
                     			  					</div>
                     			  				</div>
-                                      <div class="form-group">
+<!--                                       <div class="form-group">
                     			  					<label for="operation-type" class="col-sm-2 control-label">Operación</label>
                     			  					<div class="col-sm-5">
                     			  						<select name="select-operation-type" id="select-operation-type" class="form-control" required>
@@ -63,8 +63,8 @@
                                             <option value=Retiro>Retiro</option>
                     			  						</select>
                     			  					</div>
-                    			  				</div>
-                                    <div class="form-group">
+                    			  				</div> -->
+<!--                                     <div class="form-group">
                     			  					<label for="shipping-type" class="col-sm-2 control-label">Prioridad</label>
                     			  					<div class="col-sm-5">
                     			  						<select name="select-shipping-type" id="select-shipping-type" class="form-control" required>
@@ -81,7 +81,7 @@
                                             <option value=9>9</option>
                     			  						</select>
                     			  					</div>
-                    			  				</div>
+                    			  				</div> -->
                                     <div class="form-group">
                     			  					<label for="delivery-options" class="col-sm-2 control-label">Repartidor</label>
                     			  					<div class="col-sm-5">
@@ -126,7 +126,7 @@
                     			  					</div>
                     			  				</div>
                     
-                    			  				<div class="form-group">
+                    			  				<!-- <div class="form-group">
                     			  					<label for="receiver-mail" class="col-sm-2 control-label">E-mail</label>
                     			  					<div class="col-sm-5">
                     			  						<input type="email" class="form-control" name="input-receiver-mail" id="input-receiver-mail">
@@ -142,7 +142,7 @@
                     			  							<?php } ?>
                     			  						</select>
                     			  					</div>
-                    			  				</div>
+                    			  				</div> -->
                                      <div class="form-group">
                     			  					<label for="observation" class="col-sm-2 control-label">Observacion</label>
                     			  					<div class="col-sm-5">
@@ -150,14 +150,26 @@
                     			  					</div>
                     			  				</div>
 
+                             
                     			  				<div class="form-group">
-                    			  					<label for="select-branch-offices" class="col-sm-2 control-label">Sucursal</label>
+                    			  					<label for="origin" class="col-sm-2 control-label">Origen</label>
                     			  					<div class="col-sm-5">
-                    			  						<select name="select-branch-offices" id="select-branch-offices" class="form-control" required>
-                    			  							<option value="">Seleccione una opción</option>
-                                          <option value="<?php echo $user_company[0]->id; ?>"><?php echo $user_company[0]->address; ?></option>
+                    			  						<select name="select-origin" id="select-origin" class="form-control totalAmount" required>
+                    			  							<option value="<?php if(!empty($user_company[0]->communes_id)) echo $user_company[0]->communes_id;?>"><?php if(!empty($user_company[0]->commune)) echo $user_company[0]->commune;?></option>
                     			  							<?php foreach ($branch_offices as $key) { ?>
-                    			  								<option value="<?php echo $key->id; ?>"><?php echo $key->address; ?></option>
+                    			  								<option value="<?php echo $key->id; ?>"><?php echo $key->commune; ?></option>
+                    			  							<?php } ?>
+                    			  						</select>
+                    			  					</div>
+                    			  				</div>
+
+                    			  				<div class="form-group">
+                    			  					<label for="destination" class="col-sm-2 control-label">Destino</label>
+                    			  					<div class="col-sm-5">
+                    			  						<select name="select-destination" id="select-destination" class="form-control totalAmount" required >
+                    			  							<option value="<?php if(!empty($user_company[0]->communes_id)) echo $user_company[0]->communes_id;?>"><?php if(!empty($user_company[0]->commune)) echo $user_company[0]->commune;?></option>
+                    			  							<?php foreach ($communes as $key) { ?>
+                    			  								<option value="<?php echo $key->id; ?>"><?php echo $key->commune; ?></option>
                     			  							<?php } ?>
                     			  						</select>
                     			  					</div>
@@ -209,6 +221,43 @@
 	
 	$(document).ready(function()
 	{
+     totalAmount();
+    function totalAmount(){
+        let typeRate = "<?php print($type_rate); ?>"
+      let rates = null;
+      let ratesSizes = null;
+
+      let shippingType  = document.getElementById('select-shipping-type').value;
+      if (typeRate ==="1"){
+        var js_data = '<?php echo json_encode($rates); ?>';
+        var js_obj_data = JSON.parse(js_data);
+       let origin = document.getElementById('select-origin');
+       let originSelectedText = origin.options[origin.selectedIndex].text;
+       let destination = document.getElementById('select-destination');
+       let destinationSelectedText = destination.options[destination.selectedIndex].text;
+
+          js_obj_data.forEach(price => {
+            if (price.from===originSelectedText &&
+                price.to===destinationSelectedText
+            ){
+              console.log( price );
+               document.getElementById('input-total-amount').value = price.value;
+            }
+          });
+      }else if(typeRate ==="2"){
+        var js_data = '<?php echo json_encode($rates_sizes); ?>';
+        var js_obj_data = JSON.parse(js_data);
+
+          js_obj_data.forEach(price => {
+            if (price.size===shippingType){
+               document.getElementById('input-total-amount').value = price.value;
+            }
+          });
+      }
+    }
+    $('select.totalAmount').on('change', function() {
+      totalAmount();
+    });
 		$("#form-shipping").submit(function(event) {
 			event.preventDefault();
             
