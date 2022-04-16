@@ -28,26 +28,26 @@ class MShipping extends CI_Model {
 	public function getShipping_($id)
 	{
 		$this->db->select(
-      'shipping.id as id, 
-      shipping.order_nro as order_nro, 
-      shipping.delivery_name as delivery_name, 
-      shipping.quadmins_code as quadmins_code, 
-      shipping.shipping_type as shipping_type, 
-      shipping.total_amount as total_amount, 
-      shipping.address as address, 
-      shipping.origin as origin, 
-      shipping.destination as destination, 
-      shipping.delivery_name as delivery_name, 
-      shipping.observation as observation, 
-      shipping.receiver_name as receiver_name, 
-      shipping.receiver_phone as receiver_phone, 
-      shipping.receiver_mail as receiver_mail, 
-      shipping.companies_id as companies_id, 
-      shipping.shipping_states_id as shipping_states_id, companies.razon as company, 
-      shipping_states.state as state,  
-      DATE_FORMAT(shipping.created, "%d-%m-%Y %H:%i:%s") as created, 
-      DATE_FORMAT(shipping.modified, "%d-%m-%Y %H:%i:%s") as modified,
-      DATE_FORMAT(shipping.shipping_date, "%d-%m-%Y %H:%i:%s") as shipping_date
+			'shipping.id as id, 
+			shipping.order_nro as order_nro, 
+			shipping.delivery_name as delivery_name, 
+			shipping.quadmins_code as quadmins_code, 
+			shipping.shipping_type as shipping_type, 
+			shipping.total_amount as total_amount, 
+			shipping.address as address, 
+			shipping.origin as origin, 
+			shipping.destination as destination, 
+			shipping.delivery_name as delivery_name, 
+			shipping.observation as observation, 
+			shipping.receiver_name as receiver_name, 
+			shipping.receiver_phone as receiver_phone, 
+			shipping.receiver_mail as receiver_mail, 
+			shipping.companies_id as companies_id, 
+			shipping.shipping_states_id as shipping_states_id, companies.razon as company, 
+			shipping_states.state as state,  
+			DATE_FORMAT(shipping.created, "%d-%m-%Y %H:%i:%s") as created, 
+			DATE_FORMAT(shipping.modified, "%d-%m-%Y %H:%i:%s") as modified,
+			DATE_FORMAT(shipping.shipping_date, "%d-%m-%Y %H:%i:%s") as shipping_date
       ');
 
 		$this->db->join('shipping_states','shipping_states.id = shipping.shipping_states_id');
@@ -293,16 +293,30 @@ class MShipping extends CI_Model {
 		return $this->db->get()->result();
 	}
 
-public function getBranchOfficesOfCompany($id)
+	public function getBranchOfficesOfCompany($id)
 	{
 		$this->db->select('company_address.id, company_address.city_id, city.city, company_address.communes_id,communes.commune, company_address.address');
 		$this->db->from('company_address');
-    $this->db->join('communes','communes.id  = company_address.communes_id');
-    $this->db->join('city','city.id  = company_address.city_id');
+    	$this->db->join('communes','communes.id  = company_address.communes_id');
+    	$this->db->join('city','city.id  = company_address.city_id');
 		$this->db->where('company_address.companies_id', $id);
 		$this->db->order_by('company_address.address', 'asc');
 
 		return $this->db->get()->result();
+	}
+
+	public function getCommuneName($id)
+	{
+		$this->db->select('commune');
+		$this->db->from('communes');
+		$this->db->where('id', $id);
+		$this->db->limit(1);
+
+		$res = $this->db->get()->result_array();
+		if(!empty($res[0]['commune']))
+			return $res[0]['commune'];
+		else
+			return false;
 	}
 
 

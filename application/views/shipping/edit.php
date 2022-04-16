@@ -88,7 +88,6 @@
                     			  					<label for="origin" class="col-sm-2 control-label">Origen</label>
                     			  					<div class="col-sm-5">
                     			  						<select name="select-origin" id="select-origin" class="form-control totalAmount" required >
-                    			  							<option value="<?php if(!empty($shipping[0]['origin'])) echo $shipping[0]['origin'];?>"><?php if(!empty($shipping[0]['origin'])) echo $shipping[0]['origin'];?></option>
                     			  							<?php foreach ($communes as $key) { ?>
                     			  								<option value="<?php echo $key->id; ?>"><?php echo $key->commune; ?></option>
                     			  							<?php } ?>
@@ -112,7 +111,7 @@
                     			  					<label for="delivery" class="col-sm-2 control-label">Repartidor</label>
                     			  					<div class="col-sm-5">
                     			  						<select name="select-delivery" id="select-delivery" class="form-control" required>
-                    			  							<option value="<?php if(!empty($shipping[0]['delivery_name'])) echo $shipping[0]['delivery_name'];?>"><?php if(!empty($shipping[0]['delivery_name'])) echo $shipping[0]['delivery_name'];?></option>
+    
                     			  							<?php foreach ($delivery as $key) { ?>
                     			  								<option value="<?php echo $key->name. " " . $key->lastname; ?>"><?php echo $key->name. " " . $key->lastname; ?></option>
                     			  							<?php } ?>
@@ -143,8 +142,7 @@
 				</div>
 			</div>
 		</div>
-	</section>
-
+	</section>								
 </div>
 
 <?php $this->view('footer'); ?>
@@ -155,46 +153,60 @@
 
 	$(document).ready(function()
 	{
+		$("#select-origin option").filter(function() {
+			return $(this).text() == '<?php if(!empty($shipping[0]['origin'])) echo $shipping[0]['origin'];else echo 1;?>';
+		}).prop('selected', true);
 
-     totalAmount();
-    function totalAmount(){
-        let typeRate = "<?php print($type_rate); ?>"
-      let rates = null;
-      let ratesSizes = null;
+		$("#select-destination option").filter(function() {
+			return $(this).text() == '<?php if(!empty($shipping[0]['destination'])) echo $shipping[0]['destination'];else echo 1;?>';
+		}).prop('selected', true);
 
-      let shippingType  = document.getElementById('select-shipping-type').value;
-      if (typeRate ==="1"){
-        var js_data = '<?php echo json_encode($rates); ?>';
-        var js_obj_data = JSON.parse(js_data);
-       let origin = document.getElementById('select-origin');
-       let originSelectedText = origin.options[origin.selectedIndex].text;
-       let destination = document.getElementById('select-destination');
-       let destinationSelectedText = destination.options[destination.selectedIndex].text;
+		$("#select-delivery option").filter(function() {
+			return $(this).text() == '<?php if(!empty($shipping[0]['deslivery_name'])) echo $shipping[0]['deslivery_name'];else echo 1;?>';
+		}).prop('selected', true);
 
-          js_obj_data.forEach(price => {
-            if (price.from===originSelectedText &&
-                price.to===destinationSelectedText
-            ){
-              console.log( price );
-               document.getElementById('input-total-amount').value = price.value;
-            }
-          });
-      }else if(typeRate ==="2"){
-        var js_data = '<?php echo json_encode($rates_sizes); ?>';
-        var js_obj_data = JSON.parse(js_data);
+		$('#select-shipping-states').val(<?php if(!empty($shipping[0]['shipping_states_id'])) echo $shipping[0]['shipping_states_id'];?>);
 
-          js_obj_data.forEach(price => {
-            if (price.size===shippingType){
-               document.getElementById('input-total-amount').value = price.value;
-            }
-          });
-      }
+		totalAmount();
+		function totalAmount(){
+			let typeRate = "<?php print($type_rate); ?>"
+			let rates = null;
+			let ratesSizes = null;
+
+			let shippingType  = document.getElementById('select-shipping-type').value;
+			if (typeRate ==="1"){
+				var js_data = '<?php echo json_encode($rates); ?>';
+				var js_obj_data = JSON.parse(js_data);
+				let origin = document.getElementById('select-origin');
+				let originSelectedText = origin.options[origin.selectedIndex].text;
+				let destination = document.getElementById('select-destination');
+				let destinationSelectedText = destination.options[destination.selectedIndex].text;
+
+				js_obj_data.forEach(price => {
+					if (price.from===originSelectedText &&price.to===destinationSelectedText)
+					{
+						console.log( price );
+						document.getElementById('input-total-amount').value = price.value;
+					}
+				});
+			}
+			else if(typeRate ==="2"){
+				var js_data = '<?php echo json_encode($rates_sizes); ?>';
+				var js_obj_data = JSON.parse(js_data);
+
+				js_obj_data.forEach(price => {
+					if (price.size===shippingType){
+					document.getElementById('input-total-amount').value = price.value;
+					}
+				});
+		}
     }
+
     $('select.totalAmount').on('change', function() {
       totalAmount();
     });
 
-		$('#select-shipping-states').val('<?php if(!empty($shipping[0]['shipping_states_id'])) echo $shipping[0]['shipping_states_id'];?>');
+		
 
     
 		$('#select-companies').val('<?php if(!empty($shipping[0]['companies_id'])) echo $shipping[0]['companies_id'];?>');
@@ -207,35 +219,36 @@
             cuerpo = $('#input-rut').val();
 	        dv = cuerpo;
 
-			$.post(
-				site_url + "/CShipping/editShipping",{
-          order_nro: $("#input-order-nro").val(),
-          quadmins_code: null,//$("#input-quadmins-code").val(),
-          total_amount: $("#input-total-amount").val(),
-          address: $("#input-address").val(),
-          delivery_name: $("#input-delivery-name").val(),
-          shipping_date: $("#input-shipping-date").val(),
-          shipping_type: $("#input-shipping-type").val(),
-          origin: $("#input-origin").val(),
-          destiny: $("#input-destiny").val(),
-          companies_id: $("#input-company").val(),
-          shipping_states_id: $("#input-shipping-state").val(),
-          sender: $("#input-sender").val(),
-          address: $("#input-address").val(),
-          receiver_name: $("#input-receiver-name").val(),
-          receiver_phone: $("#input-receiver-phone").val(),
-          receiver_mail: $("#input-receiver-mail").val(),
-          observation: $("#input-observation").val(),
-          label: $("#input-label").val(),
+			$.ajax({
+				url: site_url + "/CShipping/editShipping",
+				type: 'post',
+				data:
+				{ 
+					id: <?php if(!empty($_GET['id'])) echo $_GET['id']; ?>,
+					order_nro: $("#input-order-nro").val(),
+					quadmins_code: null,
+					total_amount: $("#input-total-amount").val(),
+					address: $("#input-address").val(),
+					delivery_name: $("#select-delivery").val(),
+					shipping_type: $("#select-shipping-type").val(),
+					origin: $("#select-origin").val(),
+					destination: $("#select-destination").val(),
+					shipping_states_id: $("#select-shipping-states").val(),
+					receiver_name: $("#input-receiver-name").val(),
+					receiver_phone: $("#input-receiver-phone").val(),
+					receiver_mail: $("#input-receiver-mail").val(),
+					observation: $("#input-observation").val()
 				},
-				function(data)
+				success: function(data)
 				{
+					/*
 					if (data == 1)
 						window.location.replace(site_url+"/CShipping/index");
 					else
-						alert("Error.")
+						alert("Error.");
+					*/
 				}
-			);
+			});
 		});
 
 		$('#li-configuration').addClass('menu-open');

@@ -111,34 +111,34 @@ class CShipping extends CI_Controller {
 	public function edit()
 	{
 		$id = trim($this->input->get('id', TRUE));
-    $user = $this->session->userdata('users_id');
+    	$user = $this->session->userdata('users_id');
 		$userCompany = $this->modelo->getCompanyOfUser($user);
 		$shipping = $this->modelo->getShipping_($id);
 		$communes = $this->modelo->getAllCommunes();
 		$shipping_states = $this->modelo->getAllShipping_States();
-    $delivery = $this->modelo->getAllDeliveryOptions();
-    $rates = null;
-    $rates_sizes = null;
-    $type_rate = $userCompany[0]->type_rate;
+		$delivery = $this->modelo->getAllDeliveryOptions();
+		$rates = null;
+		$rates_sizes = null;
+		$type_rate = $userCompany[0]->type_rate;
 
-    if ($type_rate === "1"){
-      //por lista de precio (rates) origen destino
-      $rates = $this->modelo->getAllRatesByCompany($userCompany[0]->id);
-    }
+		if ($type_rate === "1"){
+			//por lista de precio (rates) origen destino
+			$rates = $this->modelo->getAllRatesByCompany($userCompany[0]->id);
+		}
 
-    if ($type_rate === "2"){
-      //por tamaño x m s (rates_sizes)
-        $rates_sizes = $this->modelo->getAllRatesSizesByCompany($userCompany[0]->id);
+		if ($type_rate === "2"){
+			//por tamaño x m s (rates_sizes)
+			$rates_sizes = $this->modelo->getAllRatesSizesByCompany($userCompany[0]->id);
 
-    }
+		}
 
 		$data = array(
 			'shipping' => $shipping,
 			'communes' => $communes,
-      'type_rate' => $type_rate,
-      'rates' => $rates,
-      'rates_sizes' => $rates_sizes,
-      'delivery' => $delivery,
+			'type_rate' => $type_rate,
+			'rates' => $rates,
+			'rates_sizes' => $rates_sizes,
+			'delivery' => $delivery,
 			'shipping_states' => $shipping_states,
 		);
 
@@ -262,24 +262,42 @@ class CShipping extends CI_Controller {
 
 	public function editShipping()
 	{
-		$id 				= 	trim($this->input->post('id', TRUE));
-		$order_nro 				= 	trim($this->input->post('order_nro', TRUE));
+		/*
+		id: <?php if(!empty($_GET['id'])) echo $_GET['id']; ?>,
+		order_nro: $("#input-order-nro").val(),
+		quadmins_code: null,
+		total_amount: $("#input-total-amount").val(),
+		address: $("#input-address").val(),
+		delivery_name: $("#input-delivery-name").val(),
+		shipping_type: $("#select-shipping-type").val(),
+		origin: $("#select-origin").val(),
+		destiny: $("#select-destination").val(),
+		shipping_states_id: $("#input-shipping-state").val(),
+		receiver_name: $("#input-receiver-name").val(),
+		receiver_phone: $("#input-receiver-phone").val(),
+		receiver_mail: $("#input-receiver-mail").val(),
+		observation: $("#input-observation").val()
+		*/
+
+		$id 						= 	trim($this->input->post('id', TRUE));
+		$order_nro 					= 	trim($this->input->post('order_nro', TRUE));
 		$quadmins_code 				= 	trim($this->input->post('quadmins_code', TRUE));
 		$total_amount 				= 	trim($this->input->post('total_amount', TRUE));
-		$quadmins_code 			= 	trim($this->input->post('quadmins_code', TRUE));
-		$address 			= 	trim($this->input->post('address', TRUE));
 		$delivery_name 				= 	trim($this->input->post('delivery_name', TRUE));
-		$shipping_date 				= 	trim($this->input->post('shipping_date', TRUE));
-    $shipping_type 				= 	trim($this->input->post('shipping_type', TRUE));
-		$companies_id 		= 	trim($this->input->post('companies_id', TRUE));
-		$shipping_states_id	=	trim($this->input->post('shipping_states_id', TRUE));
-    $address	=	trim($this->input->post('address', TRUE));
-    $receiver_name	=	trim($this->input->post('receiver_name', TRUE));
-    $receiver_phone	=	trim($this->input->post('receiver_phone', TRUE));
-    $receiver_mail	=	trim($this->input->post('receiver_mail', TRUE));
-    $observation	=	trim($this->input->post('observation', TRUE));
-    $label	=	trim($this->input->post('label', TRUE));
-		
+    	$shipping_type 				= 	trim($this->input->post('shipping_type', TRUE));
+		$origin 					= 	trim($this->input->post('origin', TRUE));
+		$destination 				= 	trim($this->input->post('destination', TRUE));
+		$companies_id 				= 	$this->session->userdata("companies_id");
+		$shipping_states_id			=	trim($this->input->post('shipping_states_id', TRUE));
+		$address					=	trim($this->input->post('address', TRUE));
+		$receiver_name				=	trim($this->input->post('receiver_name', TRUE));
+		$receiver_phone				=	trim($this->input->post('receiver_phone', TRUE));
+		$receiver_mail				=	trim($this->input->post('receiver_mail', TRUE));
+		$observation				=	trim($this->input->post('observation', TRUE));
+
+		$originCommuneName 			= $this->modelo->getCommuneName($origin);
+		$destinationCommuneName 	= $this->modelo->getCommuneName($destination);
+			
 		if(empty($total_amount))
 			$total_amount = 'N/A';
 		
@@ -292,27 +310,24 @@ class CShipping extends CI_Controller {
 		if(empty($delivery_name))
 			$delivery_name = '000000000';
 
-		if(empty($shipping_date))
-			$shipping_date = 'sin_shipping_date@gmail.com';
-
 		$date_time = date('Y-m-d H:i:s');
 		$data = array(
 			'order_nro' 				=> $order_nro,
-			'quadmins_code' 				=> $quadmins_code,
+			'quadmins_code' 			=> $quadmins_code,
 			'total_amount' 				=> $total_amount,
 			'quadmins_code' 			=> $quadmins_code,
-			'address' 			=> $address,
-      'shipping_type' 			=> $shipping_type,
-      'receiver_name' 			=> $receiver_name,
-      'receiver_phone' 			=> $receiver_phone,
-      'receiver_mail' 			=> $receiver_mail,
-			'shipping_date' 			=> $shipping_date,
-      'shipping_type' 			=> $shipping_type,
+			'address' 					=> $address,
+			'shipping_type' 			=> $shipping_type,
+			'receiver_name' 			=> $receiver_name,
+			'receiver_phone' 			=> $receiver_phone,
+			'receiver_mail' 			=> $receiver_mail,
 			'delivery_name' 			=> $delivery_name,
-      'observation' 			=> $observation,
-			'companies_id'		=> $companies_id,
-			'shipping_states_id'	=> $shipping_states_id,
-			'modified'			=> $date_time
+      		'observation' 				=> $observation,
+			'companies_id'				=> $companies_id,
+			'shipping_states_id'		=> $shipping_states_id,
+			'origin'					=> $originCommuneName,
+			'destination'				=> $destinationCommuneName,
+			'modified'					=> $date_time
 		);
 
 		if($this->modelo->editShipping($data, $id))
