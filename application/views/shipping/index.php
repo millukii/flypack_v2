@@ -21,9 +21,9 @@
                       <thead>
                         <tr>
                           <th>Orden</th>
-                          <th>Tipo</th>
+                          <th>Tamaño</th>
                           <th>Total</th>
-                          <th>Delivery</th>
+                          <th>Repartidor</th>
                           <th>Fecha de Envio</th>
                           <th>Estado</th>
                           <th>Empresa</th>
@@ -71,9 +71,9 @@
           },
           "columns": [
             { "data": "Orden"},
-            { "data": "Tipo" },
+            { "data": "Tamaño" },
             { "data": "Total" },
-            { "data": "Delivery" },
+            { "data": "Repartidor" },
             { "data": "Fecha de Envio" },
             { "data": "Estado" },
             { "data": "Empresa" },

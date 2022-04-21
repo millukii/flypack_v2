@@ -87,13 +87,15 @@
                     			  				<div class="form-group">
                     			  					<label for="origin" class="col-sm-2 control-label">Origen</label>
                     			  					<div class="col-sm-5">
-                    			  						<select name="select-origin" id="select-origin" class="form-control totalAmount" required >
-                    			  							<?php foreach ($communes as $key) { ?>
+                    			  						<select name="select-origin" id="select-origin" class="form-control totalAmount" required>
+                    			  							<option value="<?php if(!empty($user_company[0]->communes_id)) echo $user_company[0]->communes_id;?>"><?php if(!empty($user_company[0]->commune)) echo $user_company[0]->commune;?></option>
+                    			  							<?php foreach ($branch_offices as $key) { ?>
                     			  								<option value="<?php echo $key->id; ?>"><?php echo $key->commune; ?></option>
                     			  							<?php } ?>
                     			  						</select>
                     			  					</div>
                     			  				</div>
+
 
                     			  				<div class="form-group">
                     			  					<label for="destination" class="col-sm-2 control-label">Destino</label>

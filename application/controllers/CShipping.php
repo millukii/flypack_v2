@@ -113,6 +113,9 @@ class CShipping extends CI_Controller {
 		$id = trim($this->input->get('id', TRUE));
     	$user = $this->session->userdata('users_id');
 		$userCompany = $this->modelo->getCompanyOfUser($user);
+    $branchOffices = $this->modelo->getBranchOfficesOfCompany($userCompany[0]->id);
+    $deliveryOptions = $this->modelo->getAllDeliveryOptions();
+
 		$shipping = $this->modelo->getShipping_($id);
 		$communes = $this->modelo->getAllCommunes();
 		$shipping_states = $this->modelo->getAllShipping_States();
@@ -134,7 +137,9 @@ class CShipping extends CI_Controller {
 
 		$data = array(
 			'shipping' => $shipping,
+      'branch_offices' => $branchOffices,
 			'communes' => $communes,
+       'user_company'=>$userCompany,
 			'type_rate' => $type_rate,
 			'rates' => $rates,
 			'rates_sizes' => $rates_sizes,
@@ -163,11 +168,9 @@ class CShipping extends CI_Controller {
 
 	public function addShipping()
 	{
-    $id 				= 	trim($this->input->post('id', TRUE));
 		$order_nro 				= 	trim($this->input->post('order_nro', TRUE));
 		$quadmins_code 				= 	trim($this->input->post('quadmins_code', TRUE));
 		$total_amount 				= 	trim($this->input->post('total_amount', TRUE));
-		$quadmins_code 			= 	trim($this->input->post('quadmins_code', TRUE));
 		$address 			= 	trim($this->input->post('address', TRUE));
 		$delivery_name 				= 	trim($this->input->post('delivery_name', TRUE));
 		$shipping_date 				= 	trim($this->input->post('shipping_date', TRUE));
@@ -179,9 +182,12 @@ class CShipping extends CI_Controller {
     $receiver_phone	=	trim($this->input->post('receiver_phone', TRUE));
     $receiver_mail	=	trim($this->input->post('receiver_mail', TRUE));
     $observation	=	trim($this->input->post('observation', TRUE));
-    $poiId	=	trim($this->input->post('poiId', TRUE));
-    $label	=	trim($this->input->post('label', TRUE));
-    $operation_type	=	trim($this->input->post('operation_type', TRUE));
+
+    $origin 					= 	trim($this->input->post('origin', TRUE));
+		$destination 				= 	trim($this->input->post('destination', TRUE));
+
+    $originCommuneName 			= $this->modelo->getCommuneName($origin);
+		$destinationCommuneName 	= $this->modelo->getCommuneName($destination);
 
 		if(empty($total_amount))
 			$total_amount = 'N/A';
@@ -203,23 +209,28 @@ class CShipping extends CI_Controller {
 		
 		$date_time = date('Y-m-d H:i:s');
 
+	  $user = $this->session->userdata('users_id');
+    $companies_id = $this->session->userdata('companies_id');
+
 		$data = array(
 			'order_nro' 				=> $order_nro,
 			'quadmins_code' 				=> $quadmins_code,
 			'total_amount' 				=> $total_amount,
-			'quadmins_code' 			=> $quadmins_code,
 			'address' 			=> $address,
       'shipping_type' 			=> $shipping_type,
       'receiver_name' 			=> $receiver_name,
       'receiver_phone' 			=> $receiver_phone,
       'receiver_mail' 			=> $receiver_mail,
 			'shipping_date' 			=> $shipping_date,
-      'shipping_type' 			=> $shipping_type,
 			'delivery_name' 			=> $delivery_name,
       'observation' 			=> $observation,
 			'companies_id'		=> $companies_id,
-			'shipping_states_id'	=> $shipping_states_id,
-			'created'			=> $date_time
+			'shipping_states_id'	=> 1,
+      'origin' => $originCommuneName,
+      'destination' => $destinationCommuneName,
+			'created'			=> $date_time,
+      'users_id' => $user,
+      'companies_id' => $companies_id
 		);
 
 		if($this->modelo->addShipping($data))
@@ -284,7 +295,7 @@ class CShipping extends CI_Controller {
 		$quadmins_code 				= 	trim($this->input->post('quadmins_code', TRUE));
 		$total_amount 				= 	trim($this->input->post('total_amount', TRUE));
 		$delivery_name 				= 	trim($this->input->post('delivery_name', TRUE));
-    	$shipping_type 				= 	trim($this->input->post('shipping_type', TRUE));
+    $shipping_type 				= 	trim($this->input->post('shipping_type', TRUE));
 		$origin 					= 	trim($this->input->post('origin', TRUE));
 		$destination 				= 	trim($this->input->post('destination', TRUE));
 		$companies_id 				= 	$this->session->userdata("companies_id");

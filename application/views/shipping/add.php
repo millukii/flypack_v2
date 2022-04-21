@@ -24,24 +24,13 @@
 
                     				  	<form class="form-horizontal" id="form-shipping">
                     			  			<div class="box-body">
-                                  <div class="form-group">
-                    			  					<label for="id" class="col-sm-2 control-label">Id</label>
-                    			  					<div class="col-sm-3">
-                    			  						<input type="text" class="form-control" name="input-id" id="input-id"  maxlength="10" value="<?php if(!empty($new_id)) echo $new_id;?>"  disabled required>
-                    			  					</div>
-                    			  				</div>
+
                     			  				<div class="form-group">
                     			  					<label for="order_nro" class="col-sm-2 control-label">Numero de Orden</label>
                     			  					<div class="col-sm-3">
                     			  						<input type="text" class="form-control" name="input-order-nro" id="input-order-nro"  maxlength="10"  required>
                     			  					</div>
                     			  				</div>
-                    			  				<div class="form-group">
-                    			  					<label for="quadmins-code" class="col-sm-2 control-label">Codigo Quadmin</label>
-                    			  					<div class="col-sm-5">
-                    			  						<input type="text" class="form-control" name="input-quadmins-code" id="input-quadmins-code">
-                    			  					</div>
-                    			  				</div> 
                     
                                     <div class="form-group">
                     			  					<label for="shipping-type" class="col-sm-2 control-label">Tamaño</label>
@@ -126,12 +115,13 @@
                     			  					</div>
                     			  				</div>
                     
-                    			  				<!-- <div class="form-group">
+                    			  			<div class="form-group">
                     			  					<label for="receiver-mail" class="col-sm-2 control-label">E-mail</label>
                     			  					<div class="col-sm-5">
                     			  						<input type="email" class="form-control" name="input-receiver-mail" id="input-receiver-mail">
                     			  					</div>
                     			  				</div>
+                                    	<!-- 
                     			  				<div class="form-group">
                     			  					<label for="points" class="col-sm-2 control-label">Punto de Interés</label>
                     			  					<div class="col-sm-5">
@@ -170,18 +160,6 @@
                     			  							<option value="<?php if(!empty($user_company[0]->communes_id)) echo $user_company[0]->communes_id;?>"><?php if(!empty($user_company[0]->commune)) echo $user_company[0]->commune;?></option>
                     			  							<?php foreach ($communes as $key) { ?>
                     			  								<option value="<?php echo $key->id; ?>"><?php echo $key->commune; ?></option>
-                    			  							<?php } ?>
-                    			  						</select>
-                    			  					</div>
-                    			  				</div>
-                    
-                    			  				<div class="form-group">
-                    			  					<label for="select-shipping_states" class="col-sm-2 control-label">Estado</label>
-                    			  					<div class="col-sm-5">
-                    			  						<select name="select-shipping_states" id="select-shipping_states" class="form-control" required>
-                    			  							<option value="">Seleccione una opción</option>
-                    			  							<?php foreach ($shipping_states as $key) { ?>
-                    			  								<option value="<?php echo $key->id; ?>"><?php echo $key->state; ?></option>
                     			  							<?php } ?>
                     			  						</select>
                     			  					</div>
@@ -266,38 +244,32 @@
 	    
 			$.post(
 				site_url + "/CShipping/addShipping",{
-          id: $("#input-id").val(),
           order_nro: $("#input-order-nro").val(),
           quadmins_code: null, // $("#input-quadmins-code").val(),
           total_amount: $("#input-total-amount").val(),
           address: $("#input-address").val(),
-          delivery_name: $("#input-delivery-name").val(),
-          branch_office: $("#select-branch-offices").val(),
           delivery_name: $("#delivery-options").val(),
           shipping_date: $("#input-shipping-date").val(),
           shipping_type: $("#select-shipping-type").val(),
           operation_type: $("#select-operation-type").val(),
           shipping_states_id: $("#select-shipping_states").val(),
-          sender: $("#input-sender").val(),
           address: $("#input-address").val(),
           receiver_name: $("#input-receiver-name").val(),
           receiver_phone: $("#input-receiver-phone").val(),
           receiver_mail: $("#input-receiver-mail").val(),
           observation: $("#input-observation").val(),
-          label: $("#input-label").val(),
-          poiId: $("#input-poild").val(),
-          code: $("#input-quadmins-code").val() ,
           date: $("#input-shipping-date").val(),
-          priority: $("#input-priority").val(),
-          
+          origin: $('#select-origin').val(),
+          destination: $('#select-destination').val()
 				},
 				function(data)
 				{
+          /*
 					if (data == 1)
 						window.location.replace(site_url+"/CShipping/index");
 					else
 						alert("Orden existente.", data);
-					
+					*/
 				}
 			);
 		});
