@@ -32,46 +32,19 @@
                     			  					</div>
                     			  				</div>
                     
-                                    <div class="form-group">
+                                    			<div class="form-group">
                     			  					<label for="shipping-type" class="col-sm-2 control-label">Tamaño</label>
                     			  					<div class="col-sm-5">
                     			  						<select name="select-shipping-type" id="select-shipping-type" class="form-control totalAmount" required>
                     			  							<option default value="L">L</option>
-                    			  								<option value=M>M</option>
-                                            <option value=L>L</option>
-                                            <option value=XL>XL</option>
+                    			  							<option value=M>M</option>
+															<option value=L>L</option>
+															<option value=XL>XL</option>
                     			  						</select>
                     			  					</div>
                     			  				</div>
-<!--                                       <div class="form-group">
-                    			  					<label for="operation-type" class="col-sm-2 control-label">Operación</label>
-                    			  					<div class="col-sm-5">
-                    			  						<select name="select-operation-type" id="select-operation-type" class="form-control" required>
-                    			  							<option value="">Seleccione una opción</option>
-                    			  								<option value=Pedido>Pedido</option>
-                                            <option value=Retiro>Retiro</option>
-                    			  						</select>
-                    			  					</div>
-                    			  				</div> -->
-<!--                                     <div class="form-group">
-                    			  					<label for="shipping-type" class="col-sm-2 control-label">Prioridad</label>
-                    			  					<div class="col-sm-5">
-                    			  						<select name="select-shipping-type" id="select-shipping-type" class="form-control" required>
-                    			  							<option value="">Seleccione una opción</option>
-                    			  								<option value=0>0</option>
-                                            <option value=1>1</option>
-                                            <option value=2>2</option>
-                                            <option value=3>3</option>
-                                            <option value=4>4</option>
-                                            <option value=5>5</option>
-                                            <option value=6>6</option>
-                                            <option value=7>7</option>
-                                            <option value=8>8</option>
-                                            <option value=9>9</option>
-                    			  						</select>
-                    			  					</div>
-                    			  				</div> -->
-                                    <div class="form-group">
+
+                                    			<div class="form-group">
                     			  					<label for="delivery-options" class="col-sm-2 control-label">Repartidor</label>
                     			  					<div class="col-sm-5">
                     			  						<select name="delivery-options" id="delivery-options" class="form-control" required>
@@ -82,10 +55,11 @@
                     			  						</select>
                     			  					</div>
                     			  				</div>
-                                     <div class="form-group">
+
+                                     			<div class="form-group">
                     			  					<label for="total-amount" class="col-sm-2 control-label">Total</label>
                     			  					<div class="col-sm-10">
-                    			  						<input type="text" class="form-control" name="input-total-amount" id="input-total-amount">
+                    			  						<input type="text" class="form-control" name="input-total-amount" id="input-total-amount" disabled>
                     			  					</div>
                     			  				</div>
 
@@ -121,18 +95,6 @@
                     			  						<input type="email" class="form-control" name="input-receiver-mail" id="input-receiver-mail">
                     			  					</div>
                     			  				</div>
-                                    	<!-- 
-                    			  				<div class="form-group">
-                    			  					<label for="points" class="col-sm-2 control-label">Punto de Interés</label>
-                    			  					<div class="col-sm-5">
-                    			  						<select name="select-points" id="select-points" class="form-control" required>
-                    			  							<option value="">Seleccione una opción</option>
-                    			  							<?php foreach ($points as $key) { ?>
-                    			  								<option value="<?php echo $key['code']; ?>"><?php echo $key['address']; ?></option>
-                    			  							<?php } ?>
-                    			  						</select>
-                    			  					</div>
-                    			  				</div> -->
                                      <div class="form-group">
                     			  					<label for="observation" class="col-sm-2 control-label">Observacion</label>
                     			  					<div class="col-sm-5">
@@ -179,15 +141,8 @@
                 </div>
             </div>
         </div>
-        
         </div>
-	    
-	    
-	    
-	    
-		
 	</section>
-
 </div>
 
 <?php $this->view('footer'); ?>
@@ -195,93 +150,76 @@
 <script>
 	var cuerpo;
 	var dv;
+	
+	function totalAmount()
+	{
+		let origin = document.getElementById('select-origin');
+		let originSelectedText = origin.options[origin.selectedIndex].text;
+		let destination = document.getElementById('select-destination');
+		let destinationSelectedText = destination.options[destination.selectedIndex].text;
 
+		$.ajax({
+			url: site_url + '/CShipping/getRateFromToCompany',
+			type: 'post',
+			data: {from: originSelectedText, to: destinationSelectedText},
+			success: function(data)
+			{
+				$('#input-total-amount').val(data);
+			}
+		});		
+    }
 	
 	$(document).ready(function()
 	{
-     totalAmount();
-    function totalAmount(){
-        let typeRate = "<?php print($type_rate); ?>"
-      let rates = null;
-      let ratesSizes = null;
+     	totalAmount();
 
-      let shippingType  = document.getElementById('select-shipping-type').value;
-      if (typeRate ==="1"){
-        var js_data = '<?php echo json_encode($rates); ?>';
-        var js_obj_data = JSON.parse(js_data);
-       let origin = document.getElementById('select-origin');
-       let originSelectedText = origin.options[origin.selectedIndex].text;
-       let destination = document.getElementById('select-destination');
-       let destinationSelectedText = destination.options[destination.selectedIndex].text;
+		$('select.totalAmount').on('change', function() {
+			totalAmount();
+		});
 
-          js_obj_data.forEach(price => {
-            if (price.from===originSelectedText &&
-                price.to===destinationSelectedText
-            ){
-              console.log( price );
-               document.getElementById('input-total-amount').value = price.value;
-            }
-          });
-      }else if(typeRate ==="2"){
-        var js_data = '<?php echo json_encode($rates_sizes); ?>';
-        var js_obj_data = JSON.parse(js_data);
-
-          js_obj_data.forEach(price => {
-            if (price.size===shippingType){
-               document.getElementById('input-total-amount').value = price.value;
-            }
-          });
-      }
-    }
-    $('select.totalAmount').on('change', function() {
-      totalAmount();
-    });
-		$("#form-shipping").submit(function(event) {
+		$("#form-shipping").submit(function(event) 
+		{
 			event.preventDefault();
             
-        cuerpo = $('#input-order_nro').val();
-	      dv = cuerpo;
+			cuerpo = $('#input-order_nro').val();
+			dv = cuerpo;
 	    
 			$.post(
-				site_url + "/CShipping/addShipping",{
-          order_nro: $("#input-order-nro").val(),
-          quadmins_code: null, // $("#input-quadmins-code").val(),
-          total_amount: $("#input-total-amount").val(),
-          address: $("#input-address").val(),
-          delivery_name: $("#delivery-options").val(),
-          shipping_date: $("#input-shipping-date").val(),
-          shipping_type: $("#select-shipping-type").val(),
-          operation_type: $("#select-operation-type").val(),
-          shipping_states_id: $("#select-shipping_states").val(),
-          address: $("#input-address").val(),
-          receiver_name: $("#input-receiver-name").val(),
-          receiver_phone: $("#input-receiver-phone").val(),
-          receiver_mail: $("#input-receiver-mail").val(),
-          observation: $("#input-observation").val(),
-          date: $("#input-shipping-date").val(),
-          origin: $('#select-origin').val(),
-          destination: $('#select-destination').val()
+				site_url + "/CShipping/addShipping",
+				{
+					order_nro: $("#input-order-nro").val(),
+					quadmins_code: null, // $("#input-quadmins-code").val(),
+					total_amount: $("#input-total-amount").val(),
+					address: $("#input-address").val(),
+					delivery_name: $("#delivery-options").val(),
+					shipping_date: $("#input-shipping-date").val(),
+					shipping_type: $("#select-shipping-type").val(),
+					operation_type: $("#select-operation-type").val(),
+					shipping_states_id: $("#select-shipping_states").val(),
+					address: $("#input-address").val(),
+					receiver_name: $("#input-receiver-name").val(),
+					receiver_phone: $("#input-receiver-phone").val(),
+					receiver_mail: $("#input-receiver-mail").val(),
+					observation: $("#input-observation").val(),
+					date: $("#input-shipping-date").val(),
+					origin: $('#select-origin').val(),
+					destination: $('#select-destination').val()
 				},
 				function(data)
 				{
-          /*
 					if (data == 1)
 						window.location.replace(site_url+"/CShipping/index");
 					else
 						alert("Orden existente.", data);
-					*/
 				}
 			);
 		});
 
 		$('#li-configuration').addClass('menu-open');
-    $('#ul-configuration').css('display', 'block');
-  	$('#li-people').addClass('menu-open');
-    $('#ul-people').css('display', 'block');
+		$('#ul-configuration').css('display', 'block');
+		$('#li-people').addClass('menu-open');
+		$('#ul-people').css('display', 'block');
 	});
-
-
-    
 </script>
 </body>
 </html>

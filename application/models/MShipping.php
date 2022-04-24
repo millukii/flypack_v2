@@ -229,24 +229,27 @@ class MShipping extends CI_Model {
 
 		return $this->db->get()->result();
 	}
-  public function getAllRatesByCompany($id)
+
+  	public function getAllRatesByCompany($id)
 	{
 		$this->db->select('id, from, to, value, companies_id');
 		$this->db->from('rates');
-    $this->db->where('companies_id', $id);
-		$this->db->order_by('companies_id');
+    	$this->db->where('companies_id', $id);
+		$this->db->order_by('value');
 
 		return $this->db->get()->result();
 	}
-  public function getAllRatesSizesByCompany($id)
+
+  	public function getAllRatesSizesByCompany($id)
 	{
 		$this->db->select('id, size, value');
 		$this->db->from('rates_size');
-    $this->db->where('companies_id', $id);
+    	$this->db->where('companies_id', $id);
 		$this->db->order_by('size');
 
 		return $this->db->get()->result();
 	}
+
 	public function getAllCompanies()
 	{
 		$this->db->select('id, razon');
@@ -271,11 +274,11 @@ class MShipping extends CI_Model {
 	}
 
 
-  public function getAllDeliveryOptions()
+  	public function getAllDeliveryOptions()
 	{
 		$this->db->select('id, name, lastname, rol_id');
 		$this->db->from('users');
-    $this->db->where('users.rol_id', "3");
+    	$this->db->where('users.rol_id', "3");
 		$this->db->order_by('name');
 		return $this->db->get()->result();
 	}
@@ -284,8 +287,8 @@ class MShipping extends CI_Model {
 	{
 		$this->db->select('companies.id,companies.type_rate, companies.razon, companies.city_id, city.city, companies.communes_id,communes.commune, companies.address');
 		$this->db->from('companies');
-    $this->db->join('city','city.id  = companies.city_id');
-    $this->db->join('communes','communes.id  = companies.communes_id');
+		$this->db->join('city','city.id  = companies.city_id');
+		$this->db->join('communes','communes.id  = companies.communes_id');
 		$this->db->join('users','users.companies_id  = companies.id');
 		$this->db->where('users.id', $id);
 		$this->db->order_by('companies.razon', 'asc');
@@ -319,7 +322,17 @@ class MShipping extends CI_Model {
 			return false;
 	}
 
+	public function getRateFromToCompany($from, $to, $id)
+	{
+		$this->db->select('id, from, to, value, companies_id');
+		$this->db->from('rates');
+		$this->db->where('from', $from);
+		$this->db->where('to', $to);
+    	$this->db->where('companies_id', $id);
+		$this->db->limit(1);
 
+		return $this->db->get()->result_array();
+	}
 }
 
 ?>

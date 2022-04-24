@@ -39,65 +39,61 @@ class CShipping extends CI_Controller {
 	public function add()
 	{
 		$shipping_states = $this->modelo->getAllShipping_States();
-    $user = $this->session->userdata('users_id');
+    	$user = $this->session->userdata('users_id');
 		$userCompany = $this->modelo->getCompanyOfUser($user);
-    $branchOffices = $this->modelo->getBranchOfficesOfCompany($userCompany[0]->id);
-    $deliveryOptions = $this->modelo->getAllDeliveryOptions();
+		$branchOffices = $this->modelo->getBranchOfficesOfCompany($userCompany[0]->id);
+		$deliveryOptions = $this->modelo->getAllDeliveryOptions();
 		$communes = $this->modelo->getAllCommunes();
-    $rates = null;
-    $rates_sizes = null;
-    $type_rate = $userCompany[0]->type_rate;
+		$rates = null;
+		$rates_sizes = null;
+		$type_rate = $userCompany[0]->type_rate;
 
-    if ($type_rate === "1"){
-      //por lista de precio (rates) origen destino
-      $rates = $this->modelo->getAllRatesByCompany($userCompany[0]->id);
-    }
+		if ($type_rate === "1")
+			$rates = $this->modelo->getAllRatesByCompany($userCompany[0]->id);
 
-    if ($type_rate === "2"){
-      //por tamaño x m s (rates_sizes)
-        $rates_sizes = $this->modelo->getAllRatesSizesByCompany($userCompany[0]->id);
-
-    }
-
+		if ($type_rate === "2")
+			$rates_sizes = $this->modelo->getAllRatesSizesByCompany($userCompany[0]->id);
 
 		$this->db->select('id');
         $this->db->from('shipping');
         $this->db->order_by('id', 'desc');
         $this->db->limit(1);
+
         $res = $this->db->get()->result_array();
-        $res;
+		
         if(!empty($res[0]['id']))
             $res = intval($res[0]['id']) + 1;
         else
             $res = 1;
-    // agregar get a points de quadmins
-    $curl = curl_init('https://flash-api.quadminds.com/api/v2/pois/search?limit=100&offset=0');
 
-    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
+		// agregar get a points de quadmins
+		$curl = curl_init('https://flash-api.quadminds.com/api/v2/pois/search?limit=100&offset=0');
 
-    curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-    'Content-Type: application/json',
-    'x-saas-apikey:  SzaORv8XtExcO1zVX3jcWGsOvyGwsl3y46sOLnmn')
-    );
+		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
 
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);  // Make it so the data coming back is put into a string
+		curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+		'Content-Type: application/json',
+		'x-saas-apikey:  SzaORv8XtExcO1zVX3jcWGsOvyGwsl3y46sOLnmn')
+		);
 
-    // Send the request
-    $result = curl_exec($curl);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);  // Make it so the data coming back is put into a string
 
-    // Free up the resources $curl is using
-    curl_close($curl);
+		// Send the request
+		$result = curl_exec($curl);
 
-    $points = json_decode($result, true);
+		// Free up the resources $curl is using
+		curl_close($curl);
+
+		$points = json_decode($result, true);
 
 		$data = array(
-      'points' => $points['data'],
-      'delivery_options' =>  $deliveryOptions, 
-      'user_company'=>$userCompany,
-      'communes' => $communes,
-      'type_rate' => $type_rate,
-      'rates' => $rates,
-      'rates_sizes' => $rates_sizes,
+			'points' => $points['data'],
+			'delivery_options' =>  $deliveryOptions, 
+			'user_company'=>$userCompany,
+			'communes' => $communes,
+			'type_rate' => $type_rate,
+			'rates' => $rates,
+			'rates_sizes' => $rates_sizes,
 			'branch_offices' => $branchOffices,
 			'shipping_states' => $shipping_states,
 			'new_id' => $res,
@@ -113,8 +109,8 @@ class CShipping extends CI_Controller {
 		$id = trim($this->input->get('id', TRUE));
     	$user = $this->session->userdata('users_id');
 		$userCompany = $this->modelo->getCompanyOfUser($user);
-    $branchOffices = $this->modelo->getBranchOfficesOfCompany($userCompany[0]->id);
-    $deliveryOptions = $this->modelo->getAllDeliveryOptions();
+		$branchOffices = $this->modelo->getBranchOfficesOfCompany($userCompany[0]->id);
+		$deliveryOptions = $this->modelo->getAllDeliveryOptions();
 
 		$shipping = $this->modelo->getShipping_($id);
 		$communes = $this->modelo->getAllCommunes();
@@ -134,18 +130,12 @@ class CShipping extends CI_Controller {
 			$rates_sizes = $this->modelo->getAllRatesSizesByCompany($userCompany[0]->id);
 
 		}
-
-
-
-
-
-
     
 		$data = array(
 			'shipping' => $shipping,
-      'branch_offices' => $branchOffices,
+      		'branch_offices' => $branchOffices,
 			'communes' => $communes,
-       'user_company'=>$userCompany,
+       		'user_company'=>$userCompany,
 			'type_rate' => $type_rate,
 			'rates' => $rates,
 			'rates_sizes' => $rates_sizes,
@@ -180,14 +170,14 @@ class CShipping extends CI_Controller {
 		$address 			= 	trim($this->input->post('address', TRUE));
 		$delivery_name 				= 	trim($this->input->post('delivery_name', TRUE));
 		$shipping_date 				= 	trim($this->input->post('shipping_date', TRUE));
-    $shipping_type 				= 	trim($this->input->post('shipping_type', TRUE));
+    	$shipping_type 				= 	trim($this->input->post('shipping_type', TRUE));
 		$companies_id 		= 	trim($this->input->post('companies_id', TRUE));
 		$shipping_states_id	=	trim($this->input->post('shipping_states_id', TRUE));
-    $address	=	trim($this->input->post('address', TRUE));
-    $receiver_name	=	trim($this->input->post('receiver_name', TRUE));
-    $receiver_phone	=	trim($this->input->post('receiver_phone', TRUE));
-    $receiver_mail	=	trim($this->input->post('receiver_mail', TRUE));
-    $observation	=	trim($this->input->post('observation', TRUE));
+		$address	=	trim($this->input->post('address', TRUE));
+		$receiver_name	=	trim($this->input->post('receiver_name', TRUE));
+		$receiver_phone	=	trim($this->input->post('receiver_phone', TRUE));
+		$receiver_mail	=	trim($this->input->post('receiver_mail', TRUE));
+		$observation	=	trim($this->input->post('observation', TRUE));
 
     $origin 					= 	trim($this->input->post('origin', TRUE));
 		$destination 				= 	trim($this->input->post('destination', TRUE));
@@ -403,6 +393,20 @@ class CShipping extends CI_Controller {
 		}
 
         echo '1';		
+	}
+
+	public function getRateFromToCompany()
+	{
+		$companies_id = $this->session->userdata('companies_id');
+		$from = trim($this->input->post('from', TRUE));
+		$to = trim($this->input->post('to', TRUE));
+
+		$response = $this->modelo->getRateFromToCompany($from, $to, $companies_id);
+		$value = 0;
+		if(!empty($response))
+			$value = $response[0]['value'];
+
+		echo $value;
 	}
 }
 
