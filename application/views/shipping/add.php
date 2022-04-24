@@ -155,7 +155,7 @@
 		let destinationSelectedText = destination.options[destination.selectedIndex].text;
 
     let typeRate = "<?php print($type_rate);?>";
-
+    alert(typeRate);
     if (typeRate == "1"){
 		$.ajax({
 			url: site_url + '/CShipping/getRateFromToCompany',

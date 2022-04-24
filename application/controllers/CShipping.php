@@ -431,10 +431,10 @@ curl_close($curl); */
     }
     public function getRateSizeCompany()
     {
-
         $companies_id = $this->session->userdata('companies_id');
-        $size = trim($this->input->post('shipping_type', true));
+        $size = trim($this->input->post('size', true));
         $response = $this->modelo->getRateSizeCompany($size, $companies_id);
+
         $value = 0;
         if (!empty($response)) {
             $value = $response[0]['value'];

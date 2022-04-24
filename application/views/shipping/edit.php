@@ -131,8 +131,6 @@
                     			  						</select>
                     			  					</div>
                     			  				</div>
-
-
                     			  				<div class="form-group">
                     			  					<label for="destination" class="col-sm-2 control-label">Destino</label>
                     			  					<div class="col-sm-5">
