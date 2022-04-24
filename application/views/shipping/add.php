@@ -1,6 +1,6 @@
 <div class="content-wrapper">
 	<section class="content">
-	    
+
 	     <div class="row">
     	<div class="col-md-12">
             <div class="panel with-nav-tabs panel-default">
@@ -31,27 +31,15 @@
                     			  						<input type="text" class="form-control" name="input-order-nro" id="input-order-nro"  maxlength="10"  required>
                     			  					</div>
                     			  				</div>
-                    
+
                                     			<div class="form-group">
                     			  					<label for="shipping-type" class="col-sm-2 control-label">Tamaño</label>
                     			  					<div class="col-sm-5">
                     			  						<select name="select-shipping-type" id="select-shipping-type" class="form-control totalAmount" required>
                     			  							<option default value="L">L</option>
                     			  							<option value=M>M</option>
-															<option value=L>L</option>
-															<option value=XL>XL</option>
-                    			  						</select>
-                    			  					</div>
-                    			  				</div>
-
-                                    			<div class="form-group">
-                    			  					<label for="delivery-options" class="col-sm-2 control-label">Repartidor</label>
-                    			  					<div class="col-sm-5">
-                    			  						<select name="delivery-options" id="delivery-options" class="form-control" required>
-                    			  							<option value="">Seleccione una opción</option>
-                    			  							<?php foreach ($delivery_options as $key) { ?>
-                    			  								<option value="<?php echo $key->id; ?>"><?php echo $key->name; ?></option>
-                    			  							<?php } ?>
+                                          <option value=L>L</option>
+                                          <option value=XL>XL</option>
                     			  						</select>
                     			  					</div>
                     			  				</div>
@@ -70,12 +58,6 @@
                     			  					</div>
                     			  				</div>
                                      <div class="form-group">
-                    			  					<label for="sender" class="col-sm-2 control-label">Emisor</label>
-                    			  					<div class="col-sm-10">
-                    			  						<input type="text" class="form-control" name="input-sender" id="input-sender">
-                    			  					</div>
-                                      </div>
-                                     <div class="form-group">
                     			  					<label for="receiver-name" class="col-sm-2 control-label">Receptor</label>
                     			  					<div class="col-sm-10">
                     			  						<input type="text" class="form-control" name="input-receiver-name" id="input-receiver-name">
@@ -88,7 +70,7 @@
                     			  						<input type="text" class="form-control" name="input-receiver-phone" id="input-receiver-phone">
                     			  					</div>
                     			  				</div>
-                    
+
                     			  			<div class="form-group">
                     			  					<label for="receiver-mail" class="col-sm-2 control-label">E-mail</label>
                     			  					<div class="col-sm-5">
@@ -102,15 +84,21 @@
                     			  					</div>
                     			  				</div>
 
-                             
+
                     			  				<div class="form-group">
                     			  					<label for="origin" class="col-sm-2 control-label">Origen</label>
                     			  					<div class="col-sm-5">
                     			  						<select name="select-origin" id="select-origin" class="form-control totalAmount" required>
-                    			  							<option value="<?php if(!empty($user_company[0]->communes_id)) echo $user_company[0]->communes_id;?>"><?php if(!empty($user_company[0]->commune)) echo $user_company[0]->commune;?></option>
-                    			  							<?php foreach ($branch_offices as $key) { ?>
+                    			  							<option value="<?php if (!empty($user_company[0]->communes_id)) {
+    echo $user_company[0]->communes_id;
+}
+?>"><?php if (!empty($user_company[0]->commune)) {
+    echo $user_company[0]->commune;
+}
+?></option>
+                    			  							<?php foreach ($branch_offices as $key) {?>
                     			  								<option value="<?php echo $key->id; ?>"><?php echo $key->commune; ?></option>
-                    			  							<?php } ?>
+                    			  							<?php }?>
                     			  						</select>
                     			  					</div>
                     			  				</div>
@@ -119,14 +107,20 @@
                     			  					<label for="destination" class="col-sm-2 control-label">Destino</label>
                     			  					<div class="col-sm-5">
                     			  						<select name="select-destination" id="select-destination" class="form-control totalAmount" required >
-                    			  							<option value="<?php if(!empty($user_company[0]->communes_id)) echo $user_company[0]->communes_id;?>"><?php if(!empty($user_company[0]->commune)) echo $user_company[0]->commune;?></option>
-                    			  							<?php foreach ($communes as $key) { ?>
+                    			  							<option value="<?php if (!empty($user_company[0]->communes_id)) {
+    echo $user_company[0]->communes_id;
+}
+?>"><?php if (!empty($user_company[0]->commune)) {
+    echo $user_company[0]->commune;
+}
+?></option>
+                    			  							<?php foreach ($communes as $key) {?>
                     			  								<option value="<?php echo $key->id; ?>"><?php echo $key->commune; ?></option>
-                    			  							<?php } ?>
+                    			  							<?php }?>
                     			  						</select>
                     			  					</div>
                     			  				</div>
-                    			  				
+
                     			  			</div>
                     			  			<div class="box-footer">
                     			  				<button type="submit" class="btn btn-primary pull-right">Guardar</button>
@@ -135,7 +129,7 @@
                     				</div>
                     			</div>
                     		</div>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -145,30 +139,51 @@
 	</section>
 </div>
 
-<?php $this->view('footer'); ?>
+<?php $this->view('footer');?>
 
 <script>
 	var cuerpo;
 	var dv;
-	
+
 	function totalAmount()
 	{
 		let origin = document.getElementById('select-origin');
 		let originSelectedText = origin.options[origin.selectedIndex].text;
 		let destination = document.getElementById('select-destination');
+    let size = document.getElementById('select-shipping-type');
+    let sizeSelectedText = size.options[size.selectedIndex].text;
 		let destinationSelectedText = destination.options[destination.selectedIndex].text;
 
+    let typeRate = "<?php print($type_rate);?>";
+
+    if (typeRate == "1"){
 		$.ajax({
 			url: site_url + '/CShipping/getRateFromToCompany',
 			type: 'post',
 			data: {from: originSelectedText, to: destinationSelectedText},
 			success: function(data)
 			{
+        alert(data);
 				$('#input-total-amount').val(data);
 			}
-		});		
+		});
     }
-	
+    if (typeRate == "2") {
+      alert(sizeSelectedText)
+		$.ajax({
+			url: site_url + '/CShipping/getRateSizeCompany',
+			type: 'post',
+			data: {size: sizeSelectedText},
+			success: function(data)
+			{
+				$('#input-total-amount').val(data);
+			}
+		});
+  }
+
+
+    }
+
 	$(document).ready(function()
 	{
      	totalAmount();
@@ -177,13 +192,13 @@
 			totalAmount();
 		});
 
-		$("#form-shipping").submit(function(event) 
+		$("#form-shipping").submit(function(event)
 		{
 			event.preventDefault();
-            
+
 			cuerpo = $('#input-order_nro').val();
 			dv = cuerpo;
-	    
+
 			$.post(
 				site_url + "/CShipping/addShipping",
 				{

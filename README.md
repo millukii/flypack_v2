@@ -16,7 +16,7 @@
 10. Reporte Ordenes de transporte (Mati)
 11. Accesos directos (Mel)
 12. Invisibilizar codigo quadmins dejar como null y ocultar de las vistas Done
-13. Tomar la empresa del usuario al crear orden de transporte
+13. Tomar la empresa del usuario al crear orden de transporte done
 14. Cambiar representante legal a contacto Done
 15. Select reprentante legal agregar digito verificador Done
 16. Agregar monto en orden de transporte Done
@@ -24,15 +24,21 @@
 18. ShippingType de orden de transporte convertirlo en select X, L, M Done
 19. Aplicar precio sugerido que se encuentre en la tabla rates
 20. Dejar edit ot igual al add pero con edicion del estado
-
 21. Agregar boton para editar de usuarios que inicia sesión, todos menos el campo "user". (mati) (DONE)
 22. Al momento de que se cree un usuario, generar una constraseña aleatoria y mande un correo al usuario con sus datos para iniciar sesion. (mati) (DONE)
 23. Mejorar interfaz login (mel) Done
-24. Agregar hipervinculo de: ¿has olvidado tu contraseña? en el login (mel)
+24. Agregar hipervinculo de: ¿has olvidado tu contraseña? en el login (mel) 
 25. Agregar Consumo de endpoint POST para que al crear una orden se cree su homologo en quadmin.
 26. Las ordenes en quadmin se crean por separado en su cuerpo genérico y su detalle. El detalle se compone de ítems.
-27. Revisar en agregar orden que la compañia y el estado no se estan enviando a la bd
-28. Editar Envio (campos editables,todos excepto company y user)
+27. Revisar en agregar orden que la compañia y el estado no se estan enviando a la bd done
+28. Editar Envio (campos editables,todos excepto company y user) done
+29. Eliminar clases obsoletas Done
+30. Formatear identacion php, html Done
+31. Agregar ajax operacion obtener los precios por tamaño add, edit shipping Errores
+32. Validar que se calculen totalAmount add y edit shipping No funciona
+33. Agregar boton icono de qr, para generar etiqueta
+34. Quitar menus de etiquetas en el index y en sidebar Done
+
 ## Vistas
 
 - Cliente:  OT(solo de la empresa que inicia sesion), Precios, Etiquetas
