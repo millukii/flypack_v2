@@ -194,7 +194,7 @@ class CShipping extends CI_Controller
         }
 
         if (empty($quadmins_code)) {
-            $quadmins_code = 'N/A';
+            $quadmins_code = $order_nro;
         }
 
         if (empty($address)) {
@@ -206,7 +206,7 @@ class CShipping extends CI_Controller
         }
 
         if (empty($delivery_name)) {
-            $delivery_name = '000000000';
+            $delivery_name = 'N/A';
         }
 
         if (empty($shipping_date)) {
@@ -240,63 +240,54 @@ class CShipping extends CI_Controller
         );
 
         if ($this->modelo->addShipping($data)) {
-            echo '1';
-        } else {
-            echo '0';
-        }
+               //agregar llamado a la api de quadmin con los datos necesarios para crear una orden
 
-        //agregar llamado a la api de quadmin con los datos necesarios para crear una orden
-/*
-$quadminOrder = array(
-'code'                 => $quadmins_code,
-'poiId'                 => $poiId,
-'quadmins_code'                 => $quadmins_code,
-'operation'                 => $operation_type,
-'label'                 => $label,
-'priority'                 => $priority,
-'totalAmount'                 => $total_amount,
-'totalWithoutTaxes'                 => $total_amount
-);
-$data_string = json_encode($data);
+            $quadminOrder = array(
+                'code' => $quadmins_code,
+                'poiId' => 121245261,
+                'quadmins_code' => $quadmins_code,
+                'operation' => "PEDIDO",
+                'priority' => 0,
+                'totalAmount' => (int) $total_amount,
+                'totalAmountWithoutTaxes' => (int) $total_amount,
+            );
+            $orders = [];
+            array_push($orders, $quadminOrder);
 
-$curl = curl_init('https://flash-api.quadminds.com/api/v2/orders');
+            $data_string = json_encode($orders);
+            $curl = curl_init('https://flash-api.quadminds.com/api/v2/orders');
 
-curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
 
-curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-'Content-Type: application/json',
-'Content-Length: ' . strlen($data_string),
-'x-saas-apikey: ' . 'SzaORv8XtExcO1zVX3jcWGsOvyGwsl3y46sOLnmn'));
+            curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($data_string),
+                'x-saas-apikey: ' . 'SzaORv8XtExcO1zVX3jcWGsOvyGwsl3y46sOLnmn'));
 
-curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);  // Make it so the data coming back is put into a string
-curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);  // Insert the data
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // Make it so the data coming back is put into a string
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string); // Insert the data
 
-// Send the request
-$result = curl_exec($curl);
+            // Send the request
+            $result = curl_exec($curl);
 
-// Free up the resources $curl is using
-curl_close($curl); */
+            $array = json_decode($result, true);
+
+            // Free up the resources $curl is using
+            curl_close($curl);
+
+            $date_time = date('Y-m-d H:i:s');
+            $data = array(
+                'quadmins_code' => $array['data'][0]['_id'],
+                'modified' => $date_time,
+            );
+            $this->modelo->editShippingByOrderNro($data, $order_nro));
+            echo '1'; 
+        }else{ echo '0'; }
+
     }
 
     public function editShipping()
     {
-        /*
-        id: <?php if(!empty($_GET['id'])) echo $_GET['id']; ?>,
-        order_nro: $("#input-order-nro").val(),
-        quadmins_code: null,
-        total_amount: $("#input-total-amount").val(),
-        address: $("#input-address").val(),
-        delivery_name: $("#input-delivery-name").val(),
-        shipping_type: $("#select-shipping-type").val(),
-        origin: $("#select-origin").val(),
-        destiny: $("#select-destination").val(),
-        shipping_states_id: $("#input-shipping-state").val(),
-        receiver_name: $("#input-receiver-name").val(),
-        receiver_phone: $("#input-receiver-phone").val(),
-        receiver_mail: $("#input-receiver-mail").val(),
-        observation: $("#input-observation").val()
-         */
-
         $id = trim($this->input->post('id', true));
         $order_nro = trim($this->input->post('order_nro', true));
         $quadmins_code = trim($this->input->post('quadmins_code', true));

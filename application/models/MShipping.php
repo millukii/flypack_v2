@@ -221,7 +221,15 @@ class MShipping extends CI_Model
         } else {
             return false;
         }
-
+    }
+    public function editShippingByOrderNro($data, $order_nro)
+    {
+        $this->db->where('order_nro', $order_nro);
+        if ($this->db->update('shipping', $data)) {
+            return true;
+        } else {
+            return false;
+        }
     }
     //FUNCTION AUXILIARES
     public function getAllProfiles()
