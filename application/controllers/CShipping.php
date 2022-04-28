@@ -240,12 +240,13 @@ class CShipping extends CI_Controller
         );
 
         if ($this->modelo->addShipping($data)) {
-               //agregar llamado a la api de quadmin con los datos necesarios para crear una orden
+            //agregar llamado a la api de quadmin con los datos necesarios para crear una orden
 
             $quadminOrder = array(
                 'code' => $quadmins_code,
                 'poiId' => 121245261,
                 'quadmins_code' => $quadmins_code,
+                'date' => date('Y-m-d'),
                 'operation' => "PEDIDO",
                 'priority' => 0,
                 'totalAmount' => (int) $total_amount,
@@ -271,7 +272,7 @@ class CShipping extends CI_Controller
             $result = curl_exec($curl);
 
             $array = json_decode($result, true);
-
+            print_r($array);
             // Free up the resources $curl is using
             curl_close($curl);
 
@@ -280,9 +281,9 @@ class CShipping extends CI_Controller
                 'quadmins_code' => $array['data'][0]['_id'],
                 'modified' => $date_time,
             );
-            $this->modelo->editShippingByOrderNro($data, $order_nro));
-            echo '1'; 
-        }else{ echo '0'; }
+            $this->modelo->editShippingByOrderNro($data, $order_nro);
+            echo '1';
+        } else {echo '0';}
 
     }
 
