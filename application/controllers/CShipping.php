@@ -242,6 +242,13 @@ class CShipping extends CI_Controller
         if ($this->modelo->addShipping($data)) {
             //agregar llamado a la api de quadmin con los datos necesarios para crear una orden
 
+            $measures = array();
+            $volume = new stdClass;
+            $volume->constraintId = 7;
+            $volume->value = (int) $total_amount;
+
+            array_push($measures, $volume);
+
             $quadminOrder = array(
                 'code' => $quadmins_code,
                 'poiId' => 121245261,
@@ -251,11 +258,13 @@ class CShipping extends CI_Controller
                 'priority' => 0,
                 'totalAmount' => (int) $total_amount,
                 'totalAmountWithoutTaxes' => (int) $total_amount,
+                'orderMeasures' => $measures,
             );
             $orders = [];
             array_push($orders, $quadminOrder);
 
             $data_string = json_encode($orders);
+            echo $data_string;
             $curl = curl_init('https://flash-api.quadminds.com/api/v2/orders');
 
             curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
@@ -321,7 +330,7 @@ class CShipping extends CI_Controller
         }
 
         if (empty($delivery_name)) {
-            $delivery_name = '000000000';
+            $delivery_name = 'N/A';
         }
 
         $date_time = date('Y-m-d H:i:s');
