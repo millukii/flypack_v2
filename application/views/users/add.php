@@ -10,38 +10,26 @@
 
 				  	<form class="form-horizontal" id="form-users">
 			  			<div class="box-body">
-<<<<<<< HEAD
-
-=======
->>>>>>> 1faacbce48356d48f2d7ccb7721675adf46d5269
 			  				<div class="form-group">
 			  					<label for="user" class="col-sm-2 control-label">Usuario</label>
 			  					<div class="col-sm-10">
 			  						<input type="text" class="form-control" name="input-user" id="input-user" required>
 			  					</div>
 			  				</div>
-<<<<<<< HEAD
-
-=======
->>>>>>> 1faacbce48356d48f2d7ccb7721675adf46d5269
 			  				<div class="form-group">
 			  					<label for="password" class="col-sm-2 control-label">Contraseña</label>
 			  					<div class="col-sm-10">
 			  						<input type="password" class="form-control" name="input-password" id="input-password" required>
 			  					</div>
 			  				</div>
-<<<<<<< HEAD
-
-=======
->>>>>>> 1faacbce48356d48f2d7ccb7721675adf46d5269
 			  				<div class="form-group">
 			  					<label for="roles_id" class="col-sm-2 control-label">Rol</label>
 			  					<div class="col-sm-5">
 			  						<select name="select-roles_id" id="select-roles_id" class="form-control" required>
 			  							<option value="">Seleccione una opción</option>
-			  							<?php foreach ($roles as $key) { ?>
+			  							<?php foreach ($roles as $key) {?>
 			  								<option value="<?php echo $key->id; ?>"><?php echo $key->rol; ?></option>
-			  							<?php } ?>
+			  							<?php }?>
 			  						</select>
 			  					</div>
 			  				</div>
@@ -79,9 +67,9 @@
 			  					<div class="col-sm-5">
 			  						<select name="select-companies_id" id="select-companies_id" class="form-control" required>
 			  							<option value="">Seleccione una opción</option>
-			  							<?php foreach ($companies as $key) { ?>
-			  								<option value="<?php echo $key->id; ?>"><?php echo $key->rut.'-'.$key->dv.' '.$key->razon; ?></option>
-			  							<?php } ?>
+			  							<?php foreach ($companies as $key) {?>
+			  								<option value="<?php echo $key->id; ?>"><?php echo $key->rut . '-' . $key->dv . ' ' . $key->razon; ?></option>
+			  							<?php }?>
 			  						</select>
 			  					</div>
 			  				</div>
@@ -90,14 +78,14 @@
 			  					<div class="col-sm-5">
 			  						<select name="select-user_states_id" id="select-user_states_id" class="form-control" required>
 			  							<option value="">Seleccione una opción</option>
-			  							<?php foreach ($user_states as $key) { ?>
+			  							<?php foreach ($user_states as $key) {?>
 			  								<option value="<?php echo $key->id; ?>"><?php echo $key->state; ?></option>
-			  							<?php } ?>
+			  							<?php }?>
 			  						</select>
 			  					</div>
 			  				</div>
 			  				<!--  -->
-			  				
+
 			  				<!--  -->
 			  			</div>
 			  			<div class="box-footer">
@@ -111,7 +99,7 @@
 
 </div>
 
-<?php $this->view('footer'); ?>
+<?php $this->view('footer');?>
 
 <script>
 	$(document).ready(function() {

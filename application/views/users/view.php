@@ -7,48 +7,78 @@
 					    <i class="fa fa-users"></i>
 						<h3 class="box-title">Usuario</h3>
 				  	</div>
-					
+
 					<div class="box-body">
 			  			<section class="content">
 			  			    <table id="sensors" class="table">
 		  		    		    <tbody>
 		  		    		    	<tr>
 		  		    		    		<th>Id</th>
-		  			    				<td><?php if(!empty($user[0]['id'])) echo $user[0]['id'];?></td>
+		  			    				<td><?php if (!empty($user[0]['id'])) {
+    echo $user[0]['id'];
+}
+?></td>
 		  		    		    	</tr>
 									<tr>
 		  		    		    		<th>Usuario</th>
-		  			    				<td><?php if(!empty($user[0]['user'])) echo $user[0]['user'];?></td>
+		  			    				<td><?php if (!empty($user[0]['user'])) {
+    echo $user[0]['user'];
+}
+?></td>
 		  		    		    	</tr>
                           			<tr>
                           				<th>Rol</th>
-                          				<td><?php if(!empty($user[0]['rol'])) echo $user[0]['rol'];?></td>
+                          				<td><?php if (!empty($user[0]['rol'])) {
+    echo $user[0]['rol'];
+}
+?></td>
                           			</tr>
                           			<tr>
                           				<th>Nombre</th>
-                          				<td><?php if(!empty($user[0]['name'])) echo $user[0]['name'];if(!empty($user[0]['lastname'])) echo $user[0]['lastname'];?></td>
+                          				<td><?php if (!empty($user[0]['name'])) {
+    echo $user[0]['name'];
+}
+if (!empty($user[0]['lastname'])) {
+    echo $user[0]['lastname'];
+}
+?></td>
                           			</tr>
 									<tr>
                           				<th>Email</th>
-                          				<td><?php if(!empty($user[0]['email'])) echo $user[0]['email'];?></td>
+                          				<td><?php if (!empty($user[0]['email'])) {
+    echo $user[0]['email'];
+}
+?></td>
                           			</tr>
 									<tr>
                           				<th>Empresa</th>
-                          				<td><?php if(!empty($user[0]['rut'])) echo $user[0]['rut'].'-'.$user[0]['dv'].' '.$user[0]['razon'];?></td>
+                          				<td><?php if (!empty($user[0]['rut'])) {
+    echo $user[0]['rut'] . '-' . $user[0]['dv'] . ' ' . $user[0]['razon'];
+}
+?></td>
                           			</tr>
                           			<tr>
                           				<th>Estado</th>
-                          				<td><?php if(!empty($user[0]['state'])) echo $user[0]['state'];?></td>
+                          				<td><?php if (!empty($user[0]['state'])) {
+    echo $user[0]['state'];
+}
+?></td>
                           			</tr>
 									<tr>
                           				<th>Creado</th>
-                          				<td><?php if(!empty($user[0]['created'])) echo $user[0]['created'];?></td>
+                          				<td><?php if (!empty($user[0]['created'])) {
+    echo $user[0]['created'];
+}
+?></td>
                           			</tr>
 									  <tr>
                           				<th>Modificado</th>
-                          				<td><?php if(!empty($user[0]['modified'])) echo $user[0]['modified'];?></td>
+                          				<td><?php if (!empty($user[0]['modified'])) {
+    echo $user[0]['modified'];
+}
+?></td>
                           			</tr>
-                          			
+
 		  		    		    </tbody>
 		  			    	</table>
 			  			</section>
@@ -62,17 +92,17 @@
 			</div>
 		</div>
 	</section>
-	
+
 </div>
 
-<?php $this->view('footer'); ?>
+<?php $this->view('footer');?>
 
 <script>
     $(document).ready(function() {
 
     	$('#li-configuration').addClass('menu-open');
       	$('#ul-configuration').css('display', 'block');
-      	
+
       	$('#li-users').addClass('menu-open');
 		$('#ul-users').css('display', 'block');
     });
