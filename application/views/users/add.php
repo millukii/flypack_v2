@@ -124,7 +124,7 @@
 					}
 					else {
 						alert("Usuario existente.");
-						//window.location.replace(site_url+"/CUsers/add");
+						window.location.replace(site_url+"/CUsers/add");
 					}
 				}
 			);

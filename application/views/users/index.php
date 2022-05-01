@@ -61,9 +61,11 @@
           },
           "columns": [
             { "data": "ID"},
+            { "data": "Usuario" },
+               { "data": "Rol" },
             { "data": "Nombre" },
-            { "data": "Rol" },
-            { "data": "Persona" },
+            { "data": "Email" },
+            { "data": "Empresa" },
             { "data": "Estado" },
             { "data": "Acción" }
           ],
@@ -93,18 +95,32 @@
               "targets": [3],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.rut+'-'+row.dv+' | '+row.name+' '+row.lastname
+                return row.rut+'-'+row.dv+' | '+row.name
               }
             },
             {
               "targets": [4],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.state
+                return row.email
               }
             },
             {
               "targets": [5],
+              "orderable": true,
+              "render": function(data, type, row) {
+                return row.razon
+              }
+            },
+            {
+              "targets": [6],
+              "orderable": true,
+              "render": function(data, type, row) {
+                return row.state
+              }
+            },
+            {
+              "targets": [7],
               "orderable": false,
               "render": function(data, type, row) {
                 return  `

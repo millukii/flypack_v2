@@ -376,45 +376,7 @@ class CShipping extends CI_Controller
         }
 
     }
-
-    public function generateMasive()
-    {
-        $quantity_workers = trim($this->input->post('quantity_workers', true));
-
-        $this->db->select('id');
-        $this->db->from('shipping');
-        $this->db->order_by('id', 'desc');
-        $this->db->limit(1);
-        $res = $this->db->get()->result_array();
-
-        if (!empty($res[0]['id'])) {
-            $res = intval($res[0]['id']);
-        } else {
-            $res = 1;
-        }
-
-        $date_time = date('Y-m-d H:i:s');
-        for ($i = 0; $i < $quantity_workers; $i++) {
-            $res++;
-            $data = array(
-                'order_nro' => $res,
-                'quadmins_code' => $res,
-                'total_amount' => 'N/A',
-                'quadmins_code' => 'N/A',
-                'address' => 'N/A',
-                'shipping_date' => 'sin_correo@gmail.com',
-                'delivery_name' => '000000000',
-                'profile_id' => 2,
-                'shipping_states_id' => 1,
-                'created' => $date_time,
-            );
-
-            $this->modelo->addShipping($data);
-        }
-
-        echo '1';
-    }
-
+ 
     public function getRateFromToCompany()
     {
         $companies_id = $this->session->userdata('companies_id');
