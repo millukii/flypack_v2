@@ -13,6 +13,13 @@
                     				  	<form class="form-horizontal" id="form-shipping">
                     			  			<div class="box-body">
 
+                                    <div class="form-group">
+                    			  					<label for="input-shipping-date" class="col-sm-2 control-label">Fecha</label>
+                    			  					<div class="col-sm-5">
+                    			  						<input type="date" class="form-control" name="input-shipping-date" id="input-shipping-date">
+                    			  					</div>
+                    			  				</div>
+
                                      <div class="form-group">
                     			  					<label for="total-amount" class="col-sm-2 control-label">Numero de Orden</label>
                     			  					<div class="col-sm-5">
@@ -233,7 +240,6 @@
 			data: {from: originSelectedText, to: destinationSelectedText},
 			success: function(data)
 			{
-        alert(data);
 				$('#input-total-amount').val(data);
 			}
 		});
@@ -282,6 +288,7 @@
 ?>,
 					order_nro: $("#input-order-nro").val(),
 					quadmins_code: null,
+          shipping_date: $("#input-shipping-date").val(),
 					total_amount: $("#input-total-amount").val(),
 					address: $("#input-address").val(),
 					delivery_name: $("#select-delivery").val(),

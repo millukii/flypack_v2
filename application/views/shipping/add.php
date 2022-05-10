@@ -26,6 +26,13 @@
                     			  			<div class="box-body">
 
                     			  				<div class="form-group">
+                    			  					<label for="input-shipping-date" class="col-sm-2 control-label">Fecha</label>
+                    			  					<div class="col-sm-5">
+                    			  						<input type="date" class="form-control" name="input-shipping-date" id="input-shipping-date">
+                    			  					</div>
+                    			  				</div>
+
+                    			  				<div class="form-group">
                     			  					<label for="order_nro" class="col-sm-2 control-label">Numero de Orden</label>
                     			  					<div class="col-sm-3">
                     			  						<input type="text" class="form-control" name="input-order-nro" id="input-order-nro"  maxlength="10"  required>
@@ -214,7 +221,6 @@
 					receiver_phone: $("#input-receiver-phone").val(),
 					receiver_mail: $("#input-receiver-mail").val(),
 					observation: $("#input-observation").val(),
-					date: $("#input-shipping-date").val(),
 					origin: $('#select-origin').val(),
 					destination: $('#select-destination').val()
 				},

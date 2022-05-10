@@ -215,6 +215,7 @@ class CShipping extends CI_Controller
 
         $date_time = date('Y-m-d H:i:s');
 
+        
         $user = $this->session->userdata('users_id');
         $companies_id = $this->session->userdata('companies_id');
 

@@ -131,6 +131,14 @@
 30. OTs atributo delivery = repartidor, corresponde nombre completo del repartidor (sale de usuarios con rol repartidor) (mel)
 31. OTs al agregar, considerar campos que se esten pre cargados:
   - origen = es un selector con la comuna de origen de la empresa. (mel)
-  - para origen considerar empresas que puedan tener sucursales, a lo cual habría que listar dichas comunas de sucursales. (mel)
-32. El total se calcula dependiendo si la empresa posee tarifa por (origen  a destino) o (tamaño), para eso existe un campo en la bd que se llama type_rate [1 = origen a destino, 2 = tamaño]. Por ende el precio no es ingresado a mano, si no que se calcula en base a la matriz de precios ya sea de origen destino o por tamaño. (mel)
-
+  - para origen considerar empresas que puedan tener sucursales, a lo cual habría que listar dichas comunas de sucursales. (mel) Done
+32. El total se calcula dependiendo si la empresa posee tarifa por (origen  a destino) o (tamaño), para eso existe un campo en la bd que se llama type_rate [1 = origen a destino, 2 = tamaño]. Por ende el precio no es ingresado a mano, si no que se calcula en base a la matriz de precios ya sea de origen destino o por tamaño. (mel) Done
+33. Condiciones en la creacion de OT
+- Si la orden de transporte se ingresa antes de las 22:00 GMT -3 se considera que la orden será parte de la planificación para el siguiente día, de lo contrario, se pasará a la del día sub siguiente.
+- Días hábiles de flypack Lunes-Sábado
+34. Autocompletado sugerido para la dirección de la ot dirección final, a partir de los POId del cliente.
+35. La orden de compra debe crearse por defecto como RETIRO.
+36. Los estados son ENTREGA y RETIRO.
+37. Escribir en notas de quadmin el campo observación.
+38. Habilitar editar OT en Quadmin.
+39. 
