@@ -215,7 +215,6 @@ class CShipping extends CI_Controller
 
         $date_time = date('Y-m-d H:i:s');
 
-        
         $user = $this->session->userdata('users_id');
         $companies_id = $this->session->userdata('companies_id');
 
@@ -377,7 +376,7 @@ class CShipping extends CI_Controller
         }
 
     }
- 
+
     public function getRateFromToCompany()
     {
         $companies_id = $this->session->userdata('companies_id');
@@ -397,6 +396,26 @@ class CShipping extends CI_Controller
     {
         $companies_id = $this->session->userdata('companies_id');
         $size = trim($this->input->post('size', true));
+        $response = $this->modelo->getRateSizeCompany($size, $companies_id);
+
+        $value = 0;
+        if (!empty($response)) {
+            $value = $response[0]['value'];
+        }
+        echo $value;
+
+    }
+    public function getPoiData()
+    {
+        $attr = trim($this->input->post('attr', true));
+        $value = trim($this->input->post('value', true));
+
+        if ($value == 1) {
+
+        } else if ($value == 2) {
+
+        }
+
         $response = $this->modelo->getRateSizeCompany($size, $companies_id);
 
         $value = 0;

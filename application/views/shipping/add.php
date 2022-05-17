@@ -152,6 +152,30 @@
 	var cuerpo;
 	var dv;
 
+  function getDataPoi(attr, ev)	  {
+      console.log(attr, ev);
+      //address
+      $.ajax({
+         url: site_url + '/CShipping/getPoiData',
+          type: 'post',
+          data: {attr:attr, value: ev},
+          dataType: 'json',
+          success: function(response){
+            let poiID = response.poi;
+            let address = response.address;
+            let comuna = response.commune;
+            let  receiver_name = response.receiver_name;
+          }
+
+        });
+    }
+
+
+
+
+
+
+
 	function totalAmount()
 	{
 		let origin = document.getElementById('select-origin');
@@ -174,7 +198,6 @@
 		});
     }
     if (typeRate == "2") {
-      alert(sizeSelectedText)
 		$.ajax({
 			url: site_url + '/CShipping/getRateSizeCompany',
 			type: 'post',
@@ -192,6 +215,19 @@
 	$(document).ready(function()
 	{
      	totalAmount();
+
+
+
+		$('#input-address').on('keyup', function() {
+      console.log($(this).val());
+      getDataPoi(1,$(this).val());
+		});
+
+    $('#input-receiver-name').on('keyup', function() {
+      console.log($(this).val());
+      getDataPoi(2, $(this).val());
+
+		});
 
 		$('select.totalAmount').on('change', function() {
 			totalAmount();

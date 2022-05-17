@@ -137,6 +137,7 @@
 - Si la orden de transporte se ingresa antes de las 22:00 GMT -3 se considera que la orden será parte de la planificación para el siguiente día, de lo contrario, se pasará a la del día sub siguiente.
 - Días hábiles de flypack Lunes-Sábado
 34. Autocompletado sugerido para la dirección de la ot dirección final, a partir de los POId del cliente.
+(rescatar id, name, address generar sugerencia por separado para receptor y direccion), si se elige el nombre del receptor se autocompleta el nombre, la direccion y comuna
 35. La orden de compra debe crearse por defecto como RETIRO.
 36. Los estados son ENTREGA y RETIRO.
 37. Escribir en notas de quadmin el campo observación.
