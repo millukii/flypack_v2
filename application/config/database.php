@@ -75,13 +75,13 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
+	'hostname' => 'flypack.cl',
+	'username' => 'flypackroot_flypack',
 	//'username' => 'cpcc001_sph',
 	//'username' => 'root',
-	'password' => '',
+	'password' => 'Leica666_',
 	//'password' => '',
-	'database' => 'flypack',
+	'database' => 'flypackroot_flypack',
 	//'database' => 'sph',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
