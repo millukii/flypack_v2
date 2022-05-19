@@ -204,6 +204,14 @@ class MPrices extends CI_Model
 			return false;
 	}
 
+	public function addPriceSize($data)
+	{
+		if($this->db->insert('rates_size', $data))
+			return true;
+		else
+			return false;
+	}
+
 	public function editPrice($companies_id, $data, $id)
 	{
 		if($this->getType_Rate($companies_id) == 1)

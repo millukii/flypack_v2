@@ -74,9 +74,12 @@ class CPrices extends CI_Controller {
 
 	public function add()
 	{
+		$company = trim($this->input->get('company', TRUE));
+		$data = ['company' => $company];
+
 		$this->load->view('header');
 		$this->load->view('aside');
-		$this->load->view('prices/add');
+		$this->load->view('prices/add', $data);
 	}
 
 	public function edit()
@@ -115,6 +118,24 @@ class CPrices extends CI_Controller {
 		//	'created' => $date_time
 		);
 		if($this->modelo->addPrice($data))
+			echo '1';
+		else
+			echo '0';
+	}
+
+	public function addPriceSize()
+	{
+		$value 	= trim($this->input->post('value', TRUE));
+		$size 	= trim($this->input->post('size', TRUE));
+		$companies_id = trim($this->input->post('companies_id', TRUE));
+
+		$date_time = date('Y-m-d H:i:s');
+		$data = array(
+			'value' => $value,
+			'size' => $size,
+			'companies_id' => $companies_id
+		);
+		if($this->modelo->addPriceSize($data))
 			echo '1';
 		else
 			echo '0';

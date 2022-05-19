@@ -13,11 +13,13 @@
                 <section class="content">
 
                   <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
-                    <form id="form-upload_file" method="post" enctype="multipart/form-data" action="<?php echo base_url();?>index.php/CPrices/import_excelfile">
+                    <form style="display: none;" id="form-upload_file" method="post" enctype="multipart/form-data" action="<?php echo base_url();?>index.php/CPrices/import_excelfile">
                       <input id="input-upload_file" type="file" name="spreadsheet" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
                       <input name="input-company" id="input-company" type="hidden" value="0">
                     </form>
-                  
+                    <div id="div-addSize" style="display: none;">
+                      <button class="btn btn-primary" onclick="addPriceSize();">Agregar</button>
+                    </div>
                   </div>
 
                   <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6" >
@@ -30,20 +32,20 @@
                     <?php } ?>
                 </select>
                 <hr>
-                    <div id="div-table">
-                      <table id="table-prices" class="table table-striped table-bordered table-condensed" style="width:100%;">
-                          <thead>
-                          <tr>
-                            <th width="10%">ID</th>
-                            <th>Origen</th>
-                            <th>Destino</th>
-                            <th>Precio</th>
-                            <th>Acción</th>
-                          </tr>
-                        </thead>
-                        <tbody></tbody>
-                      </table>
-                    </div>
+                <div id="div-table">
+                  <table id="table-prices" class="table table-striped table-bordered table-condensed" style="width:100%;">
+                      <thead>
+                      <tr>
+                        <th width="10%">ID</th>
+                        <th>Origen</th>
+                        <th>Destino</th>
+                        <th>Precio</th>
+                        <th>Acción</th>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                </div>
             </section>
           </div>
           <div class="box-footer"></div>
@@ -93,6 +95,9 @@
         {
           if(data == '1')
           {
+            $('#form-upload_file').css('display','block');
+            $('#div-addSize').css('display','none');
+
             $('#div-table').html('<table id="table-prices" class="table table-striped table-bordered table-condensed" style="width:100%;"><thead><tr><th width="10%">ID</th><th>Origen</th><th>Destino</th><th>Precio</th><th>Acción</th></tr></thead><tbody></tbody></table>');
             $('#table-prices').DataTable({
                 "lengthMenu": [[2000, 2500, 5000, -1], [2000, 2500, 5000, "All"]],
@@ -164,6 +169,9 @@
           }
           else
           {
+            $('#form-upload_file').css('display','none');
+            $('#div-addSize').css('display','block');
+
             $('#div-table').html('<table id="table-prices" class="table table-striped table-bordered table-condensed" style="width:100%;"><thead><tr><th width="10%">ID</th><th>Tamaño</th><th>Precio</th><th>Acción</th></tr></thead><tbody></tbody></table>');
             $('#table-prices').DataTable({
                 "lengthMenu": [[2000, 2500, 5000, -1], [2000, 2500, 5000, "All"]],
@@ -227,10 +235,14 @@
           }
         }
       });
-
-
-
       
+    }
+
+    function addPriceSize()
+    {
+      let company = $('#select-companies').val();
+
+      window.location.href = "<?php echo base_url();?>index.php/CPrices/add?company="+company;
     }
 
 
