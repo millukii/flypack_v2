@@ -57,6 +57,7 @@ class MShipping extends CI_Model
         $this->db->from('shipping');
         $this->db->where('shipping.id', $id);
         $this->db->limit(1);
+
         return $this->db->get()->result_array();
     }
 

@@ -134,7 +134,6 @@ class CShipping extends CI_Controller
             $rates_sizes = $this->modelo->getAllRatesSizesByCompany($userCompany[0]->id);
 
         }
-
         $data = array(
             'shipping' => $shipping,
             'branch_offices' => $branchOffices,
@@ -313,6 +312,8 @@ class CShipping extends CI_Controller
         $receiver_phone = trim($this->input->post('receiver_phone', true));
         $receiver_mail = trim($this->input->post('receiver_mail', true));
         $observation = trim($this->input->post('observation', true));
+        $label = trim($this->input->post('label', true));
+        $time_windows = trim($this->input->post('time_windows', true));
 
         $originCommuneName = $this->modelo->getCommuneName($origin);
         $destinationCommuneName = $this->modelo->getCommuneName($destination);
@@ -331,6 +332,14 @@ class CShipping extends CI_Controller
 
         if (empty($delivery_name)) {
             $delivery_name = 'N/A';
+        }
+
+        if (empty($label)) {
+            $label = 'N/A';
+        }
+
+        if (empty($time_windows)) {
+            $time_windows = null;
         }
 
         $date_time = date('Y-m-d H:i:s');
@@ -354,7 +363,54 @@ class CShipping extends CI_Controller
         );
 
         if ($this->modelo->editShipping($data, $id)) {
-            echo '1';
+            $quadminOrder = array(
+                // 'code' => $quadmins_code,
+                'poiId' => 121245261,
+                // 'quadmins_code' => $quadmins_code,
+                'date' => date('Y-m-d'),
+                'totalAmount' => (int) $total_amount,
+                'totalAmountWithoutTaxes' => (int) $total_amount,
+                'label' => $label,
+                // 'timeWindow' => $time_windows,
+            );
+            $orders = [];
+            array_push($orders, $quadminOrder);
+
+            $data_string = json_encode($orders[0]);
+            echo $data_string;
+            $endpoint = sprintf("%s/%s", 'https://flash-api.quadminds.com/api/v2/orders', $quadmins_code);
+            $curl = curl_init();
+            echo $endpoint;
+
+            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PATCH");
+
+            curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($data_string),
+                'x-saas-apikey: ' . 'SzaORv8XtExcO1zVX3jcWGsOvyGwsl3y46sOLnmn'));
+
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // Make it so the data coming back is put into a string
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string); // Insert the data
+
+            // Send the request
+            $result = curl_exec($curl);
+            print_r($result);
+            $array = json_decode($result, true);
+            print_r($array);
+            // Free up the resources $curl is using
+            curl_close($curl);
+
+            if ($array != null) {
+                $date_time = date('Y-m-d H:i:s');
+                $data = array(
+                    'quadmins_code' => $array['data'][0]['_id'],
+                    'modified' => $date_time,
+                );
+                $this->modelo->editShippingByOrderNro($data, $order_nro);
+                echo '1';
+
+            }
+            //echo '0';
         } else {
             echo '0';
         }

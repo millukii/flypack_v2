@@ -16,21 +16,39 @@
                                     <div class="form-group">
                     			  					<label for="input-shipping-date" class="col-sm-2 control-label">Fecha</label>
                     			  					<div class="col-sm-5">
-                    			  						<input type="date" class="form-control" name="input-shipping-date" id="input-shipping-date">
-                    			  					</div>
-                    			  				</div>
-
-                                     <div class="form-group">
-                    			  					<label for="total-amount" class="col-sm-2 control-label">Numero de Orden</label>
-                    			  					<div class="col-sm-5">
-                    			  						<input type="text" class="form-control" name="input-order-nro" id="input-order-nro"
-                                         value="<?php if (!empty($shipping[0]['order_nro'])) {
-    echo $shipping[0]['order_nro'];
+                    			  						<input type="text" class="form-control" name="input-shipping-date" id="input-shipping-date"
+                                        value="<?php if (!empty($shipping[0]['shipping_date'])) {
+    echo $shipping[0]['shipping_date'];
 }
 ?>"
                                         >
                     			  					</div>
                     			  				</div>
+
+                                     <div class="form-group">
+                                        <label for="input-order-nro" class="col-sm-2 control-label">Numero de Orden</label>
+                                        <div class="col-sm-5">
+                                          <input type="text" class="form-control" name="input-order-nro" id="input-order-nro"
+                                          value="<?php if (!empty($shipping[0]['order_nro'])) {
+    echo $shipping[0]['order_nro'];
+}
+?>"
+                                          >
+                                        </div>
+                    			  				</div>
+
+                                     <div class="form-group">
+                                        <label for="input-quadmins-code" class="col-sm-2 control-label">Id Quadmins</label>
+                                        <div class="col-sm-5">
+                                          <input type="number" class="form-control"   disabled name="input-quadmins-code" id="input-quadmins-code"
+                                          value="<?php if (!empty($shipping[0]['quadmins_code'])) {
+    echo $shipping[0]['quadmins_code'];
+}
+?>"
+                                          >
+                                        </div>
+                    			  				</div>
+
                                     <div class="form-group">
                     			  					<label for="shipping-type" class="col-sm-2 control-label">Tamaño</label>
                     			  					<div class="col-sm-5">
@@ -209,8 +227,8 @@
 		}).prop('selected', true);
 
 		$("#select-delivery option").filter(function() {
-			return $(this).text() == '<?php if (!empty($shipping[0]['deslivery_name'])) {
-    echo $shipping[0]['deslivery_name'];
+			return $(this).text() == '<?php if (!empty($shipping[0]['delivery_name'])) {
+    echo $shipping[0]['delivery_name'];
 } else {
     echo 1;
 }
@@ -287,7 +305,7 @@
 }
 ?>,
 					order_nro: $("#input-order-nro").val(),
-					quadmins_code: null,
+					quadmins_code:  $("#input-quadmins-code").val(),
           shipping_date: $("#input-shipping-date").val(),
 					total_amount: $("#input-total-amount").val(),
 					address: $("#input-address").val(),

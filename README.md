@@ -141,5 +141,5 @@
 35. La orden de compra debe crearse por defecto como RETIRO.
 36. Los estados son ENTREGA y RETIRO.
 37. Escribir en notas de quadmin el campo observación.
-38. Habilitar editar OT en Quadmin.
+38. Habilitar editar OT en Quadmin. EJ 68 5072 259091289
 39. 
