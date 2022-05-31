@@ -46,6 +46,22 @@
   </section>
 </div>
 
+<div id="modalLabel" class="modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Etiqueta</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Cargando...</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <?php $this->view('footer'); ?>
 
 <script>
@@ -222,6 +238,22 @@
             alert("Este registro posee dependencias asociadas.\nNo se puede eliminar.")
         });
       }
+    }
+
+    function generateLabel(id)
+    {
+      $('#modalLabel').modal('show');
+      
+      $.ajax({
+        url: site_url + '/CShipping/getQRLabel',
+        type: 'post',
+        data: {id: id},
+        success: function(response)
+        {
+          console.log(response);
+        }
+      });
+      
     }
 </script>
 

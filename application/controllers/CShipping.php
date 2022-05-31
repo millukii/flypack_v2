@@ -484,4 +484,27 @@ class CShipping extends CI_Controller
         echo $value;
 
     }
+
+    public function getQRLabel()
+    {
+        $id = trim($this->input->post('id', true));
+
+        $shipping = $this->modelo->getShipping_($id);
+
+        $receiver_name = $shipping[0]['receiver_name'];
+        $address = $shipping[0]['address'];
+        $destination = $shipping[0]['destination'];
+        $country = 'Chile';
+        $receiver_phone = $shipping[0]['receiver_phone'];
+
+        $data =     [
+                        'receiver_name' => $receiver_name,
+                        'address' => $address,
+                        'destination' => $destination,
+                        'country' => $country,
+                        'receiver_phone' => $receiver_phone
+                    ];
+        
+        echo json_encode($data);
+    }
 }
