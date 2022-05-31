@@ -303,6 +303,7 @@ class CShipping extends CI_Controller
         $total_amount = trim($this->input->post('total_amount', true));
         $delivery_name = trim($this->input->post('delivery_name', true));
         $shipping_type = trim($this->input->post('shipping_type', true));
+        $shipping_date = trim($this->input->post('shipping_date', true));
         $origin = trim($this->input->post('origin', true));
         $destination = trim($this->input->post('destination', true));
         $companies_id = $this->session->userdata("companies_id");
@@ -378,6 +379,7 @@ class CShipping extends CI_Controller
 
             $data_string = json_encode($orders[0]);
             echo $data_string;
+            //parece que falta identificador de la orden https://flash-api.quadminds.com/api/v2/orders/{id}  <---- segun api
             $endpoint = sprintf("%s/%s", 'https://flash-api.quadminds.com/api/v2/orders', $quadmins_code);
             $curl = curl_init();
             echo $endpoint;
