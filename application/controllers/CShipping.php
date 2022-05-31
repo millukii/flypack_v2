@@ -379,8 +379,9 @@ class CShipping extends CI_Controller
 
             $data_string = json_encode($orders[0]);
             echo $data_string;
-            //parece que falta identificador de la orden https://flash-api.quadminds.com/api/v2/orders/{id}  <---- segun api
+            
             $endpoint = sprintf("%s/%s", 'https://flash-api.quadminds.com/api/v2/orders', $quadmins_code);
+            //parece que falta inicializar el curl_init(); con la url
             $curl = curl_init();
             echo $endpoint;
 
