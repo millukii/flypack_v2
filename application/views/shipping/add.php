@@ -170,12 +170,6 @@
         });
     }
 
-
-
-
-
-
-
 	function totalAmount()
 	{
 		let origin = document.getElementById('select-origin');
@@ -220,12 +214,16 @@
 
 		$('#input-address').on('keyup', function() {
       console.log($(this).val());
-      getDataPoi(1,$(this).val());
+       if ($(this).val().length > 3) {
+        getDataPoi(1,$(this).val());
+       }
 		});
 
     $('#input-receiver-name').on('keyup', function() {
       console.log($(this).val());
-      getDataPoi(2, $(this).val());
+      if ($(this).val().length > 3) {
+        getDataPoi(2, $(this).val());
+      }
 
 		});
 

@@ -70,28 +70,7 @@ class CShipping extends CI_Controller
             $res = 1;
         }
 
-        // agregar get a points de quadmins
-        $curl = curl_init('https://flash-api.quadminds.com/api/v2/pois/search?limit=100&offset=0');
-
-        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
-
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-            'Content-Type: application/json',
-            'x-saas-apikey:  SzaORv8XtExcO1zVX3jcWGsOvyGwsl3y46sOLnmn')
-        );
-
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // Make it so the data coming back is put into a string
-
-        // Send the request
-        $result = curl_exec($curl);
-
-        // Free up the resources $curl is using
-        curl_close($curl);
-
-        $points = json_decode($result, true);
-
         $data = array(
-            'points' => $points['data'],
             'delivery_options' => $deliveryOptions,
             'user_company' => $userCompany,
             'communes' => $communes,
@@ -378,14 +357,52 @@ class CShipping extends CI_Controller
             array_push($orders, $quadminOrder);
 
             $data_string = json_encode($orders[0]);
-            echo $data_string;
-            
             $endpoint = sprintf("%s/%s", 'https://flash-api.quadminds.com/api/v2/orders', $quadmins_code);
-            //parece que falta inicializar el curl_init(); con la url
-            $curl = curl_init();
-            echo $endpoint;
+
+            $curl = curl_init($endpoint);
 
             curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PATCH");
+
+            curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($data_string),
+                'x-saas-apikey: ' . 'SzaORv8XtExcO1zVX3jcWGsOvyGwsl3y46sOLnmn'));
+
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // Make it so the data coming back is put into a string
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string); // Insert the data
+            // Send the request
+            $result = curl_exec($curl);
+            $array = json_decode($result, true);
+            // Free up the resources $curl is using
+            curl_close($curl);
+            if ($array != null) {
+                $date_time = date('Y-m-d H:i:s');
+                $data = array(
+                    'quadmins_code' => $array['data']['_id'],
+                    'modified' => $date_time,
+                );
+
+                $orderMeasures = $array['data']['orderMeasures'];
+                $orderMeasureTotalAmountId = null;
+
+                foreach ($orderMeasures as $value) {
+                    if ($value['constraintId'] == 7) {
+                        $orderMeasureTotalAmountId = $value['_id'];
+                    }
+                }
+                $this->modelo->editShippingByOrderNro($data, $order_nro);
+
+            }
+            $measure_endpoint = sprintf("%s/%s", 'https://flash-api.quadminds.com/api/v2/order-measures', $orderMeasureTotalAmountId);
+            $curl = curl_init($measure_endpoint);
+
+            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PATCH");
+
+            $measure = array(
+                'constraintId' => 7,
+                'value' => (int) $total_amount,
+            );
+            $data_string = json_encode($measure);
 
             curl_setopt($curl, CURLOPT_HTTPHEADER, array(
                 'Content-Type: application/json',
@@ -397,23 +414,11 @@ class CShipping extends CI_Controller
 
             // Send the request
             $result = curl_exec($curl);
-            print_r($result);
             $array = json_decode($result, true);
-            print_r($array);
             // Free up the resources $curl is using
             curl_close($curl);
 
-            if ($array != null) {
-                $date_time = date('Y-m-d H:i:s');
-                $data = array(
-                    'quadmins_code' => $array['data'][0]['_id'],
-                    'modified' => $date_time,
-                );
-                $this->modelo->editShippingByOrderNro($data, $order_nro);
-                echo '1';
-
-            }
-            //echo '0';
+            echo '1';
         } else {
             echo '0';
         }
@@ -469,19 +474,45 @@ class CShipping extends CI_Controller
         $attr = trim($this->input->post('attr', true));
         $value = trim($this->input->post('value', true));
 
-        if ($value == 1) {
+        // agregar get a points de quadmins
+        $curl = curl_init('https://flash-api.quadminds.com/api/v2/pois/search?limit=100&offset=0');
 
-        } else if ($value == 2) {
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
 
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'x-saas-apikey:  SzaORv8XtExcO1zVX3jcWGsOvyGwsl3y46sOLnmn')
+        );
+
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // Make it so the data coming back is put into a string
+
+// Send the request
+        $result = curl_exec($curl);
+
+// Free up the resources $curl is using
+        curl_close($curl);
+
+        $points = json_decode($result, true);
+        $filter_data = array();
+
+        if ($points != null) {
+
+            $data = $points['data'];
+
+            foreach ($data as $poId) {
+                if ($attr == 1) {
+                    if (strpos($poId['address'], $value) !== false) {
+                        array_push($filter_data, $poId['address']);
+                    }
+                } else if ($attr == 2) {
+                    if (strpos($poId['name'], $value) !== false) {
+                        array_push($filter_data, $poId['address']);
+                    }
+                }
+
+            }
         }
-
-        $response = $this->modelo->getRateSizeCompany($size, $companies_id);
-
-        $value = 0;
-        if (!empty($response)) {
-            $value = $response[0]['value'];
-        }
-        echo $value;
+        echo json_encode($filter_data);
 
     }
 
@@ -497,23 +528,23 @@ class CShipping extends CI_Controller
         $country = 'Chile';
         $receiver_phone = $shipping[0]['receiver_phone'];
 
-        $data =     [
-                        'receiver_name' => $receiver_name,
-                        'address' => $address,
-                        'destination' => $destination,
-                        'country' => $country,
-                        'receiver_phone' => $receiver_phone,
-                        'pathPDF' => ''
-                    ];
+        $data = [
+            'receiver_name' => $receiver_name,
+            'address' => $address,
+            'destination' => $destination,
+            'country' => $country,
+            'receiver_phone' => $receiver_phone,
+            'pathPDF' => '',
+        ];
 
-        $data['pathPDF'] = base_url().$this->createPDF($data);
-        
+        $data['pathPDF'] = base_url() . $this->createPDF($data);
+
         echo json_encode($data, JSON_UNESCAPED_SLASHES);
     }
 
     private function createPDF($data)
     {
-    
+
         $path = 'files/example.pdf';
         /*
         'receiver_name' => $receiver_name,
@@ -521,7 +552,7 @@ class CShipping extends CI_Controller
         'destination' => $destination,
         'country' => $country,
         'receiver_phone' => $receiver_phone,
-        */
+         */
         return $path;
     }
 
@@ -531,61 +562,59 @@ class CShipping extends CI_Controller
     }
 
     public function GenerateAllPeople()
-	{
+    {
         //ejemplo
-		require_once('./application/libraries/barcode.php');
+        require_once './application/libraries/barcode.php';
 
-		$this->db->select('rut, dv, name, lastname');
-		$this->db->from('people');
-		$this->db->where('people_states_id', 1);
-		$this->db->order_by('rut','asc');
-		$res = $this->db->get()->result_array();
-		$array_barcodes = array();
-		//END DB
-		if(!empty($res))
-		{
-			foreach($res as $r)
-			{
-				barcode('./assets/barcodes/'.$r['rut'].'.png', $r['rut'], 20, 'horizontal', 'code128', true);
-				$temp = array(
-					'image' => './assets/barcodes/'.$r['rut'].'.png',
-					'name' => $r['name'],
-					'lastname' => $r['lastname']
-				);
-				array_push($array_barcodes, $temp);
-			}
-		}
+        $this->db->select('rut, dv, name, lastname');
+        $this->db->from('people');
+        $this->db->where('people_states_id', 1);
+        $this->db->order_by('rut', 'asc');
+        $res = $this->db->get()->result_array();
+        $array_barcodes = array();
+        //END DB
+        if (!empty($res)) {
+            foreach ($res as $r) {
+                barcode('./assets/barcodes/' . $r['rut'] . '.png', $r['rut'], 20, 'horizontal', 'code128', true);
+                $temp = array(
+                    'image' => './assets/barcodes/' . $r['rut'] . '.png',
+                    'name' => $r['name'],
+                    'lastname' => $r['lastname'],
+                );
+                array_push($array_barcodes, $temp);
+            }
+        }
 
-		$data = array('title' => 'Listado completo de personas', 'datos' => $array_barcodes);
-		$html = $this->load->view('barcode_generator/masivePeople.php', $data, true);
-		$this->load->library('M_pdf');
-		$this->m_pdf->pdf->WriteHTML($html);
-		$filename = "codigos_barra.pdf";
-		$this->m_pdf->pdf->Output($filename, "I");
-	}
+        $data = array('title' => 'Listado completo de personas', 'datos' => $array_barcodes);
+        $html = $this->load->view('barcode_generator/masivePeople.php', $data, true);
+        $this->load->library('M_pdf');
+        $this->m_pdf->pdf->WriteHTML($html);
+        $filename = "codigos_barra.pdf";
+        $this->m_pdf->pdf->Output($filename, "I");
+    }
 
     public function emitQRCode()
-	{
+    {
         //ejemplo
-		/*
-		$rut = trim($this->input->post('rut', TRUE));
-		$dv = trim($this->input->post('dv', TRUE));
+        /*
+    $rut = trim($this->input->post('rut', TRUE));
+    $dv = trim($this->input->post('dv', TRUE));
 
-		$this->load->library('ciqrcode');
+    $this->load->library('ciqrcode');
 
-		 //hacemos configuraciones
-        $params['data'] = $rut;
-        $params['level'] = 'H';
-        $params['size'] = 10;
-        //$params['framSize'] = 3; //tamaño en blanco
+    //hacemos configuraciones
+    $params['data'] = $rut;
+    $params['level'] = 'H';
+    $params['size'] = 10;
+    //$params['framSize'] = 3; //tamaño en blanco
 
-        //decimos el directorio a guardar el codigo qr, en este 
-        //caso una carpeta en la raíz llamada qr_code
-        $params['savename'] = FCPATH . "assets/qr_codes/qr_".$rut.".png";
-        //generamos el código qr
-        $this->ciqrcode->generate($params);
-        chmod( FCPATH . "assets/qr_codes/qr_".$rut.".png", 0777);
-        echo "assets/qr_codes/qr_".$rut.".png";
-        */
-	}
+    //decimos el directorio a guardar el codigo qr, en este
+    //caso una carpeta en la raíz llamada qr_code
+    $params['savename'] = FCPATH . "assets/qr_codes/qr_".$rut.".png";
+    //generamos el código qr
+    $this->ciqrcode->generate($params);
+    chmod( FCPATH . "assets/qr_codes/qr_".$rut.".png", 0777);
+    echo "assets/qr_codes/qr_".$rut.".png";
+     */
+    }
 }
