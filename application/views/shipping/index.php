@@ -56,7 +56,10 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>Cargando...</p>
+        <iframe id="iframe-etiqueta" style="height: 200px;width: 100%;" src="#" title="Etiqueta"></iframe>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success">Imprimir</button>
       </div>
     </div>
   </div>
@@ -242,15 +245,18 @@
 
     function generateLabel(id)
     {
-      $('#modalLabel').modal('show');
+      
       
       $.ajax({
         url: site_url + '/CShipping/getQRLabel',
         type: 'post',
         data: {id: id},
+        dataType: 'json',
         success: function(response)
         {
           console.log(response);
+          $('#iframe-etiqueta').attr('src',response['pathPDF']);
+          $('#modalLabel').modal('show');
         }
       });
       
