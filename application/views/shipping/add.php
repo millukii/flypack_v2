@@ -198,11 +198,18 @@
           	dataType: 'json',
           	success: function(response){
             	pois = response;
-				console.log(response);
+				      console.log(response[0]);
           	}
         });
 	}
 
+  function setDataFromPoi(){
+    document.getElementById('input-receiver-phone').value = pois[0]['phoneNumber'];
+    document.getElementById('input-receiver-mail').value=pois[0]['email'];
+    document.getElementById('input-observation').value=pois[0]['poiDeliveryComments'];
+    document.getElementById('input-receiver-name').value=pois[0]['name'];
+    document.getElementById('input-address').value=pois[0]['address'];
+  }
 	function totalAmount()
 	{
 		let origin = document.getElementById('select-origin');
@@ -242,17 +249,21 @@
 	$(document).ready(function()
 	{
      	totalAmount();
-		getAllPois();
+		  getAllPois();
 
 		$('#input-address').on('keyup', function() {
 			if ($(this).val().length > 3) {
 				getDataPoi(1,$(this).val());
+        setDataFromPoi();
+
 			}
 		});
 
     	$('#input-receiver-name').on('keyup', function() {
 			if ($(this).val().length > 3) {
 				getDataPoi(2, $(this).val());
+        setDataFromPoi();
+
 			}
 		});
 
