@@ -89,6 +89,8 @@
 			echo $order_nro;
 		?>
 	</p>
+    <br>
+    <img src="<?php echo base_url();?>files/qrs/qr_<?php echo $order_nro;?>.png"/>
 </center>
 </body>
 </html>

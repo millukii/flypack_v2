@@ -547,7 +547,8 @@ class CShipping extends CI_Controller
 
     private function createPDF($data)
     {
-        $path = 'files/'.$this->session->userdata('rut').'/'.date('Ym');
+        //PDF
+        $path = 'files/'.$this->session->userdata('rut').'/'.date('Ym').'/';
 
         if(!file_exists($path))
             mkdir($path, 0777, true);
@@ -556,70 +557,34 @@ class CShipping extends CI_Controller
         $this->load->library('M_pdf');
         $this->m_pdf->pdf->WriteHTML($html);
         $filename = $data['order_nro'].'.pdf';
-        $this->m_pdf->pdf->save($path.$filename, "I");
-
+        $this->m_pdf->pdf->Output($path.$filename, "F");
+        //QR
+        $this->createQR($data['order_nro']);
         return $path.$filename;
     }
 
-    private function createQR()
+    private function createQR($code)
     {
+        $this->load->library('ciqrcode');
 
+        //hacemos configuraciones
+        $params['data'] = base_url().'index.php/CShipping/readQR?qr='.$code;
+        $params['level'] = 'H';
+        $params['size'] = 10;
+        //$params['framSize'] = 3; //tamaño en blanco
+
+        //decimos el directorio a guardar el codigo qr, en este
+        //caso una carpeta en la raíz llamada qr_code
+        $params['savename'] = FCPATH . "files/qrs/qr_".$code.".png";
+        //generamos el código qr
+        $this->ciqrcode->generate($params);
+        chmod( FCPATH . "files/qrs/qr_".$code.".png", 0777);
+        //echo "files/qrs/qr_".$code.".png";
     }
 
-    public function GenerateAllPeople()
+    public function readQR()
     {
-        //ejemplo
-        require_once './application/libraries/barcode.php';
-
-        $this->db->select('rut, dv, name, lastname');
-        $this->db->from('people');
-        $this->db->where('people_states_id', 1);
-        $this->db->order_by('rut', 'asc');
-        $res = $this->db->get()->result_array();
-        $array_barcodes = array();
-        //END DB
-        if (!empty($res)) {
-            foreach ($res as $r) {
-                barcode('./assets/barcodes/' . $r['rut'] . '.png', $r['rut'], 20, 'horizontal', 'code128', true);
-                $temp = array(
-                    'image' => './assets/barcodes/' . $r['rut'] . '.png',
-                    'name' => $r['name'],
-                    'lastname' => $r['lastname'],
-                );
-                array_push($array_barcodes, $temp);
-            }
-        }
-
-        $data = array('title' => 'Listado completo de personas', 'datos' => $array_barcodes);
-        $html = $this->load->view('barcode_generator/masivePeople.php', $data, true);
-        $this->load->library('M_pdf');
-        $this->m_pdf->pdf->WriteHTML($html);
-        $filename = "codigos_barra.pdf";
-        $this->m_pdf->pdf->Output($filename, "I");
-    }
-
-    public function emitQRCode()
-    {
-        //ejemplo
-        /*
-    $rut = trim($this->input->post('rut', TRUE));
-    $dv = trim($this->input->post('dv', TRUE));
-
-    $this->load->library('ciqrcode');
-
-    //hacemos configuraciones
-    $params['data'] = $rut;
-    $params['level'] = 'H';
-    $params['size'] = 10;
-    //$params['framSize'] = 3; //tamaño en blanco
-
-    //decimos el directorio a guardar el codigo qr, en este
-    //caso una carpeta en la raíz llamada qr_code
-    $params['savename'] = FCPATH . "assets/qr_codes/qr_".$rut.".png";
-    //generamos el código qr
-    $this->ciqrcode->generate($params);
-    chmod( FCPATH . "assets/qr_codes/qr_".$rut.".png", 0777);
-    echo "assets/qr_codes/qr_".$rut.".png";
-     */
+        $qr = trim($this->input->get('qr', true));
+        echo $qr;
     }
 }

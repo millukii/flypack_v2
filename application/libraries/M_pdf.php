@@ -8,7 +8,7 @@ class M_pdf {
 public $param;
 public $pdf;
 
-	public function __construct($param = "'utf-8', 'c', 'A4-L'")
+	public function __construct($param = "'utf-8', 'c', 'A5-L'")
 	{
 	    $this->param =$param;
 	    $this->pdf = new mPDF($this->param);
