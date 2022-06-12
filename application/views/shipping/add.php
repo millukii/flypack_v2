@@ -61,13 +61,15 @@
                     			  				<div class="form-group">
                     			  					<label for="address" class="col-sm-2 control-label">Dirección</label>
                     			  					<div class="col-sm-10">
-                    			  						<input type="text" class="form-control" name="input-address" id="input-address">
-                    			  					</div>
+                    			  						<input type="text" class="form-control" name="input-address" id="input-address" list="list-address">
+														<datalist id="list-address"></datalist>
+													</div>
                     			  				</div>
                                      <div class="form-group">
                     			  					<label for="receiver-name" class="col-sm-2 control-label">Receptor</label>
                     			  					<div class="col-sm-10">
-                    			  						<input type="text" class="form-control" name="input-receiver-name" id="input-receiver-name">
+                    			  						<input type="text" class="form-control" name="input-receiver-name" id="input-receiver-name" list="list-name">
+														  <datalist id="list-name"></datalist>
                     			  					</div>
                     			  				</div>
 
@@ -149,82 +151,109 @@
 <?php $this->view('footer');?>
 
 <script>
+
 	var cuerpo;
 	var dv;
+	var pois;
 
-  function getDataPoi(attr, ev)	  {
+	function getDataPoi(attr, ev){
       console.log(attr, ev);
-      //address
-      $.ajax({
-         url: site_url + '/CShipping/getPoiData',
-          type: 'post',
-          data: {attr:attr, value: ev},
-          dataType: 'json',
-          success: function(response){
-            let poiID = response.poi;
-            let address = response.address;
-            let comuna = response.commune;
-            let  receiver_name = response.receiver_name;
-          }
-
-        });
+	  //attr => 1 = address
+	  //atte => 2 = receiver_name
+	  if(attr == 1)
+	  {
+		let result = pois.filter(poi => poi.address.toLowerCase().includes(ev.toLowerCase()) );
+		let html_option = '';
+		if(result.length > 0)
+		{
+			for(let i=0; i<result.length; i++)
+			{
+				html_option += '<option>'+result[i]['address']+'</option>';
+			}
+		}
+		$('#list-address').html(html_option);
+		console.log(result);
+	  }
+	  else if(attr == 2)
+	  {
+		let result = pois.filter(poi => poi.name.toLowerCase().includes(ev.toLowerCase()) );
+		let html_option = '';
+		if(result.length > 0)
+		{
+			for(let i=0; i<result.length; i++)
+			{
+				html_option += '<option>'+result[i]['name']+'</option>';
+			}
+		}
+		$('#list-name').html(html_option);
+		console.log(result);
+	  }
     }
+
+	function getAllPois()
+	{
+		$.ajax({
+        	url: site_url + '/CShipping/getAllPoiData',
+          	type: 'post',
+          	dataType: 'json',
+          	success: function(response){
+            	pois = response;
+				console.log(response);
+          	}
+        });
+	}
 
 	function totalAmount()
 	{
 		let origin = document.getElementById('select-origin');
 		let originSelectedText = origin.options[origin.selectedIndex].text;
 		let destination = document.getElementById('select-destination');
-    let size = document.getElementById('select-shipping-type');
-    let sizeSelectedText = size.options[size.selectedIndex].text;
+    	let size = document.getElementById('select-shipping-type');
+    	let sizeSelectedText = size.options[size.selectedIndex].text;
 		let destinationSelectedText = destination.options[destination.selectedIndex].text;
 
-    let typeRate = "<?php print($type_rate);?>";
-    if (typeRate == "1"){
-		$.ajax({
-			url: site_url + '/CShipping/getRateFromToCompany',
-			type: 'post',
-			data: {from: originSelectedText, to: destinationSelectedText},
-			success: function(data)
-			{
-				$('#input-total-amount').val(data);
-			}
-		});
-    }
-    if (typeRate == "2") {
-		$.ajax({
-			url: site_url + '/CShipping/getRateSizeCompany',
-			type: 'post',
-			data: {size: sizeSelectedText},
-			success: function(data)
-			{
-				$('#input-total-amount').val(data);
-			}
-		});
-  }
+    	let typeRate = "<?php print($type_rate);?>";
 
+		if (typeRate == "1"){
+			$.ajax({
+				url: site_url + '/CShipping/getRateFromToCompany',
+				type: 'post',
+				data: {from: originSelectedText, to: destinationSelectedText},
+				success: function(data)
+				{
+					$('#input-total-amount').val(data);
+				}
+			});
+		}
 
+		if (typeRate == "2") {
+			$.ajax({
+				url: site_url + '/CShipping/getRateSizeCompany',
+				type: 'post',
+				data: {size: sizeSelectedText},
+				success: function(data)
+				{
+					$('#input-total-amount').val(data);
+				}
+			});
+		}
     }
 
 	$(document).ready(function()
 	{
      	totalAmount();
-
-
+		getAllPois();
 
 		$('#input-address').on('keyup', function() {
-      console.log($(this).val());
-       if ($(this).val().length > 3) {
-        getDataPoi(1,$(this).val());
-       }
+			if ($(this).val().length > 3) {
+				getDataPoi(1,$(this).val());
+			}
 		});
 
-    $('#input-receiver-name').on('keyup', function() {
-      console.log($(this).val());
-      if ($(this).val().length > 3) {
-        getDataPoi(2, $(this).val());
-      }
-
+    	$('#input-receiver-name').on('keyup', function() {
+			if ($(this).val().length > 3) {
+				getDataPoi(2, $(this).val());
+			}
 		});
 
 		$('select.totalAmount').on('change', function() {

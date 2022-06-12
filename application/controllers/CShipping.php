@@ -469,6 +469,7 @@ class CShipping extends CI_Controller
         echo $value;
 
     }
+
     public function getPoiData()
     {
         $attr = trim($this->input->post('attr', true));
@@ -486,10 +487,10 @@ class CShipping extends CI_Controller
 
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // Make it so the data coming back is put into a string
 
-// Send the request
+        // Send the request
         $result = curl_exec($curl);
 
-// Free up the resources $curl is using
+        // Free up the resources $curl is using
         curl_close($curl);
 
         $points = json_decode($result, true);
@@ -501,19 +502,49 @@ class CShipping extends CI_Controller
 
             foreach ($data as $poId) {
                 if ($attr == 1) {
-                    if (strpos($poId['address'], $value) !== false) {
-                        array_push($filter_data, $poId['address']);
+                    if (strpos(strtolower($poId['address']), strtolower($value)) !== false) {
+                        //array_push($filter_data, $poId['address']);
+                        array_push($filter_data, $poId);
                     }
                 } else if ($attr == 2) {
-                    if (strpos($poId['name'], $value) !== false) {
-                        array_push($filter_data, $poId['address']);
+                    if (strpos(strtolower($poId['name']), strtolower($value)) !== false) {
+                        //array_push($filter_data, $poId['address']);
+                        array_push($filter_data, $poId);
                     }
                 }
 
             }
         }
         echo json_encode($filter_data);
+    }
 
+    public function getAllPoiData()
+    {
+        $attr = trim($this->input->post('attr', true));
+        $value = trim($this->input->post('value', true));
+
+        // agregar get a points de quadmins
+        $curl = curl_init('https://flash-api.quadminds.com/api/v2/pois/search?limit=10000&offset=0');
+
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
+
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+            'Content-Type: application/json',
+            'x-saas-apikey:  SzaORv8XtExcO1zVX3jcWGsOvyGwsl3y46sOLnmn')
+        );
+
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // Make it so the data coming back is put into a string
+
+        // Send the request
+        $result = curl_exec($curl);
+
+        // Free up the resources $curl is using
+        curl_close($curl);
+
+        $points = json_decode($result, true);
+        
+        $data = $points['data'];
+        echo json_encode($data);
     }
 
     public function getQRLabel()
