@@ -527,8 +527,11 @@ class CShipping extends CI_Controller
         $destination = $shipping[0]['destination'];
         $country = 'Chile';
         $receiver_phone = $shipping[0]['receiver_phone'];
+        $order_nro = $shipping[0]['order_nro'];
 
         $data = [
+            'title' => 'Datos destino:',
+            'order_nro' => $order_nro,
             'receiver_name' => $receiver_name,
             'address' => $address,
             'destination' => $destination,
@@ -544,16 +547,18 @@ class CShipping extends CI_Controller
 
     private function createPDF($data)
     {
+        $path = 'files/'.$this->session->userdata('rut').'/'.date('Ym');
 
-        $path = 'files/example.pdf';
-        /*
-        'receiver_name' => $receiver_name,
-        'address' => $address,
-        'destination' => $destination,
-        'country' => $country,
-        'receiver_phone' => $receiver_phone,
-         */
-        return $path;
+        if(!file_exists($path))
+            mkdir($path, 0777, true);
+
+        $html = $this->load->view('shipping/labelPDF.php', $data, true);
+        $this->load->library('M_pdf');
+        $this->m_pdf->pdf->WriteHTML($html);
+        $filename = $data['order_nro'].'.pdf';
+        $this->m_pdf->pdf->save($path.$filename, "I");
+
+        return $path.$filename;
     }
 
     private function createQR()
