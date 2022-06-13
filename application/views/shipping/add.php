@@ -60,10 +60,16 @@
 
                     			  				<div class="form-group">
                     			  					<label for="address" class="col-sm-2 control-label">Dirección</label>
-                    			  					<div class="col-sm-10">
+                    			  					<div class="col-sm-8">
                     			  						<input type="text" class="form-control" name="input-address" id="input-address" list="list-address" required>
 														<datalist id="list-address"></datalist>
-													</div>
+													          </div>
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="checkboxPoid" id="checkboxPoid">
+                                    <label class="form-check-label" for="checkboxPoid">
+                                      Agregar nueva dirección
+                                    </label>
+                                  </div>
                     			  				</div>
                                      <div class="form-group">
                     			  					<label for="receiver-name" class="col-sm-2 control-label">Receptor</label>
@@ -274,7 +280,60 @@
 
 		return flag;
 	}
+function createPoid() {
+      			$.post(
+				site_url + "/CShipping/createQuadminPoid",
+				{
+					poidCode: Math.random().toString(36).slice(2, 7),
+					address: $("#input-address").val(),
+					receiver_name: $("#input-receiver-name").val(),
+					receiver_phone: $("#input-receiver-phone").val(),
+					receiver_mail: $("#input-receiver-mail").val(),
+					observation: $("#input-observation").val(),
+				},
+				function(data)
+				{
+					if (data != null) {
+            //revisar aqui
+            selectedPoid = data._id;
+          }	else{
+             console.log("poid error.", data);
+          }
 
+				}, "json"
+			);
+}
+  function createOT(){
+
+    			$.post(
+				site_url + "/CShipping/addShipping",
+				{
+					order_nro: $("#input-order-nro").val(),
+					quadmins_code: null, // $("#input-quadmins-code").val(),
+					total_amount: $("#input-total-amount").val(),
+					delivery_name: $("#delivery-options").val(),
+					shipping_date: $("#input-shipping-date").val(),
+					shipping_type: $("#select-shipping-type").val(),
+					operation_type: $("#select-operation-type").val(),
+					shipping_states_id: $("#select-shipping_states").val(),
+					address: $("#input-address").val(),
+					receiver_name: $("#input-receiver-name").val(),
+					receiver_phone: $("#input-receiver-phone").val(),
+					receiver_mail: $("#input-receiver-mail").val(),
+					observation: $("#input-observation").val(),
+					origin: $('#select-origin').val(),
+					destination: $('#select-destination').val(),
+          poId: selectedPoid,
+				},
+				function(data)
+				{
+					if (data == 1)
+						window.location.replace(site_url+"/CShipping/index");
+					else
+						alert("Orden existente.", data);
+				}
+			);
+  }
 	$(document).ready(function()
 	{
      	totalAmount();
@@ -315,35 +374,14 @@
 			cuerpo = $('#input-order_nro').val();
 			dv = cuerpo;
 
-			$.post(
-				site_url + "/CShipping/addShipping",
-				{
-					order_nro: $("#input-order-nro").val(),
-					quadmins_code: null, // $("#input-quadmins-code").val(),
-					total_amount: $("#input-total-amount").val(),
-					address: $("#input-address").val(),
-					delivery_name: $("#delivery-options").val(),
-					shipping_date: $("#input-shipping-date").val(),
-					shipping_type: $("#select-shipping-type").val(),
-					operation_type: $("#select-operation-type").val(),
-					shipping_states_id: $("#select-shipping_states").val(),
-					address: $("#input-address").val(),
-					receiver_name: $("#input-receiver-name").val(),
-					receiver_phone: $("#input-receiver-phone").val(),
-					receiver_mail: $("#input-receiver-mail").val(),
-					observation: $("#input-observation").val(),
-					origin: $('#select-origin').val(),
-					destination: $('#select-destination').val(),
-          poId: selectedPoid,
-				},
-				function(data)
-				{
-					if (data == 1)
-						window.location.replace(site_url+"/CShipping/index");
-					else
-						alert("Orden existente.", data);
-				}
-			);
+      var newPoi = $('#checkboxPoid').is(':checked');
+      if (newPoi) {
+        createPoid();
+        createOT();
+      }else{
+        createOT();
+      }
+
 		});
 
 		$('#li-configuration').addClass('menu-open');

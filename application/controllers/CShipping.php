@@ -261,7 +261,6 @@ class CShipping extends CI_Controller
             $array = json_decode($result, true);
             // Free up the resources $curl is using
             curl_close($curl);
-            print_r($array);
             $date_time = date('Y-m-d H:i:s');
             $data = array(
                 'quadmins_code' => $array['data'][0]['_id'],
@@ -515,6 +514,60 @@ class CShipping extends CI_Controller
             }
         }
         echo json_encode($filter_data);
+    }
+
+    public function createQuadminPoid()
+    {
+        $poidCode = trim($this->input->post('poidCode', true));
+        $address = trim($this->input->post('address', true));
+        $receiver_name = trim($this->input->post('receiver_name', true));
+        $receiver_phone = trim($this->input->post('receiver_phone', true));
+        $receiver_mail = trim($this->input->post('receiver_mail', true));
+
+        $observation = trim($this->input->post('observation', true));
+        $quadminOrder = array(
+            'code' => $poidCode,
+            'poiType' => 'SIN_TIPO',
+            'name' => $receiver_name,
+            'email' => $receiver_mail,
+            'enabled' => true,
+            'phoneNumber' => $receiver_phone,
+            'poiDeliveryComments' => $observation,
+            'originalAddress' => $address,
+            'longAddress' => $address,
+            'visitingFrequency' => "weekly",
+        );
+        $orders = [];
+        array_push($orders, $quadminOrder);
+
+        $data_string = json_encode($orders);
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://flash-api.quadminds.com/api/v2/pois',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $data_string,
+            CURLOPT_HTTPHEADER => array(
+                'Accept: application/json',
+                'Content-Type: application/json',
+                'x-saas-apikey: SzaORv8XtExcO1zVX3jcWGsOvyGwsl3y46sOLnmn',
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        $points = json_decode($response, true);
+
+        $data = $points['data'][0];
+        echo json_encode($data);
+
     }
 
     public function getAllPoiData()
