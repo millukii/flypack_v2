@@ -251,7 +251,7 @@
 				$('#input-receiver-mail').val(poiObject.email);
 				$('#input-receiver-name').val(poiObject.name);
 				$('#input-observation').val(poiObject.poiDeliveryComments);
-         selectedPoid = poiObject._id;
+         		selectedPoid = poiObject._id;
 			}
 
 		}
@@ -273,7 +273,7 @@
 				$('#input-receiver-mail').val(poiObject.email);
 				$('#input-receiver-address').val(poiObject.address);
 				$('#input-observation').val(poiObject.poiDeliveryComments);
-        selectedPoid = poiObject._id;
+        		selectedPoid = poiObject._id;
 			}
 
 		}
@@ -294,8 +294,9 @@ function createPoid() {
 				function(data)
 				{
 					if (data != null) {
-            //revisar aqui
-            selectedPoid = data._id;
+					//revisar aqui
+					selectedPoid = data._id;
+					createOT();
           }	else{
              console.log("poid error.", data);
           }
@@ -323,7 +324,7 @@ function createPoid() {
 					observation: $("#input-observation").val(),
 					origin: $('#select-origin').val(),
 					destination: $('#select-destination').val(),
-          poId: selectedPoid,
+          			poId: selectedPoid,
 				},
 				function(data)
 				{
@@ -376,8 +377,7 @@ function createPoid() {
 
       var newPoi = $('#checkboxPoid').is(':checked');
       if (newPoi) {
-        createPoid();
-        createOT();
+		createPoid();
       }else{
         createOT();
       }
