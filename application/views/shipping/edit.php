@@ -82,28 +82,23 @@
 
                     			  				<div class="form-group">
                     			  					<label for="address" class="col-sm-2 control-label">Dirección</label>
-                    			  					<div class="col-sm-5">
-                    			  						<input type="text" class="form-control" name="input-address" id="input-address"
-                                        value="<?php if (!empty($shipping[0]['address'])) {
-    echo $shipping[0]['address'];
-}
-?>"
-                                        >
-                    			  					</div>
-                    			  				</div>
-
-                    			  				<div class="form-group">
+                    			  					<div class="col-sm-10">
+                                          <input type="text" class="form-control" name="input-address" id="input-address" list="list-address" required value="<?php if (!empty($shipping[0]['address'])) {echo $shipping[0]['address'];}?>">
+														            <datalist id="list-address"></datalist>
+												            	</div>
+                                    </div>
+                                     <div class="form-group">
                     			  					<label for="receiver-name" class="col-sm-2 control-label">Receptor</label>
-                    			  					<div class="col-sm-5">
-                    			  						<input type="text" class="form-control" name="input-receiver-name" id="input-receiver-name"
-                                        value="<?php if (!empty($shipping[0]['receiver_name'])) {
+                    			  					<div class="col-sm-10">
+                    			  						<input type="text" class="form-control" name="input-receiver-name" id="input-receiver-name" list="list-name" required
+                                                                                value="<?php if (!empty($shipping[0]['receiver_name'])) {
     echo $shipping[0]['receiver_name'];
 }
 ?>"
                                         >
+														  <datalist id="list-name"></datalist>
                     			  					</div>
                     			  				</div>
-
                     			  				<div class="form-group">
                     			  					<label for="receiver_phone" class="col-sm-2 control-label">Teléfono</label>
                     			  					<div class="col-sm-5">
@@ -203,11 +198,130 @@
 <?php $this->view('footer');?>
 
 <script>
+
 	var cuerpo;
 	var dv;
+	var pois;
+  var selectedPoid;
+
+	function getDataPoi(attr, ev){
+	  //attr => 1 = address
+	  //atte => 2 = receiver_name
+	  if(attr == 1)
+	  {
+		let result = pois.filter(poi => poi.address.toLowerCase().includes(ev.toLowerCase()) );
+		let html_option = '';
+		if(result.length > 0)
+		{
+			for(let i=0; i<result.length; i++)
+			{
+				html_option += '<option>'+result[i]['address']+'</option>';
+			}
+		}
+		$('#list-address').html(html_option);
+	  }
+	  else if(attr == 2)
+	  {
+		let result = pois.filter(poi => poi.name.toLowerCase().includes(ev.toLowerCase()) );
+		let html_option = '';
+		if(result.length > 0)
+		{
+			for(let i=0; i<result.length; i++)
+			{
+				html_option += '<option>'+result[i]['name']+'</option>';
+			}
+		}
+		$('#list-name').html(html_option);
+	  }
+    }
+
+    	function getAllPois()
+	{
+		$.ajax({
+        	url: site_url + '/CShipping/getAllPoiData',
+          	type: 'post',
+          	dataType: 'json',
+          	success: function(response){
+            	pois = response;
+          	}
+        });
+	}
+
+
+	function checkExists(inputValue) {
+
+		var x = document.getElementById("list-address");
+		var i;
+		var flag = false;
+		for (i = 0; i < x.options.length; i++) {
+			if(inputValue == x.options[i].value){
+				flag = true;
+				poiObject = pois.find(poi => poi.address.toLowerCase() ==  inputValue.toLowerCase() );
+
+				$('#input-receiver-phone').val(poiObject.phoneNumber);
+				$('#input-receiver-mail').val(poiObject.email);
+				$('#input-receiver-name').val(poiObject.name);
+				$('#input-observation').val(poiObject.poiDeliveryComments);
+         selectedPoid = poiObject._id;
+			}
+
+		}
+
+		return flag;
+	}
+
+	function checkExists2(inputValue) {
+
+		var x = document.getElementById("list-name");
+		var i;
+		var flag = false;
+		for (i = 0; i < x.options.length; i++) {
+			if(inputValue == x.options[i].value){
+				flag = true;
+				poiObject = pois.find(poi => poi.name.toLowerCase() ==  inputValue.toLowerCase() );
+
+				$('#input-receiver-phone').val(poiObject.phoneNumber);
+				$('#input-receiver-mail').val(poiObject.email);
+				$('#input-receiver-address').val(poiObject.address);
+				$('#input-observation').val(poiObject.poiDeliveryComments);
+        selectedPoid = poiObject._id;
+			}
+
+		}
+
+		return flag;
+	}
 
 	$(document).ready(function()
 	{
+
+    totalAmount();
+    getAllPois();
+
+    		$("#input-address").bind('input', function () {
+			if(checkExists( $('#input-address').val() ) === true){
+				//alert('item selected')
+			}
+		});
+
+		$("#input-receiver-name").bind('input', function () {
+			if(checkExists2( $('#input-receiver-name').val() ) === true){
+				//alert('item selected')
+			}
+		});
+
+		$('#input-address').on('keyup', function() {
+			if ($(this).val().length > 3) {
+				getDataPoi(1,$(this).val());
+			}
+		});
+
+    	$('#input-receiver-name').on('keyup', function() {
+			if ($(this).val().length > 3) {
+				getDataPoi(2, $(this).val());
+			}
+		});
+
 		$("#select-origin option").filter(function() {
 			return $(this).text() == '<?php if (!empty($shipping[0]['origin'])) {
     echo $shipping[0]['origin'];
@@ -317,7 +431,8 @@
 					receiver_name: $("#input-receiver-name").val(),
 					receiver_phone: $("#input-receiver-phone").val(),
 					receiver_mail: $("#input-receiver-mail").val(),
-					observation: $("#input-observation").val()
+					observation: $("#input-observation").val(),
+          poId: selectedPoid,
 				},
 				success: function(data)
 				{

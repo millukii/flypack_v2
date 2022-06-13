@@ -343,6 +343,7 @@ class MShipping extends CI_Model
         $this->db->where('to', $to);
         $this->db->where('companies_id', $id);
         $this->db->limit(1);
+        // echo $this->db->get_compiled_select();
         return $this->db->get()->result_array();
     }
     public function getRateSizeCompany($size, $id)

@@ -160,6 +160,7 @@ class CShipping extends CI_Controller
         $receiver_phone = trim($this->input->post('receiver_phone', true));
         $receiver_mail = trim($this->input->post('receiver_mail', true));
         $observation = trim($this->input->post('observation', true));
+        $poId = trim($this->input->post('poId', true));
 
         $origin = trim($this->input->post('origin', true));
         $destination = trim($this->input->post('destination', true));
@@ -229,7 +230,7 @@ class CShipping extends CI_Controller
 
             $quadminOrder = array(
                 'code' => $quadmins_code,
-                'poiId' => 121245261,
+                'poiId' => (int) $poId,
                 'quadmins_code' => $quadmins_code,
                 'date' => date('Y-m-d'),
                 'operation' => "PEDIDO",
@@ -242,7 +243,6 @@ class CShipping extends CI_Controller
             array_push($orders, $quadminOrder);
 
             $data_string = json_encode($orders);
-            echo $data_string;
             $curl = curl_init('https://flash-api.quadminds.com/api/v2/orders');
 
             curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
@@ -259,10 +259,9 @@ class CShipping extends CI_Controller
             $result = curl_exec($curl);
 
             $array = json_decode($result, true);
-            print_r($array);
             // Free up the resources $curl is using
             curl_close($curl);
-
+            print_r($array);
             $date_time = date('Y-m-d H:i:s');
             $data = array(
                 'quadmins_code' => $array['data'][0]['_id'],
@@ -542,7 +541,7 @@ class CShipping extends CI_Controller
         curl_close($curl);
 
         $points = json_decode($result, true);
-        
+
         $data = $points['data'];
         echo json_encode($data);
     }
@@ -579,19 +578,20 @@ class CShipping extends CI_Controller
     private function createPDF($data)
     {
         //PDF
-        $path = 'files/'.$this->session->userdata('rut').'/'.date('Ym').'/';
+        $path = 'files/' . $this->session->userdata('rut') . '/' . date('Ym') . '/';
 
-        if(!file_exists($path))
+        if (!file_exists($path)) {
             mkdir($path, 0777, true);
+        }
 
         $html = $this->load->view('shipping/labelPDF.php', $data, true);
         $this->load->library('M_pdf');
         $this->m_pdf->pdf->WriteHTML($html);
-        $filename = $data['order_nro'].'.pdf';
-        $this->m_pdf->pdf->Output($path.$filename, "F");
+        $filename = $data['order_nro'] . '.pdf';
+        $this->m_pdf->pdf->Output($path . $filename, "F");
         //QR
         $this->createQR($data['order_nro']);
-        return $path.$filename;
+        return $path . $filename;
     }
 
     private function createQR($code)
@@ -599,17 +599,17 @@ class CShipping extends CI_Controller
         $this->load->library('ciqrcode');
 
         //hacemos configuraciones
-        $params['data'] = base_url().'index.php/CShipping/readQR?qr='.$code;
+        $params['data'] = base_url() . 'index.php/CShipping/readQR?qr=' . $code;
         $params['level'] = 'H';
         $params['size'] = 10;
         //$params['framSize'] = 3; //tamaño en blanco
 
         //decimos el directorio a guardar el codigo qr, en este
         //caso una carpeta en la raíz llamada qr_code
-        $params['savename'] = FCPATH . "files/qrs/qr_".$code.".png";
+        $params['savename'] = FCPATH . "files/qrs/qr_" . $code . ".png";
         //generamos el código qr
         $this->ciqrcode->generate($params);
-        chmod( FCPATH . "files/qrs/qr_".$code.".png", 0777);
+        chmod(FCPATH . "files/qrs/qr_" . $code . ".png", 0777);
         //echo "files/qrs/qr_".$code.".png";
     }
 

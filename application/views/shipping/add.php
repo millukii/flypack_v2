@@ -149,6 +149,7 @@
 	var cuerpo;
 	var dv;
 	var pois;
+  var selectedPoid;
 
 	function getDataPoi(attr, ev){
 	  //attr => 1 = address
@@ -195,6 +196,7 @@
 
 	function totalAmount()
 	{
+
 		let origin = document.getElementById('select-origin');
 		let originSelectedText = origin.options[origin.selectedIndex].text;
 		let destination = document.getElementById('select-destination');
@@ -230,7 +232,7 @@
     }
 
 	function checkExists(inputValue) {
-		
+
 		var x = document.getElementById("list-address");
 		var i;
 		var flag = false;
@@ -238,20 +240,21 @@
 			if(inputValue == x.options[i].value){
 				flag = true;
 				poiObject = pois.find(poi => poi.address.toLowerCase() ==  inputValue.toLowerCase() );
-				
+
 				$('#input-receiver-phone').val(poiObject.phoneNumber);
 				$('#input-receiver-mail').val(poiObject.email);
 				$('#input-receiver-name').val(poiObject.name);
 				$('#input-observation').val(poiObject.poiDeliveryComments);
+         selectedPoid = poiObject._id;
 			}
-			
+
 		}
 
 		return flag;
 	}
 
 	function checkExists2(inputValue) {
-		
+
 		var x = document.getElementById("list-name");
 		var i;
 		var flag = false;
@@ -259,13 +262,14 @@
 			if(inputValue == x.options[i].value){
 				flag = true;
 				poiObject = pois.find(poi => poi.name.toLowerCase() ==  inputValue.toLowerCase() );
-				
+
 				$('#input-receiver-phone').val(poiObject.phoneNumber);
 				$('#input-receiver-mail').val(poiObject.email);
 				$('#input-receiver-address').val(poiObject.address);
 				$('#input-observation').val(poiObject.poiDeliveryComments);
+        selectedPoid = poiObject._id;
 			}
-			
+
 		}
 
 		return flag;
@@ -274,7 +278,7 @@
 	$(document).ready(function()
 	{
      	totalAmount();
-		getAllPois();
+	  	getAllPois();
 
 		$("#input-address").bind('input', function () {
 			if(checkExists( $('#input-address').val() ) === true){
@@ -329,7 +333,8 @@
 					receiver_mail: $("#input-receiver-mail").val(),
 					observation: $("#input-observation").val(),
 					origin: $('#select-origin').val(),
-					destination: $('#select-destination').val()
+					destination: $('#select-destination').val(),
+          poId: selectedPoid,
 				},
 				function(data)
 				{
