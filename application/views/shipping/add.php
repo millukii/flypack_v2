@@ -250,6 +250,27 @@
 		return flag;
 	}
 
+	function checkExists2(inputValue) {
+		
+		var x = document.getElementById("list-name");
+		var i;
+		var flag = false;
+		for (i = 0; i < x.options.length; i++) {
+			if(inputValue == x.options[i].value){
+				flag = true;
+				poiObject = pois.find(poi => poi.name.toLowerCase() ==  inputValue.toLowerCase() );
+				
+				$('#input-receiver-phone').val(poiObject.phoneNumber);
+				$('#input-receiver-mail').val(poiObject.email);
+				$('#input-receiver-address').val(poiObject.address);
+				$('#input-observation').val(poiObject.poiDeliveryComments);
+			}
+			
+		}
+
+		return flag;
+	}
+
 	$(document).ready(function()
 	{
      	totalAmount();
@@ -257,7 +278,13 @@
 
 		$("#input-address").bind('input', function () {
 			if(checkExists( $('#input-address').val() ) === true){
-				alert('item selected')
+				//alert('item selected')
+			}
+		});
+
+		$("#input-receiver-name").bind('input', function () {
+			if(checkExists2( $('#input-receiver-name').val() ) === true){
+				//alert('item selected')
 			}
 		});
 
