@@ -28,7 +28,7 @@
                     			  				<div class="form-group">
                     			  					<label for="input-shipping-date" class="col-sm-2 control-label">Fecha</label>
                     			  					<div class="col-sm-5">
-                    			  						<input type="date" class="form-control" name="input-shipping-date" id="input-shipping-date">
+                    			  						<input type="date" class="form-control" name="input-shipping-date" id="input-shipping-date" required>
                     			  					</div>
                     			  				</div>
 
@@ -151,7 +151,6 @@
 	var pois;
 
 	function getDataPoi(attr, ev){
-      console.log(attr, ev);
 	  //attr => 1 = address
 	  //atte => 2 = receiver_name
 	  if(attr == 1)
@@ -166,7 +165,6 @@
 			}
 		}
 		$('#list-address').html(html_option);
-		console.log(result);
 	  }
 	  else if(attr == 2)
 	  {
@@ -180,7 +178,6 @@
 			}
 		}
 		$('#list-name').html(html_option);
-		console.log(result);
 	  }
     }
 
@@ -192,18 +189,10 @@
           	dataType: 'json',
           	success: function(response){
             	pois = response;
-				      console.log(response[0]);
           	}
         });
 	}
 
-	function setDataFromPoi(){
-		document.getElementById('input-receiver-phone').value = pois[0]['phoneNumber'];
-		document.getElementById('input-receiver-mail').value=pois[0]['email'];
-		document.getElementById('input-observation').value=pois[0]['poiDeliveryComments'];
-		document.getElementById('input-receiver-name').value=pois[0]['name'];
-		document.getElementById('input-address').value=pois[0]['address'];
-	}
 	function totalAmount()
 	{
 		let origin = document.getElementById('select-origin');
@@ -241,7 +230,6 @@
     }
 
 	function checkExists(inputValue) {
-		console.log(inputValue);
 		
 		var x = document.getElementById("list-address");
 		var i;
@@ -276,14 +264,12 @@
 		$('#input-address').on('keyup', function() {
 			if ($(this).val().length > 3) {
 				getDataPoi(1,$(this).val());
-        		//setDataFromPoi();
 			}
 		});
 
     	$('#input-receiver-name').on('keyup', function() {
 			if ($(this).val().length > 3) {
 				getDataPoi(2, $(this).val());
-        		//setDataFromPoi();
 			}
 		});
 
