@@ -61,14 +61,14 @@
                     			  				<div class="form-group">
                     			  					<label for="address" class="col-sm-2 control-label">Dirección</label>
                     			  					<div class="col-sm-10">
-                    			  						<input type="text" class="form-control" name="input-address" id="input-address" list="list-address">
+                    			  						<input type="text" class="form-control" name="input-address" id="input-address" list="list-address" required>
 														<datalist id="list-address"></datalist>
 													</div>
                     			  				</div>
                                      <div class="form-group">
                     			  					<label for="receiver-name" class="col-sm-2 control-label">Receptor</label>
                     			  					<div class="col-sm-10">
-                    			  						<input type="text" class="form-control" name="input-receiver-name" id="input-receiver-name" list="list-name">
+                    			  						<input type="text" class="form-control" name="input-receiver-name" id="input-receiver-name" list="list-name" required>
 														  <datalist id="list-name"></datalist>
                     			  					</div>
                     			  				</div>
@@ -76,14 +76,14 @@
                     			  				<div class="form-group">
                     			  					<label for="receiver_phone" class="col-sm-2 control-label">Teléfono</label>
                     			  					<div class="col-sm-5">
-                    			  						<input type="text" class="form-control" name="input-receiver-phone" id="input-receiver-phone">
+                    			  						<input type="text" class="form-control" name="input-receiver-phone" id="input-receiver-phone" required>
                     			  					</div>
                     			  				</div>
 
                     			  			<div class="form-group">
                     			  					<label for="receiver-mail" class="col-sm-2 control-label">E-mail</label>
                     			  					<div class="col-sm-5">
-                    			  						<input type="email" class="form-control" name="input-receiver-mail" id="input-receiver-mail">
+                    			  						<input type="email" class="form-control" name="input-receiver-mail" id="input-receiver-mail" required>
                     			  					</div>
                     			  				</div>
                                      <div class="form-group">
@@ -116,13 +116,7 @@
                     			  					<label for="destination" class="col-sm-2 control-label">Destino</label>
                     			  					<div class="col-sm-5">
                     			  						<select name="select-destination" id="select-destination" class="form-control totalAmount" required >
-                    			  							<option value="<?php if (!empty($user_company[0]->communes_id)) {
-    echo $user_company[0]->communes_id;
-}
-?>"><?php if (!empty($user_company[0]->commune)) {
-    echo $user_company[0]->commune;
-}
-?></option>
+                    			  							<option value="">SELECCIONE</option>
                     			  							<?php foreach ($communes as $key) {?>
                     			  								<option value="<?php echo $key->id; ?>"><?php echo $key->commune; ?></option>
                     			  							<?php }?>
@@ -203,13 +197,13 @@
         });
 	}
 
-  function setDataFromPoi(){
-    document.getElementById('input-receiver-phone').value = pois[0]['phoneNumber'];
-    document.getElementById('input-receiver-mail').value=pois[0]['email'];
-    document.getElementById('input-observation').value=pois[0]['poiDeliveryComments'];
-    document.getElementById('input-receiver-name').value=pois[0]['name'];
-    document.getElementById('input-address').value=pois[0]['address'];
-  }
+	function setDataFromPoi(){
+		document.getElementById('input-receiver-phone').value = pois[0]['phoneNumber'];
+		document.getElementById('input-receiver-mail').value=pois[0]['email'];
+		document.getElementById('input-observation').value=pois[0]['poiDeliveryComments'];
+		document.getElementById('input-receiver-name').value=pois[0]['name'];
+		document.getElementById('input-address').value=pois[0]['address'];
+	}
 	function totalAmount()
 	{
 		let origin = document.getElementById('select-origin');
@@ -246,24 +240,50 @@
 		}
     }
 
+	function checkExists(inputValue) {
+		console.log(inputValue);
+		
+		var x = document.getElementById("list-address");
+		var i;
+		var flag = false;
+		for (i = 0; i < x.options.length; i++) {
+			if(inputValue == x.options[i].value){
+				flag = true;
+				poiObject = pois.find(poi => poi.address.toLowerCase() ==  inputValue.toLowerCase() );
+				
+				$('#input-receiver-phone').val(poiObject.phoneNumber);
+				$('#input-receiver-mail').val(poiObject.email);
+				$('#input-receiver-name').val(poiObject.name);
+				$('#input-observation').val(poiObject.poiDeliveryComments);
+			}
+			
+		}
+
+		return flag;
+	}
+
 	$(document).ready(function()
 	{
      	totalAmount();
-		  getAllPois();
+		getAllPois();
+
+		$("#input-address").bind('input', function () {
+			if(checkExists( $('#input-address').val() ) === true){
+				alert('item selected')
+			}
+		});
 
 		$('#input-address').on('keyup', function() {
 			if ($(this).val().length > 3) {
 				getDataPoi(1,$(this).val());
-        setDataFromPoi();
-
+        		//setDataFromPoi();
 			}
 		});
 
     	$('#input-receiver-name').on('keyup', function() {
 			if ($(this).val().length > 3) {
 				getDataPoi(2, $(this).val());
-        setDataFromPoi();
-
+        		//setDataFromPoi();
 			}
 		});
 
