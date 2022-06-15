@@ -639,6 +639,7 @@ class CShipping extends CI_Controller
 
         $html = $this->load->view('shipping/labelPDF.php', $data, true);
         $this->load->library('M_pdf');
+        $this->m_pdf->pdf->SetDisplayMode('fullwidth');
         $this->m_pdf->pdf->WriteHTML($html);
         $filename = $data['order_nro'] . '.pdf';
         $this->m_pdf->pdf->Output($path . $filename, "F");

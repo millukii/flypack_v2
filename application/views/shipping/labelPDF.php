@@ -15,6 +15,8 @@
         border-radius:4px;
         //background-color:#f5f5f5;
         padding-left:10px!important;
+        width:100%;
+        height: 100%;
     }
     legend
     {
@@ -43,6 +45,7 @@
   .table {
       width: 100%;
       max-width: 100%;
+      height: 100%;
       margin-bottom: 20px;
       border-spacing: 0;
       border-collapse: collapse;
@@ -52,45 +55,67 @@
       border-color: grey;
       font-size: 11px;
   }
+  .fontSizeCustom
+  {
+    font-size: 3.75vw; 
+  }
 </style>
 </head>
 <body>
 <center>
-	<h6>
-		<?php
-		if(!empty($receiver_name))
-			echo $receiver_name;
-		?>
-	</h6>
-    <p>
-		<?php
-		if(!empty($address))
-			echo $address;
-		?>
-	</p>
-    <p>
-		<?php
-		if(!empty($destination))
-			echo $destination;
-		?>
-	</p>
-    <p><b>
-		<?php
-		if(!empty($country))
-			echo $country;
-		?>
-	</b></p>
-    <p>
-		<?php
-		if(!empty($receiver_phone))
-			echo $receiver_phone;
-        echo '&nbsp;&nbsp;&nbsp;';
-        if(!empty($order_nro))
-			echo $order_nro;
-		?>
-	</p>
-    <br>
-    <img src="<?php echo base_url();?>files/qrs/qr_<?php echo $order_nro;?>.png"/>
+  <fieldset>
+    <legend>Datos:</legend>
+    <table class="table">
+      <tr>
+        <td align="center" >
+          <?php
+            if(!empty($receiver_name))
+              echo '<h3 class="fontSizeCustom">'.$receiver_name.'</h3>';
+          ?>
+        </td>
+      </tr>
+      <tr>
+        <td align="center" >
+          <?php
+            if(!empty($address))
+              echo '<b class="fontSizeCustom">'.$address.'</b>';
+          ?>
+        </td>
+      </tr>
+      <tr>
+        <td align="center" >
+          <?php
+            if(!empty($destination))
+              echo $destination;
+          ?>
+        </td>
+      </tr>
+      <tr>
+        <td align="center" >
+          <?php
+            if(!empty($country))
+              echo '<b>'.$country.'</b>';
+          ?>
+        </td>
+      </tr>
+      <tr>
+        <td align="center">
+          <?php
+            if(!empty($receiver_phone))
+              echo $receiver_phone;
+            
+            if(!empty($order_nro))
+              echo '&nbsp;&nbsp;&nbsp;#'.$order_nro;
+          ?>
+        </td>
+      </tr>
+      <tr>
+        <td align="center" >
+          <img width="150" src="<?php echo base_url();?>files/qrs/qr_<?php echo $order_nro;?>.png?<?php echo date('YmdHis')?>"/>
+        </td>
+      </tr>
+    </table>
+  </fieldset>
 </center>
 </body>
 </html>
