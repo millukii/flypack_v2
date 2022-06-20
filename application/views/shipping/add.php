@@ -271,7 +271,7 @@
 
 				$('#input-receiver-phone').val(poiObject.phoneNumber);
 				$('#input-receiver-mail').val(poiObject.email);
-				$('#input-receiver-address').val(poiObject.address);
+				$('#input-address').val(poiObject.address);
 				$('#input-observation').val(poiObject.poiDeliveryComments);
         		selectedPoid = poiObject._id;
 			}

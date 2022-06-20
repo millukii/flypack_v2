@@ -6,6 +6,7 @@ class CShipping extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        ini_set('date.timezone', 'America/Santiago');
         $this->load->model('MShipping', 'modelo');
         $this->load->model('MSession', 'modelo_session');
     }
@@ -232,7 +233,7 @@ class CShipping extends CI_Controller
                 'code' => $quadmins_code,
                 'poiId' => (int) $poId,
                 'quadmins_code' => $quadmins_code,
-                'date' => date('Y-m-d'),
+                'date' => $shipping_date,
                 'operation' => "PEDIDO",
                 'priority' => 0,
                 'totalAmount' => (int) $total_amount,
