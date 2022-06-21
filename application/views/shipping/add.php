@@ -39,7 +39,7 @@
                     			  					</div>
                     			  				</div>
 
-                                    			<div class="form-group">
+                                    <div class="form-group selectShippingType">
                     			  					<label for="shipping-type" class="col-sm-2 control-label">Tamaño</label>
                     			  					<div class="col-sm-5">
                     			  						<select name="select-shipping-type" id="select-shipping-type" class="form-control totalAmount" required>
@@ -100,10 +100,10 @@
                     			  				</div>
 
 
-                    			  				<div class="form-group">
+                    			  				<div class="form-group selectCommune">
                     			  					<label for="origin" class="col-sm-2 control-label">Origen</label>
                     			  					<div class="col-sm-5">
-                    			  						<select name="select-origin" id="select-origin" class="form-control totalAmount" required>
+                    			  						<select name="select-origin" id="select-origin" class="form-control totalAmount selectCommune" required>
                     			  							<option value="<?php if (!empty($user_company[0]->communes_id)) {
     echo $user_company[0]->communes_id;
 }
@@ -118,10 +118,10 @@
                     			  					</div>
                     			  				</div>
 
-                    			  				<div class="form-group">
+                    			  				<div class="form-group selectCommune">
                     			  					<label for="destination" class="col-sm-2 control-label">Destino</label>
                     			  					<div class="col-sm-5">
-                    			  						<select name="select-destination" id="select-destination" class="form-control totalAmount" required >
+                    			  						<select name="select-destination" id="select-destination" class="form-control totalAmount selectCommune" required >
                     			  							<option value="">SELECCIONE</option>
                     			  							<?php foreach ($communes as $key) {?>
                     			  								<option value="<?php echo $key->id; ?>"><?php echo $key->commune; ?></option>
@@ -337,9 +337,21 @@ function createPoid() {
   }
 	$(document).ready(function()
 	{
+
      	totalAmount();
 	  	getAllPois();
 
+      var typeRate = "<?php echo $type_rate; ?>";
+
+      if (typeRate == "2") {
+		      $('.selectCommune').hide();
+          $('.selectCommune').prop('required',false);
+      }
+
+      if (typeRate == "1") {
+		      $('.selectShippingType').hide();
+          $('.selectShippingType').prop('required',false);
+      }
 		$("#input-address").bind('input', function () {
 			if(checkExists( $('#input-address').val() ) === true){
 				//alert('item selected')

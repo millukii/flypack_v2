@@ -148,3 +148,5 @@
 42. CREAR EMPRESA CON SUCURSALES + USUARIO POR DEFECTO
 43. CARGAR PRECIOS POR TAMAÑO Y POR ORIGEN DESTINO
 44. Validar FLUJO AGREGAR, EDITAR, ELIMINAR ORDENES DE TRANSPORTE CON LAS NUEVAS EMPRESAS
+45. Cuando se agregue o edite una orden, hay que identificar que la empresa que esta creando o editando la orden, si el cobro es por origen destino, se oculta el campo de tamaño y si es por tamaño se ocultan los origen desitno
+
