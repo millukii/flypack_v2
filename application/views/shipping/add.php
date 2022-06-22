@@ -280,6 +280,30 @@
 
 		return flag;
 	}
+  function updatePoid(code) {
+      			$.post(
+				site_url + "/CShipping/updateQuadminPoid",
+				{
+					poidCode: code,
+					address: $("#input-address").val(),
+					receiver_name: $("#input-receiver-name").val(),
+					receiver_phone: $("#input-receiver-phone").val(),
+					receiver_mail: $("#input-receiver-mail").val(),
+					observation: $("#input-observation").val(),
+				},
+				function(data)
+				{
+          console.log("response from quadmin ", data);
+					if (data != null) {
+					//revisar aqui
+					selectedPoid = data._id;
+          }	else{
+             console.log("poid error.", data);
+          }
+
+				}, "json"
+			);
+}
 function createPoid() {
       			$.post(
 				site_url + "/CShipping/createQuadminPoid",
@@ -306,6 +330,46 @@ function createPoid() {
 }
   function createOT(){
 
+      //evaluar si es necesario actualizar la poid
+        //1. obtener los input name, address, phone, observation
+
+        var inputAddress =  $("#input-address").val();
+        var inputReceiverName = $("#input-receiver-name").val();
+        var inputReceiverPhone =  $("#input-receiver-phone").val();
+        var inputObservation = $("#input-observation").val();
+        var inputReceiverMail =  $("#input-receiver-mail").val();
+
+        //2. obtener datos del poid seleccionado
+
+        var	poiObject = pois.find(poi => poi._id ==  selectedPoid);
+        //3. comparar cambios
+
+        console.log(poiObject)
+        var updatePoi = false;
+        if (poiObject.phoneNumber != inputReceiverPhone){
+           updatePoi = true;
+        }
+
+        if (poiObject.email != inputReceiverPhone) {
+          updatePoi = true;
+        }
+
+        if (poiObject.address != inputAddress) {
+          updatePoi = true;
+        }
+
+        if (poiObject.poiDeliveryComments != inputObservation) {
+          updatePoi = true;
+        }
+        if (poiObject.name != inputReceiverName) {
+          updatePoi = true;
+        }
+
+        console.log(updatePoi);
+        //actualizar poi a travès del code
+        updatePoid(poiObject.code);
+
+
     			$.post(
 				site_url + "/CShipping/addShipping",
 				{
@@ -317,11 +381,11 @@ function createPoid() {
 					shipping_type: $("#select-shipping-type").val(),
 					operation_type: $("#select-operation-type").val(),
 					shipping_states_id: $("#select-shipping_states").val(),
-					address: $("#input-address").val(),
-					receiver_name: $("#input-receiver-name").val(),
-					receiver_phone: $("#input-receiver-phone").val(),
-					receiver_mail: $("#input-receiver-mail").val(),
-					observation: $("#input-observation").val(),
+					address: inputAddress ,
+					receiver_name: inputReceiverName,
+					receiver_phone: inputReceiverPhone,
+					receiver_mail: inputReceiverMail,
+					observation: inputObservation ,
 					origin: $('#select-origin').val(),
 					destination: $('#select-destination').val(),
           			poId: selectedPoid,

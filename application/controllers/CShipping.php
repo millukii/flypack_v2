@@ -673,4 +673,68 @@ class CShipping extends CI_Controller
         $qr = trim($this->input->get('qr', true));
         echo $qr;
     }
+
+    public function updateQuadminPoid()
+    {
+        $poidCode = trim($this->input->post('poidCode', true));
+        $address = trim($this->input->post('address', true));
+        $receiver_name = trim($this->input->post('receiver_name', true));
+        $receiver_phone = trim($this->input->post('receiver_phone', true));
+        $receiver_mail = trim($this->input->post('receiver_mail', true));
+
+        $observation = trim($this->input->post('observation', true));
+        $quadminOrder = array(
+            'code' => $poidCode,
+            'poiType' => 'SIN_TIPO',
+            'name' => $receiver_name,
+            'enabled' => true,
+            'email' => $receiver_mail,
+            'phoneNumber' => $receiver_phone,
+            'poiDeliveryComments' => $observation,
+            'originalAddress' => $address,
+            'longAddress' => $address,
+        );
+        $orders = [];
+        print_r($quadminOrder);
+        array_push($orders, $quadminOrder);
+
+        $data_string = json_encode($orders);
+        $curl = curl_init();
+
+        $endpoint = sprintf("%s/%s", "https: //flash-api.quadminds.com/api/v2/pois", $poidCode);
+
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $endpoint,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "PUT",
+            CURLOPT_POSTFIELDS => $data_string,
+            CURLOPT_HTTPHEADER => [
+                "Accept: application/json",
+                "Content-Type: application/json",
+                "x-saas-apikey: SzaORv8XtExcO1zVX3jcWGsOvyGwsl3y46sOLnmn",
+            ],
+        ]);
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        }
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        $point = json_decode($response, true);
+
+        //$data = $point['data'];
+        echo json_encode($point);
+
+    }
 }
