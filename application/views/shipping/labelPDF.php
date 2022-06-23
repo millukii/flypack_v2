@@ -20,7 +20,7 @@
     }
     legend
     {
-        font-size:14px;
+        //font-size:20px;
         font-weight:bold;
         margin-bottom: 0px; 
         width: 35%; 
@@ -53,18 +53,16 @@
       border-collapse: separate;
       border-spacing: 2px;
       border-color: grey;
-      font-size: 11px;
   }
-  .fontSizeCustom
-  {
-    font-size: 3.75vw; 
+  body{
+    font-size: 45px; 
   }
 </style>
 </head>
 <body>
 <center>
   <fieldset>
-    <legend>Datos:</legend>
+    <legend>Datos Receptor:</legend>
     <table class="table">
       <tr>
         <td align="center" >
@@ -111,7 +109,7 @@
       </tr>
       <tr>
         <td align="center" >
-          <img width="150" src="<?php echo base_url();?>files/qrs/qr_<?php echo $order_nro;?>.png?<?php echo date('YmdHis')?>"/>
+          <img width="200" src="<?php echo base_url();?>files/qrs/qr_<?php echo $order_nro;?>.png?<?php echo date('YmdHis')?>"/>
         </td>
       </tr>
     </table>
