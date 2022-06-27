@@ -671,7 +671,27 @@ class CShipping extends CI_Controller
     public function readQR()
     {
         $qr = trim($this->input->get('qr', true));
-        echo $qr;
+        
+        $this->db->select('order_nro');
+        $this->db->from('shipping');
+        $this->db->where('order_nro', $qr);
+        $this->db->limit(1);
+        $res = $this->db->get()->result_array();
+        
+        $data = [];
+
+        if(!empty($res[0]['order_nro']))
+        {   
+            $data = ['order_nro' => $qr, 'operation' => 1, 'success' => 0];
+
+            $this->load->view('header2');
+            //$this->load->view('aside');
+            $this->load->view('shipping/readQR', $data);
+        }
+        else
+        {
+            header('Location: '.base_url());
+        }
     }
 
     public function updateQuadminPoid()
@@ -736,5 +756,125 @@ class CShipping extends CI_Controller
         //$data = $point['data'];
         echo json_encode($point);
 
+    }
+
+    public function validarRetiro()
+    {
+        $user = trim($this->input->post('input-user', TRUE));
+		$password = md5(trim($this->input->post('input-password', TRUE)));
+        $order_nro = trim($this->input->post('input-order_nro', TRUE));
+
+        $success = 0;
+        $message = '';
+
+        $this->load->model('MWelcome', 'modeloWelcome');
+		$data = $this->modeloWelcome->getUserSession($user, $password);
+        $userEmail = '';
+        //obtener en quadmins, 
+        $emailCompany = '';
+        //obtener por order_nro
+        $emailReceiver = '';
+        //----------------------------------
+        $this->db->select('receiver_mail');
+        $this->db->from('shipping');
+        $this->db->where('order_nro', $order_nro);
+        $this->db->limit(1);
+        $res = $this->db->get()->result_array();
+        if(!empty($res[0]['receiver_mail']))
+            $emailReceiver = $res[0]['receiver_mail'];
+
+
+        if(!empty($data[0]['id']))
+        {
+            if(!empty($data[0]['rol_id']) && $data[0]['rol_id'] == 3)
+            {
+                $userEmail = $data[0]['email'];
+                $message = '<font color="green">Retiro generado correctamente de la orden #<b>'.$order_nro.'</b>.<br>Se han generado las notificaciones pertinentes.</font>';
+                $success = 1;
+            }
+            else
+            {
+                $message = '<font color="red">Usuario no posee el perfil para realizar esta operación.</font>';
+            }
+        }
+        else
+        {
+            $message = '<font color="red">Usuario y/o contraseña no coinciden.</font>';
+        }
+
+        if($success == 1)
+            $this->enviarCorreo('Retiro Generado','<p>Se ha generado correctamente un retiro con número de orden <b>#'.$order_nro.'</b></p>',$userEmail.','.$emailReceiver.','.$emailCompany);
+
+        $data = ['message' => $message, 'success' => $success,'operation' => 2];
+        $this->load->view('header2');
+        //$this->load->view('aside');
+        $this->load->view('shipping/readQR', $data);
+
+    }
+
+    private function enviarCorreo($asunto, $mensaje, $emails)
+    {
+        $emails = explode(',', $emails);
+        //user
+        //$userEmail = $emails[0];
+        //receiver
+        //$receiverEmail = $emails[1];
+        //company
+        //$companyEmail = $emails[2];
+        $mensaje .= '<br>';
+        $mensaje .= 'Fecha hora: '.date('d-m-Y H:i:s');
+
+        foreach($emails as $e)
+        {
+            if(!empty($e))
+            {
+                echo $e;
+            }
+        }
+
+         // Load PHPMailer library
+         $this->load->library('phpmailer_library');
+
+         // PHPMailer object
+         $mail = $this->phpmailer_library->load();
+ 
+         // SMTP configuration
+         $mail->isSMTP();
+         $mail->Host       = 'smtp.gmail.com';                           //Set the SMTP server to send through
+         $mail->SMTPAuth   = true;                                       //Enable SMTP authentication
+         $mail->Username   = 'matias@arriendatumaquina.com';                         //SMTP username
+         $mail->Password   = 'coco7095436';                                   //SMTP password
+         //$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;              //Enable implicit TLS encryption
+         $mail->SMTPSecure = 'tls';                                      //Enable implicit TLS encryption
+         $mail->Port       = 587;              
+ 
+         $mail->setFrom('matias@arriendatumaquina.com', 'Matias');
+         // Add a recipient
+         $mail->addAddress('el_mts@hotmail.com');
+ 
+         // Add cc or bcc 
+         //$mail->addCC('cc@example.com');
+         //$mail->addBCC('bcc@example.com');
+ 
+         // Email subject
+         $mail->Subject = 'Send Email via SMTP using PHPMailer in CodeIgniter';
+ 
+         // Set email format to HTML
+         $mail->isHTML(true);
+ 
+         // Email body content
+         $mailContent = "<h1>Send HTML Email using SMTP in CodeIgniter</h1>
+             <p>This is a test email sending using SMTP mail server with PHPMailer.</p>";
+         $mail->Body = $mailContent;
+ 
+         // Send email
+         if(!$mail->send()){
+             echo 'Message could not be sent.';
+             echo 'Mailer Error: ' . $mail->ErrorInfo;
+         }else{
+             echo 'Message has been sent';
+         }
+
+        //echo 'enviarCorreo';
     }
 }
