@@ -55,7 +55,7 @@
       border-color: grey;
   }
   body{
-    font-size: 45px; 
+    font-size: 40px; 
   }
 </style>
 </head>
@@ -66,6 +66,9 @@
     <table class="table">
       <tr>
         <td align="center" >
+          <img width="120" src="<?php echo base_url();?>assets/img/logo.png?<?php echo date('YmdHis')?>"/>
+        </td>
+        <td>
           <?php
             if(!empty($receiver_name))
               echo '<h3 class="fontSizeCustom">'.$receiver_name.'</h3>';
@@ -73,7 +76,7 @@
         </td>
       </tr>
       <tr>
-        <td align="center" >
+        <td align="center" colspan="2">
           <?php
             if(!empty($address))
               echo '<b class="fontSizeCustom">'.$address.'</b>';
@@ -81,7 +84,7 @@
         </td>
       </tr>
       <tr>
-        <td align="center" >
+        <td align="center" colspan="2">
           <?php
             if(!empty($destination))
               echo $destination;
@@ -89,7 +92,7 @@
         </td>
       </tr>
       <tr>
-        <td align="center" >
+        <td align="center" colspan="2">
           <?php
             if(!empty($country))
               echo '<b>'.$country.'</b>';
@@ -97,19 +100,20 @@
         </td>
       </tr>
       <tr>
-        <td align="center">
+        <td align="center" colspan="2">
+          <img width="30" src="<?php echo base_url();?>assets/img/phone.png?<?php echo date('YmdHis')?>"/>
           <?php
             if(!empty($receiver_phone))
               echo $receiver_phone;
             
             if(!empty($order_nro))
-              echo '&nbsp;&nbsp;&nbsp;#'.$order_nro;
+              echo '&nbsp;&nbsp;&nbsp;<b>#'.$order_nro.'</b>';
           ?>
         </td>
       </tr>
       <tr>
-        <td align="center" >
-          <img width="200" src="<?php echo base_url();?>files/qrs/qr_<?php echo $order_nro;?>.png?<?php echo date('YmdHis')?>"/>
+        <td align="center" colspan="2">
+          <img width="180" src="<?php echo base_url();?>files/qrs/qr_<?php echo $order_nro;?>.png?<?php echo date('YmdHis')?>"/>
         </td>
       </tr>
     </table>

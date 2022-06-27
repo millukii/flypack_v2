@@ -623,7 +623,8 @@ class CShipping extends CI_Controller
             'receiver_phone' => $receiver_phone,
             'pathPDF' => '',
         ];
-
+        //QR
+        $this->createQR($order_nro);
         $data['pathPDF'] = base_url() . $this->createPDF($data);
 
         echo json_encode($data, JSON_UNESCAPED_SLASHES);
@@ -644,8 +645,7 @@ class CShipping extends CI_Controller
         $this->m_pdf->pdf->WriteHTML($html);
         $filename = $data['order_nro'] . '.pdf';
         $this->m_pdf->pdf->Output($path . $filename, "F");
-        //QR
-        $this->createQR($data['order_nro']);
+        
         return $path . $filename;
     }
 
