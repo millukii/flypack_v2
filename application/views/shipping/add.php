@@ -25,6 +25,17 @@
                     				  	<form class="form-horizontal" id="form-shipping">
                     			  			<div class="box-body">
 
+                                   <div class="form-group">
+                    			  					<label for="select-operation-type" class="col-sm-2 control-label">Tipo de orden</label>
+                    			  					<div class="col-sm-5">
+                    			  						<select name="select-operation-type" id="select-operation-type" class="form-control " required>
+                    			  							<option value="PEDIDO">PEDIDO</option>
+                                          <option value="RETIRO">RETIRO</option>
+                    			  						</select>
+                    			  					</div>
+                    			  				</div>
+                    			  			</div>
+
                     			  				<div class="form-group">
                     			  					<label for="input-shipping-date" class="col-sm-2 control-label">Fecha</label>
                     			  					<div class="col-sm-5">
@@ -39,7 +50,14 @@
                     			  					</div>
                     			  				</div>
 
-                                    <div class="form-group selectShippingType">
+                    			  				<div class="form-group">
+                    			  					<label for="input-packages" class="col-sm-2 control-label">Cantidad de Paquetes</label>
+                    			  					<div class="col-sm-3">
+                    			  						<input type="text" class="form-control" name="input-packages" id="input-packages"  maxlength="10"  required>
+                    			  					</div>
+                    			  				</div>
+
+                                    <div class="form-group selectShippingType onlyPedido">
                     			  					<label for="shipping-type" class="col-sm-2 control-label">Tamaño</label>
                     			  					<div class="col-sm-5">
                     			  						<select name="select-shipping-type" id="select-shipping-type" class="form-control totalAmount" required>
@@ -51,7 +69,7 @@
                     			  					</div>
                     			  				</div>
 
-                                     			<div class="form-group">
+                                     			<div class="form-group onlyPedido">
                     			  					<label for="total-amount" class="col-sm-2 control-label">Total</label>
                     			  					<div class="col-sm-10">
                     			  						<input type="text" class="form-control" name="input-total-amount" id="input-total-amount" disabled>
@@ -100,7 +118,7 @@
                     			  				</div>
 
 
-                    			  				<div class="form-group selectCommune">
+                    			  				<div class="form-group selectCommune onlyPedido">
                     			  					<label for="origin" class="col-sm-2 control-label">Origen</label>
                     			  					<div class="col-sm-5">
                     			  						<select name="select-origin" id="select-origin" class="form-control totalAmount selectCommune" required>
@@ -118,7 +136,7 @@
                     			  					</div>
                     			  				</div>
 
-                    			  				<div class="form-group selectCommune">
+                    			  				<div class="form-group selectCommune onlyPedido">
                     			  					<label for="destination" class="col-sm-2 control-label">Destino</label>
                     			  					<div class="col-sm-5">
                     			  						<select name="select-destination" id="select-destination" class="form-control totalAmount selectCommune" required >
@@ -129,8 +147,6 @@
                     			  						</select>
                     			  					</div>
                     			  				</div>
-
-                    			  			</div>
                     			  			<div class="box-footer">
                     			  				<button type="submit" class="btn btn-primary pull-right">Guardar</button>
                     			  			</div>
@@ -156,6 +172,7 @@
 	var dv;
 	var pois;
   var selectedPoid;
+  let merchantId = "<?php print($user_company[0]->merchant_id);?>";
 
 	function getDataPoi(attr, ev){
 	  //attr => 1 = address
@@ -206,11 +223,10 @@
 		let origin = document.getElementById('select-origin');
 		let originSelectedText = origin.options[origin.selectedIndex].text;
 		let destination = document.getElementById('select-destination');
-    	let size = document.getElementById('select-shipping-type');
-    	let sizeSelectedText = size.options[size.selectedIndex].text;
+    let size = document.getElementById('select-shipping-type');
+    let sizeSelectedText = size.options[size.selectedIndex].text;
 		let destinationSelectedText = destination.options[destination.selectedIndex].text;
-
-    	let typeRate = "<?php print($type_rate);?>";
+    let typeRate = "<?php print($type_rate);?>";
 
 		if (typeRate == "1"){
 			$.ajax({
@@ -293,12 +309,11 @@
 				},
 				function(data)
 				{
-          console.log("response from quadmin ", data);
 					if (data != null) {
 					//revisar aqui
 					selectedPoid = data._id;
           }	else{
-             console.log("poid error.", data);
+             console.log("poid update error.", data);
           }
 
 				}, "json"
@@ -322,7 +337,7 @@ function createPoid() {
 					selectedPoid = data._id;
 					createOT();
           }	else{
-             console.log("poid error.", data);
+             console.log("poid creation error.", data);
           }
 
 				}, "json"
@@ -344,7 +359,6 @@ function createPoid() {
         var	poiObject = pois.find(poi => poi._id ==  selectedPoid);
         //3. comparar cambios
 
-        console.log(poiObject)
         var updatePoi = false;
         if (poiObject.phoneNumber != inputReceiverPhone){
            updatePoi = true;
@@ -365,10 +379,10 @@ function createPoid() {
           updatePoi = true;
         }
 
-        console.log(updatePoi);
-        //actualizar poi a travès del code
-        updatePoid(poiObject.code);
-
+        if (updatePoid){
+          //actualizar poi a travès del code
+          updatePoid(poiObject.code);
+        }
 
     			$.post(
 				site_url + "/CShipping/addShipping",
@@ -379,16 +393,17 @@ function createPoid() {
 					delivery_name: $("#delivery-options").val(),
 					shipping_date: $("#input-shipping-date").val(),
 					shipping_type: $("#select-shipping-type").val(),
-					operation_type: $("#select-operation-type").val(),
-					shipping_states_id: $("#select-shipping_states").val(),
+					operation: $("#select-operation-type").val(),
 					address: inputAddress ,
 					receiver_name: inputReceiverName,
 					receiver_phone: inputReceiverPhone,
 					receiver_mail: inputReceiverMail,
 					observation: inputObservation ,
 					origin: $('#select-origin').val(),
+          packages: $("#input-packages").val(),
 					destination: $('#select-destination').val(),
-          			poId: selectedPoid,
+          poId: selectedPoid,
+          merchant_id: merchantId,
 				},
 				function(data)
 				{
@@ -405,6 +420,14 @@ function createPoid() {
      	totalAmount();
 	  	getAllPois();
 
+    $('#select-operation-type').on('change', function() {
+					$('.onlyPedido').toggle();
+          $('.onlyPedido').prop('required',false);
+          $('#select-shipping-type').prop('required',false);
+
+		});
+
+
       var typeRate = "<?php echo $type_rate; ?>";
 
       if (typeRate == "2") {
@@ -414,7 +437,7 @@ function createPoid() {
 
       if (typeRate == "1") {
 		      $('.selectShippingType').hide();
-          $('.selectShippingType').prop('required',false);
+          $('#select-shipping-type').prop('required',false);
       }
 		$("#input-address").bind('input', function () {
 			if(checkExists( $('#input-address').val() ) === true){

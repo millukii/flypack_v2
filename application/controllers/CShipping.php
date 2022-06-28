@@ -162,6 +162,9 @@ class CShipping extends CI_Controller
         $receiver_mail = trim($this->input->post('receiver_mail', true));
         $observation = trim($this->input->post('observation', true));
         $poId = trim($this->input->post('poId', true));
+        $packages = trim($this->input->post('packages', true));
+        $operation = trim($this->input->post('operation', true));
+        $merchant_id = trim($this->input->post('merchant_id', true));
 
         $origin = trim($this->input->post('origin', true));
         $destination = trim($this->input->post('destination', true));
@@ -170,7 +173,7 @@ class CShipping extends CI_Controller
         $destinationCommuneName = $this->modelo->getCommuneName($destination);
 
         if (empty($total_amount)) {
-            $total_amount = 'N/A';
+            $total_amount = 0;
         }
 
         if (empty($quadmins_code)) {
@@ -192,6 +195,9 @@ class CShipping extends CI_Controller
         if (empty($shipping_date)) {
             $shipping_date = '';
         }
+        if (empty($merchant_id)) {
+            $merchant_id = 0;
+        }
 
         $date_time = date('Y-m-d H:i:s');
 
@@ -210,13 +216,14 @@ class CShipping extends CI_Controller
             'shipping_date' => $shipping_date,
             'delivery_name' => $delivery_name,
             'observation' => $observation,
-            'companies_id' => $companies_id,
-            'shipping_states_id' => 1,
+            'shipping_states_id' => $shipping_states_id,
             'origin' => $originCommuneName,
             'destination' => $destinationCommuneName,
             'created' => $date_time,
             'users_id' => $user,
             'companies_id' => $companies_id,
+            'packages' => $packages,
+            'operation' => $operation,
         );
 
         if ($this->modelo->addShipping($data)) {
@@ -229,18 +236,25 @@ class CShipping extends CI_Controller
 
             array_push($measures, $volume);
 
+            $merchants = array();
+            $merchant = new stdClass;
+            $merchant->_id = (int) $merchant_id;
+            array_push($merchants, $merchant);
+
             $quadminOrder = array(
                 'code' => $quadmins_code,
                 'poiId' => (int) $poId,
                 'quadmins_code' => $quadmins_code,
                 'date' => $shipping_date,
-                'operation' => "PEDIDO",
+                'operation' => $operation,
                 'priority' => 0,
                 'totalAmount' => (int) $total_amount,
                 'totalAmountWithoutTaxes' => (int) $total_amount,
                 'orderMeasures' => $measures,
+                'merchants' => $merchants,
             );
             $orders = [];
+
             array_push($orders, $quadminOrder);
 
             $data_string = json_encode($orders);
@@ -258,9 +272,14 @@ class CShipping extends CI_Controller
 
             // Send the request
             $result = curl_exec($curl);
-
+            $err = curl_error($curl);
+            if ($err) {
+                echo "cURL Error #:" . $err;
+            }
             $array = json_decode($result, true);
             // Free up the resources $curl is using
+
+            print_r($array);
             curl_close($curl);
             $date_time = date('Y-m-d H:i:s');
             $data = array(
@@ -371,6 +390,11 @@ class CShipping extends CI_Controller
             curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string); // Insert the data
             // Send the request
             $result = curl_exec($curl);
+            $err = curl_error($curl);
+            if ($err) {
+                echo "cURL Error #:" . $err;
+            }
+
             $array = json_decode($result, true);
             // Free up the resources $curl is using
             curl_close($curl);
@@ -413,6 +437,11 @@ class CShipping extends CI_Controller
 
             // Send the request
             $result = curl_exec($curl);
+            $err = curl_error($curl);
+            if ($err) {
+                echo "cURL Error #:" . $err;
+            }
+
             $array = json_decode($result, true);
             // Free up the resources $curl is using
             curl_close($curl);
@@ -488,6 +517,10 @@ class CShipping extends CI_Controller
 
         // Send the request
         $result = curl_exec($curl);
+        $err = curl_error($curl);
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        }
 
         // Free up the resources $curl is using
         curl_close($curl);
@@ -562,6 +595,11 @@ class CShipping extends CI_Controller
         ));
 
         $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        }
 
         curl_close($curl);
         $points = json_decode($response, true);
@@ -645,7 +683,7 @@ class CShipping extends CI_Controller
         $this->m_pdf->pdf->WriteHTML($html);
         $filename = $data['order_nro'] . '.pdf';
         $this->m_pdf->pdf->Output($path . $filename, "F");
-        
+
         return $path . $filename;
     }
 
@@ -671,26 +709,23 @@ class CShipping extends CI_Controller
     public function readQR()
     {
         $qr = trim($this->input->get('qr', true));
-        
+
         $this->db->select('order_nro');
         $this->db->from('shipping');
         $this->db->where('order_nro', $qr);
         $this->db->limit(1);
         $res = $this->db->get()->result_array();
-        
+
         $data = [];
 
-        if(!empty($res[0]['order_nro']))
-        {   
+        if (!empty($res[0]['order_nro'])) {
             $data = ['order_nro' => $qr, 'operation' => 1, 'success' => 0];
 
             $this->load->view('header2');
             //$this->load->view('aside');
             $this->load->view('shipping/readQR', $data);
-        }
-        else
-        {
-            header('Location: '.base_url());
+        } else {
+            header('Location: ' . base_url());
         }
     }
 
@@ -715,7 +750,6 @@ class CShipping extends CI_Controller
             'longAddress' => $address,
         );
         $orders = [];
-        print_r($quadminOrder);
         array_push($orders, $quadminOrder);
 
         $data_string = json_encode($orders);
@@ -760,17 +794,17 @@ class CShipping extends CI_Controller
 
     public function validarRetiro()
     {
-        $user = trim($this->input->post('input-user', TRUE));
-		$password = md5(trim($this->input->post('input-password', TRUE)));
-        $order_nro = trim($this->input->post('input-order_nro', TRUE));
+        $user = trim($this->input->post('input-user', true));
+        $password = md5(trim($this->input->post('input-password', true)));
+        $order_nro = trim($this->input->post('input-order_nro', true));
 
         $success = 0;
         $message = '';
 
         $this->load->model('MWelcome', 'modeloWelcome');
-		$data = $this->modeloWelcome->getUserSession($user, $password);
+        $data = $this->modeloWelcome->getUserSession($user, $password);
         $userEmail = '';
-        //obtener en quadmins, 
+        //obtener en quadmins,
         $emailCompany = '';
         //obtener por order_nro
         $emailReceiver = '';
@@ -780,32 +814,27 @@ class CShipping extends CI_Controller
         $this->db->where('order_nro', $order_nro);
         $this->db->limit(1);
         $res = $this->db->get()->result_array();
-        if(!empty($res[0]['receiver_mail']))
+        if (!empty($res[0]['receiver_mail'])) {
             $emailReceiver = $res[0]['receiver_mail'];
+        }
 
-
-        if(!empty($data[0]['id']))
-        {
-            if(!empty($data[0]['rol_id']) && $data[0]['rol_id'] == 3)
-            {
+        if (!empty($data[0]['id'])) {
+            if (!empty($data[0]['rol_id']) && $data[0]['rol_id'] == 3) {
                 $userEmail = $data[0]['email'];
-                $message = '<font color="green">Retiro generado correctamente de la orden #<b>'.$order_nro.'</b>.<br>Se han generado las notificaciones pertinentes.</font>';
+                $message = '<font color="green">Retiro generado correctamente de la orden #<b>' . $order_nro . '</b>.<br>Se han generado las notificaciones pertinentes.</font>';
                 $success = 1;
-            }
-            else
-            {
+            } else {
                 $message = '<font color="red">Usuario no posee el perfil para realizar esta operación.</font>';
             }
-        }
-        else
-        {
+        } else {
             $message = '<font color="red">Usuario y/o contraseña no coinciden.</font>';
         }
 
-        if($success == 1)
-            $this->enviarCorreo('Retiro Generado','<p>Se ha generado correctamente un retiro con número de orden <b>#'.$order_nro.'</b></p>',$userEmail.','.$emailReceiver.','.$emailCompany);
+        if ($success == 1) {
+            $this->enviarCorreo('Retiro Generado', '<p>Se ha generado correctamente un retiro con número de orden <b>#' . $order_nro . '</b></p>', $userEmail . ',' . $emailReceiver . ',' . $emailCompany);
+        }
 
-        $data = ['message' => $message, 'success' => $success,'operation' => 2];
+        $data = ['message' => $message, 'success' => $success, 'operation' => 2];
         $this->load->view('header2');
         //$this->load->view('aside');
         $this->load->view('shipping/readQR', $data);
@@ -822,58 +851,56 @@ class CShipping extends CI_Controller
         //company
         //$companyEmail = $emails[2];
         $mensaje .= '<br>';
-        $mensaje .= 'Fecha hora: '.date('d-m-Y H:i:s');
+        $mensaje .= 'Fecha hora: ' . date('d-m-Y H:i:s');
 
-        foreach($emails as $e)
-        {
-            if(!empty($e))
-            {
+        foreach ($emails as $e) {
+            if (!empty($e)) {
                 echo $e;
             }
         }
 
-         // Load PHPMailer library
-         $this->load->library('phpmailer_library');
+        // Load PHPMailer library
+        $this->load->library('phpmailer_library');
 
-         // PHPMailer object
-         $mail = $this->phpmailer_library->load();
- 
-         // SMTP configuration
-         $mail->isSMTP();
-         $mail->Host       = 'smtp.gmail.com';                           //Set the SMTP server to send through
-         $mail->SMTPAuth   = true;                                       //Enable SMTP authentication
-         $mail->Username   = 'matias@arriendatumaquina.com';                         //SMTP username
-         $mail->Password   = 'coco7095436';                                   //SMTP password
-         //$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;              //Enable implicit TLS encryption
-         $mail->SMTPSecure = 'tls';                                      //Enable implicit TLS encryption
-         $mail->Port       = 587;              
- 
-         $mail->setFrom('matias@arriendatumaquina.com', 'Matias');
-         // Add a recipient
-         $mail->addAddress('el_mts@hotmail.com');
- 
-         // Add cc or bcc 
-         //$mail->addCC('cc@example.com');
-         //$mail->addBCC('bcc@example.com');
- 
-         // Email subject
-         $mail->Subject = 'Send Email via SMTP using PHPMailer in CodeIgniter';
- 
-         // Set email format to HTML
-         $mail->isHTML(true);
- 
-         // Email body content
-         $mailContent = "<h1>Send HTML Email using SMTP in CodeIgniter</h1>
+        // PHPMailer object
+        $mail = $this->phpmailer_library->load();
+
+        // SMTP configuration
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com'; //Set the SMTP server to send through
+        $mail->SMTPAuth = true; //Enable SMTP authentication
+        $mail->Username = 'matias@arriendatumaquina.com'; //SMTP username
+        $mail->Password = 'coco7095436'; //SMTP password
+        //$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;              //Enable implicit TLS encryption
+        $mail->SMTPSecure = 'tls'; //Enable implicit TLS encryption
+        $mail->Port = 587;
+
+        $mail->setFrom('matias@arriendatumaquina.com', 'Matias');
+        // Add a recipient
+        $mail->addAddress('el_mts@hotmail.com');
+
+        // Add cc or bcc
+        //$mail->addCC('cc@example.com');
+        //$mail->addBCC('bcc@example.com');
+
+        // Email subject
+        $mail->Subject = 'Send Email via SMTP using PHPMailer in CodeIgniter';
+
+        // Set email format to HTML
+        $mail->isHTML(true);
+
+        // Email body content
+        $mailContent = "<h1>Send HTML Email using SMTP in CodeIgniter</h1>
              <p>This is a test email sending using SMTP mail server with PHPMailer.</p>";
-         $mail->Body = $mailContent;
- 
-         // Send email
-         if(!$mail->send()){
-             echo 'Message could not be sent.';
-             echo 'Mailer Error: ' . $mail->ErrorInfo;
-         }else{
-             echo 'Message has been sent';
-         }
+        $mail->Body = $mailContent;
+
+        // Send email
+        if (!$mail->send()) {
+            echo 'Message could not be sent.';
+            echo 'Mailer Error: ' . $mail->ErrorInfo;
+        } else {
+            echo 'Message has been sent';
+        }
 
         //echo 'enviarCorreo';
     }
