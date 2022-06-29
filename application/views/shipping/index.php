@@ -21,6 +21,7 @@
                       <thead>
                         <tr>
                           <th>Orden</th>
+                          <th>Operación</th>
                           <th>Tamaño</th>
                           <th>Total</th>
                           <th>Repartidor</th>
@@ -65,7 +66,7 @@
   </div>
 </div>
 
-<?php $this->view('footer'); ?>
+<?php $this->view('footer');?>
 
 <script>
     $(document).ready(function()
@@ -90,6 +91,7 @@
           },
           "columns": [
             { "data": "Orden"},
+            { "data": "Operación"},
             { "data": "Tamaño" },
             { "data": "Total" },
             { "data": "Repartidor" },
@@ -110,93 +112,93 @@
               "render": function(data, type, row) {
                 return row.order_nro
               }
-            },/* 
+            },
             {
               "targets": [1],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.quadmins_code
-              }
-            }, */
-            {
-              "targets": [1],
-              "orderable": true,
-              "render": function(data, type, row) {
-                return row.shipping_type
+                return row.operation
               }
             },
             {
               "targets": [2],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.total_amount
+                return row.shipping_type
               }
             },
             {
               "targets": [3],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.delivery_name
+                return row.total_amount
               }
             },
             {
               "targets": [4],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.shipping_date
+                return row.delivery_name
               }
             },
             {
               "targets": [5],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.state
+                return row.shipping_date
               }
             },
             {
               "targets": [6],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.company
+                return row.state
               }
             },
             {
               "targets": [7],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.address
+                return row.company
               }
             },
-           {
+            {
               "targets": [8],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.origin
+                return row.address
               }
             },
            {
               "targets": [9],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.destination
+                return row.origin
               }
             },
-            {
+           {
               "targets": [10],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.receiver_name
+                return row.destination
               }
             },
             {
               "targets": [11],
               "orderable": true,
               "render": function(data, type, row) {
-                return row.receiver_phone
+                return row.receiver_name
               }
             },
             {
               "targets": [12],
+              "orderable": true,
+              "render": function(data, type, row) {
+                return row.receiver_phone
+              }
+            },
+            {
+              "targets": [13],
               "orderable": false,
               "render": function(data, type, row) {
                 return `
@@ -245,8 +247,8 @@
 
     function generateLabel(id)
     {
-      
-      
+
+
       $.ajax({
         url: site_url + '/CShipping/getQRLabel',
         type: 'post',
@@ -259,7 +261,7 @@
           $('#modalLabel').modal('show');
         }
       });
-      
+
     }
 </script>
 

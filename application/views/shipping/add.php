@@ -27,26 +27,18 @@
 
                                    <div class="form-group">
                     			  					<label for="select-operation-type" class="col-sm-2 control-label">Tipo de orden</label>
-                    			  					<div class="col-sm-5">
+                    			  					<div class="col-sm-2">
                     			  						<select name="select-operation-type" id="select-operation-type" class="form-control " required>
                     			  							<option value="PEDIDO">PEDIDO</option>
                                           <option value="RETIRO">RETIRO</option>
                     			  						</select>
                     			  					</div>
                     			  				</div>
-                    			  			</div>
 
                     			  				<div class="form-group">
                     			  					<label for="input-shipping-date" class="col-sm-2 control-label">Fecha</label>
                     			  					<div class="col-sm-5">
-                    			  						<input type="date" class="form-control" name="input-shipping-date" id="input-shipping-date" required>
-                    			  					</div>
-                    			  				</div>
-
-                                    <div class="form-group">
-                    			  					<label for="input-shipping-delivery-date" class="col-sm-2 control-label">Fecha Entrega</label>
-                    			  					<div class="col-sm-5">
-                    			  						<input type="date" class="form-control" name="input-shipping-delivery-date" id="input-shipping-delivery-date" required>
+                    			  						<input type="date" class="form-control" name="input-shipping-date" id="input-shipping-date" required value="<?php echo date('Y-m-d'); ?>">
                     			  					</div>
                     			  				</div>
 
@@ -58,9 +50,9 @@
                     			  				</div>
 
                     			  				<div class="form-group">
-                    			  					<label for="input-packages" class="col-sm-2 control-label">Cantidad de Paquetes</label>
+                    			  					<label for="input-packages" class="col-sm-2 control-label">Paquetes extras</label>
                     			  					<div class="col-sm-3">
-                    			  						<input type="text" class="form-control" name="input-packages" id="input-packages"  maxlength="10"  required>
+                    			  						<input type="number" class="form-control" name="input-packages" id="input-packages"  required value="0" min="0">
                     			  					</div>
                     			  				</div>
 
@@ -78,7 +70,7 @@
 
                                      			<div class="form-group onlyPedido">
                     			  					<label for="total-amount" class="col-sm-2 control-label">Total</label>
-                    			  					<div class="col-sm-10">
+                    			  					<div class="col-sm-3">
                     			  						<input type="text" class="form-control" name="input-total-amount" id="input-total-amount" disabled>
                     			  					</div>
                     			  				</div>
@@ -362,7 +354,7 @@ function createPoid() {
         var inputReceiverMail =  $("#input-receiver-mail").val();
 
         //2. obtener datos del poid seleccionado
-
+/*
         var	poiObject = pois.find(poi => poi._id ==  selectedPoid);
         //3. comparar cambios
 
@@ -389,7 +381,7 @@ function createPoid() {
         if (updatePoid){
           //actualizar poi a travès del code
           updatePoid(poiObject.code);
-        }
+        } */
 
     			$.post(
 				site_url + "/CShipping/addShipping",
@@ -412,7 +404,6 @@ function createPoid() {
           poId: selectedPoid,
           merchant_id: merchantId,
           operation: $("#select-operation-type").val(),
-          shipping_delivery_date:  $("#input-shipping-delivery-date").val()
 				},
 				function(data)
 				{

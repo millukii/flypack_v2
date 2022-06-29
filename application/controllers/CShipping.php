@@ -156,7 +156,7 @@ class CShipping extends CI_Controller
         $shipping_delivery_date = trim($this->input->post('shipping_delivery_date', true));
         $shipping_type = trim($this->input->post('shipping_type', true));
         $companies_id = trim($this->input->post('companies_id', true));
-        $shipping_states_id = trim($this->input->post('shipping_states_id', true));
+        $shipping_states_id = 1;
         $address = trim($this->input->post('address', true));
         $receiver_name = trim($this->input->post('receiver_name', true));
         $receiver_phone = trim($this->input->post('receiver_phone', true));
@@ -281,7 +281,6 @@ class CShipping extends CI_Controller
             $array = json_decode($result, true);
             // Free up the resources $curl is using
 
-            print_r($array);
             curl_close($curl);
             $date_time = date('Y-m-d H:i:s');
             $data = array(
