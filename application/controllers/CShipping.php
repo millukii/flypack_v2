@@ -821,6 +821,7 @@ class CShipping extends CI_Controller
         if (!empty($data[0]['id'])) {
             if (!empty($data[0]['rol_id']) && $data[0]['rol_id'] == 3) {
                 $userEmail = $data[0]['email'];
+                $emailCompany = $data[0]['c_email'];
                 $message = '<font color="green">Retiro generado correctamente de la orden #<b>' . $order_nro . '</b>.<br>Se han generado las notificaciones pertinentes.</font>';
                 $success = 1;
             } else {
@@ -843,65 +844,35 @@ class CShipping extends CI_Controller
 
     private function enviarCorreo($asunto, $mensaje, $emails)
     {
-        $emails = explode(',', $emails);
-        //user
-        //$userEmail = $emails[0];
-        //receiver
-        //$receiverEmail = $emails[1];
-        //company
-        //$companyEmail = $emails[2];
+        /*
+        no-responder@flypack.cl
+        .&sNWO2Qt&!J
+         */
         $mensaje .= '<br>';
         $mensaje .= 'Fecha hora: ' . date('d-m-Y H:i:s');
 
-        foreach ($emails as $e) {
-            if (!empty($e)) {
-                echo $e;
-            }
-        }
+        $to = $emails;
 
-        // Load PHPMailer library
-        $this->load->library('phpmailer_library');
+        $message = "
+        <html>
+        <head>
+        <title>Notificación</title>
+        </head>
+        <body>
+        <h5>El pedido esta en ruta</h5>
+        ".$mensaje."
+        </body>
+        </html>
+        ";
 
-        // PHPMailer object
-        $mail = $this->phpmailer_library->load();
+        // Always set content-type when sending HTML email
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
-        // SMTP configuration
-        $mail->isSMTP();
-        $mail->Host = 'smtp.gmail.com'; //Set the SMTP server to send through
-        $mail->SMTPAuth = true; //Enable SMTP authentication
-        $mail->Username = 'matias@arriendatumaquina.com'; //SMTP username
-        $mail->Password = 'coco7095436'; //SMTP password
-        //$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;              //Enable implicit TLS encryption
-        $mail->SMTPSecure = 'tls'; //Enable implicit TLS encryption
-        $mail->Port = 587;
+        // More headers
+        $headers .= 'From: <no-responder@flypack.cl>' . "\r\n";
+        //$headers .= 'Cc: myboss@example.com' . "\r\n";
 
-        $mail->setFrom('matias@arriendatumaquina.com', 'Matias');
-        // Add a recipient
-        $mail->addAddress('el_mts@hotmail.com');
-
-        // Add cc or bcc
-        //$mail->addCC('cc@example.com');
-        //$mail->addBCC('bcc@example.com');
-
-        // Email subject
-        $mail->Subject = 'Send Email via SMTP using PHPMailer in CodeIgniter';
-
-        // Set email format to HTML
-        $mail->isHTML(true);
-
-        // Email body content
-        $mailContent = "<h1>Send HTML Email using SMTP in CodeIgniter</h1>
-             <p>This is a test email sending using SMTP mail server with PHPMailer.</p>";
-        $mail->Body = $mailContent;
-
-        // Send email
-        if (!$mail->send()) {
-            echo 'Message could not be sent.';
-            echo 'Mailer Error: ' . $mail->ErrorInfo;
-        } else {
-            echo 'Message has been sent';
-        }
-
-        //echo 'enviarCorreo';
+        mail($to,$asunto,$message,$headers);
     }
 }
