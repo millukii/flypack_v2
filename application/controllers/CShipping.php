@@ -756,7 +756,7 @@ class CShipping extends CI_Controller
         $data_string = json_encode($orders);
         $curl = curl_init();
 
-        $endpoint = sprintf("%s/%s", "https: //flash-api.quadminds.com/api/v2/pois", $poidCode);
+        $endpoint = sprintf("%s/%s", "https://flash-api.quadminds.com/api/v2/pois", $poidCode);
 
         curl_setopt_array($curl, [
             CURLOPT_URL => $endpoint,
