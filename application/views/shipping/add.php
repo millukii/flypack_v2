@@ -354,7 +354,7 @@ function createPoid() {
         var inputReceiverMail =  $("#input-receiver-mail").val();
 
         //2. obtener datos del poid seleccionado
-/*
+
         var	poiObject = pois.find(poi => poi._id ==  selectedPoid);
         //3. comparar cambios
 
@@ -381,7 +381,7 @@ function createPoid() {
         if (updatePoid){
           //actualizar poi a travès del code
           updatePoid(poiObject.code);
-        } */
+        } 
 
     			$.post(
 				site_url + "/CShipping/addShipping",

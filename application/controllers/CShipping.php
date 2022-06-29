@@ -750,14 +750,12 @@ class CShipping extends CI_Controller
             'originalAddress' => $address,
             'longAddress' => $address,
         );
-        $orders = [];
-        array_push($orders, $quadminOrder);
-
-        $data_string = json_encode($orders);
+        
+        $data_string = json_encode($quadminOrder);
         $curl = curl_init();
 
         $endpoint = sprintf("%s/%s", "https://flash-api.quadminds.com/api/v2/pois", $poidCode);
-
+        
         curl_setopt_array($curl, [
             CURLOPT_URL => $endpoint,
             CURLOPT_RETURNTRANSFER => true,
@@ -790,7 +788,7 @@ class CShipping extends CI_Controller
 
         //$data = $point['data'];
         echo json_encode($point);
-
+        
     }
 
     public function validarRetiro()
