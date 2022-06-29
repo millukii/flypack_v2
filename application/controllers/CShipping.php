@@ -153,6 +153,7 @@ class CShipping extends CI_Controller
         $address = trim($this->input->post('address', true));
         $delivery_name = trim($this->input->post('delivery_name', true));
         $shipping_date = trim($this->input->post('shipping_date', true));
+        $shipping_delivery_date = trim($this->input->post('shipping_delivery_date', true));
         $shipping_type = trim($this->input->post('shipping_type', true));
         $companies_id = trim($this->input->post('companies_id', true));
         $shipping_states_id = trim($this->input->post('shipping_states_id', true));
@@ -224,6 +225,7 @@ class CShipping extends CI_Controller
             'companies_id' => $companies_id,
             'packages' => $packages,
             'operation' => $operation,
+            'shipping_delivery_date' => $shipping_delivery_date,
         );
 
         if ($this->modelo->addShipping($data)) {
@@ -860,7 +862,7 @@ class CShipping extends CI_Controller
         </head>
         <body>
         <h5>El pedido esta en ruta</h5>
-        ".$mensaje."
+        " . $mensaje . "
         </body>
         </html>
         ";
@@ -873,6 +875,6 @@ class CShipping extends CI_Controller
         $headers .= 'From: <no-responder@flypack.cl>' . "\r\n";
         //$headers .= 'Cc: myboss@example.com' . "\r\n";
 
-        mail($to,$asunto,$message,$headers);
+        mail($to, $asunto, $message, $headers);
     }
 }

@@ -43,6 +43,13 @@
                     			  					</div>
                     			  				</div>
 
+                                    <div class="form-group">
+                    			  					<label for="input-shipping-delivery-date" class="col-sm-2 control-label">Fecha Entrega</label>
+                    			  					<div class="col-sm-5">
+                    			  						<input type="date" class="form-control" name="input-shipping-delivery-date" id="input-shipping-delivery-date" required>
+                    			  					</div>
+                    			  				</div>
+
                     			  				<div class="form-group">
                     			  					<label for="order_nro" class="col-sm-2 control-label">Numero de Orden</label>
                     			  					<div class="col-sm-3">
@@ -404,6 +411,8 @@ function createPoid() {
 					destination: $('#select-destination').val(),
           poId: selectedPoid,
           merchant_id: merchantId,
+          operation: $("#select-operation-type").val(),
+          shipping_delivery_date:  $("#input-shipping-delivery-date").val()
 				},
 				function(data)
 				{
