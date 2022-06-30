@@ -110,7 +110,7 @@
                     
                           <div  class="form-group">
                             <label>
-                              <a href="<?php echo base_url()?>">Haz olvidado tu contraseña? Recupera tu cuenta</a>
+                              <!-- <a href="<?php //echo base_url()?>">Haz olvidado tu contraseña? Recupera tu cuenta</a> -->
                             </label>
                           </div>
                         </form>
