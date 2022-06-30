@@ -839,7 +839,13 @@ class CShipping extends CI_Controller
         }
 
         if ($success == 1) {
-            $this->enviarCorreo('Retiro Generado', '<p>Se ha generado correctamente un retiro con número de orden <b>#' . $order_nro . '</b></p>', $userEmail . ',' . $emailReceiver . ',' . $emailCompany);
+            $date_time = date('Y-m-d H:i:s');
+            $dataUpdate = ['shipping_delivery_date' => $date_time, 'delivery_name' => $data[0]['name'].' '.$data[0]['lastname']];
+            //update fecha hora retiro
+            $this->db->where('order_nro', $order_nro);
+            if($this->db->update('shipping', $dataUpdate))
+                $this->enviarCorreo('Retiro Generado', '<p>Se ha generado correctamente un retiro con número de orden <b>#' . $order_nro . '</b></p>', $userEmail . ',' . $emailReceiver . ',' . $emailCompany, $date_time);
+            
         }
 
         $data = ['message' => $message, 'success' => $success, 'operation' => 2];
@@ -849,14 +855,14 @@ class CShipping extends CI_Controller
 
     }
 
-    private function enviarCorreo($asunto, $mensaje, $emails)
+    private function enviarCorreo($asunto, $mensaje, $emails, $date_time)
     {
         /*
         no-responder@flypack.cl
         .&sNWO2Qt&!J
          */
         $mensaje .= '<br>';
-        $mensaje .= 'Fecha hora: ' . date('d-m-Y H:i:s');
+        $mensaje .= 'Fecha hora: ' . $date_time;
 
         $to = $emails;
 

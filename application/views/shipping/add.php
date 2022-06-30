@@ -170,8 +170,9 @@
 	var cuerpo;
 	var dv;
 	var pois;
-  var selectedPoid;
-  let merchantId = "<?php print($user_company[0]->merchant_id);?>";
+  	var selectedPoid;
+  	let merchantId = "<?php print($user_company[0]->merchant_id);?>";
+	var typeRate = '';
 
 	function getDataPoi(attr, ev){
 	  //attr => 1 = address
@@ -344,7 +345,7 @@ function createPoid() {
 			);
 }
 
-  function createOT(){
+  	function createOT(){
 
       //evaluar si es necesario actualizar la poid
         //1. obtener los input name, address, phone, observation
@@ -386,40 +387,52 @@ function createPoid() {
           updatePoid(poiObject.code);
         } 
 
-    			$.post(
-				site_url + "/CShipping/addShipping",
-				{
-					order_nro: $("#input-order-nro").val(),
-					quadmins_code: null, // $("#input-quadmins-code").val(),
-					total_amount: $("#input-total-amount").val(),
-					delivery_name: $("#delivery-options").val(),
-					shipping_date: $("#input-shipping-date").val(),
-					shipping_type: $("#select-shipping-type").val(),
-					operation: $("#select-operation-type").val(),
-					address: inputAddress ,
-					receiver_name: inputReceiverName,
-					receiver_phone: inputReceiverPhone,
-					receiver_mail: inputReceiverMail,
-					observation: inputObservation ,
-					origin: $('#select-origin').val(),
-          			packages: $("#input-packages").val(),
-					destination: $('#select-destination').val(),
-					poId: selectedPoid,
-					merchant_id: merchantId,
-					operation: $("#select-operation-type").val(),
-				},
-				function(data)
-				{
-					if (data == 1)
-						window.location.replace(site_url+"/CShipping/index");
-					else
-						alert("Orden existente.");
-				}
-			);
-  }
+		let shipping_type_  = $("#select-shipping-type").val();
+		let origin_ = $('#select-origin').val();
+		let destination_ =  $('#select-destination').val();
+
+		if (typeRate == "1")
+			shipping_type_ = 'N/A';
+		else
+		{
+			origin_ = 'N/A';
+			destination_ = 'N/A';
+		}
+
+		$.post(
+			site_url + "/CShipping/addShipping",
+			{
+				order_nro: $("#input-order-nro").val(),
+				quadmins_code: null, // $("#input-quadmins-code").val(),
+				total_amount: $("#input-total-amount").val(),
+				delivery_name: $("#delivery-options").val(),
+				shipping_date: $("#input-shipping-date").val(),
+				shipping_type: shipping_type_,
+				operation: $("#select-operation-type").val(),
+				address: inputAddress ,
+				receiver_name: inputReceiverName,
+				receiver_phone: inputReceiverPhone,
+				receiver_mail: inputReceiverMail,
+				observation: inputObservation ,
+				origin: origin_,
+				packages: $("#input-packages").val(),
+				destination: destination_,
+				poId: selectedPoid,
+				merchant_id: merchantId,
+				operation: $("#select-operation-type").val(),
+			},
+			function(data)
+			{
+				if (data == 1)
+					window.location.replace(site_url+"/CShipping/index");
+				else
+					alert("Orden existente.");
+			}
+		);
+  	}
 	$(document).ready(function()
 	{
-
+		typeRate = "<?php echo $type_rate; ?>";
      	totalAmount();
 	  	getAllPois();
 
@@ -432,6 +445,18 @@ function createPoid() {
 
 			$('.onlyPedido').css('display','block');
 			$('#select-destination').attr('required', true);
+
+			if (typeRate == "2") {
+				$('.selectCommune').hide();
+				$('.selectCommune').prop('required',false);
+				$('#select-shipping-type').prop('required',true);
+			}
+
+			if (typeRate == "1") {
+				$('.selectShippingType').hide();
+				$('#select-shipping-type').prop('required',false);
+				$('.selectCommune').prop('required',true);
+			}
 		}
 		else
 		{
@@ -443,21 +468,8 @@ function createPoid() {
 			$('#select-destination').attr('required', false);
 			$('#input-total-amount').val('0');
 		}
-
-		if (typeRate == "2") {
-			$('.selectCommune').hide();
-        	$('.selectCommune').prop('required',false);
-      	}
-
-      	if (typeRate == "1") {
-			$('.selectShippingType').hide();
-        	$('#select-shipping-type').prop('required',false);
-      	}
 		
 	});
-
-
-      var typeRate = "<?php echo $type_rate; ?>";
 
       if (typeRate == "2") {
 		      $('.selectCommune').hide();
