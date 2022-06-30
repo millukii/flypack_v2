@@ -205,6 +205,14 @@ class CShipping extends CI_Controller
         $user = $this->session->userdata('users_id');
         $companies_id = $this->session->userdata('companies_id');
 
+        if($operation == 'RETIRO')
+        {
+            $originCommuneName = 'N/A';
+            $destinationCommuneName = 'N/A';
+            $total_amount = 0;
+            $shipping_type = 'N/A';
+        }
+
         $data = array(
             'order_nro' => $order_nro,
             'quadmins_code' => $quadmins_code,
@@ -750,7 +758,7 @@ class CShipping extends CI_Controller
             'originalAddress' => $address,
             'longAddress' => $address,
         );
-        
+
         $data_string = json_encode($quadminOrder);
         $curl = curl_init();
 

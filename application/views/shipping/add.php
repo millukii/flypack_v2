@@ -68,7 +68,7 @@
                     			  					</div>
                     			  				</div>
 
-                                     			<div class="form-group onlyPedido">
+                                     			<div class="form-group">
                     			  					<label for="total-amount" class="col-sm-2 control-label">Total</label>
                     			  					<div class="col-sm-3">
                     			  						<input type="text" class="form-control" name="input-total-amount" id="input-total-amount" disabled>
@@ -308,12 +308,13 @@
 				},
 				function(data)
 				{
-					if (data != null) {
+					//if (data != null) {
 					//revisar aqui
-					selectedPoid = data._id;
-          }	else{
-             console.log("poid update error.", data);
-          }
+					//selectedPoid = data._id;
+					//}	else{
+					//	console.log("poid update error.", data);
+					//}
+					console.log("poid update error.", data);
 
 				}, "json"
 			);
@@ -342,6 +343,7 @@ function createPoid() {
 				}, "json"
 			);
 }
+
   function createOT(){
 
       //evaluar si es necesario actualizar la poid
@@ -355,7 +357,8 @@ function createPoid() {
 
         //2. obtener datos del poid seleccionado
 
-        var	poiObject = pois.find(poi => poi._id ==  selectedPoid);
+        var poiObject = pois.find(poi => poi._id ==  selectedPoid);
+
         //3. comparar cambios
 
         var updatePoi = false;
@@ -399,18 +402,18 @@ function createPoid() {
 					receiver_mail: inputReceiverMail,
 					observation: inputObservation ,
 					origin: $('#select-origin').val(),
-          packages: $("#input-packages").val(),
+          			packages: $("#input-packages").val(),
 					destination: $('#select-destination').val(),
-          poId: selectedPoid,
-          merchant_id: merchantId,
-          operation: $("#select-operation-type").val(),
+					poId: selectedPoid,
+					merchant_id: merchantId,
+					operation: $("#select-operation-type").val(),
 				},
 				function(data)
 				{
 					if (data == 1)
 						window.location.replace(site_url+"/CShipping/index");
 					else
-						alert("Orden existente.", data);
+						alert("Orden existente.");
 				}
 			);
   }
@@ -421,11 +424,37 @@ function createPoid() {
 	  	getAllPois();
 
     $('#select-operation-type').on('change', function() {
-					$('.onlyPedido').toggle();
-          $('.onlyPedido').prop('required',false);
-          $('#select-shipping-type').prop('required',false);
 
-		});
+		if(this.value == 'PEDIDO')
+		{
+			$('.onlyPedido').toggle();
+			$('.onlyPedido').prop('required',true);
+
+			$('.onlyPedido').css('display','block');
+			$('#select-destination').attr('required', true);
+		}
+		else
+		{
+			$('.onlyPedido').toggle();
+			$('.onlyPedido').prop('required',false);
+
+			$('.onlyPedido').css('display','none');
+
+			$('#select-destination').attr('required', false);
+			$('#input-total-amount').val('0');
+		}
+
+		if (typeRate == "2") {
+			$('.selectCommune').hide();
+        	$('.selectCommune').prop('required',false);
+      	}
+
+      	if (typeRate == "1") {
+			$('.selectShippingType').hide();
+        	$('#select-shipping-type').prop('required',false);
+      	}
+		
+	});
 
 
       var typeRate = "<?php echo $type_rate; ?>";
@@ -474,12 +503,12 @@ function createPoid() {
 			cuerpo = $('#input-order_nro').val();
 			dv = cuerpo;
 
-      var newPoi = $('#checkboxPoid').is(':checked');
-      if (newPoi) {
-		createPoid();
-      }else{
-        createOT();
-      }
+			var newPoi = $('#checkboxPoid').is(':checked');
+			if (newPoi) {
+				createPoid();
+			}else{
+				createOT();
+			}
 
 		});
 
