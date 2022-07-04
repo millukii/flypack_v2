@@ -55,20 +55,19 @@
       border-color: grey;
   }
   body{
-    font-size: 40px; 
+    font-size: 36px; 
   }
 </style>
 </head>
 <body>
 <center>
+  
+  <img width="120" src="<?php echo base_url();?>assets/img/logo.png?<?php echo date('YmdHis')?>"/>
   <fieldset>
     <legend>Datos Receptor:</legend>
     <table class="table">
       <tr>
         <td align="center" >
-          <img width="120" src="<?php echo base_url();?>assets/img/logo.png?<?php echo date('YmdHis')?>"/>
-        </td>
-        <td>
           <?php
             if(!empty($receiver_name))
               echo '<h3 class="fontSizeCustom">'.$receiver_name.'</h3>';
@@ -76,7 +75,7 @@
         </td>
       </tr>
       <tr>
-        <td align="center" colspan="2">
+        <td align="center">
           <?php
             if(!empty($address))
               echo '<b class="fontSizeCustom">'.$address.'</b>';
@@ -84,7 +83,7 @@
         </td>
       </tr>
       <tr>
-        <td align="center" colspan="2">
+        <td align="center">
           <?php
             if(!empty($destination))
               echo $destination;
@@ -92,7 +91,7 @@
         </td>
       </tr>
       <tr>
-        <td align="center" colspan="2">
+        <td align="center">
           <?php
             if(!empty($country))
               echo '<b>'.$country.'</b>';
@@ -100,7 +99,7 @@
         </td>
       </tr>
       <tr>
-        <td align="center" colspan="2">
+        <td align="center">
           <img width="30" src="<?php echo base_url();?>assets/img/phone.png?<?php echo date('YmdHis')?>"/>
           <?php
             if(!empty($receiver_phone))
@@ -112,8 +111,16 @@
         </td>
       </tr>
       <tr>
-        <td align="center" colspan="2">
-          <img width="180" src="<?php echo base_url();?>files/qrs/qr_<?php echo $order_nro;?>.png?<?php echo date('YmdHis')?>"/>
+        <td align="center">
+          <img width="160" src="<?php echo base_url();?>files/qrs/qr_<?php echo $order_nro;?>.png?<?php echo date('YmdHis')?>"/>
+          <br>
+          <p style="font-size: 25px;">
+            <font color="black">
+              <a href="https://flypack.cl/flypack_v2/index.php/CShipping/readQR?qr=<?php echo $order_nro;?>">
+                https://flypack.cl/flypack_v2/index.php/CShipping/readQR?qr=<?php echo $order_nro;?>
+              </a>
+            </font>
+          </p>
         </td>
       </tr>
     </table>

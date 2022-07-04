@@ -872,7 +872,7 @@ class CShipping extends CI_Controller
         <title>Notificación</title>
         </head>
         <body>
-        <h5>El pedido esta en ruta</h5>
+        <h5>Se generó el retiro</h5>
         " . $mensaje . "
         </body>
         </html>
