@@ -10,29 +10,36 @@
 }
 ?></h3>
 				  	</div>
+
                     				  	<form class="form-horizontal" id="form-shipping">
                     			  			<div class="box-body">
+                                   <div class="form-group">
+                    			  					<label for="select-operation-type" class="col-sm-2 control-label">Tipo de orden</label>
+                    			  					<div class="col-sm-2">
+                    			  						<select name="select-operation-type" id="select-operation-type" class="form-control " required>
+                    			  							<option value="PEDIDO">PEDIDO</option>
+                                          <option value="RETIRO">RETIRO</option>
+                    			  						</select>
+                    			  					</div>
+                    			  				</div>
 
                                     <div class="form-group">
                     			  					<label for="input-shipping-date" class="col-sm-2 control-label">Fecha</label>
                     			  					<div class="col-sm-5">
                     			  						<input type="text" class="form-control" name="input-shipping-date" id="input-shipping-date"
-                                        value="<?php if (!empty($shipping[0]['shipping_date'])) {
-    echo $shipping[0]['shipping_date'];
-}
-?>"
+                                        value="<?php if (!empty($shipping[0]['shipping_date'])) {echo $shipping[0]['shipping_date'];}?>"
                                         >
                     			  					</div>
                     			  				</div>
 
                                      <div class="form-group">
                                         <label for="input-order-nro" class="col-sm-2 control-label">Numero de Orden</label>
+                                        <div class="col-sm-1">
+                                        		<input type="text" class="form-control" name="company-prefix" id="company-prefix"   disabled max="10">
+                                        </div>
                                         <div class="col-sm-5">
                                           <input type="text" class="form-control" name="input-order-nro" id="input-order-nro"
-                                          value="<?php if (!empty($shipping[0]['order_nro'])) {
-    echo $shipping[0]['order_nro'];
-}
-?>"
+                                          value="<?php if (!empty($shipping[0]['order_nro'])) {echo $shipping[0]['order_nro'];}?>"
                                           >
                                         </div>
                     			  				</div>
@@ -41,25 +48,22 @@
                                         <label for="input-quadmins-code" class="col-sm-2 control-label">Id Quadmins</label>
                                         <div class="col-sm-5">
                                           <input type="number" class="form-control"   disabled name="input-quadmins-code" id="input-quadmins-code"
-                                          value="<?php if (!empty($shipping[0]['quadmins_code'])) {
-    echo $shipping[0]['quadmins_code'];
-}
-?>"
+                                          value="<?php if (!empty($shipping[0]['quadmins_code'])) {echo $shipping[0]['quadmins_code'];}?>"
                                           >
                                         </div>
+                    			  				</div>
+                    			  				<div class="form-group">
+                    			  					<label for="input-packages" class="col-sm-2 control-label">Paquetes extras</label>
+                    			  					<div class="col-sm-3">
+                    			  						<input type="number" class="form-control" name="input-packages" id="input-packages"  required value="<?php if (!empty($shipping[0]['packages'])) {echo $shipping[0]['packages'];} else {echo '0';}?>" min="0">
+                    			  					</div>
                     			  				</div>
 
                                     <div class="form-group selectShippingType">
                     			  					<label for="shipping-type" class="col-sm-2 control-label">Tamaño</label>
                     			  					<div class="col-sm-5">
                     			  						<select name="select-shipping-type" id="select-shipping-type" class="form-control totalAmount" required>
-                    			  							<option value="<?php if (!empty($shipping[0]['shipping_type'])) {
-    echo $shipping[0]['shipping_type'];
-}
-?>"><?php if (!empty($shipping[0]['shipping_type'])) {
-    echo $shipping[0]['shipping_type'];
-}
-?></option>
+                    			  							<option value="<?php if (!empty($shipping[0]['shipping_type'])) {echo $shipping[0]['shipping_type'];}?>"><?php if (!empty($shipping[0]['shipping_type'])) {echo $shipping[0]['shipping_type'];}?></option>
                     			  								<option value=M>M</option>
                                             <option value=L>L</option>
                                             <option value=XL>XL</option>
@@ -71,11 +75,7 @@
                     			  					<label for="total-amount" class="col-sm-2 control-label">Total</label>
                     			  					<div class="col-sm-5">
                     			  						<input type="text" class="form-control" name="input-total-amount" id="input-total-amount"
-                                         value="<?php if (!empty($shipping[0]['total_amount'])) {
-    echo $shipping[0]['total_amount'];
-}
-?>"
-                                        >
+                                         value="<?php if (!empty($shipping[0]['total_amount'])) {echo $shipping[0]['total_amount'];} else {echo '0';}?>">
                     			  					</div>
                     			  				</div>
 
@@ -90,12 +90,7 @@
                                      <div class="form-group">
                     			  					<label for="receiver-name" class="col-sm-2 control-label">Receptor</label>
                     			  					<div class="col-sm-10">
-                    			  						<input type="text" class="form-control" name="input-receiver-name" id="input-receiver-name" list="list-name" required
-                                                                                value="<?php if (!empty($shipping[0]['receiver_name'])) {
-    echo $shipping[0]['receiver_name'];
-}
-?>"
-                                        >
+                    			  						<input type="text" class="form-control" name="input-receiver-name" id="input-receiver-name" list="list-name" required value="<?php if (!empty($shipping[0]['receiver_name'])) {echo $shipping[0]['receiver_name'];}?>">
 														  <datalist id="list-name"></datalist>
                     			  					</div>
                     			  				</div>
@@ -103,10 +98,7 @@
                     			  					<label for="receiver_phone" class="col-sm-2 control-label">Teléfono</label>
                     			  					<div class="col-sm-5">
                     			  						<input type="text" class="form-control" name="input-receiver-phone" id="input-receiver-phone"
-                                        value="<?php if (!empty($shipping[0]['receiver_phone'])) {
-    echo $shipping[0]['receiver_phone'];
-}
-?>"
+                                        value="<?php if (!empty($shipping[0]['receiver_phone'])) {echo $shipping[0]['receiver_phone'];}?>"
                                         >
                     			  					</div>
                     			  				</div>
@@ -189,6 +181,7 @@
                     			  				<button type="submit" class="btn btn-primary pull-right">Guardar</button>
                     			  			</div>
                     			  		</form>
+
 				</div>
 			</div>
 		</div>
@@ -294,6 +287,11 @@
 
 	$(document).ready(function()
 	{
+
+    $('#select-operation-type').val("<?php echo $shipping[0]['operation']; ?>");
+    let prefix = "<?php print($user_company[0]->prefix);?>";
+    console.log("prefix ",prefix);
+    $('#company-prefix').val(prefix);
 
     totalAmount();
     getAllPois();
@@ -443,7 +441,9 @@
 					receiver_phone: $("#input-receiver-phone").val(),
 					receiver_mail: $("#input-receiver-mail").val(),
 					observation: $("#input-observation").val(),
+          packages: $("#input-packages").val(),
           poId: selectedPoid,
+          operation: $("#select-operation-type").val(),
 				},
 				success: function(data)
 				{

@@ -14,41 +14,84 @@
 		  		    		    <tbody>
 		  		    		    	<tr>
 		  		    		    		<th>Id</th>
-		  			    				<td><?php if(!empty($company[0]['id'])) echo $company[0]['id'];?></td>
+		  			    				<td><?php if (!empty($company[0]['id'])) {
+    echo $company[0]['id'];
+}
+?></td>
 		  		    		    	</tr>
 		  		    		    	<tr>
 		  		    		    		<th>Rut</th>
-		  			    				<td><?php if(!empty($company[0]['rut'])) echo $company[0]['rut'];?>-<?php if(!empty($company[0]['dv'])) echo $company[0]['dv'];?></td>
+		  			    				<td><?php if (!empty($company[0]['rut'])) {
+    echo $company[0]['rut'];
+}
+?>-<?php if (!empty($company[0]['dv'])) {
+    echo $company[0]['dv'];
+}
+?></td>
 		  		    		    	</tr>
 		  		    		    	<tr>
 		  		    	    			<th>Razon</th>
-		  		    	    			<td><?php if(!empty($company[0]['razon'])) echo $company[0]['razon'];?></td>
+		  		    	    			<td><?php if (!empty($company[0]['razon'])) {
+    echo $company[0]['razon'];
+}
+?></td>
 		  		    	    		</tr>
 		  		    	    		<tr>
 		  		    	    			<th>Nombre de Fantasia</th>
-		  		    	    			<td><?php if(!empty($company[0]['fantasy'])) echo $company[0]['fantasy'];?></td>
+		  		    	    			<td><?php if (!empty($company[0]['fantasy'])) {
+    echo $company[0]['fantasy'];
+}
+?></td>
 		  		    	    		</tr>
+                        <tr>
+		  		    	    			<th>Prefijo</th>
+		  		    	    			<td><?php if (!empty($company[0]['prefix'])) {
+    echo $company[0]['prefix'];
+}
+?></td>
+		  		    	    		</tr>
+									<tr>
+                          				<th>Email</th>
+                          				<td><?php if (!empty($company[0]['email'])) {
+    echo $company[0]['email'];
+}
+?></td>
+                          			</tr>
 		  		    	    		<tr>
 		  		    	    			<th>Dirección</th>
-		  		    	    			<td><?php if(!empty($company[0]['address'])) echo $company[0]['address'];?></td>
+		  		    	    			<td><?php if (!empty($company[0]['address'])) {
+    echo $company[0]['address'];
+}
+?></td>
 		  		    	    		</tr>
 		  		    	    		<tr>
-		  		    	    			<th>City</th>
-		  		    	    			<td><?php if(!empty($company[0]['city'])) echo $company[0]['city'];?></td>
+		  		    	    			<th>Ciudad</th>
+		  		    	    			<td><?php if (!empty($company[0]['city'])) {
+    echo $company[0]['city'];
+}
+?></td>
 		  		    	    		</tr>
 		  		    	    		<tr>
 		  		    	    			<th>Comuna</th>
-		  		    	    			<td><?php if(!empty($company[0]['commune'])) echo $company[0]['commune'];?></td>
+		  		    	    			<td><?php if (!empty($company[0]['commune'])) {
+    echo $company[0]['commune'];
+}
+?></td>
 		  		    	    		</tr>
 									  <tr>
 		  		    	    			<th>Tipo Tarifa Precios</th>
-		  		    	    			<td><?php if($company[0]['type_rate'] == 1) echo 'Estandar (Origen a Destino)';else{echo 'Tamaño Paquete';}?></td>
+		  		    	    			<td><?php if ($company[0]['type_rate'] == 1) {
+    echo 'Estandar (Origen a Destino)';
+} else {echo 'Tamaño Paquete';}?></td>
 		  		    	    		</tr>
 									<tr>
 		  		    	    			<th>Estado</th>
-		  		    	    			<td><?php if(!empty($company[0]['state'])) echo $company[0]['state'];?></td>
+		  		    	    			<td><?php if (!empty($company[0]['state'])) {
+    echo $company[0]['state'];
+}
+?></td>
 		  		    	    		</tr>
-		  		    	    		
+
 		  		    		    </tbody>
 		  			    	</table>
 			  			</section>
@@ -68,13 +111,14 @@
 								</thead>
 		  		    		    <tbody>
 								  	<?php
-									  if(!empty($sucursales))
-									  {
-									  	foreach ($sucursales as $key) { ?>
+if (!empty($sucursales)) {
+    foreach ($sucursales as $key) {?>
 										<tr>
-											<?php echo '<td>'.$key->city.'</td>';echo '<td>'.$key->commune.'</td>';echo '<td>'.$key->address.'</td>'; ?>
+											<?php echo '<td>' . $key->city . '</td>';
+        echo '<td>' . $key->commune . '</td>';
+        echo '<td>' . $key->address . '</td>'; ?>
 									  	</tr>
-									<?php }} ?>
+									<?php }}?>
 		  		    		    </tbody>
 		  			    	</table>
 
@@ -95,13 +139,13 @@
 								</thead>
 		  		    		    <tbody>
 								  	<?php
-									  if(!empty($users))
-									  {
-									  	foreach ($users as $key) { ?>
+if (!empty($users)) {
+    foreach ($users as $key) {?>
 										<tr>
-											<?php echo '<td>'.$key->user.'</td>';echo '<td>'.$key->name.'</td>'; ?>
+											<?php echo '<td>' . $key->user . '</td>';
+        echo '<td>' . $key->name . '</td>'; ?>
 									  	</tr>
-									<?php }} ?>
+									<?php }}?>
 		  		    		    </tbody>
 		  			    	</table>
 
@@ -118,10 +162,10 @@
 			</div>
 		</div>
 	</section>
-	
+
 </div>
 
-<?php $this->view('footer'); ?>
+<?php $this->view('footer');?>
 
 <script>
     $(document).ready(function() {
@@ -131,7 +175,7 @@
       	$('#li-company').addClass('menu-open');
       	$('#ul-company').css('display', 'block');
     });
-  
+
 </script>
 </body>
 </html>

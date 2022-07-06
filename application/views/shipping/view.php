@@ -28,32 +28,22 @@
 		  		    		    	</tr>
 		  		    	    		<tr>
 		  		    	    			<th>Tipo de Envio</th>
-		  		    	    			<td><?php if (!empty($shipping[0]['shipping_type'])) {
-    echo $shipping[0]['shipping_type'];
-}
-?></td>
+		  		    	    			<td><?php if (!empty($shipping[0]['shipping_type'])) {echo $shipping[0]['shipping_type'];}?></td>
 		  		    	    		</tr>
 		  		    	    		<tr>
                           <th>Total</th>
-                              <td><?php if (!empty($shipping[0]['total_amount'])) {
-    echo $shipping[0]['total_amount'];
-}
-?></td>
+                              <td><?php if (!empty($shipping[0]['total_amount'])) {echo $shipping[0]['total_amount'];} else {echo '0';}?>
+                              </td>
                           </tr>
                           <tr>
                           <th>Repartidor</th>
-                              <td><?php if (!empty($shipping[0]['delivery_name'])) {
-    echo $shipping[0]['delivery_name'];
-}
-?></td>
+                              <td><?php if (!empty($shipping[0]['delivery_name'])) {echo $shipping[0]['delivery_name'];}?>
+                            </td>
                           </tr>
                           <tr>
                             <th>Dirección</th>
                             <td>
-                                <?php if (!empty($shipping[0]['address'])) {
-    echo $shipping[0]['address'];
-}
-?>
+                                <?php if (!empty($shipping[0]['address'])) {echo $shipping[0]['address'];}?>
                               </td>
 		  		    	    		</tr>
                         <tr>

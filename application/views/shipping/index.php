@@ -21,7 +21,7 @@
                       <thead>
                         <tr>
                           <th>Orden</th>
-                          <th>Operación</th>
+                          <th>Operacion</th>
                           <th>Tamaño</th>
                           <th>Total</th>
                           <th>Repartidor</th>
@@ -91,7 +91,7 @@
           },
           "columns": [
             { "data": "Orden"},
-            { "data": "Operación"},
+            { "data": "Operacion"},
             { "data": "Tamaño" },
             { "data": "Total" },
             { "data": "Repartidor" },

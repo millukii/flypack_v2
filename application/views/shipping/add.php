@@ -44,8 +44,11 @@
 
                     			  				<div class="form-group">
                     			  					<label for="order_nro" class="col-sm-2 control-label">Numero de Orden</label>
-                    			  					<div class="col-sm-3">
-                    			  						<input type="text" class="form-control" name="input-order-nro" id="input-order-nro"  maxlength="10"  required>
+                    			  					<div class="col-sm-1">
+                                        		<input type="text" class="form-control" name="company-prefix" id="company-prefix"   disabled max="10">
+                                        </div>
+                                        <div class="col-sm-3">
+                    			  						    <input type="text" class="form-control" name="input-order-nro" id="input-order-nro"    required>
                     			  					</div>
                     			  				</div>
 
@@ -170,8 +173,9 @@
 	var cuerpo;
 	var dv;
 	var pois;
-  	var selectedPoid;
-  	let merchantId = "<?php print($user_company[0]->merchant_id);?>";
+  var selectedPoid;
+  let merchantId = "<?php print($user_company[0]->merchant_id);?>";
+
 	var typeRate = '';
 
 	function getDataPoi(attr, ev){
@@ -385,12 +389,12 @@ function createPoid() {
         if (updatePoid){
           //actualizar poi a travès del code
           updatePoid(poiObject.code);
-        } 
+        }
 
 		let shipping_type_  = $("#select-shipping-type").val();
 		let origin_ = $('#select-origin').val();
 		let destination_ =  $('#select-destination').val();
-
+    let prefix = "<?php print($user_company[0]->prefix);?>";
 		if (typeRate == "1")
 			shipping_type_ = 'N/A';
 		else
@@ -402,7 +406,7 @@ function createPoid() {
 		$.post(
 			site_url + "/CShipping/addShipping",
 			{
-				order_nro: $("#input-order-nro").val(),
+				order_nro: prefix+"-"+$("#input-order-nro").val(),
 				quadmins_code: null, // $("#input-quadmins-code").val(),
 				total_amount: $("#input-total-amount").val(),
 				delivery_name: $("#delivery-options").val(),
@@ -419,7 +423,6 @@ function createPoid() {
 				destination: destination_,
 				poId: selectedPoid,
 				merchant_id: merchantId,
-				operation: $("#select-operation-type").val(),
 			},
 			function(data)
 			{
@@ -432,6 +435,9 @@ function createPoid() {
   	}
 	$(document).ready(function()
 	{
+
+    let prefix = "<?php print($user_company[0]->prefix);?>";
+    $('#company-prefix').val(prefix);
 		typeRate = "<?php echo $type_rate; ?>";
      	totalAmount();
 	  	getAllPois();
@@ -468,7 +474,7 @@ function createPoid() {
 			$('#select-destination').attr('required', false);
 			$('#input-total-amount').val('0');
 		}
-		
+
 	});
 
       if (typeRate == "2") {

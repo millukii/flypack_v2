@@ -49,10 +49,10 @@
                     			  					</div>
                     			  				</div>
 
-												  <div class="form-group">
+												          <div class="form-group">
                     			  					<label for="prefix" class="col-sm-2 control-label">Prefijo</label>
                     			  					<div class="col-sm-10">
-                    			  						<input type="text" class="form-control" name="input-prefix" id="input-prefix">
+                    			  						<input type="text" class="form-control" name="input-prefix" id="input-prefix" maxlength="5">
                     			  					</div>
                     			  				</div>
 
@@ -295,6 +295,7 @@
 					sucursales			:	data_suc,
           merchant_id: merchant_id,
           business_email: $('#input-business-email').val(),
+          prefix: $('#input-prefix').val(),
 
 				},
 				function(data)

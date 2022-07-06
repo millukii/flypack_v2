@@ -44,6 +44,7 @@ class MShipping extends CI_Model
 			shipping.receiver_phone as receiver_phone,
 			shipping.receiver_mail as receiver_mail,
 			shipping.companies_id as companies_id,
+      shipping.operation as operation,
 			shipping.shipping_states_id as shipping_states_id, companies.razon as company,
 			shipping_states.state as state,
 			DATE_FORMAT(shipping.created, "%d-%m-%Y %H:%i:%s") as created,
@@ -134,6 +135,7 @@ class MShipping extends CI_Model
       shipping.destination as destination,
       shipping.observation as observation,
       shipping.address as address,
+      shipping.operation as operation,
       shipping.receiver_phone as receiver_phone,
       shipping.receiver_mail as receiver_mail,
       companies.razon as company');
@@ -143,6 +145,8 @@ class MShipping extends CI_Model
         $this->db->where('shipping_states.id <> ', 2);
         $this->db->like('shipping.id', $search);
         $this->db->or_like('shipping.order_nro', $search);
+        $this->db->or_like('shipping.address', $search);
+        $this->db->or_like('shipping.operation', $search);
         $this->db->or_like('shipping.shipping_type', $search);
         $this->db->or_like('shipping.total_amount', $search);
         $this->db->or_like('shipping.receiver_phone', $search);
@@ -297,7 +301,7 @@ class MShipping extends CI_Model
 
     public function getCompanyOfUser($id)
     {
-        $this->db->select('companies.id,companies.type_rate, companies.merchant_id,companies.razon, companies.city_id, city.city, companies.communes_id,communes.commune, companies.address');
+        $this->db->select('companies.id,companies.type_rate, companies.merchant_id,companies.razon, companies.city_id, city.city, companies.communes_id,communes.commune, companies.address, companies.prefix');
         $this->db->from('companies');
         $this->db->join('city', 'city.id  = companies.city_id');
         $this->db->join('communes', 'communes.id  = companies.communes_id');

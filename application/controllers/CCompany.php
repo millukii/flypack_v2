@@ -106,6 +106,7 @@ class CCompany extends CI_Controller
         $business_email = trim($this->input->post('business_email', true));
 
         $sucursales = $this->input->post('sucursales', true);
+        $prefix = $this->input->post('prefix', true);
 
         if (empty($razon)) {
             $razon = 'N/A';
@@ -149,6 +150,7 @@ class CCompany extends CI_Controller
             'type_rate' => $type_rate,
             'merchant_id' => $merchant_id,
             'email' => $business_email,
+            'prefix' => $prefix,
         );
 
         $companies_id = $this->modelo->addCompany($data);
@@ -226,6 +228,8 @@ class CCompany extends CI_Controller
         $merchant_id = trim($this->input->post('merchant_id', true));
         $email = trim($this->input->post('email', true));
         $business_email = trim($this->input->post('business_email', true));
+        $prefix = trim($this->input->post('prefix', true));
+
 
         if (empty($name)) {
             $name = 'N/A';
@@ -262,6 +266,7 @@ class CCompany extends CI_Controller
             'companies_state_id' => $companies_states_id,
             'merchant_id' => $merchant_id,
             'email' => $business_email,
+            'prefix' => $prefix,
         );
 
         if ($this->modelo->editCompany($data, $id)) {

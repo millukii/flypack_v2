@@ -148,5 +148,142 @@
 42. CREAR EMPRESA CON SUCURSALES + USUARIO POR DEFECTO
 43. CARGAR PRECIOS POR TAMAÑO Y POR ORIGEN DESTINO
 44. Validar FLUJO AGREGAR, EDITAR, ELIMINAR ORDENES DE TRANSPORTE CON LAS NUEVAS EMPRESAS
-45. Cuando se agregue o edite una orden, hay que identificar que la empresa que esta creando o editando la orden, si el cobro es por origen destino, se oculta el campo de tamaño y si es por tamaño se ocultan los origen desitno
+45. Cuando se agregue o edite una orden, hay que identificar que la empresa que esta creando o editando la orden, si el cobro es por origen destino, se oculta el campo de tamaño y si es por tamaño se ocultan los origen destino. done
+46. Replicar flujo del agregar ordenes en el edit (estructura y datos y obviamente con solo lo que el edit contempla) done
+47. mostrar lo que se gestiona en el add y edit tanto en el index como el view de las shipping, que sean consistentes. En el view para el total solo hay que agregar un 0 cuando total es empty <- fijarse en la validación de la variable, creo que en el esle se debe hacer que impmira o escriba un 0 done
+48. validar que el flujo para shipping realizado en los puntos anteriores no se rompa done
+49. editar la bd, agregar el campo prefix varcha de longitud 10 en la tabla companies debajo del campo fantasy done
+50. agregar en el add de companies, que se peuda agregar un Prefijo que responde al prefix recien agregado a la tabla companies, este nuevo campo a nivel de interfaz recomendar 3 letras per pueden ser hasta 5. done
+51. agregar en el edit de companies, que se peuda agregar un Prefijo que responde al prefix recien agregado a la tabla companies, este nuevo campo a nivel de interfaz recomendar 3 letras per pueden ser hasta 5. done
+52. agregar en el view de companies, el prefix que se pueda revisar en el view ese campo por empresa. done
+53. revisar y validar el flujo desde la creación de empresa (probar los campos nuevos, email, prefijo), verificar que se cree como merchant en quadmin, verificar el usuario de la empresa creada, es decir que te desloguees del admin y revises que este operativo ese usuario. done
+54. con el usuario creado y logueado ir a hacer 1 orden de retiro y otra de pedido done
+55. Agregar campo no editable al mismo nivel que numero de orden para el prefijo done
 
+### Prueba 06-07-2022
+- Empresa Pokefan & Co
+- Merchant Quadmin 3493
+- Prefijo POK
+- Usuario pokefan pass pokefan
+- Type Rate 1 origen destino
+- Carga Precios 
+- 13419 SAN BERNARDO RENCA total 3500 idCompany 8
+- 13420 PROVIDENCIA LAS CONDES 5000 8
+- Orden creada PEDIDO Codigo quadmin 259392219  
+- POK-1	PEDIDO	N/A	10000	N/A	2022-07-06	ACTIVO	POKEFAN & CO	Plazuela el Damasco 12, Santiago, Estación Central, Chile	RENCA	SAN BERNARDO	Valentina Aranzaes Herrán	56978525160
+
+´´´´json
+´
+{
+  "meta": {},
+  "data": {
+    "_id": 259392219,
+    "poiId": 121555440,
+    "code": "POK-1",
+    "label": null,
+    "date": "2022-07-06",
+    "totalAmount": 10000,
+    "totalAmountWithoutTaxes": 10000,
+    "waypointId": null,
+    "priority": 0,
+    "deletedAt": null,
+    "operation": "PEDIDO",
+    "qtn": "GNU4FM",
+    "orderItems": [],
+    "orderMeasures": [
+      {
+        "_id": 7343556,
+        "orderId": 259392219,
+        "constraintId": 7,
+        "value": 10000
+      },
+      {
+        "_id": 7343557,
+        "orderId": 259392219,
+        "constraintId": 2,
+        "value": 0
+      },
+      {
+        "_id": 7343558,
+        "orderId": 259392219,
+        "constraintId": 3,
+        "value": 0
+      },
+      {
+        "_id": 7343559,
+        "orderId": 259392219,
+        "constraintId": 11,
+        "value": 0
+      }
+    ],
+    "merchants": [
+      {
+        "_id": 3493,
+        "code": null,
+        "name": "POKEFAN & CO",
+        "emails": [
+          "mromerodev@gmail.com"
+        ]
+      }
+    ]
+  }
+}
+´´´´
+- Orden creada RETIRO 259392325
+- POK-2	RETIRO	N/A	0	N/A	2022-07-06	ACTIVO	POKEFAN & CO	Merced 332, Santiago, Chile	N/A	N/A	Valentina Valenzuela Morgado	56988548167
+´´´´json
+{
+  "meta": {},
+  "data": {
+    "_id": 259392325,
+    "poiId": 121564822,
+    "code": "POK-2",
+    "label": null,
+    "date": "2022-07-06",
+    "totalAmount": 0,
+    "totalAmountWithoutTaxes": 0,
+    "waypointId": null,
+    "priority": 0,
+    "deletedAt": null,
+    "operation": "RETIRO",
+    "qtn": "ASDDS4",
+    "orderItems": [],
+    "orderMeasures": [
+      {
+        "_id": 7343875,
+        "orderId": 259392325,
+        "constraintId": 7,
+        "value": 0
+      },
+      {
+        "_id": 7343876,
+        "orderId": 259392325,
+        "constraintId": 2,
+        "value": 0
+      },
+      {
+        "_id": 7343877,
+        "orderId": 259392325,
+        "constraintId": 3,
+        "value": 0
+      },
+      {
+        "_id": 7343878,
+        "orderId": 259392325,
+        "constraintId": 11,
+        "value": 0
+      }
+    ],
+    "merchants": [
+      {
+        "_id": 3493,
+        "code": null,
+        "name": "POKEFAN & CO",
+        "emails": [
+          "mromerodev@gmail.com"
+        ]
+      }
+    ]
+  }
+}
+´´´´
