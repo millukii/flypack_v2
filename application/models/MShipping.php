@@ -49,7 +49,7 @@ class MShipping extends CI_Model
 			shipping_states.state as state,
 			DATE_FORMAT(shipping.created, "%d-%m-%Y %H:%i:%s") as created,
 			DATE_FORMAT(shipping.modified, "%d-%m-%Y %H:%i:%s") as modified,
-			DATE_FORMAT(shipping.shipping_date, "%d-%m-%Y %H:%i:%s") as shipping_date
+			DATE_FORMAT(shipping.shipping_date, "%Y-%m-%d") as shipping_date
       ');
 
         $this->db->join('shipping_states', 'shipping_states.id = shipping.shipping_states_id');

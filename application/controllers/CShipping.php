@@ -135,8 +135,13 @@ class CShipping extends CI_Controller
     {
         $id = trim($this->input->get('id', true));
 
+        $user = $this->session->userdata('users_id');
+        $userCompany = $this->modelo->getCompanyOfUser($user);
+        $type_rate = $userCompany[0]->type_rate;
+
         $shipping = $this->modelo->getShipping_($id);
         $data = array(
+            'type_rate' => $type_rate,
             'shipping' => $shipping,
         );
 
@@ -205,8 +210,7 @@ class CShipping extends CI_Controller
         $user = $this->session->userdata('users_id');
         $companies_id = $this->session->userdata('companies_id');
 
-        if($operation == 'RETIRO')
-        {
+        if ($operation == 'RETIRO') {
             $originCommuneName = 'N/A';
             $destinationCommuneName = 'N/A';
             $total_amount = 0;
@@ -288,7 +292,6 @@ class CShipping extends CI_Controller
             }
             $array = json_decode($result, true);
             // Free up the resources $curl is using
-
             curl_close($curl);
             $date_time = date('Y-m-d H:i:s');
             $data = array(
@@ -319,6 +322,9 @@ class CShipping extends CI_Controller
         $receiver_phone = trim($this->input->post('receiver_phone', true));
         $receiver_mail = trim($this->input->post('receiver_mail', true));
         $observation = trim($this->input->post('observation', true));
+        $operation = trim($this->input->post('operation', true));
+        $poId = trim($this->input->post('poId', true));
+
         $label = trim($this->input->post('label', true));
         $time_windows = trim($this->input->post('time_windows', true));
 
@@ -348,6 +354,12 @@ class CShipping extends CI_Controller
         if (empty($time_windows)) {
             $time_windows = null;
         }
+        if ($operation == 'RETIRO') {
+            $originCommuneName = 'N/A';
+            $destinationCommuneName = 'N/A';
+            $total_amount = 0;
+            $shipping_type = 'N/A';
+        }
 
         $date_time = date('Y-m-d H:i:s');
         $data = array(
@@ -362,6 +374,7 @@ class CShipping extends CI_Controller
             'receiver_mail' => $receiver_mail,
             'delivery_name' => $delivery_name,
             'observation' => $observation,
+            'operation' => $operation,
             'companies_id' => $companies_id,
             'shipping_states_id' => $shipping_states_id,
             'origin' => $originCommuneName,
@@ -372,7 +385,8 @@ class CShipping extends CI_Controller
         if ($this->modelo->editShipping($data, $id)) {
             $quadminOrder = array(
                 // 'code' => $quadmins_code,
-                'poiId' => 121245261,
+                'operation' => $operation,
+                'poiId' => (int) $poId,
                 // 'quadmins_code' => $quadmins_code,
                 'date' => date('Y-m-d'),
                 'totalAmount' => (int) $total_amount,
@@ -763,7 +777,7 @@ class CShipping extends CI_Controller
         $curl = curl_init();
 
         $endpoint = sprintf("%s/%s", "https://flash-api.quadminds.com/api/v2/pois", $poidCode);
-        
+
         curl_setopt_array($curl, [
             CURLOPT_URL => $endpoint,
             CURLOPT_RETURNTRANSFER => true,
@@ -796,7 +810,7 @@ class CShipping extends CI_Controller
 
         //$data = $point['data'];
         echo json_encode($point);
-        
+
     }
 
     public function validarRetiro()
@@ -840,12 +854,13 @@ class CShipping extends CI_Controller
 
         if ($success == 1) {
             $date_time = date('Y-m-d H:i:s');
-            $dataUpdate = ['shipping_delivery_date' => $date_time, 'delivery_name' => $data[0]['name'].' '.$data[0]['lastname']];
+            $dataUpdate = ['shipping_delivery_date' => $date_time, 'delivery_name' => $data[0]['name'] . ' ' . $data[0]['lastname']];
             //update fecha hora retiro
             $this->db->where('order_nro', $order_nro);
-            if($this->db->update('shipping', $dataUpdate))
+            if ($this->db->update('shipping', $dataUpdate)) {
                 $this->enviarCorreo('Retiro Generado', '<p>Se ha generado correctamente un retiro con número de orden <b>#' . $order_nro . '</b></p>', $userEmail . ',' . $emailReceiver . ',' . $emailCompany, $date_time);
-            
+            }
+
         }
 
         $data = ['message' => $message, 'success' => $success, 'operation' => 2];

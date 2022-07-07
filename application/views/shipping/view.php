@@ -26,8 +26,15 @@
 }
 ?></td>
 		  		    		    	</tr>
-		  		    	    		<tr>
-		  		    	    			<th>Tipo de Envio</th>
+		  		    		    	<tr>
+		  		    		    		<th>Operación</th>
+		  			    				<td><?php if (!empty($shipping[0]['operation'])) {
+    echo $shipping[0]['operation'];
+}
+?></td>
+		  		    		    	</tr>
+		  		    	    		<tr class="onlyTypeRate2">
+		  		    	    			<th>Tamaño</th>
 		  		    	    			<td><?php if (!empty($shipping[0]['shipping_type'])) {echo $shipping[0]['shipping_type'];}?></td>
 		  		    	    		</tr>
 		  		    	    		<tr>
@@ -46,7 +53,7 @@
                                 <?php if (!empty($shipping[0]['address'])) {echo $shipping[0]['address'];}?>
                               </td>
 		  		    	    		</tr>
-                        <tr>
+                        <tr class="onlyTypeRate1">
                             <th>Origen</th>
                             <td>
                                 <?php if (!empty($shipping[0]['origin'])) {
@@ -55,7 +62,7 @@
 ?>
                               </td>
 		  		    	    		</tr>
-                        <tr>
+                        <tr class="onlyTypeRate1">
                             <th>Destino</th>
                             <td>
                                 <?php if (!empty($shipping[0]['destination'])) {
@@ -134,6 +141,13 @@
 
 <script>
     $(document).ready(function() {
+
+        let typeRate = "<?php echo $type_rate; ?>";
+        if(typeRate == 1)
+          $('.onlyTypeRate2').remove();
+        else
+          $('.onlyTypeRate1').remove();
+
       	$('#li-configuration').addClass('menu-open');
       	$('#ul-configuration').css('display', 'block');
 

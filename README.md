@@ -287,3 +287,8 @@
   }
 }
 ´´´´
+### Prueba editar poid 07-07-2022
+- orden POK-2 quadmincode 259392325 poid 121555440 ---> 121557137 prueba ok
+
+### Prueba crear orden por tamaño
+- Usuario jojo FAN-6 quadmin code 259399444

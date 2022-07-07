@@ -26,7 +26,7 @@
                                     <div class="form-group">
                     			  					<label for="input-shipping-date" class="col-sm-2 control-label">Fecha</label>
                     			  					<div class="col-sm-5">
-                    			  						<input type="text" class="form-control" name="input-shipping-date" id="input-shipping-date"
+                    			  						<input type="date" class="form-control" name="input-shipping-date" id="input-shipping-date"
                                         value="<?php if (!empty($shipping[0]['shipping_date'])) {echo $shipping[0]['shipping_date'];}?>"
                                         >
                     			  					</div>
@@ -59,7 +59,7 @@
                     			  					</div>
                     			  				</div>
 
-                                    <div class="form-group selectShippingType">
+                                    <div class="form-group selectShippingType onlyPedido">
                     			  					<label for="shipping-type" class="col-sm-2 control-label">Tamaño</label>
                     			  					<div class="col-sm-5">
                     			  						<select name="select-shipping-type" id="select-shipping-type" class="form-control totalAmount" required>
@@ -126,7 +126,7 @@
                     			  					</div>
                     			  				</div>
 
-                    			  				<div class="form-group selectCommune">
+                    			  				<div class="form-group selectCommune onlyPedido">
                     			  					<label for="origin" class="col-sm-2 control-label">Origen</label>
                     			  					<div class="col-sm-5">
                     			  						<select name="select-origin" id="select-origin" class="form-control totalAmount" required>
@@ -143,7 +143,7 @@
                     			  						</select>
                     			  					</div>
                     			  				</div>
-                    			  				<div class="form-group selectCommune">
+                    			  				<div class="form-group selectCommune onlyPedido">
                     			  					<label for="destination" class="col-sm-2 control-label">Destino</label>
                     			  					<div class="col-sm-5">
                     			  						<select name="select-destination" id="select-destination" class="form-control totalAmount" required>
@@ -287,15 +287,49 @@
 
 	$(document).ready(function()
 	{
+      var typeRate = "<?php echo $type_rate; ?>";
 
     $('#select-operation-type').val("<?php echo $shipping[0]['operation']; ?>");
     let prefix = "<?php print($user_company[0]->prefix);?>";
-    console.log("prefix ",prefix);
     $('#company-prefix').val(prefix);
+
+        $('#select-operation-type').on('change', function() {
+
+		if(this.value == 'PEDIDO')
+		{
+			$('.onlyPedido').toggle();
+			$('.onlyPedido').prop('required',true);
+
+			$('.onlyPedido').css('display','block');
+			$('#select-destination').attr('required', true);
+
+			if (typeRate == "2") {
+				$('.selectCommune').hide();
+				$('.selectCommune').prop('required',false);
+				$('#select-shipping-type').prop('required',true);
+			}
+
+			if (typeRate == "1") {
+				$('.selectShippingType').hide();
+				$('#select-shipping-type').prop('required',false);
+				$('.selectCommune').prop('required',true);
+			}
+		}
+		else
+		{
+			$('.onlyPedido').toggle();
+			$('.onlyPedido').prop('required',false);
+
+			$('.onlyPedido').css('display','none');
+
+			$('#select-destination').attr('required', false);
+			$('#input-total-amount').val('0');
+		}
+
+	});
 
     totalAmount();
     getAllPois();
-      var typeRate = "<?php echo $type_rate; ?>";
 
       if (typeRate == "2") {
 		      $('.selectCommune').hide();
