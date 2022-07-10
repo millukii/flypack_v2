@@ -40,8 +40,7 @@
                             <button class="btn btn-success">Confirmar</button>
                         </form>
                         -->
-                        <div id="qr-reader" style="width: 600px"></div>
-                        <input style="width: 25%;" class="form-control" name="input-scanQR" id="input-scanQR" placeholder="Escanear QR">
+                        <div id="qr-reader" style="width: 100%"></div>
                         <br>
                         <table class="table table-bordered table-striped">
                             <thead>
