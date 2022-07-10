@@ -746,7 +746,7 @@ class CShipping extends CI_Controller
             $order_nro = $res[0]['order_nro'];
         } 
 
-        return $order_nro;
+        echo $order_nro;
     }
 
     public function updateQuadminPoid()
