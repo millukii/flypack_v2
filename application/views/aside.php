@@ -100,6 +100,12 @@ if (!empty($this->session->userdata('options'))) {
                 <i class="fa fa-circle-o"></i> <span>Mis Envíos</span>
               </a>
             </li>
+
+            <li  id="li-my_shippings">
+              <a href="<?php echo site_url() ?>/CShipping/addPickup">
+                <i class="fa fa-circle-o"></i> <span>Generar Retiros</span>
+              </a>
+            </li>
     <?php }?>
     </ul>
   </section>

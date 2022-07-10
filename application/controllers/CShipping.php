@@ -903,4 +903,13 @@ class CShipping extends CI_Controller
 
         mail($to, $asunto, $message, $headers);
     }
+
+    public function addPickup()
+    {
+        $data = ['order_nro' => '', 'operation' => 1, 'success' => 0];
+
+        $this->load->view('header');
+        $this->load->view('aside');
+        $this->load->view('shipping/readQR', $data);
+    }
 }
