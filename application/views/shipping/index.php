@@ -263,7 +263,7 @@
 
     function printPDF()
     {
-      window.frames["iframe-etiqueta"].print();
+      document.getElementById('iframe-etiqueta').contentWindow.print();
     }
 </script>
 
