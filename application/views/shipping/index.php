@@ -60,7 +60,7 @@
         <iframe id="iframe-etiqueta" style="height: 200px;width: 100%;" src="#" title="Etiqueta"></iframe>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-success">Imprimir</button>
+        <button class="btn btn-success" onclick="printPDF();">Imprimir</button>
       </div>
     </div>
   </div>
@@ -247,8 +247,6 @@
 
     function generateLabel(id)
     {
-
-
       $.ajax({
         url: site_url + '/CShipping/getQRLabel',
         type: 'post',
@@ -261,7 +259,11 @@
           $('#modalLabel').modal('show');
         }
       });
+    }
 
+    function printPDF()
+    {
+      window.frames["iframe-etiqueta"].print();
     }
 </script>
 
