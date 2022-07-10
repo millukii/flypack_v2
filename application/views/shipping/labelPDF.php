@@ -116,9 +116,7 @@
           <br>
           <p style="font-size: 25px;">
             <font color="black">
-              <a href="https://flypack.cl/flypack_v2/index.php/CShipping/readQR?qr=<?php echo $order_nro;?>">
-                https://flypack.cl/flypack_v2/index.php/CShipping/readQR?qr=<?php echo $order_nro;?>
-              </a>
+              <?php echo $order_nro;?>
             </font>
           </p>
         </td>
