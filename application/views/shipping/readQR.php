@@ -105,7 +105,7 @@
 
     function onScanSuccess(decodedText, decodedResult) {
         //console.log(`Code scanned = ${decodedText}`, decodedResult);
-        let c = confirm('Confirme la lectura:',decodedText);
+        let c = confirm('Confirme la lectura: '+decodedText);
         if(c)
         {
             $.ajax({
@@ -120,9 +120,6 @@
                 }
             });
         }
-        alert(`Code scanned 0 = ${decodedText}`,decodedResult);
-        alert(`Code scanned 1 = ${decodedText}`);
-        alert('Code scanned 2 = '+decodedText);
     }
     var html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 10, qrbox: 250 });
     html5QrcodeScanner.render(onScanSuccess);
