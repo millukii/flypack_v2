@@ -105,13 +105,13 @@
 
     function onScanSuccess(decodedText, decodedResult) {
         //console.log(`Code scanned = ${decodedText}`, decodedResult);
-        let c = confirm('Confirme la lectura:',decodedResult);
+        let c = confirm('Confirme la lectura:',decodedText);
         if(c)
         {
             $.ajax({
                 url: site_url + '/CShipping/readQR',
                 type: 'post',
-                data: {qr: decodedResult},
+                data: {qr: decodedText},
                 dataType: 'text',
                 success: function(data)
                 {
