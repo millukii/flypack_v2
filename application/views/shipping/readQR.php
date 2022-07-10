@@ -46,8 +46,6 @@
                             <thead>
                                 <tr>
                                     <th>Orden</th>
-                                    <th>Valor</th>
-                                    <th>Destino</th>
                                     <th>Acción</th>
                                 </tr>
                             </thead>
@@ -77,7 +75,7 @@
 <script>
     $(document).ready(function()
     {
-        listar('<?php echo $order_nro;?>');
+        
     });
 
     function listar(order)
@@ -87,8 +85,6 @@
             let tbody = '';
             tbody += '<tr>';
             tbody += '<td id="td-'+order+'">'+order+'</td>';
-            tbody += '<td>5000</td>';
-            tbody += '<td>Destino</td>';
             tbody += '<td><button class="btn btn-danger btn-xs">remover</button></td>';
             tbody += '</tr>';
 
@@ -108,9 +104,22 @@
     }
 
     function onScanSuccess(decodedText, decodedResult) {
-        console.log(`Code scanned = ${decodedText}`, decodedResult);
-
-        alert(`Code scanned = ${decodedText}`, decodedResult);
+        //console.log(`Code scanned = ${decodedText}`, decodedResult);
+        let c = confirm('Confirme la lectura:',decodedResult);
+        if(c)
+        {
+            $.ajax({
+                url: site_url + '/CShipping/readQR',
+                type: 'post',
+                data: {qr: decodedResult},
+                dataType: 'text',
+                success: function(data)
+                {
+                    if(data.length > 0)
+                        listar(data);
+                }
+            });
+        }
     }
     var html5QrcodeScanner = new Html5QrcodeScanner("qr-reader", { fps: 10, qrbox: 250 });
     html5QrcodeScanner.render(onScanSuccess);

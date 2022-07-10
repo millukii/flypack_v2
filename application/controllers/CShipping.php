@@ -715,7 +715,7 @@ class CShipping extends CI_Controller
         $this->load->library('ciqrcode');
 
         //hacemos configuraciones
-        $params['data'] = base_url() . 'index.php/CShipping/readQR?qr=' . $code;
+        $params['data'] = $code;
         $params['level'] = 'H';
         $params['size'] = 10;
         //$params['framSize'] = 3; //tamaño en blanco
@@ -731,25 +731,22 @@ class CShipping extends CI_Controller
 
     public function readQR()
     {
-        $qr = trim($this->input->get('qr', true));
+        $qr = trim($this->input->post('qr', true));
 
         $this->db->select('order_nro');
         $this->db->from('shipping');
         $this->db->where('order_nro', $qr);
+        $this->dv->where('(shipping_delivery_date IS NULL) OR (shipping_delivery_date = "0000-00-00 00:00:00")');
         $this->db->limit(1);
         $res = $this->db->get()->result_array();
 
-        $data = [];
+        $order_nro = '';
 
         if (!empty($res[0]['order_nro'])) {
-            $data = ['order_nro' => $qr, 'operation' => 1, 'success' => 0];
+            $order_nro = $res[0]['order_nro'];
+        } 
 
-            $this->load->view('header2');
-            //$this->load->view('aside');
-            $this->load->view('shipping/readQR', $data);
-        } else {
-            header('Location: ' . base_url());
-        }
+        return $order_nro;
     }
 
     public function updateQuadminPoid()
