@@ -736,7 +736,7 @@ class CShipping extends CI_Controller
         $this->db->select('order_nro');
         $this->db->from('shipping');
         $this->db->where('order_nro', $qr);
-        $this->db->where('(shipping_delivery_date IS NULL) OR (shipping_delivery_date = "0000-00-00 00:00:00")');
+        //$this->db->where('(shipping_delivery_date IS NULL) OR (shipping_delivery_date = "0000-00-00 00:00:00")');
         $this->db->limit(1);
         $res = $this->db->get()->result_array();
 
