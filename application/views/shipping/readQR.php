@@ -88,7 +88,7 @@
             tbody += '<td><button class="btn btn-danger btn-xs">remover</button></td>';
             tbody += '</tr>';
 
-            $('#tbody').html(tbody);
+            $('#tbody').append(tbody);
         }
 
         $('#p-total').html('Total: '+$('#tbody>tr').length);
@@ -115,13 +115,8 @@
                 dataType: 'text',
                 success: function(data)
                 {
-                    alert(decodedText);
-                    alert(data);
                     if(data.length > 0)
-                    {
-                        alert(data);
                         listar(data);
-                    }
                 }
             });
         }
