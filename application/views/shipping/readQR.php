@@ -81,6 +81,7 @@
     function removerOrden(order)
     {
         $('#tr-'+order).remove();
+        $('#p-total').html('Total: '+$('#tbody>tr').length);
     }
 
     function listar(order)
