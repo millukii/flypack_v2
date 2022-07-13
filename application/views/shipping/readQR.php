@@ -78,14 +78,19 @@
         
     });
 
+    function removerOrden(order)
+    {
+        $('#tr-'+order).remove();
+    }
+
     function listar(order)
     {
         if($("#td-"+order).length == false)
         {
             let tbody = '';
-            tbody += '<tr>';
-            tbody += '<td id="td-'+order+'">'+order+'</td>';
-            tbody += '<td><button class="btn btn-danger btn-xs">remover</button></td>';
+            tbody += '<tr id="tr-'+order+'">';
+            tbody += '<td>'+order+'</td>';
+            tbody += '<td><button class="btn btn-danger btn-xs" onclick="removerOrden('+order+');">remover</button></td>';
             tbody += '</tr>';
 
             $('#tbody').append(tbody);
