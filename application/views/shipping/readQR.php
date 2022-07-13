@@ -122,7 +122,11 @@
                 success: function(data)
                 {
                     if(data.length > 0)
+                    {
+                        alert(data);
                         listar(data);
+                    }
+                        
                 }
             });
         }
