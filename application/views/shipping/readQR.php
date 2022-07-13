@@ -121,7 +121,6 @@
                 dataType: 'text',
                 success: function(data)
                 {
-                    alert(data);
                     if(data.length > 0)
                     {
                         listar(data);
