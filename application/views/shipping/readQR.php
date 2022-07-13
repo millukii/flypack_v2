@@ -91,7 +91,7 @@
             let tbody = '';
             tbody += '<tr id="tr-'+order+'">';
             tbody += '<td>'+order+'</td>';
-            tbody += '<td><button class="btn btn-danger btn-xs" onclick="removerOrden('+order+');">remover</button></td>';
+            tbody += '<td><button id="'+order+'" class="btn btn-danger btn-xs" onclick="removerOrden(this.id);">remover</button></td>';
             tbody += '</tr>';
 
             $('#tbody').append(tbody);
