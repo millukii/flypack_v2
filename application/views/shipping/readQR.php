@@ -85,7 +85,7 @@
 
     function listar(order)
     {
-        if($("#td-"+order).length == false)
+        if($("#tr-"+order).length == false)
         {
             let tbody = '';
             tbody += '<tr id="tr-'+order+'">';
