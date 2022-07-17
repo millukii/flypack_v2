@@ -37,8 +37,8 @@
 
                     			  				<div class="form-group">
                     			  					<label for="input-shipping-date" class="col-sm-2 control-label">Fecha</label>
-                    			  					<div class="col-sm-5">
-                    			  						<input type="date" class="form-control" name="input-shipping-date" id="input-shipping-date" required value="<?php echo date('Y-m-d'); ?>">
+                    			  					<div class="col-sm-2">
+                    			  						<input type="date" class="form-control" name="input-shipping-date" id="input-shipping-date" required value="<?php echo date('Y-m-d'); ?>" disabled>
                     			  					</div>
                     			  				</div>
 
@@ -47,7 +47,7 @@
                     			  					<div class="col-sm-1">
                                         		<input type="text" class="form-control" name="company-prefix" id="company-prefix"   disabled max="10">
                                         </div>
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-2">
                     			  						    <input type="text" class="form-control" name="input-order-nro" id="input-order-nro"    required>
                     			  					</div>
                     			  				</div>
@@ -80,7 +80,7 @@
 
                     			  				<div class="form-group">
                     			  					<label for="address" class="col-sm-2 control-label">Dirección</label>
-                    			  					<div class="col-sm-8">
+                    			  					<div class="col-sm-5">
                     			  						<input type="text" class="form-control" name="input-address" id="input-address" list="list-address" required>
 														<datalist id="list-address"></datalist>
 													          </div>
@@ -93,7 +93,7 @@
                     			  				</div>
                                      <div class="form-group">
                     			  					<label for="receiver-name" class="col-sm-2 control-label">Receptor</label>
-                    			  					<div class="col-sm-10">
+                    			  					<div class="col-sm-5">
                     			  						<input type="text" class="form-control" name="input-receiver-name" id="input-receiver-name" list="list-name" required>
 														  <datalist id="list-name"></datalist>
                     			  					</div>
@@ -435,6 +435,19 @@ function createPoid() {
   	}
 	$(document).ready(function()
 	{
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0 so need to add 1 to make it 1!
+    var yyyy = today.getFullYear();
+    if(dd<10){
+      dd='0'+dd
+    }
+    if(mm<10){
+      mm='0'+mm
+    }
+
+    today = yyyy+'-'+mm+'-'+dd;
+    document.getElementById("input-shipping-date").setAttribute("min", today);
 
     let prefix = "<?php print($user_company[0]->prefix);?>";
     $('#company-prefix').val(prefix);

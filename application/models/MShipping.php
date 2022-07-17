@@ -25,7 +25,6 @@ class MShipping extends CI_Model
 
         return $retornar;
     }
-
     public function getShipping_($id)
     {
         $this->db->select(
@@ -150,6 +149,8 @@ class MShipping extends CI_Model
         $this->db->or_like('shipping.shipping_type', $search);
         $this->db->or_like('shipping.total_amount', $search);
         $this->db->or_like('shipping.receiver_phone', $search);
+        $this->db->or_like('shipping.delivery_name', $search);
+
         $this->db->or_like('companies.razon', $search);
 
         switch ($by) {

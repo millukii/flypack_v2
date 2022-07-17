@@ -87,12 +87,25 @@ if (!empty($this->session->userdata('options'))) {
               </a>
             </li>
 
+
+             <?php if ($this->session->userdata("rol_id") == 1) {?>
             <li  id="li-prices">
               <a href="<?php echo site_url() ?>/CPrices/index">
                 <i class="fa fa-circle-o"></i> <span>Precios</span>
 
               </a>
             </li>
+            <?php }?>
+
+            <?php if ($this->session->userdata("rol_id") == 2) {?>
+            <li  id="li-prices">
+              <a href="<?php echo site_url() ?>/CPrices/indexclient">
+                <i class="fa fa-circle-o"></i> <span>Precios</span>
+
+              </a>
+            </li>
+            <?php }?>
+
     <?php }?>
         <?php if ($this->session->userdata("rol_id") == 1 || $this->session->userdata("rol_id") == 3) {?>
             <li  id="li-my_shippings">

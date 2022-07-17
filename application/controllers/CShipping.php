@@ -9,6 +9,8 @@ class CShipping extends CI_Controller
         ini_set('date.timezone', 'America/Santiago');
         $this->load->model('MShipping', 'modelo');
         $this->load->model('MSession', 'modelo_session');
+        $this->load->model('MUsers', 'modelo');
+
     }
 
     public function index()
@@ -27,7 +29,20 @@ class CShipping extends CI_Controller
         $by = $this->input->post('order')['0']['column'];
         $order = $this->input->post('order')['0']['dir'];
 
-        $result = $this->modelo->getShipping($start, $length, $search, $order, $by);
+        $userId = $this->session->userdata('users_id');
+        $user = $this->modelo->getUser($user[0]);
+
+        $rol = $user->rol_id;
+        $name = $user->name . '' . $user->lastname;
+
+        $result = null;
+        if ($rol == 3) {
+            $result = $this->modelo->getShipping($start, $length, $name, $order, $by);
+        } else {
+            $result = $this->modelo->getShipping($start, $length, $search, $order, $by);
+
+        }
+
         $json_data = array(
             "draw" => intval($this->input->post('draw')),
             "recordsTotal" => intval($result['numDataTotal']),
@@ -204,8 +219,17 @@ class CShipping extends CI_Controller
         if (empty($merchant_id)) {
             $merchant_id = 0;
         }
-
+        //evaluar sin son pasadas las 22:30
+        $hour = date('H:i:s');
         $date_time = date('Y-m-d H:i:s');
+
+        if (strtotime($hour) < strtotime('22:30')) {
+            $next_date = date("Y-m-d", strtotime($shipping_date . "+ 1 days"));
+            list($year, $month, $day) = explode("-", $next_date);
+            // Display the date
+            $shipping_date = sprintf("%s-%s-%s", $year, $month, $day);
+
+        }
 
         $user = $this->session->userdata('users_id');
         $companies_id = $this->session->userdata('companies_id');
@@ -744,7 +768,7 @@ class CShipping extends CI_Controller
 
         if (!empty($res[0]['order_nro'])) {
             $order_nro = $res[0]['order_nro'];
-        } 
+        }
 
         echo $order_nro;
     }

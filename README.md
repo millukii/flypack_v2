@@ -159,7 +159,20 @@
 53. revisar y validar el flujo desde la creación de empresa (probar los campos nuevos, email, prefijo), verificar que se cree como merchant en quadmin, verificar el usuario de la empresa creada, es decir que te desloguees del admin y revises que este operativo ese usuario. done
 54. con el usuario creado y logueado ir a hacer 1 orden de retiro y otra de pedido done
 55. Agregar campo no editable al mismo nivel que numero de orden para el prefijo done
-
+56. Acotar fecha acorde a horario, hasta las 22.30 quedan para el siguiente día y 
+  pasado esa hora para el subsiguiente día. de lunes a sábado. fecha no es editable. pero si que le permita editarla a futuro, como mínima fecha considerar la inicial. done
+57. Armar vistas por rol (administrador ve todo, cliente ve sus ordenes de transportes y su lista de precios, repartidor solo ve las ordenes de transporte que el haya repartido y la opción de escanear para retiros
+  - admin ve todo 
+  - clientes ordenes de transporte y precios
+  - repartidor mis envios y generar retiros
+58. Precios tendra 2 posibles vistas como admin y como cliente si es cliente desaparecen los botones y se muestran solo los precios de su empresa. done
+59. Validar que no se vean las queries entre usuarios de distintas empresas excepto por el administrador
+60. Cambiar footer y cambiar iconos
+61. En el editar la fecha es editable, setear min con la fecha de la base de datos
+62. Los domingo no se pueden agendar en orden de transporte
+63. Repartidores y administradores pertenecen a la empresa flypack
+de id 1
+64. Registro siempre presente
 ### Prueba 06-07-2022
 - Empresa Pokefan & Co
 - Merchant Quadmin 3493
