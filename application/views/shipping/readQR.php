@@ -46,7 +46,14 @@ if ($operation != 2 && $success != 1) {
                                 </tr>
                             </thead>
                             <tbody id="tbody">
-
+                                <tr id="tr-test8000" class="tr-orders">
+                                    <td>test8000</td>
+                                    <td><button class="btn btn-danger">remover</button></td>
+                                </tr>
+                                <tr id="tr-test8001" class="tr-orders">
+                                    <td>test8001</td>
+                                    <td><button class="btn btn-danger">remover</button></td>
+                                </tr>
                             </tbody>
                         </table>
                         <p id="p-total">Total: </p>
@@ -85,7 +92,7 @@ if ($operation != 2 && $success != 1) {
         if($("#tr-"+order).length == false)
         {
             let tbody = '';
-            tbody += '<tr id="tr-'+order+'">';
+            tbody += '<tr id="tr-'+order+'" class="tr-orders">';
             tbody += '<td>'+order+'</td>';
             tbody += '<td><button id="'+order+'" class="btn btn-danger btn-xs" onclick="removerOrden(this.id);">remover</button></td>';
             tbody += '</tr>';
@@ -101,7 +108,27 @@ if ($operation != 2 && $success != 1) {
         let c = confirm('Confirme el Retiro de todas las ordenes listadas.');
         if(c)
         {
-            alert('confirmado');
+            //alert('confirmado');
+            let orders = '';
+            let elements = document.getElementsByClassName('tr-orders');
+            let sep = '';
+
+            for(let i=0; i< elements.length; i++){
+                orders += sep + $(elements[i]).attr('id').replace('tr-', '');
+                sep = ',';
+            }   
+            
+            $.ajax({
+                url: site_url + '/CShipping/notifications',
+                type: 'post',
+                data: {orders: orders},
+                dataType: 'text',
+                success: function(data)
+                {
+                    alert('Notificaciones enviadas');
+                    location.reload();
+                }
+            });
         }
     }
 

@@ -925,6 +925,27 @@ class CShipping extends CI_Controller
         mail($to, $asunto, $message, $headers);
     }
 
+    private function enviarCorreo2($asunto, $mensaje, $emails)
+    {
+        /*
+        no-responder@flypack.cl
+        .&sNWO2Qt&!J
+         */
+        $to = $emails;
+
+        $message = $mensaje;
+
+        // Always set content-type when sending HTML email
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+
+        // More headers
+        $headers .= 'From: <no-responder@flypack.cl>' . "\r\n";
+        //$headers .= 'Cc: myboss@example.com' . "\r\n";
+
+        mail($to, $asunto, $message, $headers);
+    }
+
     public function addPickup()
     {
         $data = ['order_nro' => '', 'operation' => 1, 'success' => 0];
@@ -932,5 +953,49 @@ class CShipping extends CI_Controller
         $this->load->view('header');
         $this->load->view('aside');
         $this->load->view('shipping/readQR', $data);
+    }
+
+    public function notifications()
+    {
+        $orders = trim($this->input->post('orders', true));
+        $orders_arr = explode(',', $orders);
+        $companyEmail = '';
+        $userEmail = $this->session->userdata('email');
+        if(count($orders_arr) > 0)
+        {
+            $this->db->select('companies.email as email');
+            $this->db->from('companies');
+            $this->db->join('shipping','shipping.companies_id=companies.id');
+            $this->db->where('shipping.order_nro', $orders_arr[0]);
+            $this->db->limit(1);
+            $res = $this->db->get()->result_array();
+            if(!empty($res[0]['email']))
+            {
+                $companyEmail = $res[0]['email'];
+            }
+
+            $this->enviarCorreo2("Nuevo retiro de paquetes ".date('d-m-Y'), "Se ha generado un nuevo retiro 
+            con fecha ".date('d-m-Y')." y con un total de ".count($orders_arr)." paquetes por el repartidor ".$this->session->userdata('name')." ".$this->session->userdata('lastname'), $companyEmail.','.$userEmail);
+            
+            $this->enviarCorreo2("Nuevo retiro de paquetes ".date('d-m-Y'), "Se ha generado un nuevo retiro 
+            con fecha ".date('d-m-Y')." y con un total de ".count($orders_arr)." paquetes por el repartidor ".$this->session->userdata('name')." ".$this->session->userdata('lastname'), $userEmail);
+            $date_time = date('d-m-Y H:i:s');
+            foreach($orders_arr as $o)
+            {
+                //enviarCorreo($asunto, $mensaje, $emails, $date_time);
+                $this->db->select('receiver_mail');
+                $this->db->from('shipping');
+                $this->db->where('order_nro', $o);
+                $this->db->limit(1);
+                $res = $this->db->get()->result_array();
+                if(!empty($res[0]['receiver_mail'])){
+                    $res = $res[0]['receiver_mail'];
+
+                    $this->enviarCorreo('Retiro Generado', '<p>Se ha generado correctamente un retiro con número de orden <b>#' . $o . '</b></p>',$res, $date_time);
+                }
+            }
+        }
+
+        echo 1;
     }
 }
