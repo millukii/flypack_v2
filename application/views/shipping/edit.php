@@ -4,7 +4,7 @@
 			<div class="col-sm-12">
 				<div class="box box-success">
 					<div class="box-header ui-sortable-handle">
-					    <i class="fa fa-users"></i>
+					    <i class="fa fa-rocket"></i>
 						<h3 class="box-title">Editar Orden de Transporte # <?php if (!empty($shipping[0]['id'])) {
     echo $shipping[0]['id'];
 }
@@ -28,6 +28,7 @@
                     			  					<div class="col-sm-5">
                     			  						<input type="date" class="form-control" name="input-shipping-date" id="input-shipping-date"
                                         value="<?php if (!empty($shipping[0]['shipping_date'])) {echo $shipping[0]['shipping_date'];}?>"
+                                        min="<?php if (!empty($shipping[0]['shipping_date'])) {echo $shipping[0]['shipping_date'];}?>"
                                         >
                     			  					</div>
                     			  				</div>

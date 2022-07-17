@@ -4,25 +4,21 @@
       <div class="col-sm-12">
         <div class="box box-success">
           <div class="box-header ui-sortable-handle">
-              <i class="fa fa-users"></i>
+              <i class="fa fa-rocket"></i>
             <?php
-            if($operation == 1)
-            {
-            ?>
+if ($operation == 1) {
+    ?>
                 <h3 class="box-title">Generar retiro de ordenes</h3>
             <?php
-            }
-            else if($operation == 2)
-            {?>
-                <h3 class="box-title"><?php echo $message;?></h3>
+} else if ($operation == 2) {?>
+                <h3 class="box-title"><?php echo $message; ?></h3>
             <?php
-            }
-            ?>
+}
+?>
             </div>
             <?php
-            if($operation != 2 && $success != 1)
-            {
-            ?>
+if ($operation != 2 && $success != 1) {
+    ?>
                 <div class="box-body">
                     <section class="content">
                         <span></span>
@@ -57,9 +53,9 @@
                         <button class="btn btn-success" onclick="enviarRetiros();">Enviar</button>
                     </section>
                 </div>
-            <?php  
-            }
-            ?>
+            <?php
+}
+?>
             <div class="box-footer"></div>
         </div>
       </div>
@@ -70,12 +66,12 @@
 <!-- include the library -->
 <script src="https://unpkg.com/html5-qrcode@2.0.9/dist/html5-qrcode.min.js"></script>
 
-<?php $this->view('footer'); ?>
+<?php $this->view('footer');?>
 
 <script>
     $(document).ready(function()
     {
-        
+
     });
 
     function removerOrden(order)
@@ -125,7 +121,7 @@
                     {
                         listar(data);
                     }
-                        
+
                 }
             });
         }

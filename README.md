@@ -167,8 +167,8 @@
   - repartidor mis envios y generar retiros
 58. Precios tendra 2 posibles vistas como admin y como cliente si es cliente desaparecen los botones y se muestran solo los precios de su empresa. done
 59. Validar que no se vean las queries entre usuarios de distintas empresas excepto por el administrador
-60. Cambiar footer y cambiar iconos
-61. En el editar la fecha es editable, setear min con la fecha de la base de datos
+60. Cambiar footer y cambiar iconos done
+61. En el editar la fecha es editable, setear min con la fecha de la base de datos. done
 62. Los domingo no se pueden agendar en orden de transporte
 63. Repartidores y administradores pertenecen a la empresa flypack
 de id 1

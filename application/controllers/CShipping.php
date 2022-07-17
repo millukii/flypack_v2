@@ -9,7 +9,7 @@ class CShipping extends CI_Controller
         ini_set('date.timezone', 'America/Santiago');
         $this->load->model('MShipping', 'modelo');
         $this->load->model('MSession', 'modelo_session');
-        $this->load->model('MUsers', 'modelo');
+        $this->load->model('MUsers', 'modelo_users');
 
     }
 
@@ -30,10 +30,10 @@ class CShipping extends CI_Controller
         $order = $this->input->post('order')['0']['dir'];
 
         $userId = $this->session->userdata('users_id');
-        $user = $this->modelo->getUser($user[0]);
+        $user = $this->modelo_users->getUser($userId);
 
-        $rol = $user->rol_id;
-        $name = $user->name . '' . $user->lastname;
+        $rol = $user[0]['rol_id'];
+        $name = $user[0]['name'] . '' . $user[0]['lastname'];
 
         $result = null;
         if ($rol == 3) {

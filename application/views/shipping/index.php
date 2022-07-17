@@ -4,7 +4,7 @@
       <div class="col-sm-12">
         <div class="box box-success">
           <div class="box-header ui-sortable-handle">
-              <i class="fa fa-users"></i>
+              <i class="fa fa-rocket"></i>
             <h3 class="box-title">Ordenes de Transporte</h3>
             </div>
 
