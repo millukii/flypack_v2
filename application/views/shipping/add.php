@@ -447,7 +447,11 @@ function createPoid() {
     }
 
     today = yyyy+'-'+mm+'-'+dd;
-    document.getElementById("input-shipping-date").setAttribute("min", today);
+
+    var inputDate = document.getElementById("input-shipping-date");
+    inputDate.setAttribute("min", today);
+
+    
 
     let prefix = "<?php print($user_company[0]->prefix);?>";
     $('#company-prefix').val(prefix);

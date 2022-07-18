@@ -103,6 +103,16 @@
 
 <script>
 	$(document).ready(function() {
+
+    //select-roles_id
+
+    $('#select-roles_id').on('change', function() {
+      if ($('#select-roles_id').val() ==3 || $('#select-roles_id').val() == 2 ){
+          $('#select-companies_id').prop('disabled', true);
+          $('#select-companies_id').val(1);
+      }
+    });
+
 		$("#form-users").submit(function(event) {
 			event.preventDefault();
 
