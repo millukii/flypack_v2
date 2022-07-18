@@ -302,7 +302,7 @@ class MShipping extends CI_Model
 
     public function getCompanyOfUser($id)
     {
-        $this->db->select('companies.id,companies.type_rate, companies.merchant_id,companies.razon, companies.city_id, city.city, companies.communes_id,communes.commune, companies.address, companies.prefix');
+        $this->db->select('companies.id as id,companies.type_rate, companies.merchant_id,companies.razon, companies.city_id, city.city, companies.communes_id,communes.commune, companies.address, companies.prefix');
         $this->db->from('companies');
         $this->db->join('city', 'city.id  = companies.city_id');
         $this->db->join('communes', 'communes.id  = companies.communes_id');

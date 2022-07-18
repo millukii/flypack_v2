@@ -223,20 +223,18 @@ class CShipping extends CI_Controller
         $hour = date('H:i:s');
         $date_time = date('Y-m-d H:i:s');
 
-        $next_date = date_create("2022-07-24");
-        echo sprintf("%s", $next_date);
-
+        $next_date = null;
         if (strtotime($hour) > strtotime('22:30')) {
             $next_date = date("Y-m-d", strtotime($shipping_date . "+ 2 days"));
         } else {
             $next_date = date("Y-m-d", strtotime($shipping_date . "+ 1 days"));
         }
+/*
+$evalDay = date("M", strtotime($next_date));
 
-        $evalDay = date("M", strtotime($next_date));
-
-        if ($evalDay == 'Sun') {
-            $next_date = date("Y-m-d", strtotime($shipping_date . "+ 1 days"));
-        }
+if ($evalDay == 'Sun') {
+$next_date = date("Y-m-d", strtotime($shipping_date . "+ 1 days"));
+} */
         list($year, $month, $day) = explode("-", $next_date);
 
         // Display the date {

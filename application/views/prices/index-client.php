@@ -41,7 +41,7 @@
 <script>
 
     $(document).ready(function() {
-     let company = "<?php print($user_company[0]->id);?>";
+     let company = "<?php echo $user_company[0]->id; ?>";
       loadDataTable();
 
     });
@@ -52,7 +52,7 @@
       $.ajax({
         url: site_url + '/CPrices/getType_Rate',
         type: 'post',
-        data: {company: $company},
+        data: {company: company},
         success: function(data)
         {
           if(data == '1')

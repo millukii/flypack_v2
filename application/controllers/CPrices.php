@@ -9,6 +9,9 @@ class CPrices extends CI_Controller
     {
         parent::__construct();
         $this->load->model('MPrices', 'modelo');
+        $this->load->model('MUsers', 'modeloUsers');
+        $this->load->model('MShipping', 'modeloShipping');
+
         $this->letters = [
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
             'AA', 'AB', 'AC', 'AD', 'AE', 'AF', 'AG', 'AH', 'AI', 'AJ', 'AK', 'AL', 'AM', 'AN', 'AO', 'AP', 'AQ', 'AR', 'AS', 'AT', 'AU', 'AV', 'AW', 'AX', 'AY', 'AZ',
@@ -33,11 +36,14 @@ class CPrices extends CI_Controller
 
         $userId = $this->session->userdata('users_id');
         $companies_id = $this->session->userdata('companies_id');
-        $userCompany = $this->modelo->getCompanyOfUser($userId);
+        $userCompany = $this->modeloShipping->getCompanyOfUser($userId);
 
-        $user = $this->modelo->getUser($user);
+        print_r($userCompany);
+        //$user = $this->modeloUsers->getUser($userId);
+        $companies = [$userCompany];
 
         $data = array(
+            'user_company' => $userCompany,
             'companies' => $companies,
         );
 
