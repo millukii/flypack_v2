@@ -223,13 +223,25 @@ class CShipping extends CI_Controller
         $hour = date('H:i:s');
         $date_time = date('Y-m-d H:i:s');
 
-        if (strtotime($hour) < strtotime('22:30')) {
-            $next_date = date("Y-m-d", strtotime($shipping_date . "+ 1 days"));
-            list($year, $month, $day) = explode("-", $next_date);
-            // Display the date
-            $shipping_date = sprintf("%s-%s-%s", $year, $month, $day);
+        $next_date = date_create("2022-07-24");
+        echo sprintf("%s", $next_date);
 
+        if (strtotime($hour) > strtotime('22:30')) {
+            $next_date = date("Y-m-d", strtotime($shipping_date . "+ 2 days"));
+        } else {
+            $next_date = date("Y-m-d", strtotime($shipping_date . "+ 1 days"));
         }
+
+        $evalDay = date("M", strtotime($next_date));
+
+        if ($evalDay == 'Sun') {
+            $next_date = date("Y-m-d", strtotime($shipping_date . "+ 1 days"));
+        }
+        list($year, $month, $day) = explode("-", $next_date);
+
+        // Display the date {
+        $shipping_date = sprintf("%s-%s-%s", $year, $month, $day);
+        echo $shipping_date;
 
         $user = $this->session->userdata('users_id');
         $companies_id = $this->session->userdata('companies_id');
@@ -715,7 +727,7 @@ class CShipping extends CI_Controller
         echo json_encode($data, JSON_UNESCAPED_SLASHES);
     }
 
-    private function createPDF($data)
+    public function createPDF($data)
     {
         //PDF
         $path = 'files/' . $this->session->userdata('rut') . '/' . date('Ym') . '/';
@@ -734,7 +746,7 @@ class CShipping extends CI_Controller
         return $path . $filename;
     }
 
-    private function createQR($code)
+    public function createQR($code)
     {
         $this->load->library('ciqrcode');
 
@@ -891,7 +903,7 @@ class CShipping extends CI_Controller
 
     }
 
-    private function enviarCorreo($asunto, $mensaje, $emails, $date_time)
+    public function enviarCorreo($asunto, $mensaje, $emails, $date_time)
     {
         /*
         no-responder@flypack.cl
@@ -925,7 +937,7 @@ class CShipping extends CI_Controller
         mail($to, $asunto, $message, $headers);
     }
 
-    private function enviarCorreo2($asunto, $mensaje, $emails)
+    public function enviarCorreo2($asunto, $mensaje, $emails)
     {
         /*
         no-responder@flypack.cl
@@ -961,37 +973,34 @@ class CShipping extends CI_Controller
         $orders_arr = explode(',', $orders);
         $companyEmail = '';
         $userEmail = $this->session->userdata('email');
-        if(count($orders_arr) > 0)
-        {
+        if (count($orders_arr) > 0) {
             $this->db->select('companies.email as email');
             $this->db->from('companies');
-            $this->db->join('shipping','shipping.companies_id=companies.id');
+            $this->db->join('shipping', 'shipping.companies_id=companies.id');
             $this->db->where('shipping.order_nro', $orders_arr[0]);
             $this->db->limit(1);
             $res = $this->db->get()->result_array();
-            if(!empty($res[0]['email']))
-            {
+            if (!empty($res[0]['email'])) {
                 $companyEmail = $res[0]['email'];
             }
 
-            $this->enviarCorreo2("Nuevo retiro de paquetes ".date('d-m-Y'), "Se ha generado un nuevo retiro 
-            con fecha ".date('d-m-Y')." y con un total de ".count($orders_arr)." paquetes por el repartidor ".$this->session->userdata('name')." ".$this->session->userdata('lastname'), $companyEmail.','.$userEmail);
-            
-            $this->enviarCorreo2("Nuevo retiro de paquetes ".date('d-m-Y'), "Se ha generado un nuevo retiro 
-            con fecha ".date('d-m-Y')." y con un total de ".count($orders_arr)." paquetes por el repartidor ".$this->session->userdata('name')." ".$this->session->userdata('lastname'), $userEmail);
+            $this->enviarCorreo2("Nuevo retiro de paquetes " . date('d-m-Y'), "Se ha generado un nuevo retiro
+            con fecha " . date('d-m-Y') . " y con un total de " . count($orders_arr) . " paquetes por el repartidor " . $this->session->userdata('name') . " " . $this->session->userdata('lastname'), $companyEmail . ',' . $userEmail);
+
+            $this->enviarCorreo2("Nuevo retiro de paquetes " . date('d-m-Y'), "Se ha generado un nuevo retiro
+            con fecha " . date('d-m-Y') . " y con un total de " . count($orders_arr) . " paquetes por el repartidor " . $this->session->userdata('name') . " " . $this->session->userdata('lastname'), $userEmail);
             $date_time = date('d-m-Y H:i:s');
-            foreach($orders_arr as $o)
-            {
+            foreach ($orders_arr as $o) {
                 //enviarCorreo($asunto, $mensaje, $emails, $date_time);
                 $this->db->select('receiver_mail');
                 $this->db->from('shipping');
                 $this->db->where('order_nro', $o);
                 $this->db->limit(1);
                 $res = $this->db->get()->result_array();
-                if(!empty($res[0]['receiver_mail'])){
+                if (!empty($res[0]['receiver_mail'])) {
                     $res = $res[0]['receiver_mail'];
 
-                    $this->enviarCorreo('Retiro Generado', '<p>Se ha generado correctamente un retiro con número de orden <b>#' . $o . '</b></p>',$res, $date_time);
+                    $this->enviarCorreo('Retiro Generado', '<p>Se ha generado correctamente un retiro con número de orden <b>#' . $o . '</b></p>', $res, $date_time);
                 }
             }
         }
