@@ -46,14 +46,7 @@ if ($operation != 2 && $success != 1) {
                                 </tr>
                             </thead>
                             <tbody id="tbody">
-                                <tr id="tr-test8000" class="tr-orders">
-                                    <td>test8000</td>
-                                    <td><button class="btn btn-danger">remover</button></td>
-                                </tr>
-                                <tr id="tr-test8001" class="tr-orders">
-                                    <td>test8001</td>
-                                    <td><button class="btn btn-danger">remover</button></td>
-                                </tr>
+                                
                             </tbody>
                         </table>
                         <p id="p-total">Total: </p>
