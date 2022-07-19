@@ -39,9 +39,9 @@
 <?php $this->view('footer');?>
 
 <script>
-
+  var company;
     $(document).ready(function() {
-     let company = "<?php echo $user_company[0]->id; ?>";
+      company = "<?php echo $user_company[0]->id; ?>";
       loadDataTable();
 
     });
@@ -78,7 +78,7 @@
                 'ajax': {
                   "url": site_url + "/CPrices/datatable",
                   "type":"POST",
-                  "data":{company: $company},
+                  "data":{company: company},
                 },
                 "columns": [
                   { "data": "ID"},
@@ -152,7 +152,7 @@
                 'ajax': {
                   "url": site_url + "/CPrices/datatable",
                   "type":"POST",
-                  "data":{company: $company},
+                  "data":{company: company},
                 },
                 "columns": [
                   { "data": "ID"},

@@ -38,7 +38,6 @@ class CPrices extends CI_Controller
         $companies_id = $this->session->userdata('companies_id');
         $userCompany = $this->modeloShipping->getCompanyOfUser($userId);
 
-        print_r($userCompany);
         //$user = $this->modeloUsers->getUser($userId);
         $companies = [$userCompany];
 
