@@ -139,7 +139,10 @@ if ($operation != 2 && $success != 1) {
                 {
                     if(data.length > 0)
                     {
-                        listar(data);
+                        if($('#tbody>tr').length < 10)
+                            listar(data);
+                        else
+                            alert('Solo se pueden enviar de 10 ordenes como máximo.');
                     }
 
                 }

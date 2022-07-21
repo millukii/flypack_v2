@@ -967,42 +967,59 @@ $next_date = date("Y-m-d", strtotime($shipping_date . "+ 1 days"));
 
     public function notifications()
     {
+        
         $orders = trim($this->input->post('orders', true));
         $orders_arr = explode(',', $orders);
         $companyEmail = '';
+        $companyFantasy = '';
         $userEmail = $this->session->userdata('email');
         if (count($orders_arr) > 0) {
-            $this->db->select('companies.email as email');
-            $this->db->from('companies');
-            $this->db->join('shipping', 'shipping.companies_id=companies.id');
-            $this->db->where('shipping.order_nro', $orders_arr[0]);
-            $this->db->limit(1);
-            $res = $this->db->get()->result_array();
-            if (!empty($res[0]['email'])) {
-                $companyEmail = $res[0]['email'];
-            }
-
-            $this->enviarCorreo2("Nuevo retiro de paquetes " . date('d-m-Y'), "Se ha generado un nuevo retiro
-            con fecha " . date('d-m-Y') . " y con un total de " . count($orders_arr) . " paquetes por el repartidor " . $this->session->userdata('name') . " " . $this->session->userdata('lastname'), $companyEmail . ',' . $userEmail);
-
-            $this->enviarCorreo2("Nuevo retiro de paquetes " . date('d-m-Y'), "Se ha generado un nuevo retiro
-            con fecha " . date('d-m-Y') . " y con un total de " . count($orders_arr) . " paquetes por el repartidor " . $this->session->userdata('name') . " " . $this->session->userdata('lastname'), $userEmail);
             $date_time = date('d-m-Y H:i:s');
-            foreach ($orders_arr as $o) {
+            $date_time2 = date('Y-m-d H:i:s');
+
+            foreach($orders_arr as $order)
+            {
+                $this->db->select('companies.email as email, companies.fantasy as fantasy');
+                $this->db->from('companies');
+                $this->db->join('shipping', 'shipping.companies_id=companies.id');
+                $this->db->where('shipping.order_nro', $order);
+                $this->db->limit(1);
+                $res = $this->db->get()->result_array();
+                if (!empty($res[0]['email'])) {
+                    $companyEmail = $res[0]['email'];
+                }
+                if (!empty($res[0]['fantasy'])) {
+                    $companyFantasy = $res[0]['fantasy'];
+                }
                 //enviarCorreo($asunto, $mensaje, $emails, $date_time);
                 $this->db->select('receiver_mail');
                 $this->db->from('shipping');
-                $this->db->where('order_nro', $o);
+                $this->db->where('order_nro', $order);
                 $this->db->limit(1);
                 $res = $this->db->get()->result_array();
                 if (!empty($res[0]['receiver_mail'])) {
                     $res = $res[0]['receiver_mail'];
 
-                    $this->enviarCorreo('Retiro Generado', '<p>Se ha generado correctamente un retiro con número de orden <b>#' . $o . '</b></p>', $res, $date_time);
+                    $this->addDeliveryDate($order, $date_time2);
+                    $this->enviarCorreo('Retiro Generado', '<p>Se ha generado correctamente un retiro con número de orden <b>#' . $order . '</b></p>', $res, $date_time);
                 }
             }
+
+            $this->enviarCorreo2("Nuevo retiro de paquetes " . date('d-m-Y')." en ".strtoupper($companyFantasy), "Se ha generado un nuevo retiro
+                con fecha " . date('d-m-Y') . " y con un total de " . count($orders_arr) . " paquetes por el repartidor " . $this->session->userdata('name') . " " . $this->session->userdata('lastname'), $companyEmail . ',' . $userEmail.', antonio.flypack@gmail.com');
+            
         }
 
         echo 1;
+    }
+
+    private function addDeliveryDate($order, $date_time){
+        
+        $data = ['shipping_delivery_date' => $date_time];
+        $this->db->where('order_nro', $order);
+        if ($this->db->update('shipping', $data)) 
+            return true;
+        else
+            return false;
     }
 }

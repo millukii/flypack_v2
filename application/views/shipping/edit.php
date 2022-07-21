@@ -403,34 +403,52 @@
 		let origin = document.getElementById('select-origin');
 		let originSelectedText = origin.options[origin.selectedIndex].text;
 		let destination = document.getElementById('select-destination');
-    let size = document.getElementById('select-shipping-type');
-    let sizeSelectedText = size.options[size.selectedIndex].text;
+    	let size = document.getElementById('select-shipping-type');
+    	let sizeSelectedText = size.options[size.selectedIndex].text;
 		let destinationSelectedText = destination.options[destination.selectedIndex].text;
 
-    let typeRate = "<?php print($type_rate);?>";
+    	let typeRate = "<?php print($type_rate);?>";
 
-    if (typeRate == "1"){
-		$.ajax({
-			url: site_url + '/CShipping/getRateFromToCompany',
+		let extraPackges = parseInt($('#input-packages').val());
+
+		if (typeRate == "1"){
+			$.ajax({
+				url: site_url + '/CShipping/getRateFromToCompany',
+				type: 'post',
+				data: {from: originSelectedText, to: destinationSelectedText},
+				success: function(data)
+				{
+					if(extraPackges == 0 || extraPackges == '')
+						data = parseInt(data);
+					else if(extraPackges == 1)
+						data = parseInt(data) + 1600;
+					else if(extraPackges > 1)
+						data = parseInt(data) + (extraPackges * 1000);
+
+					$('#input-total-amount').val(data);
+				}
+			});
+		}
+
+		if (typeRate == "2") {
+			$.ajax({
+			url: site_url + '/CShipping/getRateSizeCompany',
 			type: 'post',
-			data: {from: originSelectedText, to: destinationSelectedText},
+			data: {size: sizeSelectedText},
 			success: function(data)
 			{
+				if(extraPackges == 0)
+					data = parseInt(data);
+				else if(extraPackges == 1)
+					data = parseInt(data) + parseInt(data * 0.6);
+				else if(extraPackges > 1)
+					data = parseInt(data) + (extraPackges * 0.4 * data);
+
 				$('#input-total-amount').val(data);
 			}
-		});
-    }
-    if (typeRate == "2") {
-        $.ajax({
-          url: site_url + '/CShipping/getRateSizeCompany',
-          type: 'post',
-          data: {size: sizeSelectedText},
-          success: function(data)
-          {
-            $('#input-total-amount').val(data);
-          }
-        });
-      }
+			});
+		}
+
     }
 
     $('select.totalAmount').on('change', function() {
@@ -490,6 +508,15 @@
 
 				}
 			});
+		});
+
+		//paquetes extras
+		$('#input-packages').on('keyup', function() {
+			totalAmount();
+		});
+
+		$('#input-packages').on('change', function() {
+			totalAmount();
 		});
 
 		$('#li-configuration').addClass('menu-open');
