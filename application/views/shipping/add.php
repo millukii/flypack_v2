@@ -1,3 +1,18 @@
+<?php
+//evaluar sin son pasadas las 22:30
+$shipping_date = date('Y-m-d');
+$hour = date('H:i');
+
+$next_date = null;
+if (strtotime($hour) > strtotime('22:30')) {
+	$next_date = date("Y-m-d", strtotime($shipping_date . "+ 2 days"));
+} else {
+	$next_date = date("Y-m-d", strtotime($shipping_date . "+ 1 days"));
+}
+$evalDay = strtolower(date("D", strtotime($next_date)));
+if($evalDay == 'sun')
+	$next_date = date("Y-m-d", strtotime($next_date . "+ 1 days"));
+?>
 <div class="content-wrapper">
 	<section class="content">
 
@@ -38,7 +53,7 @@
                     			  				<div class="form-group">
                     			  					<label for="input-shipping-date" class="col-sm-2 control-label">Fecha</label>
                     			  					<div class="col-sm-2">
-                    			  						<input type="date" class="form-control" name="input-shipping-date" id="input-shipping-date" required value="<?php echo date('Y-m-d'); ?>" disabled>
+                    			  						<input type="date" class="form-control" name="input-shipping-date" id="input-shipping-date" required value="<?php echo $next_date; ?>" disabled>
                     			  					</div>
                     			  				</div>
 
