@@ -9,10 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Flypack</title>
-  <!-- <link href="<?php //echo base_url();?>assets/img/logo_bordachar.png" type="image/x-icon" rel="icon"/>
-  -->
-  <!-- <link href="<?php //echo base_url();?>assets/img/logo_bordachar.png" type="image/x-icon" rel="shortcut icon"/>
-  -->
+  <link rel="icon" type="image/x-icon" href="<?php echo base_url()?>assets/img/logo.png">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
   <link rel="stylesheet" href="<?php echo base_url()?>assets/bootstrap/dist/css/bootstrap.min.css">
@@ -46,7 +43,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     }
   </style>
   <!-- Google Font -->
-  <!-- ARREGLAR ESTO 30 / 01/ 2019  -->
   
   <link rel="stylesheet" href="<?php echo base_url()?>assets/css/fonts_google.css">
 

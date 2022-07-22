@@ -43,7 +43,8 @@ class MShipping extends CI_Model
 			shipping.receiver_phone as receiver_phone,
 			shipping.receiver_mail as receiver_mail,
 			shipping.companies_id as companies_id,
-      shipping.operation as operation,
+            shipping.packages as packages,
+            shipping.operation as operation,
 			shipping.shipping_states_id as shipping_states_id, companies.razon as company,
 			shipping_states.state as state,
 			DATE_FORMAT(shipping.created, "%d-%m-%Y %H:%i:%s") as created,
@@ -56,6 +57,11 @@ class MShipping extends CI_Model
 
         $this->db->from('shipping');
         $this->db->where('shipping.id', $id);
+
+        if($this->session->userdata('rol_id') == 2)
+            $this->db->where('shipping.companies_id', $this->session->userdata('companies_id'));
+        if($this->session->userdata('rol_id') == 3)
+            $this->db->where('shipping.delivery_name', $this->session->userdata('name').' '.$this->session->userdata('lastname'));
         $this->db->limit(1);
 
         return $this->db->get()->result_array();
@@ -86,26 +92,39 @@ class MShipping extends CI_Model
 
         $this->db->join('shipping_states', 'shipping_states.id = shipping.shipping_states_id');
         $this->db->join('companies', 'companies.id = shipping.companies_id');
-        //$this->db->where('shipping_states.id != ', 2);
-
+        
+        if($this->session->userdata('rol_id') == 2)
+            $this->db->where('shipping.companies_id', $this->session->userdata('companies_id'));
+        if($this->session->userdata('rol_id') == 3)
+            $this->db->where('shipping.delivery_name', $this->session->userdata('name').' '.$this->session->userdata('lastname'));
+        
         switch ($by) {
             case 0:
-                $this->db->order_by('shipping.id', $order);
-                break;
-            case 1:
                 $this->db->order_by('shipping.order_nro', $order);
                 break;
-            case 2:
-                $this->db->order_by('shipping_type', $order);
+            case 1:
+                $this->db->order_by('shipping.operation', $order);
                 break;
             case 3:
                 $this->db->order_by('total_amount', $order);
                 break;
             case 4:
-                $this->db->order_by('shipping.receiver_phone', $order);
+                $this->db->order_by('shipping.delivery_name', $order);
                 break;
             case 5:
+                $this->db->order_by('shipping.shipping_date', $order);
+                break;
+            case 6:
+                $this->db->order_by('shipping_states.state', $order);
+                break;
+            case 7:
                 $this->db->order_by('companies.razon', $order);
+                break;
+            case 8:
+                $this->db->order_by('shipping.address', $order);
+                break;
+            case 11:
+                $this->db->order_by('shipping.receiver_name', $order);
                 break;
         }
 
@@ -141,36 +160,56 @@ class MShipping extends CI_Model
 
         $this->db->join('shipping_states', 'shipping_states.id = shipping.shipping_states_id');
         $this->db->join('companies', 'companies.id = shipping.companies_id');
-        $this->db->where('shipping_states.id <> ', 2);
-        $this->db->like('shipping.id', $search);
-        $this->db->or_like('shipping.order_nro', $search);
-        $this->db->or_like('shipping.address', $search);
-        $this->db->or_like('shipping.operation', $search);
-        $this->db->or_like('shipping.shipping_type', $search);
-        $this->db->or_like('shipping.total_amount', $search);
-        $this->db->or_like('shipping.receiver_phone', $search);
-        $this->db->or_like('shipping.delivery_name', $search);
 
-        $this->db->or_like('companies.razon', $search);
+        //$this->db->where('shipping_states.id <> ', 2);
+        if($this->session->userdata('rol_id') == 2)
+            $this->db->where('shipping.companies_id', $this->session->userdata('companies_id'));
+        if($this->session->userdata('rol_id') == 3)
+            $this->db->where('shipping.delivery_name', $this->session->userdata('name').' '.$this->session->userdata('lastname'));
+
+        $this->db->where("  (
+                                shipping.order_nro LIKE '%".$search."%' 
+                                OR shipping.operation LIKE '%".$search."%' 
+                                OR shipping.shipping_type LIKE '%".$search."%' 
+                                OR shipping.total_amount LIKE '%".$search."%'
+                                OR shipping.delivery_name LIKE '%".$search."%' 
+                                OR shipping.shipping_date LIKE '%".$search."%'
+                                OR shipping_states.state LIKE '%".$search."%' 
+                                OR companies.razon LIKE '%".$search."%'
+                                OR shipping.address LIKE '%".$search."%' 
+                                OR shipping.origin LIKE '%".$search."%'
+                                OR shipping.destination LIKE '%".$search."%' 
+                                OR shipping.receiver_name LIKE '%".$search."%'
+                                OR shipping.receiver_phone LIKE '%".$search."%'
+                            )", NULL, FALSE);
 
         switch ($by) {
             case 0:
-                $this->db->order_by('shipping.id', $order);
-                break;
-            case 1:
                 $this->db->order_by('shipping.order_nro', $order);
                 break;
-            case 2:
-                $this->db->order_by('shipping_type', $order);
+            case 1:
+                $this->db->order_by('shipping.operation', $order);
                 break;
             case 3:
                 $this->db->order_by('total_amount', $order);
                 break;
             case 4:
-                $this->db->order_by('shipping.receiver_phone', $order);
+                $this->db->order_by('shipping.delivery_name', $order);
                 break;
             case 5:
-                $this->db->order_by('profiles.profile', $order);
+                $this->db->order_by('shipping.shipping_date', $order);
+                break;
+            case 6:
+                $this->db->order_by('shipping_states.state', $order);
+                break;
+            case 7:
+                $this->db->order_by('companies.razon', $order);
+                break;
+            case 8:
+                $this->db->order_by('shipping.address', $order);
+                break;
+            case 11:
+                $this->db->order_by('shipping.receiver_name', $order);
                 break;
         }
 
@@ -185,8 +224,13 @@ class MShipping extends CI_Model
 
     public function getCount()
     {
-        $this->db->where('shipping_states.id <> ', 2);
-        return $this->db->count_all('shipping');
+        //$this->db->where('shipping_states.id <> ', 2);
+        if($this->session->userdata('rol_id') == 2)
+            $this->db->where('shipping.companies_id', $this->session->userdata('companies_id'));
+        if($this->session->userdata('rol_id') == 3)
+            $this->db->where('shipping.delivery_name', $this->session->userdata('name').' '.$this->session->userdata('lastname'));
+        $this->db->from("shipping");
+        return $this->db->count_all_results();
 
     }
 
@@ -196,14 +240,27 @@ class MShipping extends CI_Model
 
         $this->db->join('shipping_states', 'shipping_states.id = shipping.shipping_states_id');
         $this->db->join('companies', 'companies.id = shipping.companies_id');
-        $this->db->where('shipping_states.id <> ', 2);
+        //$this->db->where('shipping_states.id <> ', 2);
+        if($this->session->userdata('rol_id') == 2)
+            $this->db->where('shipping.companies_id', $this->session->userdata('companies_id'));
+        if($this->session->userdata('rol_id') == 3)
+            $this->db->where('shipping.delivery_name', $this->session->userdata('name').' '.$this->session->userdata('lastname'));
 
-        $this->db->like('shipping.id', $search);
-        $this->db->or_like('shipping.order_nro', $search);
-        $this->db->or_like('shipping.shipping_type', $search);
-        $this->db->or_like('shipping.total_amount', $search);
-        $this->db->or_like('shipping.receiver_phone', $search);
-        $this->db->or_like('companies.razon', $search);
+        $this->db->where("  (
+            shipping.order_nro LIKE '%".$search."%' 
+            OR shipping.operation LIKE '%".$search."%' 
+            OR shipping.shipping_type LIKE '%".$search."%' 
+            OR shipping.total_amount LIKE '%".$search."%'
+            OR shipping.delivery_name LIKE '%".$search."%' 
+            OR shipping.shipping_date LIKE '%".$search."%'
+            OR shipping_states.state LIKE '%".$search."%' 
+            OR companies.razon LIKE '%".$search."%'
+            OR shipping.address LIKE '%".$search."%' 
+            OR shipping.origin LIKE '%".$search."%'
+            OR shipping.destination LIKE '%".$search."%' 
+            OR shipping.receiver_name LIKE '%".$search."%'
+            OR shipping.receiver_phone LIKE '%".$search."%'
+        )", NULL, FALSE);
 
         $query = $this->db->get('shipping')->num_rows();
         return $query;

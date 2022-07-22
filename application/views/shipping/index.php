@@ -122,7 +122,7 @@
             },
             {
               "targets": [2],
-              "orderable": true,
+              "orderable": false,
               "render": function(data, type, row) {
                 return row.shipping_type
               }
@@ -171,14 +171,14 @@
             },
            {
               "targets": [9],
-              "orderable": true,
+              "orderable": false,
               "render": function(data, type, row) {
                 return row.origin
               }
             },
            {
               "targets": [10],
-              "orderable": true,
+              "orderable": false,
               "render": function(data, type, row) {
                 return row.destination
               }
@@ -192,7 +192,7 @@
             },
             {
               "targets": [12],
-              "orderable": true,
+              "orderable": false,
               "render": function(data, type, row) {
                 return row.receiver_phone
               }

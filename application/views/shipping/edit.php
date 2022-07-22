@@ -39,8 +39,8 @@
                                         		<input type="text" class="form-control" name="company-prefix" id="company-prefix"   disabled max="10">
                                         </div>
                                         <div class="col-sm-5">
-                                          <input type="text" class="form-control" name="input-order-nro" id="input-order-nro"
-                                          value="<?php if (!empty($shipping[0]['order_nro'])) {echo $shipping[0]['order_nro'];}?>"
+                                          <input type="text" class="form-control" disabled name="input-order-nro" id="input-order-nro"
+                                          value="<?php if (!empty($shipping[0]['order_nro'])) {echo explode('-',$shipping[0]['order_nro'])[1];}?>"
                                           >
                                         </div>
                     			  				</div>
@@ -75,7 +75,7 @@
                                      <div class="form-group">
                     			  					<label for="total-amount" class="col-sm-2 control-label">Total</label>
                     			  					<div class="col-sm-5">
-                    			  						<input type="text" class="form-control" name="input-total-amount" id="input-total-amount"
+                    			  						<input disabled type="text" class="form-control" name="input-total-amount" id="input-total-amount"
                                          value="<?php if (!empty($shipping[0]['total_amount'])) {echo $shipping[0]['total_amount'];} else {echo '0';}?>">
                     			  					</div>
                     			  				</div>
@@ -476,13 +476,10 @@
 				type: 'post',
 				data:
 				{
-					id: <?php if (!empty($_GET['id'])) {
-    echo $_GET['id'];
-}
-?>,
-					order_nro: $("#input-order-nro").val(),
+					id: <?php if (!empty($_GET['id'])) {echo $_GET['id'];}?>,
+					order_nro: $('#company-prefix').val()+'-'+$("#input-order-nro").val(),
 					quadmins_code:  $("#input-quadmins-code").val(),
-          shipping_date: $("#input-shipping-date").val(),
+          			shipping_date: $("#input-shipping-date").val(),
 					total_amount: $("#input-total-amount").val(),
 					address: $("#input-address").val(),
 					delivery_name: $("#select-delivery").val(),
@@ -494,18 +491,18 @@
 					receiver_phone: $("#input-receiver-phone").val(),
 					receiver_mail: $("#input-receiver-mail").val(),
 					observation: $("#input-observation").val(),
-          packages: $("#input-packages").val(),
-          poId: selectedPoid,
-          operation: $("#select-operation-type").val(),
+					packages: $("#input-packages").val(),
+					poId: selectedPoid,
+					operation: $("#select-operation-type").val(),
 				},
 				success: function(data)
 				{
-
+					
 					if (data == 1)
 						window.location.replace(site_url+"/CShipping/index");
 					else
 						alert("Error.");
-
+					
 				}
 			});
 		});

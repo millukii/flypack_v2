@@ -29,20 +29,7 @@ class CShipping extends CI_Controller
         $by = $this->input->post('order')['0']['column'];
         $order = $this->input->post('order')['0']['dir'];
 
-        $userId = $this->session->userdata('users_id');
-        $user = $this->modelo_users->getUser($userId);
-
-        $rol = $user[0]['rol_id'];
-        $name = $user[0]['name'] . '' . $user[0]['lastname'];
-
-        $result = null;
-        if ($rol == 3) {
-            $result = $this->modelo->getShipping($start, $length, $name, $order, $by);
-        } else {
-            $result = $this->modelo->getShipping($start, $length, $search, $order, $by);
-
-        }
-
+        $result = $this->modelo->getShipping($start, $length, $search, $order, $by);
         $json_data = array(
             "draw" => intval($this->input->post('draw')),
             "recordsTotal" => intval($result['numDataTotal']),
@@ -338,6 +325,7 @@ class CShipping extends CI_Controller
         $receiver_mail = trim($this->input->post('receiver_mail', true));
         $observation = trim($this->input->post('observation', true));
         $operation = trim($this->input->post('operation', true));
+        $packages = trim($this->input->post('packages', true));
         $poId = trim($this->input->post('poId', true));
 
         $label = trim($this->input->post('label', true));
@@ -388,9 +376,11 @@ class CShipping extends CI_Controller
             'receiver_phone' => $receiver_phone,
             'receiver_mail' => $receiver_mail,
             'delivery_name' => $delivery_name,
+            'shipping_date' => $shipping_date,
             'observation' => $observation,
             'operation' => $operation,
             'companies_id' => $companies_id,
+            'packages' => $packages,
             'shipping_states_id' => $shipping_states_id,
             'origin' => $originCommuneName,
             'destination' => $destinationCommuneName,
@@ -403,7 +393,7 @@ class CShipping extends CI_Controller
                 'operation' => $operation,
                 'poiId' => (int) $poId,
                 // 'quadmins_code' => $quadmins_code,
-                'date' => date('Y-m-d'),
+                'date' => $shipping_date,
                 'totalAmount' => (int) $total_amount,
                 'totalAmountWithoutTaxes' => (int) $total_amount,
                 'label' => $label,
@@ -981,7 +971,7 @@ class CShipping extends CI_Controller
                 if (!empty($res[0]['receiver_mail'])) {
                     $res = $res[0]['receiver_mail'];
 
-                    $this->addDeliveryDate($order, $date_time2);
+                    $this->addDelivery_Name_Date($order, $date_time2);
                     $this->enviarCorreo('Retiro Generado', '<p>Se ha generado correctamente un retiro con número de orden <b>#' . $order . '</b></p>', $res, $date_time);
                 }
             }
@@ -994,13 +984,20 @@ class CShipping extends CI_Controller
         echo 1;
     }
 
-    private function addDeliveryDate($order, $date_time){
+    private function addDelivery_Name_Date($order, $date_time){
         
-        $data = ['shipping_delivery_date' => $date_time];
+        $data = ['shipping_delivery_date' => $date_time, 'delivery_name' => $this->session->userdata('name').' '.$this->session->userdata('lastname')];
         $this->db->where('order_nro', $order);
         if ($this->db->update('shipping', $data)) 
             return true;
         else
             return false;
+    }
+
+    public function getMyShippings()
+    {
+        $this->load->view('header');
+        $this->load->view('aside');
+        $this->load->view('shipping/index');
     }
 }

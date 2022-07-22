@@ -41,14 +41,14 @@
 							<div class="form-group">
 			  					<label for="user" class="col-sm-2 control-label">Nombre</label>
 			  					<div class="col-sm-10">
-			  						<input type="text" class="form-control" name="name" id="name" value="<?php echo $this->session->userdata('name');?>" >
+			  						<input type="text" class="form-control" name="name" id="name" value="<?php echo $this->session->userdata('name');?>" readonly>
 			  					</div>
 			  				</div>
 
 							<div class="form-group">
 			  					<label for="user" class="col-sm-2 control-label">Apellido</label>
 			  					<div class="col-sm-10">
-			  						<input type="text" class="form-control" name="lastname" id="lastname" value="<?php echo $this->session->userdata('lastname');?>" >
+			  						<input type="text" class="form-control" name="lastname" id="lastname" value="<?php echo $this->session->userdata('lastname');?>" readonly>
 			  					</div>
 			  				</div>
 
