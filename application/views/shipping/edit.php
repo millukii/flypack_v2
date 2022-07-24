@@ -40,8 +40,15 @@
                                         </div>
                                         <div class="col-sm-5">
                                           <input type="text" class="form-control" disabled name="input-order-nro" id="input-order-nro"
-                                          value="<?php if (!empty($shipping[0]['order_nro'])) {echo explode('-',$shipping[0]['order_nro'])[1];}?>"
-                                          >
+                                          value="<?php if (!empty($shipping[0]['order_nro'])) {
+    if (str_contains($shipping[0]['order_nro'], "-")) {
+        echo explode('-', $shipping[0]['order_nro'])[1];
+
+    } else {
+        echo $shipping[0]['order_nro'];
+    }
+
+}?>">
                                         </div>
                     			  				</div>
 
@@ -497,12 +504,12 @@
 				},
 				success: function(data)
 				{
-					
+
 					if (data == 1)
 						window.location.replace(site_url+"/CShipping/index");
 					else
 						alert("Error.");
-					
+
 				}
 			});
 		});
