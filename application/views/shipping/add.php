@@ -68,9 +68,9 @@ if($evalDay == 'sun')
                     			  				</div>
 
                     			  				<div class="form-group">
-                    			  					<label for="input-packages" class="col-sm-2 control-label">Paquetes extras</label>
+                    			  					<label for="input-packages" class="col-sm-2 control-label">Paquetes</label>
                     			  					<div class="col-sm-3">
-                    			  						<input type="number" class="form-control" name="input-packages" id="input-packages"  required value="0" min="0">
+                    			  						<input type="number" class="form-control" name="input-packages" id="input-packages"  required value="1" min="1">
                     			  					</div>
                     			  				</div>
 
@@ -256,12 +256,12 @@ if($evalDay == 'sun')
 				data: {from: originSelectedText, to: destinationSelectedText},
 				success: function(data)
 				{
-					if(extraPackges == 0 || extraPackges == '')
+					if(extraPackges == 1 || extraPackges == '')
 						data = parseInt(data);
-					else if(extraPackges == 1)
+					else if(extraPackges == 2)
 						data = parseInt(data) + 1600;
-					else if(extraPackges > 1)
-						data = parseInt(data) + (extraPackges * 1000);
+					else if(extraPackges > 2)
+						data = parseInt(data) + ((extraPackges - 1) * 1000);
 
 					$('#input-total-amount').val(data);
 				}
@@ -275,12 +275,12 @@ if($evalDay == 'sun')
 				data: {size: sizeSelectedText},
 				success: function(data)
 				{
-					if(extraPackges == 0)
+					if(extraPackges == 1 || extraPackges == '')
 						data = parseInt(data);
-					else if(extraPackges == 1)
+					else if(extraPackges == 2)
 						data = parseInt(data) + parseInt(data * 0.6);
-					else if(extraPackges > 1)
-						data = parseInt(data) + (extraPackges * 0.4 * data);
+					else if(extraPackges > 2)
+						data = parseInt(data) + ((extraPackges - 1) * 0.4 * data);
 
 					$('#input-total-amount').val(data);
 				}

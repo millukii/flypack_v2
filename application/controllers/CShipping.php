@@ -942,7 +942,7 @@ class CShipping extends CI_Controller
         $orders = trim($this->input->post('orders', true));
         $orders_arr = explode(',', $orders);
         $companyEmail = '';
-        $companyFantasy = '';
+        $companyRazon= '';
         $userEmail = $this->session->userdata('email');
         if (count($orders_arr) > 0) {
             $date_time = date('d-m-Y H:i:s');
@@ -950,7 +950,7 @@ class CShipping extends CI_Controller
 
             foreach($orders_arr as $order)
             {
-                $this->db->select('companies.email as email, companies.fantasy as fantasy');
+                $this->db->select('companies.email as email, companies.razon as razon');
                 $this->db->from('companies');
                 $this->db->join('shipping', 'shipping.companies_id=companies.id');
                 $this->db->where('shipping.order_nro', $order);
@@ -959,8 +959,8 @@ class CShipping extends CI_Controller
                 if (!empty($res[0]['email'])) {
                     $companyEmail = $res[0]['email'];
                 }
-                if (!empty($res[0]['fantasy'])) {
-                    $companyFantasy = $res[0]['fantasy'];
+                if (!empty($res[0]['razon'])) {
+                    $companyRazon = $res[0]['razon'];
                 }
                 //enviarCorreo($asunto, $mensaje, $emails, $date_time);
                 $this->db->select('receiver_mail');
@@ -972,12 +972,12 @@ class CShipping extends CI_Controller
                     $res = $res[0]['receiver_mail'];
 
                     $this->addDelivery_Name_Date($order, $date_time2);
-                    $this->enviarCorreo('Retiro Generado', '<p>Se ha generado correctamente un retiro con número de orden <b>#' . $order . '</b></p>', $res, $date_time);
+                    $this->enviarCorreo('Retiro Generado', '<p>Estimado cliente, su pedido ya ha sido retirado por Flypack SpA.  Su número de orden es <b># '.$order.'</b></p>', $res, $date_time);
                 }
             }
 
-            $this->enviarCorreo2("Nuevo retiro de paquetes " . date('d-m-Y')." en ".strtoupper($companyFantasy), "Se ha generado un nuevo retiro
-                con fecha " . date('d-m-Y') . " y con un total de " . count($orders_arr) . " paquetes por el repartidor " . $this->session->userdata('name') . " " . $this->session->userdata('lastname'), $companyEmail . ',' . $userEmail.', antonio.flypack@gmail.com');
+            $this->enviarCorreo2("Nuevo retiro de paquetes " . date('d-m-Y')." en ".strtoupper($companyRazon), "Se ha generado un nuevo retiro
+                con fecha " . date('d-m-Y') . " en ".strtoupper($companyRazon).".<b>Un total de " . count($orders_arr) . " paquetes por el repartidor " . $this->session->userdata('name') . " " . $this->session->userdata('lastname'), $companyEmail . ',' . $userEmail.', antonio.flypack@gmail.com');
             
         }
 
