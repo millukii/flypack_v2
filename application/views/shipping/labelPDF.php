@@ -55,7 +55,7 @@
       border-color: grey;
   }
   body{
-    font-size: 36px; 
+    font-size: 32px; 
   }
 </style>
 </head>
