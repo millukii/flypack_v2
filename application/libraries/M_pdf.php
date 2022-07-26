@@ -12,7 +12,7 @@ public $pdf;
 	{
 	    $this->param =$param;
 	    //$this->pdf = new mPDF($this->param);
-		$this->pdf = new mPDF('utf-8', array(280,200),"'c', 'A5-L'");
+		$this->pdf = new mPDF('utf-8', array(300,200),"'c', 'A5-L'");
 	}
 }
 
