@@ -495,13 +495,73 @@ class CShipping extends CI_Controller
     public function deleteShipping()
     {
         $id = trim($this->input->post('id', true));
+        //obtener id quadmins
 
+        $shipping = $this->modelo->getShipping_($id);
+
+        $date_time = date('Y-m-d H:i:s');
+
+        $user = $this->session->userdata('users_id');
+
+        $userCompany = $this->modelo->getCompanyOfUser($user);
+
+        $new_observations = "Shipping deleted by user_id " . $user . " at " . sprintf("%s", $date_time);
         $data = array(
+            'observation' => $new_observations,
             'shipping_states_id' => '2',
+            'modified' => $date_time,
         );
 
         if ($this->modelo->editShipping($data, $id)) {
+            $merchants = array();
+            $merchant = new stdClass;
+            $merchant->_id = (int) $userCompany[0]->merchant_id;
+            array_push($merchants, $merchant);
+
+            $quadminOrder = array(
+                // 'code' => $quadmins_code,
+                'operation' => $shipping[0]['operation'],
+                'poiId' => (int) $shipping[0]['poiId'],
+                // 'quadmins_code' => $quadmins_code,
+                'date' => $shipping[0]['shipping_date'],
+                'totalAmount' => (int) $shipping[0]['total_amount'],
+                'totalAmountWithoutTaxes' => (int) $shipping[0]['total_amount'],
+                'label' => $new_observations,
+                'merchants' => $merchants,
+                // 'timeWindow' => $time_windows,
+            );
+            $orders = [];
+            array_push($orders, $quadminOrder);
+
+            $data_string = json_encode($orders[0]);
+
+            $endpoint = sprintf("%s/%s", 'https://flash-api.quadminds.com/api/v2/orders', $shipping[0]['quadmins_code']);
+
+            $curl = curl_init($endpoint);
+
+            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PATCH");
+
+            curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($data_string),
+                'x-saas-apikey: ' . 'SzaORv8XtExcO1zVX3jcWGsOvyGwsl3y46sOLnmn'));
+
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // Make it so the data coming back is put into a string
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string); // Insert the data
+            // Send the request
+            $result = curl_exec($curl);
+            $err = curl_error($curl);
+            if ($err) {
+                echo "cURL Error #:" . $err;
+            }
+
+            $array = json_decode($result, true);
+            // Free up the resources $curl is using
+            curl_close($curl);
+
+            //   $this->deleteQuadminsOrder($shipping[0]['quadmins_code']);
             echo '1';
+
         } else {
             echo '0';
         }
@@ -1012,5 +1072,41 @@ class CShipping extends CI_Controller
         $this->load->view('header');
         $this->load->view('aside');
         $this->load->view('shipping/index');
+    }
+
+    public function deleteQuadminsOrder($id)
+    {
+        $curl = curl_init();
+
+        $url = "https://flash-api.quadminds.com/api/v2/orders/" . $id;
+        echo $url;
+        curl_setopt_array($curl, [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "DELETE",
+            CURLOPT_HTTPHEADER => [
+                "Accept: application/json",
+                "x-saas-apikey: SzaORv8XtExcO1zVX3jcWGsOvyGwsl3y46sOLnmn",
+            ],
+        ]);
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            echo $response;
+        }
+
+        $data = json_decode($response, true);
+        echo json_encode($data);
+
     }
 }
