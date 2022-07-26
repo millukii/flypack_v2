@@ -11,8 +11,8 @@ public $pdf;
 	public function __construct($param = "'utf-8', 'c', 'A5-L'")
 	{
 	    $this->param =$param;
-	    //$this->pdf = new mPDF($this->param);
-		$this->pdf = new mPDF('utf-8', array(400,200),"'c', 'A5-L'");
+	    $this->pdf = new mPDF($this->param);
+		//$this->pdf = new mPDF('utf-8', array(400,200),"'c', 'A5-L'");
 	}
 }
 
