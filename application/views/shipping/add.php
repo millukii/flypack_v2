@@ -263,6 +263,7 @@ if($evalDay == 'sun')
 					else if(extraPackges > 2)
 						data = parseInt(data) + ((extraPackges - 1) * 1000);
 
+					data = Math.round(data);
 					$('#input-total-amount').val(data);
 				}
 			});
@@ -282,6 +283,7 @@ if($evalDay == 'sun')
 					else if(extraPackges > 2)
 						data = parseInt(data) + ((extraPackges - 1) * 0.4 * data);
 
+					data = Math.round(data);
 					$('#input-total-amount').val(data);
 				}
 			});
