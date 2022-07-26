@@ -206,7 +206,7 @@ class CShipping extends CI_Controller
         if (empty($merchant_id)) {
             $merchant_id = 0;
         }
-        
+
         $date_time = date('Y-m-d H:i:s');
 
         $user = $this->session->userdata('users_id');
@@ -239,6 +239,7 @@ class CShipping extends CI_Controller
             'companies_id' => $companies_id,
             'packages' => $packages,
             'operation' => $operation,
+            'poiId' => (int) $poId,
             'shipping_delivery_date' => $shipping_delivery_date,
         );
 
@@ -327,6 +328,7 @@ class CShipping extends CI_Controller
         $operation = trim($this->input->post('operation', true));
         $packages = trim($this->input->post('packages', true));
         $poId = trim($this->input->post('poId', true));
+        $merchant_id = trim($this->input->post('merchant_id', true));
 
         $label = trim($this->input->post('label', true));
         $time_windows = trim($this->input->post('time_windows', true));
@@ -381,6 +383,7 @@ class CShipping extends CI_Controller
             'operation' => $operation,
             'companies_id' => $companies_id,
             'packages' => $packages,
+            'poiId' => (int) $poId,
             'shipping_states_id' => $shipping_states_id,
             'origin' => $originCommuneName,
             'destination' => $destinationCommuneName,
@@ -388,21 +391,29 @@ class CShipping extends CI_Controller
         );
 
         if ($this->modelo->editShipping($data, $id)) {
+
+            $merchants = array();
+            $merchant = new stdClass;
+            $merchant->_id = (int) $merchant_id;
+            array_push($merchants, $merchant);
+
             $quadminOrder = array(
-                // 'code' => $quadmins_code,
+// 'code' => $quadmins_code,
                 'operation' => $operation,
                 'poiId' => (int) $poId,
-                // 'quadmins_code' => $quadmins_code,
+// 'quadmins_code' => $quadmins_code,
                 'date' => $shipping_date,
                 'totalAmount' => (int) $total_amount,
                 'totalAmountWithoutTaxes' => (int) $total_amount,
                 'label' => $label,
-                // 'timeWindow' => $time_windows,
+                'merchants' => $merchants,
+// 'timeWindow' => $time_windows,
             );
             $orders = [];
             array_push($orders, $quadminOrder);
 
             $data_string = json_encode($orders[0]);
+
             $endpoint = sprintf("%s/%s", 'https://flash-api.quadminds.com/api/v2/orders', $quadmins_code);
 
             $curl = curl_init($endpoint);
@@ -938,18 +949,17 @@ class CShipping extends CI_Controller
 
     public function notifications()
     {
-        
+
         $orders = trim($this->input->post('orders', true));
         $orders_arr = explode(',', $orders);
         $companyEmail = '';
-        $companyRazon= '';
+        $companyRazon = '';
         $userEmail = $this->session->userdata('email');
         if (count($orders_arr) > 0) {
             $date_time = date('d-m-Y H:i:s');
             $date_time2 = date('Y-m-d H:i:s');
 
-            foreach($orders_arr as $order)
-            {
+            foreach ($orders_arr as $order) {
                 $this->db->select('companies.email as email, companies.razon as razon');
                 $this->db->from('companies');
                 $this->db->join('shipping', 'shipping.companies_id=companies.id');
@@ -972,26 +982,29 @@ class CShipping extends CI_Controller
                     $res = $res[0]['receiver_mail'];
 
                     $this->addDelivery_Name_Date($order, $date_time2);
-                    $this->enviarCorreo('Retiro Generado', '<p>Estimado cliente, su pedido ya ha sido retirado por Flypack SpA.  Su número de orden es <b># '.$order.'</b></p>', $res, $date_time);
+                    $this->enviarCorreo('Retiro Generado', '<p>Estimado cliente, su pedido ya ha sido retirado por Flypack SpA.  Su número de orden es <b># ' . $order . '</b></p>', $res, $date_time);
                 }
             }
 
-            $this->enviarCorreo2("Nuevo retiro de paquetes " . date('d-m-Y')." en ".strtoupper($companyRazon), "Se ha generado un nuevo retiro
-                con fecha " . date('d-m-Y') . " en ".strtoupper($companyRazon).".<b>Un total de " . count($orders_arr) . " paquetes por el repartidor " . $this->session->userdata('name') . " " . $this->session->userdata('lastname'), $companyEmail . ',' . $userEmail.', antonio.flypack@gmail.com');
-            
+            $this->enviarCorreo2("Nuevo retiro de paquetes " . date('d-m-Y') . " en " . strtoupper($companyRazon), "Se ha generado un nuevo retiro
+                con fecha " . date('d-m-Y') . " en " . strtoupper($companyRazon) . ".<b>Un total de " . count($orders_arr) . " paquetes por el repartidor " . $this->session->userdata('name') . " " . $this->session->userdata('lastname'), $companyEmail . ',' . $userEmail . ', antonio.flypack@gmail.com');
+
         }
 
         echo 1;
     }
 
-    private function addDelivery_Name_Date($order, $date_time){
-        
-        $data = ['shipping_delivery_date' => $date_time, 'delivery_name' => $this->session->userdata('name').' '.$this->session->userdata('lastname')];
+    private function addDelivery_Name_Date($order, $date_time)
+    {
+
+        $data = ['shipping_delivery_date' => $date_time, 'delivery_name' => $this->session->userdata('name') . ' ' . $this->session->userdata('lastname')];
         $this->db->where('order_nro', $order);
-        if ($this->db->update('shipping', $data)) 
+        if ($this->db->update('shipping', $data)) {
             return true;
-        else
+        } else {
             return false;
+        }
+
     }
 
     public function getMyShippings()

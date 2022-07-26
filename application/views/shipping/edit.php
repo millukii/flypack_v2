@@ -296,6 +296,8 @@
 	$(document).ready(function()
 	{
       var typeRate = "<?php echo $type_rate; ?>";
+      selectedPoid = "<?php print_r($shipping[0]['poiId']);?>";
+      let merchant_id = "<?php print($user_company[0]->merchant_id);?>";
 
     $('#select-operation-type').val("<?php echo $shipping[0]['operation']; ?>");
     let prefix = "<?php print($user_company[0]->prefix);?>";
@@ -480,6 +482,9 @@
             cuerpo = $('#input-rut').val();
 	        dv = cuerpo;
 
+      if(selectedPoid =="0"){
+
+      }
 			$.ajax({
 				url: site_url + "/CShipping/editShipping",
 				type: 'post',
@@ -502,6 +507,7 @@
 					observation: $("#input-observation").val(),
 					packages: $("#input-packages").val(),
 					poId: selectedPoid,
+          merchant_id: merchant_id,
 					operation: $("#select-operation-type").val(),
 				},
 				success: function(data)
