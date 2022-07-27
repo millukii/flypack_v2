@@ -254,17 +254,20 @@ if($evalDay == 'sun')
 				url: site_url + '/CShipping/getRateFromToCompany',
 				type: 'post',
 				data: {from: originSelectedText, to: destinationSelectedText},
+				dataType: 'text',
 				success: function(data)
 				{
-					if(extraPackges == 1 || extraPackges == '')
-						data = parseInt(data);
-					else if(extraPackges == 2)
-						data = parseInt(data) + 1600;
-					else if(extraPackges > 2)
-						data = parseInt(data) + ((extraPackges - 1) * 1000);
+					let monto = parseInt(data);
+					if(monto > 0)
+					{
+						if(extraPackges == 2)
+							monto = monto + 1600;
+						else if(extraPackges > 2)
+							monto = monto + ((extraPackges - 1) * 1000);
+					}
 
-					data = Math.round(data);
-					$('#input-total-amount').val(data);
+					monto = Math.round(monto);
+					$('#input-total-amount').val(monto);
 				}
 			});
 		}
@@ -276,15 +279,17 @@ if($evalDay == 'sun')
 				data: {size: sizeSelectedText},
 				success: function(data)
 				{
-					if(extraPackges == 1 || extraPackges == '')
-						data = parseInt(data);
-					else if(extraPackges == 2)
-						data = parseInt(data) + parseInt(data * 0.6);
-					else if(extraPackges > 2)
-						data = parseInt(data) + ((extraPackges - 1) * 0.4 * data);
+					let monto = parseInt(data);
+					if(monto > 0)
+					{
+						if(extraPackges == 2)
+							monto = monto + parseInt(data * 0.6);
+						else if(extraPackges > 2)
+							monto = monto + ((extraPackges - 1) * 0.4 * monto);
+					}
 
-					data = Math.round(data);
-					$('#input-total-amount').val(data);
+					monto = Math.round(monto);
+					$('#input-total-amount').val(monto);
 				}
 			});
 		}
