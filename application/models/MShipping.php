@@ -67,6 +67,10 @@ class MShipping extends CI_Model
             $this->db->where('shipping.delivery_name', $this->session->userdata('name') . ' ' . $this->session->userdata('lastname'));
         }
 
+        if ($this->session->userdata('rol_id') != 1) {
+            $this->db->where('shipping.shipping_states_id', 1);
+        }
+
         $this->db->limit(1);
 
         return $this->db->get()->result_array();
@@ -104,6 +108,9 @@ class MShipping extends CI_Model
 
         if ($this->session->userdata('rol_id') == 3) {
             $this->db->where('shipping.delivery_name', $this->session->userdata('name') . ' ' . $this->session->userdata('lastname'));
+        }
+        if ($this->session->userdata('rol_id') != 1) {
+            $this->db->where('shipping.shipping_states_id', 1);
         }
 
         switch ($by) {
@@ -177,6 +184,9 @@ class MShipping extends CI_Model
         if ($this->session->userdata('rol_id') == 3) {
             $this->db->where('shipping.delivery_name', $this->session->userdata('name') . ' ' . $this->session->userdata('lastname'));
         }
+        if ($this->session->userdata('rol_id') != 1) {
+            $this->db->where('shipping.shipping_states_id', 1);
+        }
 
         $this->db->where("  (
                                 shipping.order_nro LIKE '%" . $search . "%'
@@ -243,6 +253,9 @@ class MShipping extends CI_Model
         if ($this->session->userdata('rol_id') == 3) {
             $this->db->where('shipping.delivery_name', $this->session->userdata('name') . ' ' . $this->session->userdata('lastname'));
         }
+        if ($this->session->userdata('rol_id') != 1) {
+            $this->db->where('shipping.shipping_states_id', 1);
+        }
 
         $this->db->from("shipping");
         return $this->db->count_all_results();
@@ -262,6 +275,9 @@ class MShipping extends CI_Model
 
         if ($this->session->userdata('rol_id') == 3) {
             $this->db->where('shipping.delivery_name', $this->session->userdata('name') . ' ' . $this->session->userdata('lastname'));
+        }
+        if ($this->session->userdata('rol_id') != 1) {
+            $this->db->where('shipping.shipping_states_id', 1);
         }
 
         $this->db->where("  (

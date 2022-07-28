@@ -511,55 +511,9 @@ class CShipping extends CI_Controller
             'shipping_states_id' => '2',
             'modified' => $date_time,
         );
+        $this->deleteQuadminsOrder($shipping[0]['quadmins_code']);
 
         if ($this->modelo->editShipping($data, $id)) {
-            $merchants = array();
-            $merchant = new stdClass;
-            $merchant->_id = (int) $userCompany[0]->merchant_id;
-            array_push($merchants, $merchant);
-
-            $quadminOrder = array(
-                // 'code' => $quadmins_code,
-                'operation' => $shipping[0]['operation'],
-                'poiId' => (int) $shipping[0]['poiId'],
-                // 'quadmins_code' => $quadmins_code,
-                'date' => $shipping[0]['shipping_date'],
-                'totalAmount' => (int) $shipping[0]['total_amount'],
-                'totalAmountWithoutTaxes' => (int) $shipping[0]['total_amount'],
-                'label' => $new_observations,
-                'merchants' => $merchants,
-                // 'timeWindow' => $time_windows,
-            );
-            $orders = [];
-            array_push($orders, $quadminOrder);
-
-            $data_string = json_encode($orders[0]);
-
-            $endpoint = sprintf("%s/%s", 'https://flash-api.quadminds.com/api/v2/orders', $shipping[0]['quadmins_code']);
-
-            $curl = curl_init($endpoint);
-
-            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PATCH");
-
-            curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-                'Content-Type: application/json',
-                'Content-Length: ' . strlen($data_string),
-                'x-saas-apikey: ' . 'SzaORv8XtExcO1zVX3jcWGsOvyGwsl3y46sOLnmn'));
-
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // Make it so the data coming back is put into a string
-            curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string); // Insert the data
-            // Send the request
-            $result = curl_exec($curl);
-            $err = curl_error($curl);
-            if ($err) {
-                echo "cURL Error #:" . $err;
-            }
-
-            $array = json_decode($result, true);
-            // Free up the resources $curl is using
-            curl_close($curl);
-
-            //   $this->deleteQuadminsOrder($shipping[0]['quadmins_code']);
             echo '1';
 
         } else {
