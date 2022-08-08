@@ -103,9 +103,6 @@
           <?php
             if(!empty($receiver_phone))
               echo $receiver_phone;
-            
-            if(!empty($order_nro))
-              echo '&nbsp;&nbsp;&nbsp;<b>#'.$order_nro.'</b>';
           ?>
         </td>
       </tr>
