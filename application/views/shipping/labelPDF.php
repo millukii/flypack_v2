@@ -60,9 +60,8 @@
 </style>
 </head>
 <body>
+<img width="120" src="<?php echo base_url();?>assets/img/logo.png?<?php echo date('YmdHis')?>"/>
 <center>
-  
-  <img width="120" src="<?php echo base_url();?>assets/img/logo.png?<?php echo date('YmdHis')?>"/>
   <fieldset>
     <legend>Datos Receptor:</legend>
     <table class="table">
