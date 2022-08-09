@@ -20,7 +20,7 @@
                         <th>Origen</th>
                         <th>Destino</th>
                         <th>Precio</th>
-                        <th>Acción</th>
+                        <!-- <th>Acción</th> -->
                       </tr>
                     </thead>
                     <tbody></tbody>
@@ -116,16 +116,16 @@
                       return row.value
                     }
                   },
-                  {
+                  /*{
                     "targets": [4],
                     "orderable": false,
                     "render": function(data, type, row) {
                       return `
-                        <a href="<?php echo site_url(); ?>/CPrices/edit?id=`+row.id+`" class="btn btn-warning btn-xs" role="button">
+                        <a href="<?php //echo site_url(); ?>/CPrices/edit?id=`+row.id+`" class="btn btn-warning btn-xs" role="button">
                             <i class='fa fa-pencil-square-o'></i> Editar
                         </a>`;
                     }
-                  }
+                  }*/
                 ],
               });
           }
@@ -182,16 +182,18 @@
                       return row.value
                     }
                   },
+                  /*
                   {
                     "targets": [3],
                     "orderable": false,
                     "render": function(data, type, row) {
                       return `
-                        <a href="<?php echo site_url(); ?>/CPrices/edit?companies_id=`+$company+`&id=`+row.id+`" class="btn btn-warning btn-xs" role="button">
+                        <a href="<?php //echo site_url(); ?>/CPrices/edit?companies_id=`+$company+`&id=`+row.id+`" class="btn btn-warning btn-xs" role="button">
                             <i class='fa fa-pencil-square-o'></i> Editar
                         </a>`;
                     }
                   }
+                  */
                 ],
               });
           }
