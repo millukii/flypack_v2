@@ -85,7 +85,7 @@
                   { "data": "Origen" },
                   { "data": "Destino" },
                   { "data": "Precio" },
-                  { "data": "Acción" }
+                  //{ "data": "Acción" }
                 ],
                 "columnDefs": [
                   {
