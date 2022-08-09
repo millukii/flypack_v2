@@ -60,7 +60,7 @@
             $('#form-upload_file').css('display','block');
             $('#div-addSize').css('display','none');
 
-            $('#div-table').html('<table id="table-prices" class="table table-striped table-bordered table-condensed" style="width:100%;"><thead><tr><th width="10%">ID</th><th>Origen</th><th>Destino</th><th>Precio</th><th>Acción</th></tr></thead><tbody></tbody></table>');
+            $('#div-table').html('<table id="table-prices" class="table table-striped table-bordered table-condensed" style="width:100%;"><thead><tr><th width="10%">ID</th><th>Origen</th><th>Destino</th><th>Precio</th><!--<th>Acción</th>--></tr></thead><tbody></tbody></table>');
             $('#table-prices').DataTable({
                 "lengthMenu": [[2000, 2500, 5000, -1], [2000, 2500, 5000, "All"]],
                 'responsive': true,
