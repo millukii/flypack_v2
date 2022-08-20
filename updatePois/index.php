@@ -34,6 +34,7 @@ while($flag){
     else
         $flag = false;
 }
+$handle = fopen ("pois.json", "w+");
 $dataString = str_replace('][',',',$dataString);
 fwrite($handle, $dataString);
 fclose($handle);
