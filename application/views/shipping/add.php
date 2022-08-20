@@ -401,38 +401,39 @@ function createPoid() {
         //2. obtener datos del poid seleccionado
 
         var poiObject = pois.find(poi => poi._id ==  selectedPoid);
-
-        //3. comparar cambios
-
+		//3. comparar cambios
         var updatePoi = false;
-        if (poiObject.phoneNumber != inputReceiverPhone){
-           updatePoi = true;
-        }
 
-        if (poiObject.email != inputReceiverPhone) {
-          updatePoi = true;
-        }
+		if($("#checkboxPoid").prop('checked') == false){
+			if (poiObject.phoneNumber != inputReceiverPhone){
+				updatePoi = true;
+			}
 
-        if (poiObject.address != inputAddress) {
-          updatePoi = true;
-        }
+			if (poiObject.email != inputReceiverPhone) {
+				updatePoi = true;
+			}
 
-        if (poiObject.poiDeliveryComments != inputObservation) {
-          updatePoi = true;
-        }
-        if (poiObject.name != inputReceiverName) {
-          updatePoi = true;
-        }
+			if (poiObject.address != inputAddress) {
+				updatePoi = true;
+			}
 
-        if (updatePoid){
-          //actualizar poi a travès del code
+			if (poiObject.poiDeliveryComments != inputObservation) {
+				updatePoi = true;
+			}
+			if (poiObject.name != inputReceiverName) {
+				updatePoi = true;
+			}
+		}
+
+        if (updatePoi){
+          //actualizar poi a traves del code
           updatePoid(poiObject.code);
         }
 
 		let shipping_type_  = $("#select-shipping-type").val();
 		let origin_ = $('#select-origin').val();
 		let destination_ =  $('#select-destination').val();
-    let prefix = "<?php print($user_company[0]->prefix);?>";
+    	let prefix = "<?php print($user_company[0]->prefix);?>";
 		if (typeRate == "1")
 			shipping_type_ = 'N/A';
 		else
