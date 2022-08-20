@@ -231,7 +231,7 @@ if($evalDay == 'sun')
 			type: 'post',
           	dataType: 'json',
           	success: function(response){
-				console.log(response);
+				console.log(response.length);
             	pois = response;
           	}
         });
