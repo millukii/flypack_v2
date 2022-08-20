@@ -28,6 +28,8 @@ while($flag){
         $temp = json_encode($points['data']);
         $dataString .= $temp;
         $offset++;
+        if($offset == 3)
+            $flag = false;
     }
     else
         $flag = false;
