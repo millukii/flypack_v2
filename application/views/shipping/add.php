@@ -227,10 +227,11 @@ if($evalDay == 'sun')
 	function getAllPois()
 	{
 		$.ajax({
-        	url: site_url + '/CShipping/getAllPoiData',
-          	type: 'post',
+        	url: '<?php echo base_url();?>/updatePois/pois.json',
+			type: 'post',
           	dataType: 'json',
           	success: function(response){
+				console.log(response);
             	pois = response;
           	}
         });
