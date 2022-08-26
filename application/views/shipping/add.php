@@ -93,26 +93,28 @@ if($evalDay == 'sun')
                     			  					</div>
                     			  				</div>
 
-                    			  				<div class="form-group">
-                    			  					<label for="address" class="col-sm-2 control-label">Dirección</label>
-                    			  					<div class="col-sm-5">
-                    			  						<input type="text" class="form-control" name="input-address" id="input-address" list="list-address" required>
-														<datalist id="list-address"></datalist>
-													          </div>
-                                  <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="checkboxPoid" id="checkboxPoid">
-                                    <label class="form-check-label" for="checkboxPoid">
-                                      Agregar nueva dirección
-                                    </label>
-                                  </div>
-                    			  				</div>
-                                     <div class="form-group">
+												<div class="form-group">
                     			  					<label for="receiver-name" class="col-sm-2 control-label">Receptor</label>
                     			  					<div class="col-sm-5">
                     			  						<input type="text" class="form-control" name="input-receiver-name" id="input-receiver-name" list="list-name" required>
 														  <datalist id="list-name"></datalist>
                     			  					</div>
                     			  				</div>
+
+                    			  				<div class="form-group">
+                    			  					<label for="address" class="col-sm-2 control-label">Dirección</label>
+                    			  					<div class="col-sm-5">
+                    			  						<input type="text" class="form-control" name="input-address" id="input-address" list="list-address" required>
+														<datalist id="list-address"></datalist>
+													          </div>
+														<div class="form-check">
+															<input class="form-check-input" type="checkbox" name="checkboxPoid" id="checkboxPoid">
+															<label class="form-check-label" for="checkboxPoid">
+															Agregar nueva dirección
+															</label>
+														</div>
+                    			  				</div>
+                                     			
 
                     			  				<div class="form-group">
                     			  					<label for="receiver_phone" class="col-sm-2 control-label">Teléfono</label>

@@ -86,7 +86,14 @@
                                          value="<?php if (!empty($shipping[0]['total_amount'])) {echo $shipping[0]['total_amount'];} else {echo '0';}?>">
                     			  					</div>
                     			  				</div>
-
+												
+												  <div class="form-group">
+                    			  					<label for="receiver-name" class="col-sm-2 control-label">Receptor</label>
+                    			  					<div class="col-sm-10">
+                    			  						<input type="text" class="form-control" name="input-receiver-name" id="input-receiver-name" list="list-name" required value="<?php if (!empty($shipping[0]['receiver_name'])) {echo $shipping[0]['receiver_name'];}?>">
+														  <datalist id="list-name"></datalist>
+                    			  					</div>
+                    			  				</div>
 
                     			  				<div class="form-group">
                     			  					<label for="address" class="col-sm-2 control-label">Dirección</label>
@@ -94,14 +101,12 @@
                                           <input type="text" class="form-control" name="input-address" id="input-address" list="list-address" required value="<?php if (!empty($shipping[0]['address'])) {echo $shipping[0]['address'];}?>">
 														            <datalist id="list-address"></datalist>
 												            	</div>
-                                    </div>
-                                     <div class="form-group">
-                    			  					<label for="receiver-name" class="col-sm-2 control-label">Receptor</label>
-                    			  					<div class="col-sm-10">
-                    			  						<input type="text" class="form-control" name="input-receiver-name" id="input-receiver-name" list="list-name" required value="<?php if (!empty($shipping[0]['receiver_name'])) {echo $shipping[0]['receiver_name'];}?>">
-														  <datalist id="list-name"></datalist>
-                    			  					</div>
-                    			  				</div>
+                                    		</div>
+
+
+                                     
+
+
                     			  				<div class="form-group">
                     			  					<label for="receiver_phone" class="col-sm-2 control-label">Teléfono</label>
                     			  					<div class="col-sm-5">
