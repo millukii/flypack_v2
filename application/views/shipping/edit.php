@@ -82,7 +82,7 @@
 															<?php
 																$this->db->select('size');
 																$this->db->from('rates_size');
-																$this->db->where('companies_id', $this->session->userdata('users_id'));
+																$this->db->where('companies_id', $this->session->userdata('companies_id'));
 																$rates_size = $this->db->get()->result_array();
 																if(!empty($rates_size)){
 																	foreach($rates_size as $rs){

@@ -123,7 +123,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                       $name .= $this->session->userdata('lastname');
                     }
 
-                    echo 'Bienvenido'.$name;
+                    echo 'Bienvenido '.$name;
                   ?>
                   <small> 
                   <?php
