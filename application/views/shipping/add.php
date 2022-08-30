@@ -78,10 +78,23 @@ if($evalDay == 'sun')
                     			  					<label for="shipping-type" class="col-sm-2 control-label">Tamaño</label>
                     			  					<div class="col-sm-5">
                     			  						<select name="select-shipping-type" id="select-shipping-type" class="form-control totalAmount" required>
+															<?php
+																$this->db->select('size');
+																$this->db->from('rates_size');
+																$this->db->where('companies_id', $this->session->userdata('users_id'));
+																$rates_size = $this->db->get()->result_array();
+																if(!empty($rates_size)){
+																	foreach($rates_size as $rs){
+																		echo '<option value="'.$rs['size'].'">'.$rs['size'].'</option>';
+																	}
+																}
+															?>
+															<!--
                     			  							<option default value="L">L</option>
                     			  							<option value=M>M</option>
-                                          <option value=L>L</option>
-                                          <option value=XL>XL</option>
+															<option value=L>L</option>
+															<option value=XL>XL</option>
+															-->
                     			  						</select>
                     			  					</div>
                     			  				</div>
