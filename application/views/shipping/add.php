@@ -45,7 +45,9 @@ if($evalDay == 'sun')
                     			  					<div class="col-sm-2">
                     			  						<select name="select-operation-type" id="select-operation-type" class="form-control " required>
                     			  							<option value="PEDIDO">PEDIDO</option>
-                                          <option value="RETIRO">RETIRO</option>
+                                          					<!--
+															<option value="RETIRO">RETIRO</option>
+															-->
                     			  						</select>
                     			  					</div>
                     			  				</div>
