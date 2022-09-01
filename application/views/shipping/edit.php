@@ -430,18 +430,14 @@
 
 	function totalAmount()
 	{
-		let origin = document.getElementById('select-origin');
-		let originSelectedText = origin.options[origin.selectedIndex].text;
-		let destination = document.getElementById('select-destination');
-    	let size = document.getElementById('select-shipping-type');
-    	let sizeSelectedText = size.options[size.selectedIndex].text;
-		let destinationSelectedText = destination.options[destination.selectedIndex].text;
-
-    	let typeRate = "<?php print($type_rate);?>";
-
+    	let typeRate = "<?php echo $type_rate;?>";
 		let extraPackges = parseInt($('#input-packages').val());
 
 		if (typeRate == "1"){
+			let origin = document.getElementById('select-origin');
+			let originSelectedText = origin.options[origin.selectedIndex].text;
+			let destination = document.getElementById('select-destination');
+			let destinationSelectedText = destination.options[destination.selectedIndex].text;
 			$.ajax({
 				url: site_url + '/CShipping/getRateFromToCompany',
 				type: 'post',
@@ -464,6 +460,8 @@
 		}
 
 		if (typeRate == "2") {
+			let size = document.getElementById('select-shipping-type');
+    		let sizeSelectedText = size.options[size.selectedIndex].text;
 			$.ajax({
 			url: site_url + '/CShipping/getRateSizeCompany',
 			type: 'post',
