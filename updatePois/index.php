@@ -3,10 +3,11 @@ $data = [];
 $dataString = '';
 $sep = '';
 $offset = 0;
+$cantidad = 1000;
 $flag = true;
 while($flag){
     // agregar get a points de quadmins
-    $curl = curl_init('https://flash-api.quadminds.com/api/v2/pois/search?limit=1000&offset='.$offset);
+    $curl = curl_init('https://flash-api.quadminds.com/api/v2/pois/search?limit=1000&offset='.($offset * $cantidad));
 
     curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
 

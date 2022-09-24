@@ -335,7 +335,7 @@
 			$('#select-destination').attr('required', true);
 
 			if (typeRate == "2") {
-				$('.selectCommune').hide();
+				//$('.selectCommune').hide();
 				$('.selectCommune').prop('required',false);
 				$('#select-shipping-type').prop('required',true);
 			}
@@ -363,8 +363,8 @@
     getAllPois();
 
       if (typeRate == "2") {
-		      $('.selectCommune').hide();
-          $('.selectCommune').prop('required',false);
+			//$('.selectCommune').hide();
+          	$('.selectCommune').prop('required',false);
       }
 
       if (typeRate == "1") {

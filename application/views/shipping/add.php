@@ -157,12 +157,12 @@ if($evalDay == 'sun')
                     			  					<div class="col-sm-5">
                     			  						<select name="select-origin" id="select-origin" class="form-control totalAmount selectCommune" required>
                     			  							<option value="<?php if (!empty($user_company[0]->communes_id)) {
-    echo $user_company[0]->communes_id;
-}
-?>"><?php if (!empty($user_company[0]->commune)) {
-    echo $user_company[0]->commune;
-}
-?></option>
+																echo $user_company[0]->communes_id;
+															}
+															?>"><?php if (!empty($user_company[0]->commune)) {
+																echo $user_company[0]->commune;
+															}
+															?></option>
                     			  							<?php foreach ($branch_offices as $key) {?>
                     			  								<option value="<?php echo $key->id; ?>"><?php echo $key->commune; ?></option>
                     			  							<?php }?>
@@ -181,6 +181,7 @@ if($evalDay == 'sun')
                     			  						</select>
                     			  					</div>
                     			  				</div>
+
                     			  			<div class="box-footer">
                     			  				<button type="submit" class="btn btn-primary pull-right">Guardar</button>
                     			  			</div>
@@ -454,11 +455,11 @@ function createPoid() {
     	let prefix = "<?php print($user_company[0]->prefix);?>";
 		if (typeRate == "1")
 			shipping_type_ = 'N/A';
-		else
-		{
-			origin_ = 'N/A';
-			destination_ = 'N/A';
-		}
+		//else
+		//{
+		//	origin_ = 'N/A';
+		//	destination_ = 'N/A';
+		//}
 
 		$.post(
 			site_url + "/CShipping/addShipping",
@@ -527,7 +528,7 @@ function createPoid() {
 			$('#select-destination').attr('required', true);
 
 			if (typeRate == "2") {
-				$('.selectCommune').hide();
+				//$('.selectCommune').hide();
 				$('.selectCommune').prop('required',false);
 				$('#select-shipping-type').prop('required',true);
 			}
@@ -552,8 +553,8 @@ function createPoid() {
 	});
 
       if (typeRate == "2") {
-		      $('.selectCommune').hide();
-          $('.selectCommune').prop('required',false);
+		//$('.selectCommune').hide();
+        $('.selectCommune').prop('required',false);
       }
 
       if (typeRate == "1") {
