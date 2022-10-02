@@ -1001,7 +1001,7 @@ class CShipping extends CI_Controller
             }
 
             $this->enviarCorreo2("Nuevo retiro de paquetes " . date('d-m-Y') . " en " . strtoupper($companyRazon), "Se ha generado un nuevo retiro
-                con fecha " . date('d-m-Y') . " en " . strtoupper($companyRazon) . ".<b>Un total de " . count($orders_arr) . " paquetes por el repartidor " . $this->session->userdata('name') . " " . $this->session->userdata('lastname'), $companyEmail . ',' . $userEmail . ', antonio.flypack@gmail.com');
+                con fecha " . date('d-m-Y') . " en " . strtoupper($companyRazon) . ".<b>Un total de " . count($orders_arr) . " paquetes por el repartidor " . $this->session->userdata('name') . " " . $this->session->userdata('lastname').'. Los números de ordenes son: '.$orders.'.', $companyEmail . ',' . $userEmail . ', antonio.flypack@gmail.com');
 
         }
 
