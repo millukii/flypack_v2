@@ -65,16 +65,13 @@ class CMasive extends CI_Controller {
 							'operation'				=> 'PEDIDO',
 							'observation'			=> 'Generada de manera masiva. ('.date('Y-m-d H:i').')'
 						);
-						print_r($data);
+						//print_r($data);
 					}
-					
 	            }
-
+				$mensaje = 1;
 				unlink($destino);
-
     		}
 	    }
-	    
 	    echo $mensaje;
 	}
 }
