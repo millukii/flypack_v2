@@ -47,7 +47,7 @@ class CMasive extends CI_Controller {
 
 	            for ($i=2; $i <= $filas ; $i++)
 	            { 
-					if(!empty($objPHPExcel->getActiveSheet()->getCell($letras[0].$i)->getValue())){
+					if(!empty($objPHPExcel->getActiveSheet()->getCell($letras[0].$i)->getValue()) && trim($objPHPExcel->getActiveSheet()->getCell($letras[0].$i)->getValue()) != ''){
 						$data = array(
 							'order_nro' 			=> ($objPHPExcel->getActiveSheet()->getCell($letras[0].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[0].$i)->getValue() : ''),
 							'total_amount' 			=> ($objPHPExcel->getActiveSheet()->getCell($letras[1].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[1].$i)->getValue() : ''),
