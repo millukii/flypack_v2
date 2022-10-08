@@ -17,8 +17,6 @@ class CMasive extends CI_Controller {
 
 	public function excelfile()
 	{
-		$profile 			= trim($this->input->get('profile',TRUE));
-
 		$this->load->library('excel');
 
 		$ruta = './assets/excel/';
@@ -45,78 +43,34 @@ class CMasive extends CI_Controller {
 
 	            $filas = $objPHPExcel->getActiveSheet()->getHighestRow();
 
-	            $letras = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H');
+	            $letras = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
 
 	            for ($i=2; $i <= $filas ; $i++)
 	            { 
 	            	$data = array(
-						'rut' 				=> ($objPHPExcel->getActiveSheet()->getCell($letras[0].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[0].$i)->getValue() : ''),
-						'dv' 			=> ($objPHPExcel->getActiveSheet()->getCell($letras[1].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[1].$i)->getValue() : ''),
-						'name' 				=> ($objPHPExcel->getActiveSheet()->getCell($letras[2].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[2].$i)->getValue() : ''),
-						'lastname' 		=> ($objPHPExcel->getActiveSheet()->getCell($letras[3].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[3].$i)->getValue() : ''),
-						'address' 			=> ($objPHPExcel->getActiveSheet()->getCell($letras[4].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[4].$i)->getValue() : 'sin dirección.'),
-						'phone' 			=> ($objPHPExcel->getActiveSheet()->getCell($letras[5].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[5].$i)->getValue() : '000000000'),
-						'email' 			=> ($objPHPExcel->getActiveSheet()->getCell($letras[6].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[6].$i)->getValue() : 'sin_email@gmail.com'),
-						'profiles_id' 		=> $profile,
-						'created'			=> $date_time
+						'order_nro' 			=> ($objPHPExcel->getActiveSheet()->getCell($letras[0].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[0].$i)->getValue() : ''),
+						'total_amount' 			=> ($objPHPExcel->getActiveSheet()->getCell($letras[1].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[1].$i)->getValue() : ''),
+						'address' 				=> ($objPHPExcel->getActiveSheet()->getCell($letras[2].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[2].$i)->getValue() : ''),
+						'shipping_type' 		=> ($objPHPExcel->getActiveSheet()->getCell($letras[3].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[3].$i)->getValue() : ''),
+						'origin' 				=> ($objPHPExcel->getActiveSheet()->getCell($letras[4].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[4].$i)->getValue() : 'N/A'),
+						'destination' 			=> ($objPHPExcel->getActiveSheet()->getCell($letras[5].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[5].$i)->getValue() : 'N/A'),
+						'packages' 				=> ($objPHPExcel->getActiveSheet()->getCell($letras[6].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[6].$i)->getValue() : 1),
+						'receiver_name' 		=> ($objPHPExcel->getActiveSheet()->getCell($letras[7].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[7].$i)->getValue() : 'N/A'),
+						'receiver_phone'		=> ($objPHPExcel->getActiveSheet()->getCell($letras[8].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[8].$i)->getValue() : 'N/A'),
+						'receiver_mail'			=>  ($objPHPExcel->getActiveSheet()->getCell($letras[9].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[9].$i)->getValue() : 'N/A'),
+						'companies_id'			=> $this->session->userdata("companies_id"),
+						'users_id'				=> $this->session->userdata("users_id"),
+						'shipping_states_id'	=> 1,
+						'operation'				=> 'PEDIDO',
+						'observation'			=> 'Generada de manera masiva. ('.date('Y-m-d H:i').')'
 					);
 
-	            	$rut = $objPHPExcel->getActiveSheet()->getCell($letras[0].$i)->getValue();
-	            	if(!empty($rut))
-	            	{
-	            		//validar si existe
-	            		$this->db->select('id');
-	            		$this->db->from('people');
-	            		$this->db->where('rut', $rut);
-	            		$this->db->limit(1);
-
-	            		$res = $this->db->get()->result_array();
-	            		if(!empty($res[0]['id']))
-	            		{
-	            			//existe hay id
-	            			$res = $res[0]['id'];
-
-	            			$data2 = array(
-								'name' 				=> ($objPHPExcel->getActiveSheet()->getCell($letras[2].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[2].$i)->getValue() : ''),
-								'lastname' 		=> ($objPHPExcel->getActiveSheet()->getCell($letras[3].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[3].$i)->getValue() : ''),
-								'address' 			=> ($objPHPExcel->getActiveSheet()->getCell($letras[4].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[4].$i)->getValue() : 'sin dirección.'),
-								'phone' 			=> ($objPHPExcel->getActiveSheet()->getCell($letras[5].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[5].$i)->getValue() : '000000000'),
-								'email' 			=> ($objPHPExcel->getActiveSheet()->getCell($letras[6].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[6].$i)->getValue() : 'sin_email@gmail.com'),
-								'profiles_id' 		=> $profile
-							);
-
-							if($this->modelo->editPeople($data2, $res))
-								echo '1';
-							else
-								echo '0';
-	            		}
-	            		else
-	            		{
-	            			//no existe
-	            			$res = 0;
-	            			if($this->modelo->addPeople($data))
-								$mensaje = '1';
-							else
-								$mensaje = '0';
-							
-	            		}
-	            	}
-
-					
+					print_r($data);
 	            }
 
 				unlink($destino);
 
     		}
-    		/*
-
-	        else if($key['error'] == '') {
-	            $mensaje = '1';
-	        }
-	        else if($key['error'] != '') {
-	            $mensaje = '0';
-	        }
-	        */
 	    }
 	    
 	    echo $mensaje;
