@@ -164,7 +164,6 @@ class CShipping extends CI_Controller
         $shipping_type = trim($this->input->post('shipping_type', true));
         $companies_id = trim($this->input->post('companies_id', true));
         $shipping_states_id = 1;
-        $address = trim($this->input->post('address', true));
         $receiver_name = trim($this->input->post('receiver_name', true));
         $receiver_phone = trim($this->input->post('receiver_phone', true));
         $receiver_mail = trim($this->input->post('receiver_mail', true));
@@ -1098,22 +1097,23 @@ class CShipping extends CI_Controller
 
 	            $filas = $objPHPExcel->getActiveSheet()->getHighestRow();
 
-	            $letras = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J');
+	            $letras = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K');
 
 	            for ($i=2; $i <= $filas ; $i++)
 	            { 
 					if(!empty($objPHPExcel->getActiveSheet()->getCell($letras[0].$i)->getValue()) && trim($objPHPExcel->getActiveSheet()->getCell($letras[0].$i)->getValue()) != ''){
 						$data = array(
 							'order_nro' 			=> ($objPHPExcel->getActiveSheet()->getCell($letras[0].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[0].$i)->getValue() : ''),
-							'total_amount' 			=> ($objPHPExcel->getActiveSheet()->getCell($letras[1].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[1].$i)->getValue() : ''),
-							'address' 				=> ($objPHPExcel->getActiveSheet()->getCell($letras[2].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[2].$i)->getValue() : ''),
-							'shipping_type' 		=> ($objPHPExcel->getActiveSheet()->getCell($letras[3].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[3].$i)->getValue() : ''),
-							'origin' 				=> ($objPHPExcel->getActiveSheet()->getCell($letras[4].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[4].$i)->getValue() : 'N/A'),
-							'destination' 			=> ($objPHPExcel->getActiveSheet()->getCell($letras[5].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[5].$i)->getValue() : 'N/A'),
-							'packages' 				=> ($objPHPExcel->getActiveSheet()->getCell($letras[6].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[6].$i)->getValue() : 1),
-							'receiver_name' 		=> ($objPHPExcel->getActiveSheet()->getCell($letras[7].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[7].$i)->getValue() : 'N/A'),
-							'receiver_phone'		=> ($objPHPExcel->getActiveSheet()->getCell($letras[8].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[8].$i)->getValue() : 'N/A'),
-							'receiver_mail'			=>  ($objPHPExcel->getActiveSheet()->getCell($letras[9].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[9].$i)->getValue() : 'N/A'),
+							'shipping_date'         => ($objPHPExcel->getActiveSheet()->getCell($letras[1].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[1].$i)->getValue() : ''),
+                            'total_amount' 			=> ($objPHPExcel->getActiveSheet()->getCell($letras[2].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[2].$i)->getValue() : ''),
+							'address' 				=> ($objPHPExcel->getActiveSheet()->getCell($letras[3].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[3].$i)->getValue() : ''),
+							'shipping_type' 		=> ($objPHPExcel->getActiveSheet()->getCell($letras[4].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[4].$i)->getValue() : ''),
+							'origin' 				=> ($objPHPExcel->getActiveSheet()->getCell($letras[5].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[5].$i)->getValue() : 'N/A'),
+							'destination' 			=> ($objPHPExcel->getActiveSheet()->getCell($letras[6].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[6].$i)->getValue() : 'N/A'),
+							'packages' 				=> ($objPHPExcel->getActiveSheet()->getCell($letras[7].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[7].$i)->getValue() : 1),
+							'receiver_name' 		=> ($objPHPExcel->getActiveSheet()->getCell($letras[8].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[8].$i)->getValue() : 'N/A'),
+							'receiver_phone'		=> ($objPHPExcel->getActiveSheet()->getCell($letras[9].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[9].$i)->getValue() : 'N/A'),
+							'receiver_mail'			=>  ($objPHPExcel->getActiveSheet()->getCell($letras[10].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[10].$i)->getValue() : 'N/A'),
 							'companies_id'			=> $this->session->userdata("companies_id"),
 							'users_id'				=> $this->session->userdata("users_id"),
 							'shipping_states_id'	=> 1,
@@ -1121,6 +1121,7 @@ class CShipping extends CI_Controller
 							'observation'			=> 'Generada de manera masiva. ('.date('Y-m-d H:i').')'
 						);
 						//print_r($data);
+                        $this->addShippingMassive($data);
 					}
 	            }
 				$mensaje = 1;
@@ -1131,4 +1132,220 @@ class CShipping extends CI_Controller
 	    
 	    echo $mensaje;
 	}
+
+    public function addShippingMassive($data)
+    {
+        $order_nro = $data['order_nro'];
+        //$quadmins_code = trim($this->input->post('quadmins_code', true));
+        $total_amount = $data['total_amount'];
+        $address = $data['address'];
+        //$delivery_name = trim($this->input->post('delivery_name', true));
+        $shipping_date = $data['shipping_date'];
+        //$shipping_delivery_date = trim($this->input->post('shipping_delivery_date', true));
+        $shipping_type = $data['shipping_type'];
+        $companies_id = $data['companies_id'];
+        $shipping_states_id = 1;
+        $receiver_name = $data['receiver_name'];
+        $receiver_phone = $data['receiver_phone'];
+        $receiver_mail = $data['receiver_mail'];
+        $observation = $data['observation'];
+        $poId = $this->createQuadminPoidMassive($data);
+        $packages = $data['packages'];
+        $operation = $data['operation'];
+
+        $this->db->select('merchant_id');
+        $this->db->from('companies');
+        $this->db->where('id', $data['companies_id']);
+        $this->db->limit(1);
+        $merchant_id = $this->db->get()->result_array();
+        $merchant_id = $merchant_id[0]['merchant_id'];
+        
+
+        $origin = $data['origin'];
+        $destination = $data['destination'];
+
+        $originCommuneName = $data['origin'];
+        $destinationCommuneName = $data['destination'];
+
+        if (empty($total_amount)) {
+            $total_amount = 0;
+        }
+
+        if (empty($quadmins_code)) {
+            $quadmins_code = $order_nro;
+        }
+
+        if (empty($address)) {
+            $address = 'N/A';
+        }
+
+        if (empty($label)) {
+            $label = 'N/A';
+        }
+
+        if (empty($delivery_name)) {
+            $delivery_name = 'N/A';
+        }
+
+        if (empty($shipping_date)) {
+            $shipping_date = '';
+        }
+        if (empty($merchant_id)) {
+            $merchant_id = 0;
+        }
+
+        $date_time = date('Y-m-d H:i:s');
+
+        $user = $this->session->userdata('users_id');
+        $companies_id = $this->session->userdata('companies_id');
+
+        if ($operation == 'RETIRO') {
+            $originCommuneName = 'N/A';
+            $destinationCommuneName = 'N/A';
+            $total_amount = 0;
+            $shipping_type = 'N/A';
+        }
+
+        $data = array(
+            'order_nro' => $order_nro,
+            'quadmins_code' => $quadmins_code,
+            'total_amount' => $total_amount,
+            'address' => $address,
+            'shipping_type' => $shipping_type,
+            'receiver_name' => $receiver_name,
+            'receiver_phone' => $receiver_phone,
+            'receiver_mail' => $receiver_mail,
+            'shipping_date' => $shipping_date,
+            'delivery_name' => $delivery_name,
+            'observation' => $observation,
+            'shipping_states_id' => $shipping_states_id,
+            'origin' => $originCommuneName,
+            'destination' => $destinationCommuneName,
+            'created' => $date_time,
+            'users_id' => $user,
+            'companies_id' => $companies_id,
+            'packages' => $packages,
+            'operation' => $operation,
+            'poiId' => (int) $poId,
+            'shipping_delivery_date' => null,
+        );
+
+        if ($this->modelo->addShipping($data)) {
+            //agregar llamado a la api de quadmin con los datos necesarios para crear una orden
+
+            $measures = array();
+            $volume = new stdClass;
+            $volume->constraintId = 7;
+            $volume->value = (int) $total_amount;
+
+            array_push($measures, $volume);
+
+            $merchants = array();
+            $merchant = new stdClass;
+            $merchant->_id = (int) $merchant_id;
+            array_push($merchants, $merchant);
+
+            $quadminOrder = array(
+                'code' => $quadmins_code,
+                'poiId' => (int) $poId,
+                'quadmins_code' => $quadmins_code,
+                'date' => $shipping_date,
+                'operation' => $operation,
+                'priority' => 0,
+                'totalAmount' => (int) $total_amount,
+                'totalAmountWithoutTaxes' => (int) $total_amount,
+                'orderMeasures' => $measures,
+                'merchants' => $merchants,
+            );
+            $orders = [];
+
+            array_push($orders, $quadminOrder);
+
+            $data_string = json_encode($orders);
+            $curl = curl_init('https://flash-api.quadminds.com/api/v2/orders');
+
+            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+
+            curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+                'Content-Type: application/json',
+                'Content-Length: ' . strlen($data_string),
+                'x-saas-apikey: ' . 'SzaORv8XtExcO1zVX3jcWGsOvyGwsl3y46sOLnmn'));
+
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // Make it so the data coming back is put into a string
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string); // Insert the data
+
+            // Send the request
+            $result = curl_exec($curl);
+            $err = curl_error($curl);
+            if ($err) {
+                echo "cURL Error #:" . $err;
+            }
+            $array = json_decode($result, true);
+            // Free up the resources $curl is using
+            curl_close($curl);
+            $date_time = date('Y-m-d H:i:s');
+            $data = array(
+                'quadmins_code' => $array['data'][0]['_id'],
+                'modified' => $date_time,
+            );
+            $this->modelo->editShippingByOrderNro($data, $order_nro);
+            echo '1';
+        } else {echo '0';}
+
+    }
+
+    public function createQuadminPoidMassive($data)
+    {
+        $address = $data['address'];
+        $receiver_name = $data['receiver_name'];
+        $receiver_phone = $data['receiver_phone'];
+        $receiver_mail = $data['receiver_mail'];
+
+        $observation = $data['observation'];
+        $quadminOrder = array(
+            'poiType' => 'SIN_TIPO',
+            'name' => $receiver_name,
+            'email' => $receiver_mail,
+            'enabled' => true,
+            'phoneNumber' => $receiver_phone,
+            'poiDeliveryComments' => $observation,
+            'originalAddress' => $address,
+            'longAddress' => $address,
+            'visitingFrequency' => "weekly",
+        );
+        $orders = [];
+        array_push($orders, $quadminOrder);
+
+        $data_string = json_encode($orders);
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://flash-api.quadminds.com/api/v2/pois',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $data_string,
+            CURLOPT_HTTPHEADER => array(
+                'Accept: application/json',
+                'Content-Type: application/json',
+                'x-saas-apikey: SzaORv8XtExcO1zVX3jcWGsOvyGwsl3y46sOLnmn',
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        }
+
+        curl_close($curl);
+        $points = json_decode($response, true);
+
+        return $points['data'][0]['_id'];
+    }
 }
