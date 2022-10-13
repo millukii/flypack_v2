@@ -1136,7 +1136,11 @@ class CShipping extends CI_Controller
     {
         $order_nro = $data['order_nro'];
         //$quadmins_code = trim($this->input->post('quadmins_code', true));
-        $total_amount = $data['total_amount'];
+        //total_amount se calcula en base type_rate (1 origen/destino o 2 tamaño)
+        //para esto, siempre van a venir esos campos en el registro del masivo (shipping_type, origin, destination)
+        //por query o variables de sesion se puede extraer si el usuario logueado pertenece a una empresa de type_rate 1 o 2
+        //y dependiendo de lo que venga en el masivo, se establece la query correspondiente y se obtiene el total_amount
+        $total_amount = 0;
         $address = $data['address'];
         //$delivery_name = trim($this->input->post('delivery_name', true));
         $shipping_date = $data['shipping_date'];
