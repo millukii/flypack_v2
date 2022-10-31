@@ -86,13 +86,13 @@ if (!empty($this->session->userdata('options'))) {
                 <i class="fa fa-circle-o"></i> <span>Ordenes de Transporte</span>
               </a>
             </li>
-            
+            <!--
             <li  id="li-ot">
-              <a href="<?php echo site_url() ?>/CShipping/massive">
+              <a href="<?php //echo site_url() ?>/CShipping/massive">
                 <i class="fa fa-circle-o"></i> <span>Carga Masiva de OTs</span>
               </a>
             </li>
-    
+    -->
 
              <?php if ($this->session->userdata("rol_id") == 1) {?>
             <li  id="li-prices">

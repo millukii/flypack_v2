@@ -4,7 +4,7 @@ $shipping_date = date('Y-m-d');
 $hour = date('H:i');
 
 $next_date = null;
-if (strtotime($hour) > strtotime('23:00')) {
+if (strtotime($hour) > strtotime('22:45')) {
 	$next_date = date("Y-m-d", strtotime($shipping_date . "+ 2 days"));
 } else {
 	$next_date = date("Y-m-d", strtotime($shipping_date . "+ 1 days"));
