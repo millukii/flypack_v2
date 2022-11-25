@@ -76,7 +76,7 @@ function createPoiQuadmin($data, $order_nro){
 
     curl_close($curl);
     $points = json_decode($response, true);
-
+    //print_r($points);
     $data = $points['data'][0];
     return $data['_id'];
 }

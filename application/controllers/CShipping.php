@@ -20,6 +20,25 @@ class CShipping extends CI_Controller
         $this->load->view('shipping/index');
     }
 
+    public function replaceAllTildes($value){
+        $value = str_replace('Á','A', $value);
+        $value = str_replace('É','E', $value);
+        $value = str_replace('Í','I', $value);
+        $value = str_replace('Ó','O', $value);
+        $value = str_replace('Ú','U', $value);
+    
+        $value = str_replace('á','a', $value);
+        $value = str_replace('é','e', $value);
+        $value = str_replace('í','i', $value);
+        $value = str_replace('ó','o', $value);
+        $value = str_replace('ú','u', $value);
+    
+        $value = str_replace('Ñ','N', $value);
+        $value = str_replace('ñ','n', $value);
+    
+        return $value;
+    }
+
     //Datatable
     public function datatable()
     {
@@ -378,14 +397,14 @@ class CShipping extends CI_Controller
             'order_nro' => $order_nro,
             'quadmins_code' => $quadmins_code,
             'total_amount' => $total_amount,
-            'address' => $address,
+            'address' => $this->replaceAllTildes($address),
             'shipping_type' => $shipping_type,
-            'receiver_name' => $receiver_name,
+            'receiver_name' => $this->replaceAllTildes($receiver_name),
             'receiver_phone' => $receiver_phone,
-            'receiver_mail' => $receiver_mail,
+            'receiver_mail' => $this->replaceAllTildes($receiver_mail),
             'shipping_date' => $shipping_date,
-            'delivery_name' => $delivery_name,
-            'observation' => $observation,
+            'delivery_name' => $this->replaceAllTildes($delivery_name),
+            'observation' => $this->replaceAllTildes($observation),
             'shipping_states_id' => $shipping_states_id,
             'origin' => $originCommuneName,
             'destination' => $destinationCommuneName,
@@ -402,14 +421,14 @@ class CShipping extends CI_Controller
             'order_nro' => $order_nro,
             'quadmins_code' => $quadmins_code,
             'total_amount' => $total_amount,
-            'address' => $address,
+            'address' => $this->replaceAllTildes($address),
             'shipping_type' => $shipping_type,
-            'receiver_name' => $receiver_name,
+            'receiver_name' => $this->replaceAllTildes($receiver_name),
             'receiver_phone' => $receiver_phone,
-            'receiver_mail' => $receiver_mail,
+            'receiver_mail' => $this->replaceAllTildes($receiver_mail),
             'shipping_date' => $shipping_date,
-            'delivery_name' => $delivery_name,
-            'observation' => $observation,
+            'delivery_name' => $this->replaceAllTildes($delivery_name),
+            'observation' => $this->replaceAllTildes($observation),
             'shipping_states_id' => $shipping_states_id,
             'origin' => $originCommuneName,
             'destination' => $destinationCommuneName,
@@ -1604,14 +1623,14 @@ class CShipping extends CI_Controller
             'order_nro' => $order_nro,
             'quadmins_code' => $quadmins_code,
             'total_amount' => $total_amount,
-            'address' => $address,
+            'address' => $this->replaceAllTildes($address),
             'shipping_type' => $shipping_type,
-            'receiver_name' => $receiver_name,
+            'receiver_name' => $this->replaceAllTildes($receiver_name),
             'receiver_phone' => $receiver_phone,
-            'receiver_mail' => $receiver_mail,
+            'receiver_mail' => $this->replaceAllTildes($receiver_mail),
             'shipping_date' => $shipping_date,
-            'delivery_name' => $delivery_name,
-            'observation' => $observation,
+            'delivery_name' => $this->replaceAllTildes($delivery_name),
+            'observation' => $this->replaceAllTildes($observation),
             'shipping_states_id' => $shipping_states_id,
             'origin' => $originCommuneName,
             'destination' => $destinationCommuneName,
@@ -1628,14 +1647,14 @@ class CShipping extends CI_Controller
             'order_nro' => $order_nro,
             'quadmins_code' => $quadmins_code,
             'total_amount' => $total_amount,
-            'address' => $address,
+            'address' => $this->replaceAllTildes($address),
             'shipping_type' => $shipping_type,
-            'receiver_name' => $receiver_name,
+            'receiver_name' => $this->replaceAllTildes($receiver_name),
             'receiver_phone' => $receiver_phone,
-            'receiver_mail' => $receiver_mail,
+            'receiver_mail' => $this->replaceAllTildes($receiver_mail),
             'shipping_date' => $shipping_date,
-            'delivery_name' => $delivery_name,
-            'observation' => $observation,
+            'delivery_name' => $this->replaceAllTildes($delivery_name),
+            'observation' => $this->replaceAllTildes($observation),
             'shipping_states_id' => $shipping_states_id,
             'origin' => $originCommuneName,
             'destination' => $destinationCommuneName,
