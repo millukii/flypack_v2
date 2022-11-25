@@ -63,7 +63,7 @@
                 success: function(dato)
                 {
                   if (dato == '1') {
-                    window.location.replace(site_url+"/CShipping/massive");
+                    window.location.replace(site_url+"/CShipping/index");
                   }
                   else if (dato != '1') {
                     alert("Error durante la carga masiva");
