@@ -1238,13 +1238,14 @@ class CShipping extends CI_Controller
 							'destination' 			=> strtoupper(($objPHPExcel->getActiveSheet()->getCell($letras[4].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[4].$i)->getValue() : 'N/A')),
 							'packages' 				=> ($objPHPExcel->getActiveSheet()->getCell($letras[5].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[5].$i)->getValue() : 1),
 							'receiver_name' 		=> ($objPHPExcel->getActiveSheet()->getCell($letras[6].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[6].$i)->getValue() : 'N/A'),
-							'receiver_phone'		=> ($objPHPExcel->getActiveSheet()->getCell($letras[7].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[7].$i)->getValue() : 'N/A'),
-							'receiver_mail'			=>  ($objPHPExcel->getActiveSheet()->getCell($letras[8].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[8].$i)->getValue() : 'N/A'),
+							'observation'			=> ($objPHPExcel->getActiveSheet()->getCell($letras[7].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[7].$i)->getValue() : 'N/A'),
+                            'receiver_phone'		=> ($objPHPExcel->getActiveSheet()->getCell($letras[8].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[8].$i)->getValue() : 'N/A'),
+							'receiver_mail'			=>  ($objPHPExcel->getActiveSheet()->getCell($letras[9].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[9].$i)->getValue() : 'N/A'),
 							'companies_id'			=> $this->session->userdata("companies_id"),
 							'users_id'				=> $this->session->userdata("users_id"),
 							'shipping_states_id'	=> 1,
-							'operation'				=> 'PEDIDO',
-							'observation'			=> 'Generada de manera masiva. ('.date('Y-m-d H:i').')'
+							'operation'				=> 'PEDIDO'
+							
 						);
 						//print_r($data);
                         $this->addShippingMassive($data);
