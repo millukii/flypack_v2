@@ -2,6 +2,25 @@
 include_once 'conexion.php';
 ini_set('date.timezone', 'America/Santiago');
 
+function replaceAllTildes($value){
+    $value = str_replace('Á','A', $value);
+    $value = str_replace('É','E', $value);
+    $value = str_replace('Í','I', $value);
+    $value = str_replace('Ó','O', $value);
+    $value = str_replace('Ú','U', $value);
+
+    $value = str_replace('á','a', $value);
+    $value = str_replace('é','e', $value);
+    $value = str_replace('í','i', $value);
+    $value = str_replace('ó','o', $value);
+    $value = str_replace('ú','u', $value);
+
+    $value = str_replace('Ñ','N', $value);
+    $value = str_replace('ñ','n', $value);
+
+    return $value;
+}
+
 function getRandomCode(){
     $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     return substr(str_shuffle($permitted_chars), 0, 16);
@@ -203,13 +222,13 @@ while($rs=$result->fetch()){
         $quadminPoi = array(
             'code' => getRandomCode(),
             'poiType' => 'SIN_TIPO',
-            'name' => $receiver_name,
-            'email' => $receiver_mail,
+            'name' => replaceAllTildes($receiver_name),
+            'email' => replaceAllTildes($receiver_mail),
             'enabled' => true,
             'phoneNumber' => $receiver_phone,
-            'poiDeliveryComments' => $observation,
-            'originalAddress' => $address,
-            'longAddress' => $address,
+            'poiDeliveryComments' => replaceAllTildes($observation),
+            'originalAddress' => replaceAllTildes($address),
+            'longAddress' => replaceAllTildes($address),
             'visitingFrequency' => "weekly",
         );
         $poiId = createPoiQuadmin($quadminPoi, $order_nro);
@@ -228,13 +247,13 @@ while($rs=$result->fetch()){
             $quadminPoi = array(
                 'code' => getRandomCode(),
                 'poiType' => 'SIN_TIPO',
-                'name' => $receiver_name,
-                'email' => $receiver_mail,
+                'name' => replaceAllTildes($receiver_name),
+                'email' => replaceAllTildes($receiver_mail),
                 'enabled' => true,
                 'phoneNumber' => $receiver_phone,
-                'poiDeliveryComments' => $observation,
-                'originalAddress' => $address,
-                'longAddress' => $address,
+                'poiDeliveryComments' => replaceAllTildes($observation),
+                'originalAddress' => replaceAllTildes($address),
+                'longAddress' => replaceAllTildes($address),
                 'visitingFrequency' => "weekly",
             );
 
