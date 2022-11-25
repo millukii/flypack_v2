@@ -151,7 +151,7 @@ class CShipping extends CI_Controller
         $this->load->view('aside');
         $this->load->view('shipping/view', $data);
     }
-
+    /*
     public function addShipping()
     {
         $order_nro = trim($this->input->post('order_nro', true));
@@ -304,6 +304,134 @@ class CShipping extends CI_Controller
             echo '1';
         } else {echo '0';}
 
+    }
+    */
+    public function addShipping()
+    {
+        $order_nro = trim($this->input->post('order_nro', true));
+        $quadmins_code = null;
+        $total_amount = trim($this->input->post('total_amount', true));
+        $address = trim($this->input->post('address', true));
+        $delivery_name = trim($this->input->post('delivery_name', true));
+        $shipping_date = trim($this->input->post('shipping_date', true));
+        $shipping_delivery_date = trim($this->input->post('shipping_delivery_date', true));
+        $shipping_type = trim($this->input->post('shipping_type', true));
+        $companies_id = trim($this->input->post('companies_id', true));
+        $shipping_states_id = 1;
+        $receiver_name = trim($this->input->post('receiver_name', true));
+        $receiver_phone = trim($this->input->post('receiver_phone', true));
+        $receiver_mail = trim($this->input->post('receiver_mail', true));
+        $observation = trim($this->input->post('observation', true));
+        $poId = trim($this->input->post('poId', true));
+        $packages = trim($this->input->post('packages', true));
+        $operation = trim($this->input->post('operation', true));
+        $merchant_id = trim($this->input->post('merchant_id', true));
+
+        $origin = trim($this->input->post('origin', true));
+        $destination = trim($this->input->post('destination', true));
+
+        $originCommuneName = $this->modelo->getCommuneName($origin);
+        $destinationCommuneName = $this->modelo->getCommuneName($destination);
+
+        $nuevo_poi = !empty(trim($this->input->post('nuevo_poi', true))) ? 1 : 0;
+
+        if (empty($total_amount)) {
+            $total_amount = 0;
+        }
+
+        if (empty($quadmins_code)) {
+            $quadmins_code = 0;
+        }
+
+        if (empty($address)) {
+            $address = 'N/A';
+        }
+
+        if (empty($label)) {
+            $label = 'N/A';
+        }
+
+        if (empty($delivery_name)) {
+            $delivery_name = 'N/A';
+        }
+
+        if (empty($shipping_date)) {
+            $shipping_date = '';
+        }
+        if (empty($merchant_id)) {
+            $merchant_id = 0;
+        }
+
+        $date_time = date('Y-m-d H:i:s');
+
+        $user = $this->session->userdata('users_id');
+        $companies_id = $this->session->userdata('companies_id');
+
+        if ($operation == 'RETIRO') {
+            $originCommuneName = 'N/A';
+            $destinationCommuneName = 'N/A';
+            $total_amount = 0;
+            $shipping_type = 'N/A';
+        }
+
+        $data = array(
+            'order_nro' => $order_nro,
+            'quadmins_code' => $quadmins_code,
+            'total_amount' => $total_amount,
+            'address' => $address,
+            'shipping_type' => $shipping_type,
+            'receiver_name' => $receiver_name,
+            'receiver_phone' => $receiver_phone,
+            'receiver_mail' => $receiver_mail,
+            'shipping_date' => $shipping_date,
+            'delivery_name' => $delivery_name,
+            'observation' => $observation,
+            'shipping_states_id' => $shipping_states_id,
+            'origin' => $originCommuneName,
+            'destination' => $destinationCommuneName,
+            'created' => $date_time,
+            'users_id' => $user,
+            'companies_id' => $companies_id,
+            'packages' => $packages,
+            'operation' => $operation,
+            'poiId' => (int) $poId,
+            'shipping_delivery_date' => $shipping_delivery_date,
+        );
+
+        $data_request = array(
+            'order_nro' => $order_nro,
+            'quadmins_code' => $quadmins_code,
+            'total_amount' => $total_amount,
+            'address' => $address,
+            'shipping_type' => $shipping_type,
+            'receiver_name' => $receiver_name,
+            'receiver_phone' => $receiver_phone,
+            'receiver_mail' => $receiver_mail,
+            'shipping_date' => $shipping_date,
+            'delivery_name' => $delivery_name,
+            'observation' => $observation,
+            'shipping_states_id' => $shipping_states_id,
+            'origin' => $originCommuneName,
+            'destination' => $destinationCommuneName,
+            'created' => $date_time,
+            'users_id' => $user,
+            'companies_id' => $companies_id,
+            'packages' => $packages,
+            'operation' => $operation,
+            'poiId' => (int) $poId,
+            'shipping_delivery_date' => $shipping_delivery_date,
+            'nuevo_poi' => $nuevo_poi,
+            'status' => 2
+        );
+
+        if ($this->modelo->addShipping($data)) {
+            if($this->modelo->addShippingRequest($data_request))
+                echo '1';
+            else
+                echo '0';
+        } 
+        else 
+            echo '0';
     }
 
     public function editShipping()
@@ -1350,5 +1478,13 @@ class CShipping extends CI_Controller
         $points = json_decode($response, true);
 
         return $points['data'][0]['_id'];
+    }
+    //------------------------
+    public function doRequestQuadmins(){
+
+    }
+
+    public function deleteOrdersSuccess(){
+
     }
 }

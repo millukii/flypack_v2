@@ -29,7 +29,7 @@ while($flag){
         $temp = json_encode($points['data']);
         $dataString .= $temp;
         $offset++;
-        if($offset == 3)
+        if($offset == 5)
             $flag = false;
     }
     else

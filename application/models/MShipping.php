@@ -311,6 +311,16 @@ class MShipping extends CI_Model
 
     }
 
+    public function addShippingRequest($data)
+    {
+        if ($this->db->insert('shipping_request', $data)) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
     public function editShipping($data, $id)
     {
         $this->db->where('id', $id);
@@ -320,6 +330,17 @@ class MShipping extends CI_Model
             return false;
         }
     }
+
+    public function editShippingRequest($data, $order_nro)
+    {
+        $this->db->where('order_nro', $order_nro);
+        if ($this->db->update('shipping_request', $data)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function editShippingByOrderNro($data, $order_nro)
     {
         $this->db->where('order_nro', $order_nro);

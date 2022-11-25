@@ -209,12 +209,6 @@
                   <a title="Ver Detalle" href="<?php echo site_url(); ?>/CShipping/view?id=`+row.id+`" class="btn btn-primary btn-xs" role="button">
                     <i class='fa fa-search'> </i>
                   </a>
-                  <a title="Editar" href="<?php echo site_url(); ?>/CShipping/edit?id=`+row.id+`" class="btn btn-warning btn-xs" role="button">
-                      <i class='fa fa-pencil-square-o'> </i>
-                  </a>
-                  <a href="#" title="Eliminar" class="btn btn-danger btn-xs" role="button" onclick="deleteShipping(`+row.id+`);">
-                      <i class='fa fa-trash-o'> </i>
-                  </a>
                   <button title="Generar Etiqueta" class="btn btn-success btn-xs" role="button" onclick="generateLabel(`+row.id+`);">
                       <i class='fa fa-qrcode'> </i>
                   </button>`;
@@ -225,9 +219,6 @@
                 return `
                   <a title="Ver Detalle" href="<?php echo site_url(); ?>/CShipping/view?id=`+row.id+`" class="btn btn-primary btn-xs" role="button">
                     <i class='fa fa-search'> </i>
-                  </a>
-                  <a title="Editar" href="<?php echo site_url(); ?>/CShipping/edit?id=`+row.id+`" class="btn btn-warning btn-xs" role="button">
-                      <i class='fa fa-pencil-square-o'> </i>
                   </a>
                   <button title="Generar Etiqueta" class="btn btn-success btn-xs" role="button" onclick="generateLabel(`+row.id+`);">
                       <i class='fa fa-qrcode'> </i>

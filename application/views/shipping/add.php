@@ -481,6 +481,7 @@ function createPoid() {
 				destination: destination_,
 				poId: selectedPoid,
 				merchant_id: merchantId,
+				nuevo_poi: $('#checkboxPoid').is(':checked')
 			},
 			function(data)
 			{
@@ -596,12 +597,15 @@ function createPoid() {
 			cuerpo = $('#input-order_nro').val();
 			dv = cuerpo;
 
+			createOT();
+			/*
 			var newPoi = $('#checkboxPoid').is(':checked');
 			if (newPoi) {
 				createPoid();
 			}else{
 				createOT();
 			}
+			*/
 
 		});
 
