@@ -1233,9 +1233,9 @@ class CShipping extends CI_Controller
 						$data = array(
 							'order_nro' 			=> ($objPHPExcel->getActiveSheet()->getCell($letras[0].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[0].$i)->getValue() : ''),
 							'address' 				=> ($objPHPExcel->getActiveSheet()->getCell($letras[1].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[1].$i)->getValue() : ''),
-							'shipping_type' 		=> ($objPHPExcel->getActiveSheet()->getCell($letras[2].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[2].$i)->getValue() : ''),
-							'origin' 				=> ($objPHPExcel->getActiveSheet()->getCell($letras[3].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[3].$i)->getValue() : 'N/A'),
-							'destination' 			=> ($objPHPExcel->getActiveSheet()->getCell($letras[4].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[4].$i)->getValue() : 'N/A'),
+							'shipping_type' 		=> strtoupper(($objPHPExcel->getActiveSheet()->getCell($letras[2].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[2].$i)->getValue() : 'N/A')),
+							'origin' 				=> strtoupper(($objPHPExcel->getActiveSheet()->getCell($letras[3].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[3].$i)->getValue() : 'N/A')),
+							'destination' 			=> strtoupper(($objPHPExcel->getActiveSheet()->getCell($letras[4].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[4].$i)->getValue() : 'N/A')),
 							'packages' 				=> ($objPHPExcel->getActiveSheet()->getCell($letras[5].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[5].$i)->getValue() : 1),
 							'receiver_name' 		=> ($objPHPExcel->getActiveSheet()->getCell($letras[6].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[6].$i)->getValue() : 'N/A'),
 							'receiver_phone'		=> ($objPHPExcel->getActiveSheet()->getCell($letras[7].$i)->getValue() != '' ? $objPHPExcel->getActiveSheet()->getCell($letras[7].$i)->getValue() : 'N/A'),
