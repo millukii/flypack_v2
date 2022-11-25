@@ -32,7 +32,7 @@ function createPoiQuadmin($data, $order_nro){
     curl_setopt_array($curl, array(
         CURLOPT_URL => 'https://flash-api.quadminds.com/api/v2/pois',
         CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => '',
+        CURLOPT_ENCODING => 'UTF-8',
         CURLOPT_MAXREDIRS => 10,
         CURLOPT_TIMEOUT => 0,
         CURLOPT_FOLLOWLOCATION => true,
