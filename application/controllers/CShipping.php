@@ -1251,9 +1251,8 @@ class CShipping extends CI_Controller
                         $this->addShippingMassive($data);
 					}
 	            }
-				$mensaje = 1;
+				$mensaje = '1';
 				unlink($destino);
-
     		}
 	    }
 	    

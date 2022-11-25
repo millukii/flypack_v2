@@ -62,11 +62,10 @@
                 cache: false,
                 success: function(dato)
                 {
-                  if (dato == 1) {
-                    alert('bien');
-                    //window.location.replace(site_url+"/CShipping/massive");
+                  if (dato == '1') {
+                    window.location.replace(site_url+"/CShipping/massive");
                   }
-                  else if (dato != 1) {
+                  else if (dato != '1') {
                     alert("Error durante la carga masiva");
                     //window.location.replace(site_url+"/CShipping/massive");
                   }
