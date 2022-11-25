@@ -1,5 +1,5 @@
 <?php
-//evaluar sin son pasadas las 22:30
+//evaluar sin son pasadas las 22:45
 $shipping_date = date('Y-m-d');
 $hour = date('H:i');
 

@@ -1259,8 +1259,8 @@ class CShipping extends CI_Controller
 	    
 	    echo $mensaje;
 	}
-
-    public function addShippingMassive($data)
+    /*
+    public function addShippingMassive_bkp($data)
     {
         $order_nro = $data['order_nro'];
         //$quadmins_code = trim($this->input->post('quadmins_code', true));
@@ -1424,7 +1424,8 @@ class CShipping extends CI_Controller
         } else {echo '0';}
 
     }
-
+    */
+    /*
     public function createQuadminPoidMassive($data)
     {
         $address = $data['address'];
@@ -1478,13 +1479,185 @@ class CShipping extends CI_Controller
         $points = json_decode($response, true);
 
         return $points['data'][0]['_id'];
-    }
+    }*/
     //------------------------
-    public function doRequestQuadmins(){
+    public function addShippingMassive($data)
+    {
+        $order_nro = $data['order_nro'];
+        $quadmins_code = 0;
+        $total_amount = 0;
+        
+        $address = $data['address'];
+        $delivery_name = 'N/A';
+        //shipping date
+        //evaluar sin son pasadas las 22:45
+        $shipping_date = date('Y-m-d');
+        $hour = date('H:i');
 
-    }
+        $next_date = null;
+        if (strtotime($hour) > strtotime('22:45')) {
+            $next_date = date("Y-m-d", strtotime($shipping_date . "+ 2 days"));
+        } else {
+            $next_date = date("Y-m-d", strtotime($shipping_date . "+ 1 days"));
+        }
+        $evalDay = strtolower(date("D", strtotime($next_date)));
+        if($evalDay == 'sun')
+            $next_date = date("Y-m-d", strtotime($next_date . "+ 1 days"));
+        $shipping_date = $next_date;
 
-    public function deleteOrdersSuccess(){
+        $shipping_delivery_date = '000-00-00 00:00:00';
+        $shipping_type = $data['shipping_type'];
+        $companies_id = $data['companies_id'];
+        $shipping_states_id = 1;
+        $receiver_name = $data['receiver_name'];
+        $receiver_phone = $data['receiver_phone'];
+        $receiver_mail = $data['receiver_mail'];
+        $observation = $data['observation'];
+        $poId = 0;
+        $packages = $data['packages'];
+        $operation = $data['operation'];
 
+        $this->db->select('merchant_id');
+        $this->db->from('companies');
+        $this->db->where('id', $data['companies_id']);
+        $this->db->limit(1);
+        $merchant_id = $this->db->get()->result_array();
+        $merchant_id = $merchant_id[0]['merchant_id'];
+
+        $origin = $data['origin'];
+        $destination = $data['destination'];
+
+        $originCommuneName = $data['origin'];
+        $destinationCommuneName = $data['destination'];
+
+        //calcular total_amount
+        //total_amount se calcula en base type_rate (1 origen/destino o 2 tamaño)
+        //para esto, siempre van a venir esos campos en el registro del masivo (shipping_type, origin, destination)
+        //por query o variables de sesion se puede extraer si el usuario logueado pertenece a una empresa de type_rate 1 o 2
+        //y dependiendo de lo que venga en el masivo, se establece la query correspondiente y se obtiene el total_amount
+       
+        if($this->session->userdata('type_rate') == 1){
+            //origen <-> destino
+            $this->db->select('value');
+            $this->db->from('rates');
+            $this->db->where('from', $data['origin']);
+            $this->db->where('to', $data['destination']);
+            $this->db->where('companies_id', $data['companies_id']);
+            $this->db->limit(1);
+            $res = $this->db->get()->result_array();
+            $res = (!empty($res[0]['value'])) ? $res[0]['value'] : 0;
+            $total_amount = $res;
+        }
+        else{
+            //tamano
+            $this->db->select('value');
+            $this->db->from('rates_size');
+            $this->db->where('size', $shipping_type);
+            $this->db->where('companies_id', $data['companies_id']);
+            $this->db->limit(1);
+            $res = $this->db->get()->result_array();
+            $res = (!empty($res[0]['value'])) ? $res[0]['value'] : 0;
+            $total_amount = $res;
+        }
+
+        $nuevo_poi = 1;
+
+        if (empty($total_amount)) {
+            $total_amount = 0;
+        }
+
+        if (empty($quadmins_code)) {
+            $quadmins_code = 0;
+        }
+
+        if (empty($address)) {
+            $address = 'N/A';
+        }
+
+        if (empty($label)) {
+            $label = 'N/A';
+        }
+
+        if (empty($delivery_name)) {
+            $delivery_name = 'N/A';
+        }
+
+        if (empty($shipping_date)) {
+            $shipping_date = '';
+        }
+        if (empty($merchant_id)) {
+            $merchant_id = 0;
+        }
+
+        $date_time = date('Y-m-d H:i:s');
+
+        $user = $this->session->userdata('users_id');
+        $companies_id = $this->session->userdata('companies_id');
+
+        if ($operation == 'RETIRO') {
+            $originCommuneName = 'N/A';
+            $destinationCommuneName = 'N/A';
+            $total_amount = 0;
+            $shipping_type = 'N/A';
+        }
+
+        $data = array(
+            'order_nro' => $order_nro,
+            'quadmins_code' => $quadmins_code,
+            'total_amount' => $total_amount,
+            'address' => $address,
+            'shipping_type' => $shipping_type,
+            'receiver_name' => $receiver_name,
+            'receiver_phone' => $receiver_phone,
+            'receiver_mail' => $receiver_mail,
+            'shipping_date' => $shipping_date,
+            'delivery_name' => $delivery_name,
+            'observation' => $observation,
+            'shipping_states_id' => $shipping_states_id,
+            'origin' => $originCommuneName,
+            'destination' => $destinationCommuneName,
+            'created' => $date_time,
+            'users_id' => $user,
+            'companies_id' => $companies_id,
+            'packages' => $packages,
+            'operation' => $operation,
+            'poiId' => (int) $poId,
+            'shipping_delivery_date' => $shipping_delivery_date,
+        );
+
+        $data_request = array(
+            'order_nro' => $order_nro,
+            'quadmins_code' => $quadmins_code,
+            'total_amount' => $total_amount,
+            'address' => $address,
+            'shipping_type' => $shipping_type,
+            'receiver_name' => $receiver_name,
+            'receiver_phone' => $receiver_phone,
+            'receiver_mail' => $receiver_mail,
+            'shipping_date' => $shipping_date,
+            'delivery_name' => $delivery_name,
+            'observation' => $observation,
+            'shipping_states_id' => $shipping_states_id,
+            'origin' => $originCommuneName,
+            'destination' => $destinationCommuneName,
+            'created' => $date_time,
+            'users_id' => $user,
+            'companies_id' => $companies_id,
+            'packages' => $packages,
+            'operation' => $operation,
+            'poiId' => (int) $poId,
+            'shipping_delivery_date' => $shipping_delivery_date,
+            'nuevo_poi' => $nuevo_poi,
+            'status' => 2
+        );
+
+        if ($this->modelo->addShipping($data)) {
+            if($this->modelo->addShippingRequest($data_request))
+                echo '1';
+            else
+                echo '0';
+        } 
+        else 
+            echo '0';
     }
 }
