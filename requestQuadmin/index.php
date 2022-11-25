@@ -1,5 +1,5 @@
 <?php
-include_once '/home/flypackroot/public_html/flypack_v2/requestQuadmin/conexion.php';
+include_once 'conexion.php';
 ini_set('date.timezone', 'America/Santiago');
 
 function getRandomCode(){
