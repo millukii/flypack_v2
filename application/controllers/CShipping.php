@@ -1652,11 +1652,11 @@ class CShipping extends CI_Controller
 
         if ($this->modelo->addShipping($data)) {
             if($this->modelo->addShippingRequest($data_request))
-                echo '1';
+                return true;
             else
-                echo '0';
+                return false;
         } 
         else 
-            echo '0';
+            return false;
     }
 }
