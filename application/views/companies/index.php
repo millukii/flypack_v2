@@ -49,6 +49,7 @@
     {
       $('#table-company').DataTable({
           "lengthMenu": [[5, 10, 15, 20,], [5, 10, 15, 20]],
+          "pageLength": 20,
           'responsive': true,
           'paging': true,
           'info': true,
